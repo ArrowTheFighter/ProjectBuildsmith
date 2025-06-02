@@ -1,0 +1,207 @@
+File_ID: 'Blacksmith'
+
+id: 'Blacksmith.Introduction'
+content: 'Blacksmith.Introduction'
+choices:
+1: 'Blacksmith.Player.StartFriend'
+next-dialog-id: 'Blacksmith.Rebuild'
+
+id: 'Blacksmith.Rebuild'
+content: 'Blacksmith.Rebuild'
+next-dialog-id: 'Blacksmith.Rebuild2'
+
+id: 'Blacksmith.Rebuild2'
+content: 'Blacksmith.Rebuild2'
+choices: 
+1: 'Blacksmith.Rebuild.Player'
+next-dialog-id: 'Blacksmith.CraftingTable'
+
+id: 'Blacksmith.CraftingTable'
+content: 'Blacksmith.CraftingTable'
+next-dialog-id: 'Blacksmith.CraftingTable2'
+
+id: 'Blacksmith.CraftingTable2'
+content: 'Blacksmith.CraftingTable2'
+next-dialog-id: 'Blacksmith.CraftingTable3'
+
+id: 'Blacksmith.CraftingTable3'
+content: 'Blacksmith.CraftingTable3'
+run-event: 'Forest_Cutscene'
+choices:
+1: 'Blacksmith.Player.CraftingTable'
+next-dialog-id: 'Blacksmith.CraftingTableCheck'
+set-flag: 'Gondola_Quest'
+close-dialog: 'true'
+
+id: 'Blacksmith.CraftingTableCheck'
+content: 'Blacksmith.CraftingTableCheck'
+choices:
+1: 'Blacksmith.Player.CraftingTableRebuilt'
+require-flag: 'Crafting_Table_Rebuilt'
+next-dialog-id: 'Blacksmith.Forge1'
+
+2: 'Blacksmith.Player.CraftingTableHelp'
+next-dialog-id: 'Blacksmith.CraftingTable'
+
+3: 'Blacksmith.Player.CraftingTableNotRebuilt'
+close-dialog: 'true'
+
+*** not used
+id: 'Blacksmith.CraftingTableHelp'
+content: 'Blacksmith.CraftingTableHelp'
+next-dialog-id: 'Blacksmith.CraftingTableCheck'
+choices: 
+1: 'Blacksmith.Player.CraftingTable'
+next-dialog-id: 'Blacksmith.CraftingTableCheck'
+close-dialog: 'true'
+*** not used
+
+id: 'Blacksmith.Forge1'
+content: 'Blacksmith.Forge1'
+choices:
+1: 'Blacksmith.Player.Forge'
+next-dialog-id: 'Blacksmith.Forge2'
+
+id: 'Blacksmith.Forge2'
+content: 'Blacksmith.Forge2'
+next-dialog-id: 'Blacksmith.Forge3'
+
+id: 'Blacksmith.Forge3'
+content: 'Blacksmith.Forge3'
+next-dialog-id: 'Blacksmith.Forge4'
+
+id: 'Blacksmith.Forge4'
+content: 'Blacksmith.Forge4'
+run-event: 'Enable_MineSupports_Hologram'
+choices: 
+1: 'Blacksmith.Player.ForgeConfirm'
+next-dialog-id: 'Blacksmith.MineEntranceRepairCheck'
+close-dialog: 'true'
+
+id: 'Blacksmith.MineEntranceRepairCheck'
+content: 'Blacksmith.MineEntranceRepairCheck'
+choices:
+1: 'Blacksmith.Player.MineEntranceRepaired'
+require-flag: 'Mine_Entrance_Repaired'
+next-dialog-id: 'Blacksmith.EnterMine'
+
+2: 'Blacksmith.Player.MineEntranceRepairHelp'
+next-dialog-id: 'Blacksmith.EntranceRepairHelp'
+
+3: 'Blacksmith.Player.MineEntranceNotRepaired'
+close-dialog: 'true'
+
+id: 'Blacksmith.EntranceRepairHelp'
+content: 'Blacksmith.EntranceRepairHelp'
+choices: 
+1: 'Blacksmith.Player.ForgeConfirm'
+next-dialog-id: 'Blacksmith.MineEntranceRepairCheck'
+close-dialog: 'true'
+
+id: 'Blacksmith.EnterMine'
+content: 'Blacksmith.EnterMine'
+choices: 
+1: 'Blacksmith.Player.EnterMine'
+next-dialog-id: 'Blacksmith.ForgeCheck'
+close-dialog: 'true'
+
+id: 'Blacksmith.ForgeCheck'
+content: 'Blacksmith.ForgeCheck'
+choices: 
+1: 'Blacksmith.Player.ForgeCheck1'
+require-flag: 'Forge_Repaired'
+next-dialog-id: 'Blacksmith.ForgeRebuilt'
+
+2: 'Blacksmith.Player.ForgeCheck2'
+next-dialog-id: 'Blacksmith.ForgeHelp'
+
+3: 'Blacksmith.Player.ForgeCheck3'
+close-dialog: 'true'
+
+id: 'Blacksmith.ForgeHelp'
+content: 'Blacksmith.ForgeHelp'
+next-dialog-id: 'Blacksmith.ForgeCheck'
+close-dialog: 'true'
+
+id: 'Blacksmith.ForgeRebuilt'
+content: 'Blacksmith.ForgeRebuilt'
+next-dialog-id: 'Blacksmith.ForgeRebuilt2'
+
+id: 'Blacksmith.ForgeRebuilt2'
+content: 'Blacksmith.ForgeRebuilt2'
+next-dialog-id: 'Blacksmith.ForgeRebuilt3'
+
+id: 'Blacksmith.ForgeRebuilt3'
+content: 'Blacksmith.ForgeRebuilt3'
+run-event: 'Mountain_Cutscene'
+choices: 
+1: 'Blacksmith.Player.SawmillAccept'
+next-dialog-id: 'Blacksmith.SawmillCheck'
+close-dialog: 'true'
+
+id: 'Blacksmith.SawmillCheck'
+content: 'Blacksmith.SawmillCheck'
+choices: 
+1: 'Blacksmith.Player.SawmillCheck1'
+require-flag: 'Sawmill_Repaired'
+next-dialog-id: 'Blacksmith.SeeMayor'
+
+2: 'Blacksmith.Player.SawmillCheck2'
+next-dialog-id: 'Blacksmith.SawbladeHelp'
+
+3: 'Blacksmith.Player.SawmillCheck3'
+next-dialog-id: 'Blacksmith.SawmillHelp'
+
+4: 'Blacksmith.Player.SawmillCheck4'
+close-dialog: 'true'
+
+id: 'Blacksmith.SawbladeHelp'
+content: 'Blacksmith.SawbladeHelp'
+next-dialog-id: 'Blacksmith.SawmillCheck2'
+
+id: 'Blacksmith.SawmillCheck2'
+content: 'Blacksmith.SawmillCheck2'
+run-event: 'Mountain_Cutscene'
+next-dialog-id: 'Blacksmith.SawmillCheck'
+close-dialog: 'true'
+
+id: 'Blacksmith.SawmillHelp'
+content: 'Blacksmith.SawmillHelp'
+next-dialog-id: 'Blacksmith.SawmillCheck'
+close-dialog: 'true'
+
+id: 'Blacksmith.SeeMayor'
+content: 'Blacksmith.SeeMayor'
+next-dialog-id: 'Blacksmith.SeeMayor2'
+
+id: 'Blacksmith.SeeMayor2'
+content: 'Blacksmith.SeeMayor2'
+run-event: 'Enable_MayorBridge_Hologram'
+next-dialog-id: 'Blacksmith.MayorReminder'
+close-dialog: 'true'
+choices:
+1: 'Blacksmith.Player.MayorDirections'
+next-dialog-id: 'Blacksmith.MayorDirections'
+
+2: 'Blacksmith.Player.SeeMayor'
+next-dialog-id: 'Blacksmith.MayorReminder'
+close-dialog: 'true'
+
+id: 'Blacksmith.MayorDirections'
+content: 'Blacksmith.MayorDirections'
+next-dialog-id: 'Blacksmith.MayorDirections2'
+
+id: 'Blacksmith.MayorDirections2'
+content: 'Blacksmith.MayorDirections2'
+next-dialog-id: 'Blacksmith.MayorReminder'
+run-event: 'Mayor_Cutscene'
+close-dialog: 'true'
+
+id: 'Blacksmith.MayorReminder'
+content: 'Blacksmith.MayorReminder'
+choices: 
+1: 1: 'Blacksmith.Player.MayorDirections'
+next-dialog-id: 'Blacksmith.MayorDirections'
+
+2: 'Blacksmith.Player.SeeMayor'
+close-dialog: 'true'

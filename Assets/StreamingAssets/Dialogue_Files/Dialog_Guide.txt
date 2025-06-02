@@ -1,0 +1,50 @@
+How to write dialog files.
+
+Everything inside [] brackets indicates that this should be replaced with the value you want (including the [] brackets).
+So if a line shows "content: '[CONTENT_ID]'" then a properly written out line would look like "content: 'Blacksmith.talk_to_text'".
+
+The first line of every dialog file needs to contain "File_ID: '[ID_NAME]'".
+
+Then anywhere in the file you can create a new dialog object by adding the line "id: '[ID_NAME]'".
+This will set the id for the dialog object.
+Next you will need to add some content for the dialog by adding a new line like so "content: '[LOCALIZED_ID]'".
+The content will try and fetch the text from the localization table from the id you give it.
+
+These first two lines are the only required options for a dialog object.
+
+You can add more optional methods by adding a new line below the previous two. You can have extra line inbetween if you want.
+A dialog object only ends when you write a new "id: '[ID_NAME]'" for a new object, otherwise everthing below it will be apart of that object.
+
+A list of optional methods:
+
+next-dialog-id: '[DIALOG_ID]' - this will move the dialog to the given dialog id when it is finished.
+
+close-dialog: '[true/false]' - this will close the dialog when the player interacts with an npc after it has shown it's content.
+This can still move dialog to a new dialog with "next-dialog-id:", the player will just need to talk with the npc again after it closes.
+
+
+require-flag: '[FLAG_ID]' - This will check to see if the required flag is set to true and if not it will show the provided "no-flag-reply:" content.
+no-flag-reply: '[LOCALIZED_ID]' - This is the message that will be sent if the dialog object has a require-flag option and the flag is false.
+
+item-requirement: '[ITEM_NAME]' - This will only show the "content:" if the player has the required item.
+amount: '[AMOUNT]' - This will set the required amount for "item-requirement:".
+not-enough-reply: '[LOCALIZED_ID]' - This is the message that will be sent if the player does not have the required item for "item-requirement:".
+
+choices: - This will create a sub section where you can define clickable choices for the player, each acting as a mini dialog object.
+[CHOICE_NUMBER]: '[LOCALIZED_ID]' - You can add up to 4 choices to the list, each one starting with the number is should be.
+Choices can have other methods attached to each one, such as "next-dialog-id:" or "require-flag:".
+
+Choices example:
+
+choices:
+1: 'Blacksmith.yes'
+next-dialog-id: 'Blacksmith_don't_give_directions'
+require-flag: 'Blacksmith'
+no-flag-reply: 'Blacksmith.cant_talk'
+
+2: 'Blacksmith.no'
+next-dialog-id: 'Blacksmith_directions_to_farmer'
+
+
+3: 'Blacksmith.Maybe'
+next-dialog-id: 'Blacksmith_directions_to_farmer'

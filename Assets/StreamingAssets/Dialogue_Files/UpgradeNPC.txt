@@ -1,0 +1,37 @@
+File_ID: 'UpgradeNPC'
+
+id: 'UpgradeNPC.get_coins'
+content: 'UpgradeNPC.GetCoinsForRailGrindUpgrade'
+close-dialog: 'true'
+choices:
+1: 'UpgradeNPC.HereYouGo'
+item-requirement: 'gold_coin'
+amount: '100'
+remove-item: 'true'
+next-dialog-id: 'UpgradeNPC.RailGrindUnlocked'
+set-flag: 'Can_RailGrind'
+
+
+id: 'UpgradeNPC.RailGrindUnlocked'
+content: 'UpgradeNPC.RailGrindUnlocked'
+next-dialog-id: 'UpgradeNPC.get_coins_for_tripple_jump'
+
+
+id: 'UpgradeNPC.get_coins_for_tripple_jump'
+content: 'UpgradeNPC.GetCoinsForTrippleJump'
+choices:
+1: 'UpgradeNPC.HereYouGo'
+item-requirement: 'gold_coin'
+amount: '100'
+remove-item: 'true'
+next-dialog-id: 'UpgradeNPC.TrippleJumpUnlocked'
+run-event: 'add_double_jump'
+
+id: 'UpgradeNPC.TrippleJumpUnlocked'
+content: 'UpgradeNPC.TrippleJumpUnlocked'
+next-dialog-id: 'UpgradeNPC.AllUpgradesUnlocked'
+close-dialog: 'true'
+
+id: 'UpgradeNPC.AllUpgradesUnlocked'
+content: 'UpgradeNPC.AllUpgradesUnlocked'
+close-dialog: 'true'

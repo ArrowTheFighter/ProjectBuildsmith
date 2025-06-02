@@ -1,0 +1,86 @@
+File_ID: 'Gondola'
+
+id: 'Gondola.Default'
+content:'Gondola.Default'
+choices: 
+1: 'Gondola.Player.RepairGondola'
+require-flag: 'Gondola_Quest'
+next-dialog-id: 'Gondola.ExplainRepair'
+
+2: 'Gondola.Player.DeclineRepair'
+close-dialog: 'true'
+
+id: 'Gondola.ExplainRepair'
+content: 'Gondola.ExplainRepair'
+next-dialog-id: 'Gondola.ExplainRepair2'
+
+id: 'Gondola.ExplainRepair2'
+content: 'Gondola.ExplainRepair2'
+next-dialog-id: 'Gondola.ExplainRepair2'
+choices: 
+1: 'Gondola.Player.Accept'
+next-dialog-id: 'Gondola.QuestReminder'
+close-dialog: 'true'
+
+id: 'Gondola.QuestReminder'
+content: 'Gondola.QuestReminder'
+choices:
+1: 'Gondola.Player.HasWood'
+item-requirement: 'wood'
+amount: '10'
+remove-item: 'true'
+next-dialog-id: 'Gondola.ReceivedWood'
+
+2: 'Gondola.Player.HasFibre'
+item-requirement: 'plant_fiber'
+amount: '10'
+remove-item: 'true'
+next-dialog-id: 'Gondola.ReceivedFibre'
+
+3: 'Gondola.Player.QuestNotDone'
+close-dialog: 'true'
+
+id: 'Gondola.ReceivedWood'
+content: 'Gondola.ReceivedWood'
+choices: 
+1: 'Gondola.Player.HasFibre'
+item-requirement: 'plant_fiber'
+amount: '10'
+remove-item: 'true'
+next-dialog-id: 'Gondola.AllMaterialsDelivered'
+
+2: 'Gondola.Player.QuestNotDone'
+close-dialog: 'true'
+
+id: 'Gondola.ReceivedFibre'
+content: 'Gondola.ReceivedFibre'
+choices: 
+1: 'Gondola.Player.HasFibre'
+item-requirement: 'wood'
+amount: '10'
+remove-item: 'true'
+next-dialog-id: 'Gondola.AllMaterialsDelivered'
+
+2: 'Gondola.Player.QuestNotDone'
+close-dialog: 'true'
+
+id: 'Gondola.AllMaterialsDelivered'
+content: 'Gondola.AllMaterialsDelivered'
+***COULD ADD A CUTSCENE HERE SHOWING THE GONDOLA RUNNING AGAIN***
+next-dialog-id: 'Gondola.AllMaterialsDelivered2'
+run-event: 'repair_gondola_rope'
+
+id: 'Gondola.AllMaterialsDelivered2'
+content: 'Gondola.AllMaterialsDelivered2'
+choices: 
+1: 'Gondola.Player.PaymentQuestion'
+next-dialog-id: 'Gondola.Payment'
+
+id: 'Gondola.Payment'
+content: 'Gondola.Payment'
+next-dialog-id: 'Gondola.PaymentReminder'
+close-dialog: 'true'
+
+id: 'Gondola.PaymentReminder'
+content: 'Gondola.PaymentReminder'
+close-dialog: 'true'

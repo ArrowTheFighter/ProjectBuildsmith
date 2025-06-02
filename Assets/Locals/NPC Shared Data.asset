@@ -1,0 +1,468 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: NPC Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: NPC
+  m_TableCollectionNameGuidString: 014495a7faaa326498a6bfe78cd5029d
+  m_Entries:
+  - m_Id: 6498668987219968
+    m_Key: StartFriend.Introduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6499254658859008
+    m_Key: StartFriend.Introduction.Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501497198018560
+    m_Key: StartFriend.Earthquake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6501664521388032
+    m_Key: StartFriend.Earthquake2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6502646386982912
+    m_Key: StartFriend.Earthquake.Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6503255282483200
+    m_Key: StartFriend.Rebuild
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6503577409224704
+    m_Key: StartFriend.Rebuild.Player.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6503641103925248
+    m_Key: StartFriend.Rebuild.Player.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6503696154165248
+    m_Key: StartFriend.GatherLogs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6503782175145984
+    m_Key: StartFriend.Swim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6506027247665152
+    m_Key: StartFriend.Swim.Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6506080427245568
+    m_Key: StartFriend.End1.Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7621280064798720
+    m_Key: StartFriend.LogsCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8293154541207552
+    m_Key: StartFriend.LogsCheck.Player.Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8293218705670144
+    m_Key: StartFriend.LogsCheck.Player.No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9881897261793280
+    m_Key: StartFriend.ExamineLogs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9882083627302912
+    m_Key: StartFriend.RebuildBridge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9883059163693056
+    m_Key: StartFriend.HeadToTown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9883454103552000
+    m_Key: StartFriend.Player.HeadToTown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9883697549344768
+    m_Key: StartFriend.StillOnIsland
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9883903527419904
+    m_Key: StartFriend.Player.Boss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9884423042301952
+    m_Key: StartFriend.Boss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11574664090288128
+    m_Key: Blacksmith.Introduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11576130582544384
+    m_Key: Blacksmith.Player.StartFriend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11576349143531520
+    m_Key: Blacksmith.Rebuild
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11576955325317120
+    m_Key: Blacksmith.Rebuild2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11578853059133440
+    m_Key: Blacksmith.Rebuild.Player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11578898395365376
+    m_Key: Blacksmith.CraftingTable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11582674468536320
+    m_Key: Blacksmith.CraftingTable2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16337696959954944
+    m_Key: Blacksmith.CraftingTable3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11623993521930240
+    m_Key: Blacksmith.Player.CraftingTable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11624063055101952
+    m_Key: Blacksmith.CraftingTableCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11624419440918528
+    m_Key: Blacksmith.Player.CraftingTableRebuilt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11624574932156416
+    m_Key: Blacksmith.Player.CraftingTableHelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11625261946568704
+    m_Key: Blacksmith.CraftingTableHelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11625650766938112
+    m_Key: Blacksmith.Player.CraftingTableNotRebuilt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11627425037221888
+    m_Key: Blacksmith.Forge1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11632290689908736
+    m_Key: Blacksmith.Player.Forge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11632431991816192
+    m_Key: Blacksmith.Forge2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11633189315346432
+    m_Key: Blacksmith.Forge3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11634297437880320
+    m_Key: Blacksmith.Forge4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11637353260974080
+    m_Key: Blacksmith.Player.ForgeConfirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11637667422732288
+    m_Key: Blacksmith.MineEntranceRepairCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11639793188274176
+    m_Key: Blacksmith.Player.MineEntranceRepaired
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11640580568186880
+    m_Key: Blacksmith.Player.MineEntranceRepairHelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11640593151098880
+    m_Key: Blacksmith.Player.MineEntranceNotRepaired
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11640788559527936
+    m_Key: Blacksmith.EntranceRepairHelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11640790358884352
+    m_Key: Blacksmith.EnterMine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12309614829699072
+    m_Key: Blacksmith.Player.EnterMine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12309777476419584
+    m_Key: Blacksmith.ForgeCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12309985505509376
+    m_Key: Blacksmith.Player.ForgeCheck1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12310158474412032
+    m_Key: Blacksmith.Player.ForgeCheck2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12310170788888576
+    m_Key: Blacksmith.Player.ForgeCheck3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12310883438886912
+    m_Key: Blacksmith.ForgeHelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12311622961790976
+    m_Key: Blacksmith.ForgeRebuilt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12312149481160704
+    m_Key: Blacksmith.ForgeRebuilt2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12312975004073984
+    m_Key: Blacksmith.ForgeRebuilt3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12313979023982592
+    m_Key: Blacksmith.Player.SawmillAccept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12314611441139712
+    m_Key: Blacksmith.SawmillCheck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14887806937530368
+    m_Key: Blacksmith.SawmillCheck2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12314618827309056
+    m_Key: Blacksmith.Player.SawmillCheck1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12314623063556096
+    m_Key: Blacksmith.Player.SawmillCheck2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12314624967770112
+    m_Key: Blacksmith.Player.SawmillCheck3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12314913464582144
+    m_Key: Blacksmith.Player.SawmillCheck4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12315524725669888
+    m_Key: Blacksmith.SawbladeHelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12315526449528832
+    m_Key: Blacksmith.SawmillHelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12315527774928896
+    m_Key: Blacksmith.SeeMayor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16631864429051904
+    m_Key: Blacksmith.SeeMayor2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12319519947030528
+    m_Key: Blacksmith.Player.MayorDirections
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12319868648882176
+    m_Key: Blacksmith.Player.SeeMayor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12319870725062656
+    m_Key: Blacksmith.MayorDirections
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14890274132000768
+    m_Key: Blacksmith.MayorDirections2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12320098974892032
+    m_Key: Blacksmith.MayorReminder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15812982637322240
+    m_Key: UpgradeNPC.GetCoinsForRailGrindUpgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15819087975276544
+    m_Key: UpgradeNPC.RailGrindUnlocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15820384375922688
+    m_Key: UpgradeNPC.HereYouGo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15969405212024832
+    m_Key: UpgradeNPC.GetCoinsForTrippleJump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15969567351234560
+    m_Key: UpgradeNPC.TrippleJumpUnlocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13379433570172928
+    m_Key: Mayor.Default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16641618501107712
+    m_Key: Mayor.Default2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16641785765756928
+    m_Key: Mayor.Default3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16641859560341504
+    m_Key: Mayor.Default4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16642472289435648
+    m_Key: Mayor.Player.Gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16642402080980992
+    m_Key: Mayor.Player.Bye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16653439136104448
+    m_Key: Mayor.Gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16655414900752384
+    m_Key: Mayor.Gems2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16656655668150272
+    m_Key: Mayor.Player.Complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16656716162596864
+    m_Key: Mayor.Player.Accept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16656936086732800
+    m_Key: Mayor.GemReminder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16657607515111424
+    m_Key: Mayor.GemThanks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16658077012918272
+    m_Key: Mayor.GameOver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16688485087772672
+    m_Key: Gondola.Default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16689785636585472
+    m_Key: Gondola.Player.RepairGondola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16689853563338752
+    m_Key: Gondola.Player.DeclineRepair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16690024602861568
+    m_Key: Gondola.NoRepairFlag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16690510710112256
+    m_Key: Gondola.ExplainRepair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16691422799265792
+    m_Key: Gondola.ExplainRepair2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16697978492223488
+    m_Key: Gondola.Player.Accept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16698343883210752
+    m_Key: Gondola.QuestReminder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16691659941019648
+    m_Key: Gondola.Player.HasWood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16691697748475904
+    m_Key: Gondola.Player.HasFibre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16698905420824576
+    m_Key: Gondola.Player.QuestNotDone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16691705805733888
+    m_Key: Gondola.ReceivedWood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16692355331457024
+    m_Key: Gondola.ReceivedFibre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16692377288638464
+    m_Key: Gondola.AllMaterialsDelivered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16700464888217600
+    m_Key: Gondola.AllMaterialsDelivered2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16701042234163200
+    m_Key: Gondola.Player.PaymentQuestion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16701196983009280
+    m_Key: Gondola.Payment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16701613993295872
+    m_Key: Gondola.PaymentReminder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17107448200364032
+    m_Key: UpgradeNPC.AllUpgradesUnlocked
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2379825031514161252
+  references:
+    version: 2
+    RefIds:
+    - rid: 2379825031514161252
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1744480742590

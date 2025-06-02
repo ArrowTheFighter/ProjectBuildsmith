@@ -1,0 +1,84 @@
+File_ID: 'StartFriend'
+
+id: 'StartFriend.Introduction'
+content: 'StartFriend.Introduction'
+choices:
+1: 'StartFriend.Introduction.Player'
+next-dialog-id: 'StartFriend.Earthquake'
+
+
+id: 'StartFriend.Earthquake'
+content: 'StartFriend.Earthquake'
+next-dialog-id: 'StartFriend.Earthquake2
+
+id: 'StartFriend.Earthquake2'
+content: 'StartFriend.Earthquake2'
+choices:
+1: 'StartFriend.Earthquake.Player'
+next-dialog-id: 'StartFriend.Rebuild'
+
+id: 'StartFriend.Rebuild'
+content: 'StartFriend.Rebuild'
+choices:
+1: 'StartFriend.Rebuild.Player.1'
+next-dialog-id: 'StartFriend.GatherLogs'
+
+2: 'StartFriend.Rebuild.Player.2'
+next-dialog-id: 'StartFriend.Swim'
+
+id: 'StartFriend.Swim'
+content: 'StartFriend.Swim'
+choices:
+1: 'StartFriend.Swim.Player'
+next-dialog-id: 'StartFriend.GatherLogs'
+
+id: 'StartFriend.GatherLogs'
+content: 'StartFriend.GatherLogs'
+run-event: 'Enable_Bridge_Hologram'
+choices:
+1: 'StartFriend.End1.Player'
+close-dialog: 'true'
+next-dialog-id: 'StartFriend.LogsCheck'
+
+id: 'StartFriend.LogsCheck'
+content: 'StartFriend.LogsCheck'
+choices:
+1: 'StartFriend.LogsCheck.Player.Yes'
+next-dialog-id: 'StartFriend.CollectWood'
+item-requirement: 'wood'
+amount: '10'
+next-dialog-id: 'StartFriend.ExamineLogs'
+
+2: 'StartFriend.LogsCheck.Player.No'
+close-dialog: 'true'
+
+id: 'StartFriend.ExamineLogs'
+content: 'StartFriend.ExamineLogs'
+next-dialog-id: 'StartFriend.RebuildBridge'
+
+id: 'StartFriend.RebuildBridge'
+content: 'StartFriend.RebuildBridge'
+item-requirement: 'wood'
+amount: '10'
+remove-item: 'true'
+run-event: 'Bridge_Cutscene'
+next-dialog-id: 'StartFriend.HeadToTown'
+
+id: 'StartFriend.HeadToTown'
+content: 'StartFriend.HeadToTown'
+choices:
+1: 'StartFriend.Player.Boss'
+next-dialog-id: 'StartFriend.Boss'
+
+2: 'StartFriend.Player.HeadToTown'
+close-dialog: 'true'
+next-dialog-id: 'StartFriend.StillOnIsland'
+
+id: 'StartFriend.Boss'
+content: 'StartFriend.Boss'
+close-dialog: 'true'
+next-dialog-id: 'StartFriend.StillOnIsland'
+
+id: 'StartFriend.StillOnIsland'
+content: 'StartFriend.StillOnIsland'
+close-dialog: 'true'

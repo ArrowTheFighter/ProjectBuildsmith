@@ -1,0 +1,70 @@
+File_ID: 'Mayor'
+
+id: 'Mayor.Default'
+content: 'Mayor.Default'
+next-dialog-id: 'Mayor.Default2'
+
+id: 'Mayor.Default2'
+content: 'Mayor.Default2'
+next-dialog-id: 'Mayor.Default3'
+
+id: 'Mayor.Default3'
+content: 'Mayor.Default3'
+choices:
+1: 'Mayor.Player.Gems'
+item-requirement: 'gem'
+amount: '1'
+next-dialog-id: 'Mayor.Gems'
+
+2: 'Mayor.Player.Bye'
+next-dialog-id: 'Mayor.Default4'
+close-dialog: 'true'
+
+id: 'Mayor.Default4'
+content: 'Mayor.Default4'
+choices:
+1: 'Mayor.Player.Gems'
+item-requirement: 'gem'
+amount: '1'
+next-dialog-id: 'Mayor.Gems'
+
+2: 'Mayor.Player.Bye'
+close-dialog: 'true'
+
+id: 'Mayor.Gems'
+content: 'Mayor.Gems'
+next-dialog-id: 'Mayor.Gems2'
+
+id: 'Mayor.Gems2'
+content: 'Mayor.Gems2'
+choices:
+1: 'Mayor.Player.Complete'
+item-requirement: 'gem'
+amount: '25'
+remove-item: 'true'
+next-dialog-id: 'Mayor.GemThanks'
+
+2: 'Mayor.Player.Accept'
+next-dialog-id: 'Mayor.GemReminder'
+close-dialog: 'true'
+
+id: 'Mayor.GemReminder'
+content: 'Mayor.GemReminder'
+choices:
+1: 'Mayor.Player.Complete'
+item-requirement: 'gem'
+amount: '25'
+remove-item: 'true'
+next-dialog-id: 'Mayor.GemThanks'
+
+2: 'Mayor.Player.Accept'
+next-dialog-id: 'Mayor.GemReminder'
+close-dialog: 'true'
+
+id: 'Mayor.GemThanks'
+content: 'Mayor.GemThanks'
+next-dialog-id: 'Mayor.GameOver'
+
+id: 'Mayor.GameOver'
+content: 'Mayor.GameOver'
+close-dialog: 'true'
