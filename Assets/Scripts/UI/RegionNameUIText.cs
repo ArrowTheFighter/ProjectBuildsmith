@@ -12,14 +12,14 @@ public class RegionNameUIText : MonoBehaviour
 
     //The amount of time it takes for the text to fade in and out
     //The amount of time the text is displayed on screen after fading in and before fading out
-    public float fadeTime;
-    public float textDisplayedTime;
+    private float fadeTime = 2f;
+    private float textDisplayedTime = 5f;
 
     //Strings for the player's tag
     private string PLAYER = "Player";
 
     //The string we set in editor for the region's name that will be displayed to the player
-    public string currentRegionString;
+    private string currentRegionString;
 
     [SerializeField] string localized_string_key;
 
@@ -40,15 +40,11 @@ public class RegionNameUIText : MonoBehaviour
     {
         if (other.CompareTag(PLAYER))
         {
-            //Checks to see if the text for the region has already been shown to the player (this might not even be needed anymore?)
-            if (!regionAlreadyDisplayed)
-            {
                 //Checks to see if there is a change in the region text to not repeat the text on screen for a region
                 if (regionText.text != currentRegionString)
                 {
                     queueUpText = true;
                 } 
-            }
         }
     }
 
@@ -69,15 +65,6 @@ public class RegionNameUIText : MonoBehaviour
                 regionText.text = localized_string;
                 Invoke("FadeText", textDisplayedTime);
             }
-        }
-    }
-
-    //When the player leaves a region, it resets the bool of it the region has already been shown to the player (this might not even be needed anymore?)
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(PLAYER))
-        {
-            regionAlreadyDisplayed = false;
         }
     }
 
