@@ -3,16 +3,24 @@ using TMPro;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using DS.Data;
-using System.Collections;
 using EasyTextEffects;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
+using UnityEngine.Events;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {
     [SerializeField] string StartDialogGraphName;
     [SerializeField] TextMeshProUGUI textBox;
+    [SerializeField] TextMeshProUGUI dialogNameTextBox;
+    [SerializeField] GameObject DialogMenu;
     [SerializeField] TextEffect textEffect;
+
+    [Header("NPC")]
+    [SerializeField] string NPC_Name;
+
+    [Header("Events")]
+    [SerializeField] public NPC_Event[] nPC_Events;
+
     ScriptableObject currentDialogSO;
     DSDialogueSO StarterNode;
 
@@ -21,6 +29,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     public item_requirement[] item_Requirements;
     public item_requirement[] required_items => item_Requirements;
+
+    bool should_close;
+    bool dialog_is_open;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,11 +48,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
         return true;
     }
 
-    
+
 
     [Button("Show Next Dialog")]
     void GetAndShowNextDialog()
     {
+        GameplayUtils.instance.OpenMenu();
         Debug.Log("Getting next dialog");
         GetNextDialog();
         ShowDialog();
@@ -58,6 +70,15 @@ public class DialogWorker : MonoBehaviour, IInteractable
         if (currentDialogSO is DSDialogueSO)
         {
             DSDialogueSO dialogueSO = (DSDialogueSO)currentDialogSO;
+            if (dialogueSO.Choices.Count <= 1)
+            {
+                tempDialogSO = dialogueSO.Choices[0].NextDialogue;
+            }
+        }
+        if (currentDialogSO is DSCloseDialogSO)
+        {
+            Debug.Log("Dialog was closeDialog Node");
+            DSCloseDialogSO dialogueSO = (DSCloseDialogSO)currentDialogSO;
             if (dialogueSO.Choices.Count <= 1)
             {
                 tempDialogSO = dialogueSO.Choices[0].NextDialogue;
@@ -85,7 +106,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 if (breakLoop) break;
                 if (dialogueSO.Choices.Count <= 1)
                 {
+                    Debug.Log("Dialog was a connector node (probably): " + dialogueSO.DialogueType);
                     tempDialogSO = dialogueSO.Choices[0].NextDialogue;
+                    continue;
                 }
             }
             switch (tempDialogSO)
@@ -116,7 +139,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         if (itemRequirementSO.RemoveItems)
                         {
                             GameplayUtils.instance.remove_items_from_inventory(itemRequirementSO.ItemID, int.Parse(itemRequirementSO.ItemAmount));
-                         }
+                        }
                     }
                     foreach (DSDialogueChoiceData choice in itemRequirementSO.Choices)
                     {
@@ -128,15 +151,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     }
                     break;
                 case DSCloseDialogSO closeDialogSO:
-                    // TODO CLOSE DIALOG STUFF HERE
-
-                    if (closeDialogSO.Choices.Count > 0)
-                    {
-                        tempDialogSO = closeDialogSO.Choices[0].NextDialogue;
-                    }
-                    break;
+                    should_close = true;
+                    currentDialogSO = closeDialogSO;
+                    CloseDialog();
+                    return;
                 case DSRunEventSO runEventSO:
-                    // TODO SETUP RUN EVENT STUFF HERE
+                    runEvent(runEventSO.EventID);
 
                     if (runEventSO.Choices.Count > 0)
                     {
@@ -145,27 +165,49 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     break;
 
                 case DSSetFlagSO setFlagSO:
-                    //TODO ADD SET FLAG STUFF HERE
+                    FlagManager.Set_Flag(setFlagSO.FlagID, setFlagSO.IsTrue);
 
                     if (setFlagSO.Choices.Count > 0)
                     {
                         tempDialogSO = setFlagSO.Choices[0].NextDialogue;
                     }
                     break;
-
             }
         }
+    }
+
+    void runEvent(string event_id)
+    {
+        for (int i = 0; i < nPC_Events.Length; i++)
+        {
+            if (nPC_Events[i].id == event_id)
+            {
+                nPC_Events[i].run_event?.Invoke();
+            }
+        }
+     }
+
+    void CloseDialog()
+    {
+        Debug.Log("Closing dialog");
+        DialogMenu.SetActive(false);
+        GameplayUtils.instance.CloseMenu();
     }
 
     void ShowDialog()
     {
         if (currentDialogSO is DSDialogueSO)
         {
+            print("Showing dialog");
+            dialogNameTextBox.text = NPC_Name;
+            DialogMenu.SetActive(true);
+            dialog_is_open = true;
             DSDialogueSO dialogSO = (DSDialogueSO)currentDialogSO;
             textBox.text = dialogSO.Text;
         }
     }
 
 
-   
+
 }
+

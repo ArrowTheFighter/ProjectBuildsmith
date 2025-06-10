@@ -33,9 +33,13 @@ namespace DS.Utilities
 
         private static Dictionary<string, DSGroup> loadedGroups;
         private static Dictionary<string, DSNode> loadedNodes;
+        private static int connectorNodesSaved;
+        private static int returnToStartNodesSaved;
 
         public static void Initialize(DSGraphView dsGraphView, string graphName)
         {
+            connectorNodesSaved = 0;
+            returnToStartNodesSaved = 0;
             graphView = dsGraphView;
 
             graphFileName = graphName;
@@ -292,12 +296,13 @@ namespace DS.Utilities
 
                     if (node.Group != null)
                     {
-                        connectorSO = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", "connector");
+                        connectorSO = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", "connector" + connectorNodesSaved);
                     }
                     else
                     {
-                        connectorSO = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Global/Dialogues", "connector");
+                        connectorSO = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Global/Dialogues", "connector" + connectorNodesSaved);
                     }
+                    connectorNodesSaved++;
                     connectorSO.Initialize(
                         node.DialogueName,
                         node.Text,
@@ -451,20 +456,22 @@ namespace DS.Utilities
                     break;
                 case DSNode _node:
                     DSDialogueSO dialogue;
+                    string extra_num = "";
+                    if (node.DialogueType == Enumerations.DSDialogueType.ReturnToStart)
+                    {
+                        extra_num = returnToStartNodesSaved.ToString();
+                        returnToStartNodesSaved++;
+                    }
 
                     if (node.Group != null)
                     {
-                        if (node is DSItemRequirementNode)
-                        {
-
-                        }
-                        dialogue = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                        dialogue = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName + extra_num);
 
                         dialogueContainer.DialogueGroups.AddItem(createdDialogueGroups[node.Group.ID], dialogue);
                     }
                     else
                     {
-                        dialogue = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                        dialogue = CreateAsset<DSDialogueSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName + extra_num);
 
                         dialogueContainer.UngroupedDialogues.Add(dialogue);
                     }
