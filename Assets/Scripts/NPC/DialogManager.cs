@@ -3,6 +3,11 @@ using System.IO;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
+using DS.Data;
+using Unity.VisualScripting;
+using DS.ScriptableObjects;
+using Sirenix.OdinInspector.Editor;
 
 public class DialogManager : MonoBehaviour
 {
@@ -65,19 +70,56 @@ public class DialogManager : MonoBehaviour
         // print(read_string);
     }
 
+    public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker)
+    {
+        for (int i = 0; i < Choices_Parent_Transform.childCount; i++)
+        {
+            Choices_Parent_Transform.GetChild(i).gameObject.SetActive(false);
+        }
+        Choices_Parent_Transform.gameObject.SetActive(true);
+        bool button_is_selected = false;
+        for (int i = 0; i < 4; i++)
+        {
+            if (i >= data.Count)
+            {
+                continue;
+            }
+
+            bool validChoice = DialogRetriever.Choice_is_valid(data[i].NextDialogue,dialogWorker);
+            if (!validChoice) continue;
+            //If node is disableChoice then we should contine
+
+            Transform choice = Choices_Parent_Transform.GetChild(i);
+            if (!button_is_selected)
+            {
+                choice.GetComponent<Button>().Select();
+                button_is_selected = true;
+            }
+            choice.gameObject.SetActive(true);
+            string localized_string = LocalizationManager.GetLocalizedString("NPC", data[i].LocalizeKey);
+            choice.GetComponentInChildren<TextMeshProUGUI>().text = localized_string;
+            ChoiceButton choiceButton = choice.GetComponentInChildren<ChoiceButton>();
+            choiceButton.dialogueChoiceData = data[i];
+            choiceButton.dialogWorker = dialogWorker;
+        }
+    }
+
+    
+
     public int get_active_choices()
     {
         int active_choices = 0;
         for (int i = 0; i < Choices_Parent_Transform.childCount; i++)
         {
-            if (Choices_Parent_Transform.GetChild(0).gameObject.activeInHierarchy)
+            if (Choices_Parent_Transform.GetChild(i).gameObject.activeInHierarchy)
             {
                 active_choices++;
             }
         }
         return active_choices;
-     }
+    }
 
+    [Obsolete]
     public void Set_Choices(dialog_struct[] choices, NPC_Script npc)
     {
         for (int i = 0; i < Choices_Parent_Transform.childCount; i++)

@@ -9,17 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: connector1
+  m_Script: {fileID: 11500000, guid: 0e1d548be11e2ab409c0b46832fc8deb, type: 3}
+  m_Name: SetFlag
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 
+  <DialogueName>k__BackingField: SetFlag
   <Text>k__BackingField: Dialogue text.
-  <LocalizedKey>k__BackingField: 
   <Choices>k__BackingField:
-  - <Text>k__BackingField: 
+  - <Text>k__BackingField: output
     LocalizeKey: 
-    OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 149d1c6b58d5d674fa8ded556a062659, type: 2}
-  <DialogueType>k__BackingField: 7
+    OutputID: IsTrue
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 8d6f9c7f8b5f27248a3726dc17c39df6, type: 2}
+  <DialogueType>k__BackingField: 5
   <IsStartingDialogue>k__BackingField: 0
-  CloseDialog: 0
+  <FlagID>k__BackingField: testflag
+  IsTrue: 1

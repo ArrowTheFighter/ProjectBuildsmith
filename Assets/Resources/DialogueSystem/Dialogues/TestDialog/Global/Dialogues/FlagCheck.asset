@@ -9,22 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e6b184fd5a78944c8c74a36e658c209, type: 3}
-  m_Name: ItemCheck
+  m_Script: {fileID: 11500000, guid: 0a24acc19b71f4c4b99f6ab09172d3bd, type: 3}
+  m_Name: FlagCheck
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: ItemCheck
+  <DialogueName>k__BackingField: FlagCheck
   <Text>k__BackingField: Dialogue text.
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Has items
+  - <Text>k__BackingField: Flag is true
     LocalizeKey: 
     OutputID: IsTrue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: eeb21ac01ccd6a849b73fb409ea69836, type: 2}
-  - <Text>k__BackingField: Doesn't have items
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 49815c25d4a8c7d46a714dc26332c7ad, type: 2}
+  - <Text>k__BackingField: Flag is false
     LocalizeKey: 
     OutputID: IsFalse
     <NextDialogue>k__BackingField: {fileID: 0}
-  <DialogueType>k__BackingField: 2
+  <DialogueType>k__BackingField: 4
   <IsStartingDialogue>k__BackingField: 0
-  <ItemID>k__BackingField: wood
-  <ItemAmount>k__BackingField: 5
-  RemoveItems: 1
+  <FlagID>k__BackingField: testflag
+  IsTrue: 1

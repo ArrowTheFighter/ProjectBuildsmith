@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: DialogName
+  m_Name: multiFlagCheck
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: DialogName
-  <Text>k__BackingField: Hello!
+  <DialogueName>k__BackingField: multiFlagCheck
+  <Text>k__BackingField: Now make sure you have a flag
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
-    LocalizeKey: LOCAL_CHOICE_KEY
+  - <Text>k__BackingField: I do
+    LocalizeKey: player.ido
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 31303188aed5e614a9f451d3970c11ad, type: 2}
-  <DialogueType>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: d9f771d33b7bd5a46ad34a22beb27e94, type: 2}
+  - <Text>k__BackingField: I don't
+    LocalizeKey: player.idont
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: f352574654e3407419bbd74469732541, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0

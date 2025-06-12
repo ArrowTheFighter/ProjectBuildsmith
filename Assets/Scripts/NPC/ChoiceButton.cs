@@ -1,18 +1,31 @@
+using System;
+using DS.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class ChoiceButton : MonoBehaviour
 {
+    [Obsolete]
     public NPC_Script npc_Script;
+    [Obsolete]
     public string next_dialog_id;
+    [Obsolete]
     public dialog_struct button_dialog_struct;
+    public DialogWorker dialogWorker;
+    public DSDialogueChoiceData dialogueChoiceData;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GetComponent<Button>().onClick.AddListener(button_clicked);
+        GetComponent<Button>().onClick.AddListener(Button_Pressed);
     }
 
+    void Button_Pressed()
+    {
+        dialogWorker.GetAndShowNextDialog(dialogueChoiceData.NextDialogue);
+     }
+
+    [Obsolete]
     void button_clicked()
     {
         if(button_dialog_struct.flag_requirement != null && button_dialog_struct.flag_requirement != "")

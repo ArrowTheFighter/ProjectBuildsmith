@@ -157,24 +157,24 @@ public class DialogRetriever : MonoBehaviour
         return null;
     }
 
-    public static List<ScriptableObject> GetSettingsToNextDialog(DSDialogueSO currentDialog)
+    public static List<ScriptableObject> GetSettingsToNextDialog(ScriptableObject currentDialog)
     {
         List<ScriptableObject> settingsToNextDialog = new List<ScriptableObject>();
 
-        ScriptableObject nextSetting = GetNextChoice(currentDialog);
+        // ScriptableObject nextSetting = GetNextChoice(currentDialog);
 
-        if (nextSetting is DSDialogueSO)
-        {
-            DSDialogueSO dialogueSO = (DSDialogueSO)nextSetting;
-            switch (dialogueSO.DialogueType)
-            {
-                case DS.Enumerations.DSDialogueType.SingleChoice:
-                case DS.Enumerations.DSDialogueType.MultipleChoice:
+        // if (nextSetting is DSDialogueSO)
+        // {
+        //     DSDialogueSO dialogueSO = (DSDialogueSO)nextSetting;
+        //     switch (dialogueSO.DialogueType)
+        //     {
+        //         case DS.Enumerations.DSDialogueType.SingleChoice:
+        //         case DS.Enumerations.DSDialogueType.MultipleChoice:
 
-                    return settingsToNextDialog;
-            }
-        }
-        settingsToNextDialog.Add(nextSetting);
+        //             return settingsToNextDialog;
+        //     }
+        // }
+        settingsToNextDialog.Add(currentDialog);
         for (int i = 0; i < 1000; i++)
         {
             if (i >= settingsToNextDialog.Count) return settingsToNextDialog;
@@ -218,6 +218,81 @@ public class DialogRetriever : MonoBehaviour
 
         Debug.LogWarning("GetSettingsToNextDialog ran out of iterations. This has most likly caused an error");
         return settingsToNextDialog;
+    }
+
+    public static bool Choice_is_valid(ScriptableObject choice, DialogWorker dialogWorker)
+    {
+        if (choice == null) return false;
+        ScriptableObject currentChoice = choice;
+        for (int i = 0; i < 1000; i++)
+        {
+
+            switch (currentChoice)
+            {
+                case DSDialogueSO dialogueSO:
+                    switch (dialogueSO.DialogueType)
+                    {
+                        case DS.Enumerations.DSDialogueType.SingleChoice:
+                        case DS.Enumerations.DSDialogueType.MultipleChoice:
+                            return true;
+                        case DS.Enumerations.DSDialogueType.ReturnToStart:
+                            currentChoice = DialogRetriever.GetStarterNode(dialogWorker.StartDialogGraphName);
+                            break;
+
+                    }
+
+                    break;
+                case DSItemRequirementSO itemRequirementSO:
+                    string item_output_check = "IsFalse";
+                    if (GameplayUtils.instance.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
+                    {
+                        item_output_check = "IsTrue";
+                    }
+                    foreach (DSDialogueChoiceData item_choice in itemRequirementSO.Choices)
+                    {
+                        if (item_choice.OutputID == item_output_check)
+                        {
+                            if (item_choice.NextDialogue == null) return false;
+                            currentChoice = item_choice.NextDialogue;
+                            break;
+                        }
+                    }
+                    break;
+                case DSRequireFlagSO requireFlagSO:
+                    string flag_id = requireFlagSO.FlagID;
+                    string check = "IsFalse";
+                    if (FlagManager.Get_Flag_Value(flag_id))
+                    {
+                        check = "IsTrue";
+                    }
+                    foreach (DSDialogueChoiceData flag_choice in requireFlagSO.Choices)
+                    {
+                        if (flag_choice.OutputID == check)
+                        {
+                            if (flag_choice.NextDialogue == null) return false;
+                            currentChoice = flag_choice.NextDialogue;
+                            break;
+                        }
+                    }
+                    break;
+            }
+            var Choices = currentChoice.GetType().GetProperty("Choices", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+            if (Choices != null)
+            {
+                var value = Choices.GetValue(currentChoice);
+                if (value is List<DSDialogueChoiceData> myList)
+                {
+                    foreach (DSDialogueChoiceData listed_choice in myList)
+                    {
+                        if (listed_choice.NextDialogue == null) return false;
+                        currentChoice = listed_choice.NextDialogue;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public static string GetSettingNodeString(ScriptableObject settingNode)
@@ -269,7 +344,7 @@ public class DialogRetriever : MonoBehaviour
         }
         Debug.LogError("Couldn't get node type");
         return "";
-     }
+    }
 
     
 

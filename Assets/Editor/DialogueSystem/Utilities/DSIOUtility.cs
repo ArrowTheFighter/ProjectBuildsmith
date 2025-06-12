@@ -35,11 +35,13 @@ namespace DS.Utilities
         private static Dictionary<string, DSNode> loadedNodes;
         private static int connectorNodesSaved;
         private static int returnToStartNodesSaved;
+        private static int CloseNodesSaved;
 
         public static void Initialize(DSGraphView dsGraphView, string graphName)
         {
             connectorNodesSaved = 0;
             returnToStartNodesSaved = 0;
+            CloseNodesSaved = 0;
             graphView = dsGraphView;
 
             graphFileName = graphName;
@@ -429,13 +431,13 @@ namespace DS.Utilities
                     DSCloseDialogSO close_so;
                     if (node.Group != null)
                     {
-                        close_so = CreateAsset<DSCloseDialogSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                        close_so = CreateAsset<DSCloseDialogSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName + CloseNodesSaved);
 
                         //dialogueContainer.DialogueGroups.AddItem(createdDialogueGroups[node.Group.ID], dialogue);
                     }
                     else
                     {
-                        close_so = CreateAsset<DSCloseDialogSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                        close_so = CreateAsset<DSCloseDialogSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName + CloseNodesSaved);
 
                         //dialogueContainer.UngroupedDialogues.Add(dialogue);
                     }
@@ -447,6 +449,7 @@ namespace DS.Utilities
                         closeNode.IsStartingNode()
                     );
 
+                    CloseNodesSaved++;
                     createdCloseDialogues.Add(node.ID, close_so);
 
 
@@ -552,7 +555,7 @@ namespace DS.Utilities
             foreach (var table in tableCollection.StringTables)
             {
                 string localeCode = table.LocaleIdentifier.Code;
-                if (localeCode == "en-US") // Only modify English
+                if (localeCode == "en") // Only modify English
                 {
                     var entry = table.GetEntry(key);
                     if (entry == null)
@@ -564,6 +567,7 @@ namespace DS.Utilities
                         entry.Value = value; // optional update
                     }
                     EditorUtility.SetDirty(table); // mark for save
+                    EditorUtility.SetDirty(table.SharedData);
                     previouslySetKeys.Add(key);
                     return previouslySetKeys;
                 }

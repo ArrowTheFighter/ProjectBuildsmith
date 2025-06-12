@@ -6,10 +6,11 @@ using DS.Data;
 using EasyTextEffects;
 using System;
 using UnityEngine.Events;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {
-    [SerializeField] string StartDialogGraphName;
+    [SerializeField] public string StartDialogGraphName;
     [SerializeField] TextMeshProUGUI textBox;
     [SerializeField] TextMeshProUGUI dialogNameTextBox;
     [SerializeField] GameObject DialogMenu;
@@ -51,19 +52,20 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
 
     [Button("Show Next Dialog")]
-    void GetAndShowNextDialog()
+    public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
         GameplayUtils.instance.OpenMenu();
-        Debug.Log("Getting next dialog");
-        GetNextDialog();
-        ShowDialog();
-        textEffect.Refresh();
-        textEffect.StartManualEffects();
+        if (GetNextDialog(providedDialog))
+        {
+            ShowDialog();
+            textEffect.Refresh();
+            textEffect.StartManualEffects();
+        }
 
     }
 
 
-    void GetNextDialog()
+    bool GetNextDialog(ScriptableObject providedDialog = null)
     {
         if (currentDialogSO == null) currentDialogSO = StarterNode;
         ScriptableObject tempDialogSO = currentDialogSO;
@@ -73,16 +75,30 @@ public class DialogWorker : MonoBehaviour, IInteractable
             if (dialogueSO.Choices.Count <= 1)
             {
                 tempDialogSO = dialogueSO.Choices[0].NextDialogue;
+            } else if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.StartDialog)
+            {
+                
+             }
+            else
+            {
+                if (providedDialog == null)
+                {
+                    return false;
+                }
             }
         }
         if (currentDialogSO is DSCloseDialogSO)
         {
-            Debug.Log("Dialog was closeDialog Node");
             DSCloseDialogSO dialogueSO = (DSCloseDialogSO)currentDialogSO;
             if (dialogueSO.Choices.Count <= 1)
             {
                 tempDialogSO = dialogueSO.Choices[0].NextDialogue;
             }
+        }
+        if (providedDialog != null)
+        {
+            Debug.Log("Temp dialog was not null");
+            tempDialogSO = providedDialog;
         }
         bool breakLoop = false;
         for (int i = 0; i < 1000; i++)
@@ -92,8 +108,19 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 DSDialogueSO dialogueSO = (DSDialogueSO)tempDialogSO;
                 switch (dialogueSO.DialogueType)
                 {
-                    case DS.Enumerations.DSDialogueType.SingleChoice:
                     case DS.Enumerations.DSDialogueType.MultipleChoice:
+                        if (dialogueSO.Choices.Count > 0)
+                        {
+                            DialogManager.instance.Setup_Choices(dialogueSO.Choices, this);
+                        }
+                        currentDialogSO = dialogueSO;
+                        breakLoop = true;
+                        break;
+                    case DS.Enumerations.DSDialogueType.SingleChoice:
+                        if (DialogManager.instance.get_active_choices() > 0)
+                        {
+                            DialogManager.instance.Clear_choices();
+                        }
                         currentDialogSO = dialogueSO;
                         breakLoop = true;
                         break;
@@ -102,11 +129,24 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         // TODO - Change this so it properly loops through all options if it needs to
                         tempDialogSO = startNode.Choices[0].NextDialogue;
                         continue;
+                    case DS.Enumerations.DSDialogueType.StartDialog:
+                        for (int o = 0; o < dialogueSO.Choices.Count; o++)
+                        {
+                            if (DialogRetriever.Choice_is_valid(dialogueSO.Choices[i].NextDialogue, this))
+                            {
+                                tempDialogSO = dialogueSO.Choices[i].NextDialogue;
+                                break;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        break;
                 }
                 if (breakLoop) break;
                 if (dialogueSO.Choices.Count <= 1)
                 {
-                    Debug.Log("Dialog was a connector node (probably): " + dialogueSO.DialogueType);
                     tempDialogSO = dialogueSO.Choices[0].NextDialogue;
                     continue;
                 }
@@ -114,10 +154,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
             switch (tempDialogSO)
             {
                 case DSRequireFlagSO requireFlagSO:
-                    Debug.Log("Found flag check node");
                     string flag_id = requireFlagSO.FlagID;
                     string check = "IsFalse";
-                    FlagManager.Get_Flag_Value(flag_id);
                     if (FlagManager.Get_Flag_Value(flag_id))
                     {
                         check = "IsTrue";
@@ -132,6 +170,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     }
                     break;
                 case DSItemRequirementSO itemRequirementSO:
+                    Debug.Log("dialog was item requirement");
                     string item_output_check = "IsFalse";
                     if (GameplayUtils.instance.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
                     {
@@ -154,7 +193,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     should_close = true;
                     currentDialogSO = closeDialogSO;
                     CloseDialog();
-                    return;
+                    return true;
                 case DSRunEventSO runEventSO:
                     runEvent(runEventSO.EventID);
 
@@ -174,6 +213,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     break;
             }
         }
+        return true;
     }
 
     void runEvent(string event_id)
@@ -189,7 +229,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     void CloseDialog()
     {
-        Debug.Log("Closing dialog");
         DialogMenu.SetActive(false);
         GameplayUtils.instance.CloseMenu();
     }

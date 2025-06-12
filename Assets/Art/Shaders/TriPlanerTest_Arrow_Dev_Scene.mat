@@ -24,17 +24,37 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Side_Texture:
+        m_Texture: {fileID: 2800000, guid: 715af382e751d7540ba69ca51d7a4214, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Side_Texture2:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 715af382e751d7540ba69ca51d7a4214, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Side_Texture3:
+        m_Texture: {fileID: 2800000, guid: 715af382e751d7540ba69ca51d7a4214, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Top_Texture:
+        m_Texture: {fileID: 2800000, guid: 699bdf6be4304094db33dda64e887b3b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Top_Texture3:
+        m_Texture: {fileID: 2800000, guid: ed5cb4c53a84e914f9ec2218c31a0d96, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _HightThreashold: -28.58
+    - _Side_Tiling: 0.1
     m_Colors:
-    - _SideColor: {r: 0.46226412, g: 0.46008366, b: 0.46008366, a: 1}
-    - _SideColor2: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
-    - _TopColor: {r: 0.30588236, g: 0.5176471, b: 0.3019608, a: 1}
+    - _SideColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
+    - _SideColor2: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    - _TopColor: {r: 0.28435156, g: 0.3679245, b: 0.28288534, a: 1}
+    - _TopColor3: {r: 0.64711356, g: 0.6603774, b: 0.5575828, a: 1}
+    - _TopColor4: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+    - _TopTilingV2: {r: 0.1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &67129346199032720
