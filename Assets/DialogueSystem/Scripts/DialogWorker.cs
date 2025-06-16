@@ -55,7 +55,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
         GameplayUtils.instance.OpenMenu();
-        if (GetNextDialog(providedDialog))
+        bool nextDialogResult = GetNextDialog(providedDialog);
+        print(nextDialogResult);
+        if (nextDialogResult)
         {
             ShowDialog();
             textEffect.Refresh();
@@ -75,10 +77,11 @@ public class DialogWorker : MonoBehaviour, IInteractable
             if (dialogueSO.Choices.Count <= 1)
             {
                 tempDialogSO = dialogueSO.Choices[0].NextDialogue;
-            } else if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.StartDialog)
+            }
+            else if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.StartDialog)
             {
-                
-             }
+
+            }
             else
             {
                 if (providedDialog == null)
@@ -97,14 +100,15 @@ public class DialogWorker : MonoBehaviour, IInteractable
         }
         if (providedDialog != null)
         {
-            Debug.Log("Temp dialog was not null");
             tempDialogSO = providedDialog;
         }
         bool breakLoop = false;
         for (int i = 0; i < 1000; i++)
         {
+            print("starting loop number: " + i + " : " + tempDialogSO.GetType());
             if (tempDialogSO is DSDialogueSO)
             {
+                bool continueLoop = false;
                 DSDialogueSO dialogueSO = (DSDialogueSO)tempDialogSO;
                 switch (dialogueSO.DialogueType)
                 {
@@ -123,18 +127,21 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         }
                         currentDialogSO = dialogueSO;
                         breakLoop = true;
+                        print("Found dialog node, setting loop break to true");
                         break;
                     case DS.Enumerations.DSDialogueType.ReturnToStart:
                         DSDialogueSO startNode = (DSDialogueSO)DialogRetriever.GetStarterNode(StartDialogGraphName);
                         // TODO - Change this so it properly loops through all options if it needs to
-                        tempDialogSO = startNode.Choices[0].NextDialogue;
+                        tempDialogSO = startNode;
                         continue;
                     case DS.Enumerations.DSDialogueType.StartDialog:
+                        print("Found Starter Node");
                         for (int o = 0; o < dialogueSO.Choices.Count; o++)
                         {
                             if (DialogRetriever.Choice_is_valid(dialogueSO.Choices[i].NextDialogue, this))
                             {
                                 tempDialogSO = dialogueSO.Choices[i].NextDialogue;
+                                continueLoop = true;
                                 break;
                             }
                             else
@@ -144,7 +151,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         }
                         break;
                 }
-                if (breakLoop) break;
+                if (continueLoop) continue;
+                if (breakLoop)
+                {
+                    print("Breaking loop");
+                    break;
+                }
                 if (dialogueSO.Choices.Count <= 1)
                 {
                     tempDialogSO = dialogueSO.Choices[0].NextDialogue;
@@ -170,7 +182,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     }
                     break;
                 case DSItemRequirementSO itemRequirementSO:
-                    Debug.Log("dialog was item requirement");
                     string item_output_check = "IsFalse";
                     if (GameplayUtils.instance.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
                     {
@@ -235,6 +246,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     void ShowDialog()
     {
+        print("Showing Dialog for: " + currentDialogSO.GetType());
         if (currentDialogSO is DSDialogueSO)
         {
             print("Showing dialog");

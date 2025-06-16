@@ -5,6 +5,7 @@ using System.Linq;
 using DS;
 using DS.Data;
 using System;
+using UnityEngine.Analytics;
 
 
 public class DialogRetriever : MonoBehaviour
@@ -234,9 +235,10 @@ public class DialogRetriever : MonoBehaviour
                     {
                         case DS.Enumerations.DSDialogueType.SingleChoice:
                         case DS.Enumerations.DSDialogueType.MultipleChoice:
+
                             return true;
                         case DS.Enumerations.DSDialogueType.ReturnToStart:
-                            currentChoice = DialogRetriever.GetStarterNode(dialogWorker.StartDialogGraphName);
+                            currentChoice = GetStarterNode(dialogWorker.StartDialogGraphName);
                             break;
 
                     }
@@ -248,15 +250,18 @@ public class DialogRetriever : MonoBehaviour
                     {
                         item_output_check = "IsTrue";
                     }
+                    bool foundNextNodeFromItem = false;
                     foreach (DSDialogueChoiceData item_choice in itemRequirementSO.Choices)
                     {
                         if (item_choice.OutputID == item_output_check)
                         {
                             if (item_choice.NextDialogue == null) return false;
                             currentChoice = item_choice.NextDialogue;
+                            foundNextNodeFromItem = true;
                             break;
                         }
                     }
+                    if (foundNextNodeFromItem) continue;
                     break;
                 case DSRequireFlagSO requireFlagSO:
                     string flag_id = requireFlagSO.FlagID;
@@ -265,15 +270,18 @@ public class DialogRetriever : MonoBehaviour
                     {
                         check = "IsTrue";
                     }
+                    bool foundNextNode = false;
                     foreach (DSDialogueChoiceData flag_choice in requireFlagSO.Choices)
                     {
                         if (flag_choice.OutputID == check)
                         {
                             if (flag_choice.NextDialogue == null) return false;
                             currentChoice = flag_choice.NextDialogue;
+                            foundNextNode = true;
                             break;
                         }
                     }
+                    if (foundNextNode) continue;
                     break;
             }
             var Choices = currentChoice.GetType().GetProperty("Choices", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
