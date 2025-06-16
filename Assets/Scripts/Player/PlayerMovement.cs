@@ -323,10 +323,11 @@ public class PlayerMovement : MonoBehaviour
         CanvasGroup inventory_canvasGroup = Inventroy_Gameobject.GetComponent<CanvasGroup>();
         if(inventory_canvasGroup.alpha <= 0)
         {
+            if (GameplayUtils.instance.GetOpenMenu()) return;
+            GameplayUtils.instance.OpenMenu();
             inventory_canvasGroup.alpha = 1;
             inventory_canvasGroup.blocksRaycasts = true;
             inventory_canvasGroup.interactable = true;
-            GameplayUtils.instance.OpenMenu();
         }
         else
         {

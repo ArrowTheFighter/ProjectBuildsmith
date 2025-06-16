@@ -32,7 +32,6 @@ public class ItemRespawnManager : MonoBehaviour
             {
                 if (respawn_item.Value < Time.time)
                 {
-                    print(respawn_item.Value + " - " + Time.time);
                     respawn_item.Key.SetActive(true);
                     items_to_remove.Add(respawn_item.Key);
                 }

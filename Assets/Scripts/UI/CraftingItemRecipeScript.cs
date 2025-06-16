@@ -57,7 +57,6 @@ public class CraftingItemRecipeScript : MonoBehaviour
         {
             GameplayUtils.instance.remove_items_from_inventory(required_item.item_id,required_item.item_amount);
         }
-        print("Crafted " + item.item_name);
 
 
     }

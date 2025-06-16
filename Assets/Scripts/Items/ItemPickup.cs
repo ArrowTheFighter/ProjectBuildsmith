@@ -25,7 +25,6 @@ public class ItemPickup : MonoBehaviour
             }
             else
             {
-                print(Time.time + respawn_time);
                 ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + respawn_time);
                 gameObject.SetActive(false);
             }

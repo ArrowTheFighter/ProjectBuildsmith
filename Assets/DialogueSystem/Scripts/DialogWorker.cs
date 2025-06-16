@@ -18,9 +18,13 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     [Header("NPC")]
     [SerializeField] string NPC_Name;
+    [SerializeField] string Localized_Table = "NPC";
 
     [Header("Events")]
     [SerializeField] public NPC_Event[] nPC_Events;
+
+    [Header("Localization")]
+    [SerializeField] bool UseLocalization;
 
     ScriptableObject currentDialogSO;
     DSDialogueSO StarterNode;
@@ -54,9 +58,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
     [Button("Show Next Dialog")]
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
-        GameplayUtils.instance.OpenMenu();
+        if (!GameplayUtils.instance.OpenDialogMenu()) return;
         bool nextDialogResult = GetNextDialog(providedDialog);
-        print(nextDialogResult);
         if (nextDialogResult)
         {
             ShowDialog();
@@ -105,7 +108,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
         bool breakLoop = false;
         for (int i = 0; i < 1000; i++)
         {
-            print("starting loop number: " + i + " : " + tempDialogSO.GetType());
             if (tempDialogSO is DSDialogueSO)
             {
                 bool continueLoop = false;
@@ -127,7 +129,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         }
                         currentDialogSO = dialogueSO;
                         breakLoop = true;
-                        print("Found dialog node, setting loop break to true");
                         break;
                     case DS.Enumerations.DSDialogueType.ReturnToStart:
                         DSDialogueSO startNode = (DSDialogueSO)DialogRetriever.GetStarterNode(StartDialogGraphName);
@@ -135,7 +136,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         tempDialogSO = startNode;
                         continue;
                     case DS.Enumerations.DSDialogueType.StartDialog:
-                        print("Found Starter Node");
                         for (int o = 0; o < dialogueSO.Choices.Count; o++)
                         {
                             if (DialogRetriever.Choice_is_valid(dialogueSO.Choices[i].NextDialogue, this))
@@ -154,7 +154,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 if (continueLoop) continue;
                 if (breakLoop)
                 {
-                    print("Breaking loop");
                     break;
                 }
                 if (dialogueSO.Choices.Count <= 1)
@@ -241,20 +240,26 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void CloseDialog()
     {
         DialogMenu.SetActive(false);
-        GameplayUtils.instance.CloseMenu();
+        GameplayUtils.instance.CloseDialogMenu();
     }
 
     void ShowDialog()
     {
-        print("Showing Dialog for: " + currentDialogSO.GetType());
         if (currentDialogSO is DSDialogueSO)
         {
-            print("Showing dialog");
             dialogNameTextBox.text = NPC_Name;
             DialogMenu.SetActive(true);
             dialog_is_open = true;
             DSDialogueSO dialogSO = (DSDialogueSO)currentDialogSO;
-            textBox.text = dialogSO.Text;
+            if (UseLocalization)
+            {
+                string localizedText = LocalizationManager.GetLocalizedString(Localized_Table, dialogSO.LocalizedKey);
+                textBox.text = localizedText;
+            }
+            else
+            {
+                textBox.text = dialogSO.Text;
+            }
         }
     }
 

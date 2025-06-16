@@ -9,6 +9,7 @@ namespace DS.Elements
 {
     using Data.Save;
     using Enumerations;
+    using UnityEngine.Localization.SmartFormat.Utilities;
     using Utilities;
     using Windows;
 
@@ -118,7 +119,12 @@ namespace DS.Elements
 
             Foldout textFoldout = DSElementUtility.CreateFoldout("Dialogue Text");
 
-            TextField localizedKeyTextField = DSElementUtility.CreateTextArea(LocalizedKey, null, callback => LocalizedKey = callback.newValue);
+            TextField localizedKeyTextField = DSElementUtility.CreateTextArea(LocalizedKey, null, callback =>
+            {
+                string newText = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+                LocalizedKey = newText;
+                dialogueNameTextField.value = newText;
+            });
 
             localizedKeyTextField.AddClasses(
                 "ds-node__text-field",

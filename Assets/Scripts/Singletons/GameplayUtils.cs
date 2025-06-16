@@ -25,6 +25,8 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] CanvasGroup black_fade_cover;
     public List<Transform> respawnPoints = new List<Transform>();
     public bool can_use_dialog = true;
+    public bool DialogIsOpen;
+    public bool PauseMenuIsOpen;
     bool open_menu;
     void Awake()
     {
@@ -50,9 +52,30 @@ public class GameplayUtils : MonoBehaviour
         }
     }
 
+    public bool OpenDialogMenu()
+    {
+        if (PauseMenuIsOpen) return false;
+        DialogIsOpen = true;
+        OpenMenu();
+        return true;
+     }
+
+    public bool CloseDialogMenu()
+    {
+        if (PauseMenuIsOpen) return false;
+        DialogIsOpen = false;
+        CloseMenu();
+        return true;
+    }
+
+    public bool GetOpenMenu()
+    {
+        return open_menu;
+     }
+
+
     public void OpenMenu()
     {
-        if (open_menu) return;
         mouseLock_script.Release_Mouse();
         cameraInputComponent.enabled = false;
         playerMovement_script.can_control_player = false;
@@ -114,12 +137,15 @@ public class GameplayUtils : MonoBehaviour
         playerMovement_script.can_control_player = true;
     }
 
-    public void OpenPauseMenu()
+    public bool OpenPauseMenu()
     {
+        if (DialogIsOpen) return false;
+        PauseMenuIsOpen = true;
         OpenMenu();
         PauseMenu.SetActive(true);
         PauseMenu.GetComponent<PauseMenu>().OpenMainScreen();
         Time.timeScale = 0;
+        return true;
     }
 
     public void set_can_use_dialog(bool can_use)
@@ -130,6 +156,7 @@ public class GameplayUtils : MonoBehaviour
 
     public void ClosePauseMenu()
     {
+        PauseMenuIsOpen = false;
         CloseMenu();
         PauseMenu.SetActive(false);
         Time.timeScale = 1;

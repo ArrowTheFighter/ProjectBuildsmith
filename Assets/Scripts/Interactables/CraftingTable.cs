@@ -21,7 +21,6 @@ public class CraftingTable : MonoBehaviour, IInteractable
             Button[] buttons = GetComponentsInChildren<Button>();
             if (buttons.Length > 1)
             {
-                print("selecting button");
                 buttons[1].Select();
             }
             else if (buttons.Length > 0)

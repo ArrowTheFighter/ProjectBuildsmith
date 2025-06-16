@@ -550,7 +550,8 @@ namespace DS.Utilities
             }
             if (key == "LOCAL_DIALOG_KEY" || key == "LOCAL_CHOICE_KEY")
             {
-                Debug.LogWarning("Saved a key with a default value (A key probably needs to be set on a node)");
+                Debug.LogWarning("Key contained a default value, Please update localization key! (This can be ignored if testing without localization)");
+                return previouslySetKeys;
             }
             foreach (var table in tableCollection.StringTables)
             {

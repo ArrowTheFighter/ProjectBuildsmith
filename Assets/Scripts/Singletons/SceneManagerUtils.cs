@@ -20,7 +20,6 @@ public class SceneManagerUtils : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        print(ShowStartCutscene);
     }
 
     public void Set_ShowStartCutscene(bool should_show)
