@@ -329,7 +329,7 @@ public class DialogRetriever : MonoBehaviour
                 }
                 else
                 {
-                    return "cleared_false";
+                    //return "cleared_false";
                 }
 
             case DSRequireFlagSO:
@@ -340,7 +340,7 @@ public class DialogRetriever : MonoBehaviour
                 }
                 else
                 {
-                    return "cleared_false";
+                    //return "cleared_false";
                 }
 
             case DSRunEventSO:

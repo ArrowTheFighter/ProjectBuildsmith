@@ -1,0 +1,56 @@
+using System;
+using UnityEngine;
+
+public class DoubleJumpAbility : PlayerAbility
+{
+    float lastTimeDoubleJumped;
+    int remainingDoubleJumps;
+    int maxDoubleJumps = 1;
+    bool JumpKeyHeld;
+
+    void Start()
+    {
+        remainingDoubleJumps = maxDoubleJumps;   
+    }
+
+    public override void UpdateAbility()
+    {
+        float jumpKeyValue = characterMovement.characterInput.GetJumpInput()? 1: 0;
+        if (!JumpKeyHeld)
+        {
+            if (jumpKeyValue > 0)
+            {
+                JumpKeyHeld = true;
+                if (!characterMovement.grounded && remainingDoubleJumps > 0 && Time.time > lastTimeDoubleJumped)
+                {
+                    if (!characterMovement.readyToJump) return;
+                    if (characterMovement.MovementControlledByAbility) return;
+
+                    characterMovement.onDoubleJump?.Invoke();
+                    remainingDoubleJumps--;
+                    lastTimeDoubleJumped = Time.time + 0.2f;
+
+                    Vector3 velocity = characterMovement.rb.linearVelocity;
+                    velocity = new Vector3(velocity.x, 0, velocity.z);
+                    characterMovement.rb.linearVelocity = velocity;
+
+                    characterMovement.rb.AddForce(Vector3.up * (characterMovement.jumpForce - 3), ForceMode.Impulse);
+                }
+            }
+        }
+        else if (jumpKeyValue <= 0)
+        {
+            JumpKeyHeld = false;
+        }
+        if (characterMovement.grounded && !characterMovement.OnSteepSlope())
+        {
+            remainingDoubleJumps = maxDoubleJumps;
+         }
+        
+    }
+
+    public override void FixedUpdateAbility()
+    {
+        
+    }
+}

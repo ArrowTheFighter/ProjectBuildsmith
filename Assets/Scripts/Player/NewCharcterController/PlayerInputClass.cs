@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,12 +7,15 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
     PlayerInput playerInput;
     Camera mainCamera;
 
+    public event Action OnJump;
+
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
         mainCamera = Camera.main;
-        print(mainCamera.name);
+        playerInput.actions["Jump"].performed += Jump;
     }
+
 
     public Vector3 GetMovementInput()
     {
@@ -27,9 +31,21 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
         return direction;
     }
 
+    void Jump(InputAction.CallbackContext context)
+    {
+        OnJump?.Invoke();
+    }
+
+
+    public bool GetDashInput()
+    {
+        return playerInput.actions["Sprint"].ReadValue<float>() > 0.1f;
+     }
+
     public bool GetJumpInput()
     {
         return playerInput.actions["Jump"].ReadValue<float>() > 0.1f;
     }
+
 
 }

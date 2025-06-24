@@ -1,208 +1,364 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float groundDrag = 2f;
-    [SerializeField] float maxSpeed = 10;
+    public float maxSpeed;
+    public float moveSpeed;
 
-    [Header("Jumping")]
-    [SerializeField] float jumpForce;
-    float jumpCooldown;
-    public Action OnJump;
+    public float groundDrag;
+    public float airDrag;
 
-    [Header("Extra Gravity")]
-    [SerializeField] float extraGravity = 5;
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    [HideInInspector] public bool readyToJump;
+    [HideInInspector] public bool MovementControlledByAbility;
+    bool jumpOveride;
 
+    [Header("Rotation")]
+    [SerializeField] float maxTiltAngle = 25f;
+    [HideInInspector] public float tilt_amount;
+    float current_tilt;
+
+
+    [Header("Gravity")]
+    [SerializeField] float GravityForce;
+    public Vector3 GravityDir;
+
+    [HideInInspector] public float walkSpeed;
+    [HideInInspector] public float sprintSpeed;
+
+    [Header("Slopes")]
+    [SerializeField] float maxSlopeAngle;
+    RaycastHit groundHit;
+    Vector3 groundNormal;
+    RaycastHit steepSlopHit;
+    RaycastHit slopeHit;
+    bool exitingSlope;
+
+    [Header("Input")]
+    [HideInInspector] public ICharacterInput characterInput;
+    [HideInInspector] public PlayerInput playerInput;
 
     [Header("Ground Check")]
-    bool onGround;
-    [SerializeField] float groundCheckDistance;
-    [SerializeField] LayerMask groundCheckIgnoreLayers;
-    RaycastHit groundCheckHit;
+    public float playerHeight;
+    public float playerRadius;
+    public float groundCheckDistance = 0.5f;
+    public float secondaryGroundCheckDistance = 0.6f;
+    public float groundSnapRayDistance;
+    public LayerMask IgnoreGroundLayerMask;
+    [HideInInspector] public bool grounded;
 
-    //Rotation
-    [Header("Rotation")]
-    [SerializeField] float TiltSpeed;
-    [SerializeField] float RotationSpeed = 0.2f;
-    float tiltAmount;
-    float currentTilt;
+    public Transform orientation;
 
-    [Header("Relations")]
-    [SerializeField] Transform visuals;
-    [SerializeField] Collider CharacterCollider;
-    //Input
-    ICharacterInput characterInput;
-    Rigidbody rb;
+    Vector3 ControllerInput;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    Vector3 moveDirection;
+
+    [HideInInspector] public Rigidbody rb;
+
+    List<PlayerAbility> playerAbilities = new List<PlayerAbility>();
+
+    [Header("DEBUG")]
+    [SerializeField] int TargetFPS = 60;
+
+    [Header("Ability Actions")]
+    public Action onDoubleJump;
+    public Action OnJump;
+    public Action OnDash;
+    public Action OnDashStop;
+
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
         characterInput = GetComponent<ICharacterInput>();
+        characterInput.OnJump += Jump;
+        GravityDir = Vector3.down;
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
 
-        if (characterInput == null)
+        readyToJump = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        //playerInput = GetComponent<PlayerInput>();
+        //playerInput.actions["Jump"].performed += Jump;
+        AddAbility<DoubleJumpAbility>();
+        AddAbility<DashAbility>();
+    }
+
+    private void Update()
+    {
+        //DEBUG
+        Application.targetFrameRate = TargetFPS;
+
+
+        // Ground check
+        GroundCheck();
+        // Handle Input
+        MyInput();
+
+        if (!MovementControlledByAbility)
         {
-            Debug.LogError(gameObject.name + " Doesnt have a ICharacterInput component. Please add one.", gameObject);
+            // handle drag
+            if (grounded)
+                rb.linearDamping = groundDrag;
+            else
+                rb.linearDamping = 0;
+        }
+
+        foreach (PlayerAbility ability in playerAbilities)
+        {
+            ability.UpdateAbility();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        MoveCharacter();
-
-        RotateCharacter(rb.linearVelocity);
-        TiltPlayer();
-
-        onGround = OnGround();
-        ApplyDrag();
-        Jump();
-        ExtraGravity();
-        SpeedControl();
+        if (!MovementControlledByAbility)
+        {
+            ApplyGravity();
+            MovePlayer();
+            RotateOrientation();
+            SnapToGround();
+            // Set max speed
+            SpeedControl();
+        }
+        UpdateTilt();
+        foreach (PlayerAbility ability in playerAbilities)
+        {
+            ability.FixedUpdateAbility();
+        }
     }
 
-    void ApplyDrag()
+    void AddAbility<T>() where T : PlayerAbility
     {
-        if (onGround)
-        {
-            Vector3 horVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            float speed = horVel.magnitude;
-            float dragAmount = groundDrag * Time.deltaTime;
 
-            if (speed > 0)
+        var newAbility = gameObject.AddComponent<T>();
+        newAbility.Initialize(this);
+        playerAbilities.Add(newAbility);
+    }
+
+    void GroundCheck()
+    {
+        float distance = groundCheckDistance;
+        if (rb.linearVelocity.y < -4) distance += 0.3f;
+        grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask);
+
+        if (grounded && OnSteepSlope())
+        {
+            RaycastHit raycastHit;
+            if (Physics.Raycast(transform.position + Vector3.down * playerHeight * 0.25f, Vector3.down, out raycastHit, secondaryGroundCheckDistance, ~IgnoreGroundLayerMask))
             {
-                speed = Mathf.Max(0f, speed - dragAmount);
-                horVel = horVel.normalized * speed;
+                if (raycastHit.normal != null)
+                {
+                    float angle = Vector3.Angle(Vector3.up, groundHit.normal);
+                    if (angle < maxSlopeAngle + 30 && angle != 0)
+                    {
+                        grounded = true;
+                        GravityDir = Vector3.down;
+                        jumpOveride = true;
+                        return;
+                    }
+                }
             }
-            rb.linearVelocity = new Vector3(horVel.x, rb.linearVelocity.y, horVel.z);
+            grounded = false;
+            GravityDir = Vector3.down;
+            return;
+        }
+        if (grounded && !exitingSlope)
+        {
+            if (GravityDir == -groundHit.normal.normalized) return;
+            Vector3 oldGravityDir = GravityDir;
+            GravityDir = -groundHit.normal.normalized;
+            Vector3 velocity = rb.linearVelocity;
+
+            Vector3 VelocityAlongOldGravity = Vector3.Project(velocity, oldGravityDir);
+            Vector3 VelocityWithoutOldGravity = velocity - VelocityAlongOldGravity;
+
+            float gravityMag = Vector3.Dot(velocity, oldGravityDir);
+            Vector3 VelocityAlongNewGravity = GravityDir * gravityMag;
+
+            Vector3 newVelocity = VelocityWithoutOldGravity + VelocityAlongNewGravity;
+
+            rb.linearVelocity = newVelocity;
         }
         else
         {
-            rb.linearDamping = 0;
+            GravityDir = Vector3.down;
         }
+        jumpOveride = false;
     }
 
-    void MoveCharacter()
+    Vector3 GetSurfaceNormal(Vector3 origin, Vector3 direction, float radius, float distance, LayerMask layerMask)
     {
-        Vector3 moveInput = characterInput.GetMovementInput();
-        rb.AddForce(moveInput * moveSpeed * 10 * Time.deltaTime, ForceMode.Force);
+        RaycastHit tempHit;
+        if (Physics.Raycast(origin, direction, out tempHit, distance + radius, layerMask)) // Add radius to distance for safety
+        {
+            return tempHit.normal;
+        }
+        return Vector3.up; // Return up as a default if raycast fails
     }
 
-    void RotateCharacter(Vector3 direction)
+    void RotateOrientation()
     {
         Quaternion old_rotation = transform.rotation;
         Vector3 old_forward = transform.forward;
-        Vector3 horizontalVelocity = new Vector3(direction.x, 0, direction.z);
-        Quaternion newRotation = Quaternion.identity;
-        if (horizontalVelocity.magnitude <= 0.1f)
+        Vector3 horizontalVelocity = new Vector3(characterInput.GetMovementInput().x, 0, characterInput.GetMovementInput().z);
+        if (horizontalVelocity == Vector3.zero)
         {
-            tiltAmount = 0;
+            tilt_amount = 0;
             return;
         }
-        Quaternion forwardTarget = Quaternion.LookRotation(horizontalVelocity.normalized, Vector3.up);
+        Quaternion forwardTarget = Quaternion.LookRotation(horizontalVelocity, Vector3.up);
         if (forwardTarget == Quaternion.identity && horizontalVelocity.magnitude < 0.1f)
         {
-            tiltAmount = 0;
+            tilt_amount = 0;
             return;
         }
-        if (forwardTarget != Quaternion.identity && horizontalVelocity.magnitude > 0.1f)
-        {
-            print("rotating player");
-            newRotation = Quaternion.Slerp(transform.rotation, forwardTarget, RotationSpeed);
-            rb.MoveRotation(newRotation);
-        }
+        transform.rotation = Quaternion.Slerp(transform.rotation, forwardTarget, 0.1f);
         int rot_direction = 1;
-        if (Vector3.Cross(old_forward, newRotation * Vector3.forward).y > 0)
+        if (Vector3.Cross(old_forward, transform.forward).y > 0)
         {
             rot_direction = -1;
         }
-        tiltAmount = Mathf.Clamp(Quaternion.Angle(old_rotation, newRotation) * 3 * rot_direction, -25f, 25f);
+        tilt_amount = Quaternion.Angle(old_rotation, transform.rotation) * 3 * rot_direction;
+
+
     }
 
-    void TiltPlayer()
+    void UpdateTilt()
     {
-        currentTilt = Mathf.Lerp(currentTilt, tiltAmount, TiltSpeed);
-        visuals.eulerAngles = new Vector3(visuals.eulerAngles.x, visuals.eulerAngles.y, currentTilt);
+        current_tilt = Mathf.Lerp(current_tilt, Mathf.Clamp(tilt_amount, -maxTiltAngle, maxTiltAngle), 0.1f);
+        orientation.eulerAngles = new Vector3(orientation.eulerAngles.x, orientation.eulerAngles.y, current_tilt);
     }
 
-    bool OnGround()
+    public void ApplyGravity()
     {
-        switch (CharacterCollider)
+        rb.AddForce(GravityDir * GravityForce);
+    }
+
+    private void MyInput()
+    {
+        ControllerInput = characterInput.GetMovementInput();
+        //ControllerInput = playerInput.actions["Move"].ReadValue<Vector2>();
+
+    }
+
+    private void MovePlayer()
+    {
+        // calculate movement direction
+        Debug.DrawRay(transform.position, orientation.forward * 2, Color.red);
+        moveDirection = ControllerInput;
+
+        // on a walkable slope
+        if (OnSlope() && !exitingSlope)
         {
-            case CapsuleCollider capsuleCollider:
-                if (Physics.Raycast(transform.position,
-                        Vector3.down,
-                        out groundCheckHit,
-                        groundCheckDistance,
-                        ~groundCheckIgnoreLayers)
-                        ) return true;
-                // if (Physics.SphereCast(transform.position,
-                //     capsuleCollider.radius,
-                //     Vector3.down,
-                //     out groundCheckHit,
-                //     groundCheckDistance,
-                //     ~groundCheckIgnoreLayers)
-                //     ) return true;
-                break;
-            default:
-                Debug.LogError("Collider Type was not found! Please update CharacterMovement Script", gameObject);
-                break;
+            rb.AddForce(GetSlopeMoveDirection() * moveSpeed, ForceMode.Force);
         }
-        return false;
+        // on a steep slope
+        else if (OnSteepSlope() && !exitingSlope)
+        {
+            Vector3 wallNormal = new Vector3(groundHit.normal.x, 0, groundHit.normal.z);
+
+            Vector3 moveInput = moveDirection.normalized;
+            if (Vector3.Dot(moveInput, wallNormal) < 0f)
+            {
+                moveInput -= Vector3.Project(moveInput, wallNormal);
+            }
+            rb.AddForce(moveInput * moveSpeed, ForceMode.Force);
+        }
+
+        // on ground
+        else if (grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+
+        // in air
+        else if (!grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * airMultiplier, ForceMode.Force);
+
     }
 
-    void Jump()
+    private void SpeedControl()
     {
 
-        if (characterInput.GetJumpInput())
+        if (OnSlope() && !exitingSlope)
         {
-            print("Charater tryig to jump");
-            if (Time.time < jumpCooldown) return;
-            if (onGround)
+            if (rb.linearVelocity.magnitude > maxSpeed)
             {
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                jumpCooldown = Time.time + 0.1f;
-                OnJump?.Invoke();
+                rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
             }
         }
+        else
+        {
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+            // limit velocity if needed
+            if (flatVel.magnitude > maxSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * maxSpeed;
+                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+            }
+        }
+
     }
 
-    void ExtraGravity()
+    private void Jump()
     {
-        if (!onGround)
+        if (!jumpOveride)
         {
-            rb.AddForce(Vector3.down * extraGravity * Time.deltaTime, ForceMode.Force);
+            if (!grounded) return;
+            if (OnSteepSlope()) return;
+        }
+        if (!readyToJump) return;
+        OnJump?.Invoke();
+        readyToJump = false;
+        GravityDir = Vector3.down;
+        exitingSlope = true;
+        // reset y velocity
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        Invoke(nameof(ResetJump), jumpCooldown);
+    }
+    private void ResetJump()
+    {
+        exitingSlope = false;
+        readyToJump = true;
+    }
+
+    bool OnSlope()
+    {
+        if (groundHit.normal == null) return false;
+        float angle = Vector3.Angle(Vector3.up, groundHit.normal);
+        return angle < maxSlopeAngle && angle != 0;
+    }
+
+    public bool OnSteepSlope()
+    {
+        if (groundHit.normal == null) return false;
+        float angle = Vector3.Angle(Vector3.up, groundHit.normal);
+        return angle > maxSlopeAngle && angle + 1f != 0;
+
+    }
+
+    void SnapToGround()
+    {
+        if (OnSlope() && !exitingSlope)
+        {
+            RaycastHit raycastHit;
+            if (Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, GravityDir, out raycastHit, groundSnapRayDistance, ~IgnoreGroundLayerMask))
+            {
+                rb.MovePosition(transform.position + GravityDir * raycastHit.distance);
+            }
+
         }
     }
 
-    void SpeedControl()
+    Vector3 GetSlopeMoveDirection()
     {
-        Vector3 horVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-
-        if (horVelocity.magnitude > maxSpeed)
-        {
-            Vector3 limitedVel = horVelocity.normalized * maxSpeed;
-            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
-        }
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
-
-    public Vector3 GetVelocity()
-    {
-        return rb.linearVelocity;
-    }
-
-    public bool GetOnGround()
-    {
-        return onGround;
-    }
-
-    public float GetMaxSpeed()
-    {
-        return maxSpeed;
-     }
 }
