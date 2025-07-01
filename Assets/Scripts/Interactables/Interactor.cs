@@ -16,7 +16,7 @@ public class Interactor : MonoBehaviour
 
     private void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GameplayInput.instance.playerInput;
         playerInput.actions["Interact"].performed += Interact;
     }
 

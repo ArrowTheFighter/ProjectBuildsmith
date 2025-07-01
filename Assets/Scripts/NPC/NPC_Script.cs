@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+[Obsolete]
 public class NPC_Script : MonoBehaviour, IInteractable
 {
     [SerializeField] string NPC_Name;
@@ -62,27 +63,27 @@ public class NPC_Script : MonoBehaviour, IInteractable
             return;
         }
         if (open_dialog.flag_requirement != null && open_dialog.flag_requirement != "")
+        {
+            bool flag_check = FlagManager.Get_Flag_Value(open_dialog.flag_requirement);
+            if (!flag_check)
             {
-                bool flag_check = FlagManager.Get_Flag_Value(open_dialog.flag_requirement);
-                if (!flag_check)
+                if (open_dialog.no_flag_reply != null && open_dialog.no_flag_reply != "")
                 {
-                    if (open_dialog.no_flag_reply != null && open_dialog.no_flag_reply != "")
-                    {
-                        Set_Text_Box_Localized(open_dialog.no_flag_reply);
-                        DialogManager.instance.Clear_choices();
-                        close_on_next_interact = true;
-                        current_dialog_struct = open_dialog;
-                        return;
-                    }
-                    else
-                    {
-                        open_dialog = new dialog_struct();
-                        DialogManager.instance.Close_Dialog();
-                        close_on_next_interact = false;
-                        return;
-                    }
+                    Set_Text_Box_Localized(open_dialog.no_flag_reply);
+                    DialogManager.instance.Clear_choices();
+                    close_on_next_interact = true;
+                    current_dialog_struct = open_dialog;
+                    return;
+                }
+                else
+                {
+                    open_dialog = new dialog_struct();
+                    DialogManager.instance.Close_Dialog();
+                    close_on_next_interact = false;
+                    return;
                 }
             }
+        }
         if (current_dialog_struct.item_requirement != null && current_dialog_struct.item_requirement != "")
         {
             int current_item_amount = GameplayUtils.instance.get_item_holding_amount(current_dialog_struct.item_requirement);
@@ -191,8 +192,8 @@ public class NPC_Script : MonoBehaviour, IInteractable
         {
             CloseDialog();
 
-         }
-     }
+        }
+    }
 }
 
 [Serializable]

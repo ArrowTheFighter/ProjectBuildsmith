@@ -14,13 +14,15 @@ public class CameraManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GameplayInput.instance.playerInput;
+        playerInput.onControlsChanged += OnControlsChanged;
     }
 
     // Update is called once per frame
-    void Update()
+    void OnControlsChanged(PlayerInput input)
     {
-        if(playerInput.currentControlScheme == "Keyboard&Mouse")
+        string currentScheme = input.currentControlScheme;
+        if (currentScheme == "Keyboard&Mouse")
         {
             foreach (var c in axisController.Controllers)
             {
@@ -28,7 +30,7 @@ public class CameraManager : MonoBehaviour
                 {
                     c.Input.Gain = base_speed_X * X_speed_adjustment * controller_percentage;
                     continue;
-                } 
+                }
                 if (c.Name == "Look Orbit Y")
                 {
                     c.Input.Gain = base_speed_Y * Y_speed_adjustment * controller_percentage;
@@ -36,7 +38,8 @@ public class CameraManager : MonoBehaviour
                 }
             }
 
-        }else if(playerInput.currentControlScheme == "Gamepad")
+        }
+        else if (currentScheme == "Gamepad")
         {
             foreach (var c in axisController.Controllers)
             {

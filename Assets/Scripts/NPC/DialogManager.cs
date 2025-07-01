@@ -72,6 +72,7 @@ public class DialogManager : MonoBehaviour
 
     public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker)
     {
+        UIInputHandler.instance.ClosedMenu();
         for (int i = 0; i < Choices_Parent_Transform.childCount; i++)
         {
             Choices_Parent_Transform.GetChild(i).gameObject.SetActive(false);
@@ -85,14 +86,15 @@ public class DialogManager : MonoBehaviour
                 continue;
             }
 
-            bool validChoice = DialogRetriever.Choice_is_valid(data[i].NextDialogue,dialogWorker);
+            bool validChoice = DialogRetriever.Choice_is_valid(data[i].NextDialogue, dialogWorker);
             if (!validChoice) continue;
             //If node is disableChoice then we should contine
 
             Transform choice = Choices_Parent_Transform.GetChild(i);
             if (!button_is_selected)
             {
-                choice.GetComponent<Button>().Select();
+                //choice.GetComponent<Button>().Select();
+                UIInputHandler.instance.defaultButton = choice.gameObject;
                 button_is_selected = true;
             }
             choice.gameObject.SetActive(true);
@@ -101,6 +103,7 @@ public class DialogManager : MonoBehaviour
             ChoiceButton choiceButton = choice.GetComponentInChildren<ChoiceButton>();
             choiceButton.dialogueChoiceData = data[i];
             choiceButton.dialogWorker = dialogWorker;
+            UIInputHandler.instance.OpenedMenu();
         }
     }
 
@@ -177,6 +180,7 @@ public class DialogManager : MonoBehaviour
     public void Clear_choices()
     {
         Choices_Parent_Transform.gameObject.SetActive(false);
+        UIInputHandler.instance.ClosedMenu();
     }
 
     public void Close_Dialog()

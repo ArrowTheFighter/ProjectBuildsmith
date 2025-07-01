@@ -35,9 +35,7 @@ public class PlayerMovement : MonoBehaviour
     float speed_multiplier = 1;
     [SerializeField] float jumpHeight = 3.0f;
     [SerializeField] float gravityValue = -9.81f;
-    [SerializeField] float slideFriction = 0.3f;
     [SerializeField] float no_clip_speed = 20;
-    [SerializeField] float sprint_speed_multiplier = 1.5f;
     [SerializeField] bool can_dive;
 
     Vector3 current_move_direction;

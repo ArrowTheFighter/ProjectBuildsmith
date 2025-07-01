@@ -7,6 +7,7 @@ using EasyTextEffects;
 using System;
 using UnityEngine.Events;
 using UnityEditor.Localization.Plugins.XLIFF.V20;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {
@@ -35,8 +36,10 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public item_requirement[] item_Requirements;
     public item_requirement[] required_items => item_Requirements;
 
-    bool should_close;
-    bool dialog_is_open;
+    bool isActive;
+
+    float interactCooldown;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -45,12 +48,20 @@ public class DialogWorker : MonoBehaviour, IInteractable
         //currentDialogSO = DialogRetriever.GetDialogDataByName(StartDialogGraphName, startDialogName);
         //currentDialogSO = DialogRetriever.GetNextDialogSO(StartDialogGraphName,StarterNode);
         //ShowDialog();
+        GameplayInput.instance.playerInput.actions["Submit"].performed += context => { ActiveAndInteract(); };
     }
 
     public bool Interact(Interactor interactor)
     {
-        GetAndShowNextDialog();
+        if (!isActive) isActive = true;
+        ActiveAndInteract();
         return true;
+    }
+
+    public void ActiveAndInteract()
+    {
+        if (!isActive) return;
+        GetAndShowNextDialog();
     }
 
 
@@ -58,6 +69,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     [Button("Show Next Dialog")]
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
+        if (interactCooldown > Time.time) return;
         if (!GameplayUtils.instance.OpenDialogMenu()) return;
         bool nextDialogResult = GetNextDialog(providedDialog);
         if (nextDialogResult)
@@ -65,6 +77,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
             ShowDialog();
             textEffect.Refresh();
             textEffect.StartManualEffects();
+            interactCooldown = Time.time + 0.2f;
         }
 
     }
@@ -115,6 +128,11 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 switch (dialogueSO.DialogueType)
                 {
                     case DS.Enumerations.DSDialogueType.MultipleChoice:
+                        if (currentDialogSO == dialogueSO)
+                        {
+                            print("on same multi");
+                            return false;
+                         }
                         if (dialogueSO.Choices.Count > 0)
                         {
                             DialogManager.instance.Setup_Choices(dialogueSO.Choices, this);
@@ -200,7 +218,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     }
                     break;
                 case DSCloseDialogSO closeDialogSO:
-                    should_close = true;
                     currentDialogSO = closeDialogSO;
                     CloseDialog();
                     return true;
@@ -239,6 +256,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     void CloseDialog()
     {
+        isActive = false;
         DialogMenu.SetActive(false);
         GameplayUtils.instance.CloseDialogMenu();
     }
@@ -249,7 +267,6 @@ public class DialogWorker : MonoBehaviour, IInteractable
         {
             dialogNameTextBox.text = NPC_Name;
             DialogMenu.SetActive(true);
-            dialog_is_open = true;
             DSDialogueSO dialogSO = (DSDialogueSO)currentDialogSO;
             if (UseLocalization)
             {

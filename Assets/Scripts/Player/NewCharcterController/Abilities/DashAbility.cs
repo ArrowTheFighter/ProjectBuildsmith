@@ -3,7 +3,6 @@ using UnityEngine;
 public class DashAbility : PlayerAbility
 {
     bool canDash;
-    bool dashPressed;
     bool isDashing;
     Vector3 dashDirection;
     float lastTimeDashed;
@@ -62,10 +61,6 @@ public class DashAbility : PlayerAbility
         {
             Dash();
         }
-        else if (dashInputValue <= 0)
-        {
-            dashPressed = false;
-        }
     }
 
     void Dash()
@@ -75,7 +70,6 @@ public class DashAbility : PlayerAbility
         dashDirection = characterMovement.orientation.forward;
         isDashing = true;
         characterMovement.MovementControlledByAbility = true;
-        dashPressed = true;
         canDash = false;
 
         Vector3 velocity = characterMovement.rb.linearVelocity;

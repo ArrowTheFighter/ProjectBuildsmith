@@ -8,11 +8,14 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
     Camera mainCamera;
 
     public event Action OnJump;
+    GameplayInput gameplayInput;
 
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        gameplayInput = GameplayInput.instance;
+        playerInput = gameplayInput.playerInput;
         mainCamera = Camera.main;
+       
         playerInput.actions["Jump"].performed += Jump;
     }
 

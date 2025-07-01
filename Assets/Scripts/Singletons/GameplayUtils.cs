@@ -10,9 +10,11 @@ public class GameplayUtils : MonoBehaviour
 {
     public static GameplayUtils instance;
 
+    [SerializeField] Transform PlayerTransform;
     [SerializeField] MouseLock mouseLock_script;
-    CinemachineInputAxisController cameraInputComponent;
+    [SerializeField] CinemachineInputAxisController cameraInputComponent;
     [SerializeField] public PlayerMovement playerMovement_script;
+    [SerializeField] public InventoryManager inventoryManager;
     [SerializeField] InventoryItems inventoryItems;
     [SerializeField] GameObject inventory;
     [SerializeField] GameObject PauseMenu;
@@ -39,7 +41,9 @@ public class GameplayUtils : MonoBehaviour
 
     void Start()
     {
-        cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
+        // -- Reset Flags --
+        FlagManager.wipe_flag_list();
+        //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
         AudioListener.volume = Main_volume_slider.value;
         if (SceneManagerUtils.instance != null)
         {
@@ -58,7 +62,7 @@ public class GameplayUtils : MonoBehaviour
         DialogIsOpen = true;
         OpenMenu();
         return true;
-     }
+    }
 
     public bool CloseDialogMenu()
     {
@@ -71,24 +75,28 @@ public class GameplayUtils : MonoBehaviour
     public bool GetOpenMenu()
     {
         return open_menu;
-     }
+    }
 
 
     public void OpenMenu()
     {
         mouseLock_script.Release_Mouse();
         cameraInputComponent.enabled = false;
+        GameplayInput.instance.SwitchToUI();
         playerMovement_script.can_control_player = false;
         open_menu = true;
+        UIInputHandler.instance.OpenedMenu();
     }
 
     public void CloseMenu()
     {
         if (!open_menu) return;
         mouseLock_script.Capture_Mouse();
+        GameplayInput.instance.SwitchToGameplay();
         cameraInputComponent.enabled = true;
         playerMovement_script.can_control_player = true;
         open_menu = false;
+        UIInputHandler.instance.ClosedMenu();
     }
 
     public void Freeze_Player(bool release_mouse = false)
@@ -242,26 +250,32 @@ public class GameplayUtils : MonoBehaviour
 
     public int get_item_holding_amount(string item_id)
     {
-        return inventoryItems.GetItemAmount(item_id);
+        //return inventoryItems.GetItemAmount(item_id);
+        return inventoryManager.getAmountOfItemByID(item_id);
     }
 
-    public void add_items_to_inventory(string item_id, int amount, bool show_notif = true)
+    public bool add_items_to_inventory(string item_id, int amount, bool show_notif = true)
     {
-        inventoryItems.AddToItemAmount(item_id, amount);
+        //inventoryItems.AddToItemAmount(item_id, amount);
+        ItemData itemData = GetItemDataByID(item_id);
+        if (!inventoryManager.AddItemToInventory(itemData, amount)) return false;
         if (show_notif)
         {
-            ItemData itemData = GetItemDataByID(item_id);
             itemPickupNotifcationScript.ShowItem(itemData, amount);
         }
+        // TODO FIX THIS
         if (item_id == "gold_coin")
         {
             SpinningCoin.instance.SpeedUp();
         }
+        return true;
     }
 
+    //TODO
     public void remove_items_from_inventory(string item_id, int amount)
     {
-        add_items_to_inventory(item_id, -amount, false);
+        //add_items_to_inventory(item_id, -amount, false);
+        inventoryManager.removeItemsByID(item_id, amount);
     }
 
     public void Play_Audio_On_Player(int audio_id, float volume = 1f, float pitch = 1f)
@@ -272,5 +286,23 @@ public class GameplayUtils : MonoBehaviour
     public void ShowCustomNotif(string custom_text)
     {
         itemPickupNotifcationScript.ShowCustomText(custom_text);
+    }
+
+    public void PlayerDropItem(string item_id, int item_amount)
+    {
+        ItemData itemData = GetItemDataByID(item_id);
+        print(itemData);
+        GameObject spawned_item = Instantiate(itemData.item_pickup_object, PlayerTransform.position + Vector3.up * 1.5f + PlayerTransform.forward, Quaternion.identity);
+        spawned_item.GetComponent<ItemPickup>().amount = item_amount;
+        Rigidbody spawned_item_rigidbody = spawned_item.GetComponent<Rigidbody>();
+        spawned_item_rigidbody.useGravity = true;
+        Vector3 direction = PlayerTransform.forward;
+        direction = new Vector3(direction.x + Random.Range(-0.25f, 0.25f), 1f, direction.z + Random.Range(-0.25f, 0.25f));
+        float spawn_force = 5;
+        spawned_item_rigidbody.linearVelocity = direction.normalized * spawn_force;
+        if (GetComponent<AudioSource>() != null)
+        {
+            //GetComponent<AudioSource>().PlayOneShot(finished_sound, finished_sound_volume);
+        }
     }
 }
