@@ -52,7 +52,7 @@ public class InventoryManager : MonoBehaviour
         if (force || MouseSlot.inventorySlot.isEmpty)
         {
             MouseSlot.inventorySlot.isEmpty = false;
-            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount);
+            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount,itemData.MaxStackSize);
             MouseSlot.inventorySlot.inventoryItemStack = newItemStack;
             MouseSlot.inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image);
         }
@@ -64,40 +64,77 @@ public class InventoryManager : MonoBehaviour
         {
             print("adding item to slot");
             inventorySlot.isEmpty = false;
-            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount);
+            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount,itemData.MaxStackSize);
             print("new itemStack size is: " + newItemStack.Amount);
             inventorySlot.inventoryItemStack = newItemStack;
             inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image);
         }
     }
 
-    public bool AddItemToInventory(ItemData itemData, int amount = 1)
+    public int AddItemToInventory(ItemData itemData, int amount = 1)
     {
+        int remainingAmount = amount;
         InventorySlot inventorySlot = GetSlotWithItemButNotFull(itemData.item_id);
         if (inventorySlot != null)
         {
-            int newAmount = amount + inventorySlot.inventoryItemStack.Amount;
-            inventorySlot.inventoryItemStack.Amount = newAmount;
-            inventorySlot.inventorySlotComponent.SetSlotFilled(newAmount);
-            //inventorySlot.inventorySlotComponent.setSlotAmountText(newAmount);
-            return true;
+            print("trying to add items to an exisiting slot");
+            for (int i = 0; i < InventorySlotsParent.transform.childCount; i++)
+            {
+                int amountCanAdd = inventorySlot.inventoryItemStack.MaxStackSize - inventorySlot.inventoryItemStack.Amount;
+                print("Amount we can add = " + amountCanAdd);
+                // -- Remaining items can fit into the found slot --
+                if (remainingAmount <= amountCanAdd)
+                {
+                    int finalAmount = remainingAmount + inventorySlot.inventoryItemStack.Amount;
+                    inventorySlot.inventoryItemStack.Amount = finalAmount;
+                    inventorySlot.inventorySlotComponent.SetSlotFilled(finalAmount);
+                    print("added all the items to an exisiting slot");
+                    return 0;
+                }
+                // -- Only some of the items can fit into the slot --
+                else
+                {
+                    int newAmount = inventorySlot.inventoryItemStack.Amount + amountCanAdd;
+                    remainingAmount -= amountCanAdd;
+                    inventorySlot.inventoryItemStack.Amount = newAmount;
+                    inventorySlot.inventorySlotComponent.SetSlotFilled(newAmount);
+                    print("adding some items to a slot");
+                }
+                inventorySlot = GetSlotWithItemButNotFull(itemData.item_id);
+                if (inventorySlot == null) break;
+            }
+            if (remainingAmount <= 0)
+            {
+                return 0;
+             }
         }
 
-        // --- There isn't a slot we can add to ---
+        // --- There isn't an exisiting stack of items we can add to ---
 
-        inventorySlot = GetFirstEmptySlot();
-        // If there are no empty slots
-        if (inventorySlot == null)
+        for (int i = 0; i < InventorySlotsParent.transform.childCount; i++)
         {
-            return false;
-        }
+            // -- Get the next empty slot --
+            inventorySlot = GetFirstEmptySlot();
+            // If there are not empty slots then break from the loop
+            if (inventorySlot == null)
+            {
+                break;
+            }
 
-        //Adding item to an empty slot
-        inventorySlot.isEmpty = false;
-        InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount);
-        inventorySlot.inventoryItemStack = newItemStack;
-        inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image);
-        return true;
+            // -- Add the correct amount to the slot --
+            int amountToAdd = Math.Min(remainingAmount, itemData.MaxStackSize);
+            print("adding items to empty slot: " + amountToAdd);
+            remainingAmount -= amountToAdd;
+            inventorySlot.isEmpty = false;
+            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amountToAdd, itemData.MaxStackSize);
+            inventorySlot.inventoryItemStack = newItemStack;
+            inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amountToAdd, itemData.item_ui_image);
+
+            if (remainingAmount <= 0) break;
+           
+
+        }
+        return remainingAmount;
     }
 
     public InventorySlot GetFirstEmptySlot()
@@ -233,7 +270,7 @@ public class InventoryItemStack
         Amount = 1;
     }
 
-    public InventoryItemStack(string _id, string _name, int _amount, int _maxStack = 99)
+    public InventoryItemStack(string _id, string _name, int _amount, int _maxStack = 5)
     {
         ID = _id;
         Name = _name;

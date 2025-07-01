@@ -23,18 +23,27 @@ public class ItemPickup : MonoBehaviour
         if ((player_layer.value & (1 << other.gameObject.layer)) != 0)
         {
             if (cantPickupTime > Time.time) return;
-            if (!GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification)) return;
+            int loosePieces = GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification);
+            if (loosePieces == -1) return;
             GameplayUtils.instance.Play_Audio_On_Player(2, 0.5f);
-
-            if (respawn_time <= 0)
+            if (loosePieces > 0)
             {
-                Destroy(gameObject);
+                amount = loosePieces;
             }
             else
             {
-                ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + respawn_time);
-                gameObject.SetActive(false);
+                if (respawn_time <= 0)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + respawn_time);
+                    gameObject.SetActive(false);
+                }
             }
+
+            
         }
     }
 

@@ -113,6 +113,14 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                             GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, leftOver, true);
                         }
                     }
+                    else
+                    {
+                        RemoveItemFromSlot(false);
+                        GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+
+                        GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, mouseStack.Amount);
+                        GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(slotItemData, slotStack.Amount);
+                    }
 
                     return;
                 }

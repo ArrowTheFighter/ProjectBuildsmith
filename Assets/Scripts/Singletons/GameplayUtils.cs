@@ -254,11 +254,12 @@ public class GameplayUtils : MonoBehaviour
         return inventoryManager.getAmountOfItemByID(item_id);
     }
 
-    public bool add_items_to_inventory(string item_id, int amount, bool show_notif = true)
+    public int add_items_to_inventory(string item_id, int amount, bool show_notif = true)
     {
         //inventoryItems.AddToItemAmount(item_id, amount);
         ItemData itemData = GetItemDataByID(item_id);
-        if (!inventoryManager.AddItemToInventory(itemData, amount)) return false;
+        int loosePiece = inventoryManager.AddItemToInventory(itemData, amount);
+        if (loosePiece >= amount) return -1;
         if (show_notif)
         {
             itemPickupNotifcationScript.ShowItem(itemData, amount);
@@ -268,7 +269,7 @@ public class GameplayUtils : MonoBehaviour
         {
             SpinningCoin.instance.SpeedUp();
         }
-        return true;
+        return loosePiece;
     }
 
     //TODO
