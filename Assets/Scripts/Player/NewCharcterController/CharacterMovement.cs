@@ -12,6 +12,7 @@ public class CharacterMovement : MonoBehaviour
 
     public float groundDrag;
     public float airDrag;
+    float horizontalAirDrag = 5f;
 
     public float jumpForce;
     public float jumpCooldown;
@@ -62,7 +63,9 @@ public class CharacterMovement : MonoBehaviour
 
     [HideInInspector] public Rigidbody rb;
 
-    List<PlayerAbility> playerAbilities = new List<PlayerAbility>();
+    [HideInInspector] public List<PlayerAbility> playerAbilities = new List<PlayerAbility>();
+
+    [HideInInspector] public PlayerAnimationController playerAnimationController;
 
     [Header("DEBUG")]
     [SerializeField] int TargetFPS = 60;
@@ -72,9 +75,11 @@ public class CharacterMovement : MonoBehaviour
     public Action OnJump;
     public Action OnDash;
     public Action OnDashStop;
+    public Action OnBasicAttack;
 
     private void Start()
     {
+        playerAnimationController = GetComponent<PlayerAnimationController>();
         characterInput = GetComponent<ICharacterInput>();
         characterInput.OnJump += Jump;
         GravityDir = Vector3.down;
@@ -87,6 +92,10 @@ public class CharacterMovement : MonoBehaviour
         //playerInput.actions["Jump"].performed += Jump;
         AddAbility<DoubleJumpAbility>();
         AddAbility<DashAbility>();
+        AddAbility<QuickChopAbility>();
+        AddAbility<ChopSlamAbility>();
+        //AddAbility<DoubleJumpChopAbility>();
+        //AddAbility<ChopAbility>();
     }
 
     private void Update()
@@ -102,11 +111,18 @@ public class CharacterMovement : MonoBehaviour
 
         if (!MovementControlledByAbility)
         {
+            ApplyGravity();
             // handle drag
             if (grounded)
                 rb.linearDamping = groundDrag;
             else
                 rb.linearDamping = 0;
+                Vector3 dragVelocity = rb.linearVelocity;
+
+                dragVelocity.x /= (1 + horizontalAirDrag * Time.deltaTime);
+                dragVelocity.z /= (1 + horizontalAirDrag * Time.deltaTime);
+
+                rb.linearVelocity = new Vector3(dragVelocity.x, rb.linearVelocity.y, dragVelocity.z);
         }
 
         foreach (PlayerAbility ability in playerAbilities)
@@ -119,7 +135,6 @@ public class CharacterMovement : MonoBehaviour
     {
         if (!MovementControlledByAbility)
         {
-            ApplyGravity();
             MovePlayer();
             RotateOrientation();
             SnapToGround();
@@ -237,7 +252,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void ApplyGravity()
     {
-        rb.AddForce(GravityDir * GravityForce);
+        rb.AddForce(GravityDir * GravityForce * Time.deltaTime);
     }
 
     private void MyInput()

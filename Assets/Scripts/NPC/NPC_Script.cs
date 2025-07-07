@@ -24,7 +24,7 @@ public class NPC_Script : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameplayUtils.instance.playerMovement_script.GetComponent<PlayerInput>().actions["Pause"].performed += EscapePressed;
+        //GameplayUtils.instance.playerMovement_script.GetComponent<PlayerInput>().actions["Pause"].performed += EscapePressed;
         current_dialog_struct = DialogManager.GetDialogByID(Dialog_File_ID, initial_dialog_id);
     }
 

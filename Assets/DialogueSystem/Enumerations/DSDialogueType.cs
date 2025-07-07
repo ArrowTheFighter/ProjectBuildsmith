@@ -11,6 +11,7 @@ namespace DS.Enumerations
         RunEvent,
         Connector,
         StartDialog,
-        ReturnToStart
+        ReturnToStart,
+        AssignQuest
     }
 }

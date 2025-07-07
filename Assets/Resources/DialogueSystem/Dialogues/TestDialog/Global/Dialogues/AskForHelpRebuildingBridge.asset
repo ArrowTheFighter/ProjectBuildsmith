@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: AskForHelpRebuildingBridge
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: AskForHelpRebuildingBridge
+  <Text>k__BackingField: I need some help rebuilding the bridge, can you help me
+    out??
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Sure
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e5e58aa4d00b8a44a856683e86f6a133, type: 2}
+  - <Text>k__BackingField: I'm Busy
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 4cbd4770b351c434792123f35a41a87e, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  CloseDialog: 0

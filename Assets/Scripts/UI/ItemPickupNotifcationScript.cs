@@ -37,7 +37,7 @@ public class ItemPickupNotifcationScript : MonoBehaviour
         }).OnComplete(finished_fadeout);
     }
 
-    public void ShowCustomText(string text)
+    public void ShowCustomText(string text,float duration = 4)
     {
         GetComponent<RectTransform>().DOScale(1.1f, 0.1f).From(1f);
         notification_text.text = text;
@@ -45,7 +45,7 @@ public class ItemPickupNotifcationScript : MonoBehaviour
         {
             fadeoutTween.Kill();
         }
-        fadeoutTween = DOVirtual.Float(3,0,2,(context) => {
+        fadeoutTween = DOVirtual.Float(duration,0,2,(context) => {
             canvasGroup.alpha = context;
         }).OnComplete(finished_fadeout);
     }

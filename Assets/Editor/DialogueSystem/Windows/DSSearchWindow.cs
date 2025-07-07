@@ -63,6 +63,11 @@ namespace DS.Windows
                     userData = DSDialogueType.RunEvent,
                     level = 2
                 },
+                new SearchTreeEntry(new GUIContent("Assign Quest", indentationIcon))
+                {
+                    userData = DSDialogueType.AssignQuest,
+                    level = 2
+                },
                 new SearchTreeGroupEntry(new GUIContent("Dialogue Groups"), 1),
                 new SearchTreeEntry(new GUIContent("Single Group", indentationIcon))
                 {
@@ -157,6 +162,15 @@ namespace DS.Windows
 
                     return true;
                 }
+
+                case DSDialogueType.AssignQuest:
+                    {
+                        DSAssignQuestNode assignQuestNode = (DSAssignQuestNode)graphView.CreateNode("AssignQuest", DSDialogueType.AssignQuest, localMousePosition);
+
+                        graphView.AddElement(assignQuestNode);
+
+                        return true;
+                    }
 
                 case DSDialogueType.Connector:
                 {

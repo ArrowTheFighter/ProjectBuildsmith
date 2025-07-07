@@ -9,6 +9,7 @@ public class PlayerAudio : MonoBehaviour
         AudioSource audioSource = GetComponent<AudioSource>();
 
         audioSource.pitch = Random.Range(pitchBase - 0.1f,pitchBase + 0.1f);
+        if (clip_id > audioClips.Length - 1) return;
         audioSource.PlayOneShot(audioClips[clip_id],AudioListener.volume * volume_adjustment);
     }
 }

@@ -46,11 +46,11 @@ public class CraftingTable : MonoBehaviour, IInteractable
     {
         if (craftingTablePanel.activeInHierarchy == true)
         {
-            if (GameplayUtils.instance.playerMovement_script.GetComponent<PlayerInput>().actions["Pause"].ReadValue<float>() > 0)
+            if (GameplayInput.instance.playerInput.actions["Pause"].ReadValue<float>() > 0)
             {
                 CloseCraftingTable();
             }
-            if(GameplayUtils.instance.playerMovement_script.GetComponent<PlayerInput>().actions["Inventory"].ReadValue<float>() > 0)
+            if(GameplayInput.instance.playerInput.actions["Inventory"].ReadValue<float>() > 0)
             {
                 CloseCraftingTable();
             }

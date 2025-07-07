@@ -13,7 +13,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] Transform PlayerTransform;
     [SerializeField] MouseLock mouseLock_script;
     [SerializeField] CinemachineInputAxisController cameraInputComponent;
-    [SerializeField] public PlayerMovement playerMovement_script;
+    //[SerializeField] public PlayerMovement playerMovement_script;
     [SerializeField] public InventoryManager inventoryManager;
     [SerializeField] InventoryItems inventoryItems;
     [SerializeField] GameObject inventory;
@@ -83,7 +83,7 @@ public class GameplayUtils : MonoBehaviour
         mouseLock_script.Release_Mouse();
         cameraInputComponent.enabled = false;
         GameplayInput.instance.SwitchToUI();
-        playerMovement_script.can_control_player = false;
+        //playerMovement_script.can_control_player = false;
         open_menu = true;
         UIInputHandler.instance.OpenedMenu();
     }
@@ -94,7 +94,7 @@ public class GameplayUtils : MonoBehaviour
         mouseLock_script.Capture_Mouse();
         GameplayInput.instance.SwitchToGameplay();
         cameraInputComponent.enabled = true;
-        playerMovement_script.can_control_player = true;
+        //playerMovement_script.can_control_player = true;
         open_menu = false;
         UIInputHandler.instance.ClosedMenu();
     }
@@ -103,7 +103,7 @@ public class GameplayUtils : MonoBehaviour
     {
         if (release_mouse) mouseLock_script.Release_Mouse();
         cameraInputComponent.enabled = false;
-        playerMovement_script.can_control_player = false;
+        //playerMovement_script.can_control_player = false;
     }
 
     public void HideUI()
@@ -142,7 +142,7 @@ public class GameplayUtils : MonoBehaviour
     {
         mouseLock_script.Capture_Mouse();
         cameraInputComponent.enabled = true;
-        playerMovement_script.can_control_player = true;
+        //playerMovement_script.can_control_player = true;
     }
 
     public bool OpenPauseMenu()
@@ -227,12 +227,12 @@ public class GameplayUtils : MonoBehaviour
 
     public void Move_Player_To_Closest_Respawn_Point()
     {
-        Transform player_transform = playerMovement_script.transform;
-        Transform respawn_point = get_closest_respawn_point(player_transform.position);
+        Transform respawn_point = get_closest_respawn_point(PlayerTransform.position);
         if (respawn_point == null) return;
         Time.timeScale = 1;
         ClosePauseMenu();
-        playerMovement_script.Set_Player_Position(respawn_point.position + Vector3.up * 1);
+        //TODO \/ \/ \/
+        //playerMovement_script.Set_Player_Position(respawn_point.position + Vector3.up * 1);
     }
 
     public ItemData GetItemDataByID(string item_id)
@@ -284,9 +284,9 @@ public class GameplayUtils : MonoBehaviour
         playerAudio.PlayClip(audio_id, volume, pitch);
     }
 
-    public void ShowCustomNotif(string custom_text)
+    public void ShowCustomNotif(string custom_text,float duration = 4)
     {
-        itemPickupNotifcationScript.ShowCustomText(custom_text);
+        itemPickupNotifcationScript.ShowCustomText(custom_text,duration);
     }
 
     public void PlayerDropItem(string item_id, int item_amount)

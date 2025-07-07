@@ -70,7 +70,7 @@ public class DialogManager : MonoBehaviour
         // print(read_string);
     }
 
-    public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker)
+    public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker, bool UseLocalization = true)
     {
         UIInputHandler.instance.ClosedMenu();
         for (int i = 0; i < Choices_Parent_Transform.childCount; i++)
@@ -98,8 +98,9 @@ public class DialogManager : MonoBehaviour
                 button_is_selected = true;
             }
             choice.gameObject.SetActive(true);
-            string localized_string = LocalizationManager.GetLocalizedString("NPC", data[i].LocalizeKey);
-            choice.GetComponentInChildren<TextMeshProUGUI>().text = localized_string;
+            string text = data[i].Text;
+            if(UseLocalization) text = LocalizationManager.GetLocalizedString("NPC", data[i].LocalizeKey);
+            choice.GetComponentInChildren<TextMeshProUGUI>().text = text;
             ChoiceButton choiceButton = choice.GetComponentInChildren<ChoiceButton>();
             choiceButton.dialogueChoiceData = data[i];
             choiceButton.dialogWorker = dialogWorker;

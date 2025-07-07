@@ -135,7 +135,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                          }
                         if (dialogueSO.Choices.Count > 0)
                         {
-                            DialogManager.instance.Setup_Choices(dialogueSO.Choices, this);
+                            DialogManager.instance.Setup_Choices(dialogueSO.Choices, this,UseLocalization);
                         }
                         currentDialogSO = dialogueSO;
                         breakLoop = true;
@@ -180,6 +180,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     continue;
                 }
             }
+            // -- Indavidual node functionality goes here --
             switch (tempDialogSO)
             {
                 case DSRequireFlagSO requireFlagSO:
@@ -236,6 +237,14 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     if (setFlagSO.Choices.Count > 0)
                     {
                         tempDialogSO = setFlagSO.Choices[0].NextDialogue;
+                    }
+                    break;
+                case DSAssignQuestSO assignQuestSO:
+                    GameplayUtils.instance.inventoryManager.AssignQuest(assignQuestSO.QuestID);
+
+                    if (assignQuestSO.Choices.Count > 0)
+                    {
+                        tempDialogSO = assignQuestSO.Choices[0].NextDialogue;
                     }
                     break;
             }

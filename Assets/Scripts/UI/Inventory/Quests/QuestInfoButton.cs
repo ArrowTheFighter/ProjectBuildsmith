@@ -1,0 +1,22 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class QuestInfoButton : MonoBehaviour
+{
+    public string QuestID;
+    public QuestData questData;
+    public TextMeshProUGUI buttonName;
+    
+    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        GetComponent<Button>().onClick.AddListener(ShowInfo);
+    }
+
+    void ShowInfo()
+    {
+        GameplayUtils.instance.inventoryManager.ShowQuestInfo(questData);
+     }
+}

@@ -2,10 +2,11 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
 
 public class FlagManager : MonoBehaviour
 {
-
+    public static Action OnFlagSet;
     public static void wipe_flag_list()
     {
         Write_Dictionary_To_File(new Dictionary<string, bool>());
@@ -18,6 +19,7 @@ public class FlagManager : MonoBehaviour
         if (flag_dictionary.ContainsKey(flag_id)) ContainsKey = true;
         flag_dictionary[flag_id] = flag_value;
         Write_Dictionary_To_File(flag_dictionary);
+        OnFlagSet?.Invoke();
         return ContainsKey;
     }
 

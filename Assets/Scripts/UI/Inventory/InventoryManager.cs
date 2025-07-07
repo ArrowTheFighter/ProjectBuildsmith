@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,11 +16,27 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] public InventorySlotComponent MouseSlot;
 
     public Action OnInventoryClosed;
+    public Action OnInventoryUpdated;
 
     float inventoryToggleCooldown;
 
     [Header("InventorySlots")]
     public List<InventorySlot> inventorySlots = new List<InventorySlot>();
+
+    [Space(20)]
+    [Header("QuestMenu")]
+    public GameObject QuestMenuObject;
+    public QuestInfoBox questInfoBox;
+    public GameObject QuestItemsParent;
+    [SerializeField] GameObject QuestButton;
+    List<QuestInfo> activeQuests = new List<QuestInfo>();
+
+    [Header("Pinned Quests")]
+    public Transform PinnedQuestsParent;
+    public GameObject PinnedQuestPrefab;
+    public List<PinnedQuestItem> activedPinnedQuests = new List<PinnedQuestItem>();
+    public QuestData selectedQuest;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,8 +47,83 @@ public class InventoryManager : MonoBehaviour
         {
             AddInventorySlot(i);
         }
+        OnInventoryUpdated += QuestsObjectiveCheck;
+        FlagManager.OnFlagSet += QuestsObjectiveCheck;
     }
 
+    void ToggleInventory(InputAction.CallbackContext context)
+    {
+        if (inventoryToggleCooldown > Time.time) return;
+        inventoryToggleCooldown = Time.time + 0.1f;
+        if (InventoryObject != null)
+        {
+            //InventoryObject.SetActive(inventoryIsOpen);
+            if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
+            {
+                if (!inventoryIsOpen)
+                {
+                    if (GameplayUtils.instance.GetOpenMenu()) return;
+                    //print("opening inventory");
+                    UIInputHandler.instance.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
+                    GameplayUtils.instance.OpenMenu();
+
+                }
+                else
+                {
+                    //print("closing inventory");
+                    GameplayUtils.instance.CloseMenu();
+                    OnInventoryClosed?.Invoke();
+                    UIInputHandler.instance.defaultButton = null;
+                    if (QuestMenuObject.TryGetComponent(out CanvasGroup QuestCanvasGroup))
+                    {
+                        QuestCanvasGroup.alpha = 0;
+                        QuestCanvasGroup.interactable = false;
+                        QuestCanvasGroup.blocksRaycasts = false;
+                        questInfoBox.ClearQuestInfo();
+                        selectedQuest = null;
+                    }
+                }
+                inventoryIsOpen = !inventoryIsOpen;
+                canvasGroup.alpha = inventoryIsOpen ? 1 : 0;
+                canvasGroup.blocksRaycasts = inventoryIsOpen;
+                canvasGroup.interactable = inventoryIsOpen;
+
+            }
+        }
+    }
+
+
+    public void SwitchToQuestsMenu()
+    {
+        CanvasGroup inventroyCanvasGroup = InventoryObject.GetComponent<CanvasGroup>();
+        inventroyCanvasGroup.alpha = 0;
+        inventroyCanvasGroup.blocksRaycasts = false;
+        inventroyCanvasGroup.interactable = false;
+
+
+        CanvasGroup questsCanvasGroup = QuestMenuObject.GetComponent<CanvasGroup>();
+        questsCanvasGroup.alpha = 1;
+        questsCanvasGroup.blocksRaycasts = true;
+        questsCanvasGroup.interactable = true;
+    }
+
+    public void SwitchToInventoryMenu()
+    {
+        CanvasGroup inventroyCanvasGroup = InventoryObject.GetComponent<CanvasGroup>();
+        inventroyCanvasGroup.alpha = 1;
+        inventroyCanvasGroup.blocksRaycasts = true;
+        inventroyCanvasGroup.interactable = true;
+
+
+        CanvasGroup questsCanvasGroup = QuestMenuObject.GetComponent<CanvasGroup>();
+        questsCanvasGroup.alpha = 0;
+        questsCanvasGroup.blocksRaycasts = false;
+        questsCanvasGroup.interactable = false;
+
+        selectedQuest = null;
+    }
+
+    /* #region Inventory */
     void AddInventorySlot(int slotID)
     {
         InventorySlot inventorySlot = new InventorySlot();
@@ -52,7 +142,7 @@ public class InventoryManager : MonoBehaviour
         if (force || MouseSlot.inventorySlot.isEmpty)
         {
             MouseSlot.inventorySlot.isEmpty = false;
-            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount,itemData.MaxStackSize);
+            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount, itemData.MaxStackSize);
             MouseSlot.inventorySlot.inventoryItemStack = newItemStack;
             MouseSlot.inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image);
         }
@@ -62,33 +152,31 @@ public class InventoryManager : MonoBehaviour
     {
         if (force || inventorySlot.isEmpty)
         {
-            print("adding item to slot");
             inventorySlot.isEmpty = false;
-            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount,itemData.MaxStackSize);
-            print("new itemStack size is: " + newItemStack.Amount);
+            InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount, itemData.MaxStackSize);
             inventorySlot.inventoryItemStack = newItemStack;
             inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image);
+            OnInventoryUpdated?.Invoke();
         }
     }
 
     public int AddItemToInventory(ItemData itemData, int amount = 1)
     {
+
         int remainingAmount = amount;
         InventorySlot inventorySlot = GetSlotWithItemButNotFull(itemData.item_id);
         if (inventorySlot != null)
         {
-            print("trying to add items to an exisiting slot");
             for (int i = 0; i < InventorySlotsParent.transform.childCount; i++)
             {
                 int amountCanAdd = inventorySlot.inventoryItemStack.MaxStackSize - inventorySlot.inventoryItemStack.Amount;
-                print("Amount we can add = " + amountCanAdd);
                 // -- Remaining items can fit into the found slot --
                 if (remainingAmount <= amountCanAdd)
                 {
                     int finalAmount = remainingAmount + inventorySlot.inventoryItemStack.Amount;
                     inventorySlot.inventoryItemStack.Amount = finalAmount;
                     inventorySlot.inventorySlotComponent.SetSlotFilled(finalAmount);
-                    print("added all the items to an exisiting slot");
+                    OnInventoryUpdated?.Invoke();
                     return 0;
                 }
                 // -- Only some of the items can fit into the slot --
@@ -98,15 +186,15 @@ public class InventoryManager : MonoBehaviour
                     remainingAmount -= amountCanAdd;
                     inventorySlot.inventoryItemStack.Amount = newAmount;
                     inventorySlot.inventorySlotComponent.SetSlotFilled(newAmount);
-                    print("adding some items to a slot");
                 }
                 inventorySlot = GetSlotWithItemButNotFull(itemData.item_id);
                 if (inventorySlot == null) break;
             }
             if (remainingAmount <= 0)
             {
+                OnInventoryUpdated?.Invoke();
                 return 0;
-             }
+            }
         }
 
         // --- There isn't an exisiting stack of items we can add to ---
@@ -123,7 +211,6 @@ public class InventoryManager : MonoBehaviour
 
             // -- Add the correct amount to the slot --
             int amountToAdd = Math.Min(remainingAmount, itemData.MaxStackSize);
-            print("adding items to empty slot: " + amountToAdd);
             remainingAmount -= amountToAdd;
             inventorySlot.isEmpty = false;
             InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amountToAdd, itemData.MaxStackSize);
@@ -131,11 +218,14 @@ public class InventoryManager : MonoBehaviour
             inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amountToAdd, itemData.item_ui_image);
 
             if (remainingAmount <= 0) break;
-           
+
 
         }
+        OnInventoryUpdated?.Invoke();
         return remainingAmount;
     }
+
+
 
     public InventorySlot GetFirstEmptySlot()
     {
@@ -169,38 +259,7 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
-    void ToggleInventory(InputAction.CallbackContext context)
-    {
-        if (inventoryToggleCooldown > Time.time) return;
-        inventoryToggleCooldown = Time.time + 0.1f;
-        if (InventoryObject != null)
-        {
-            //InventoryObject.SetActive(inventoryIsOpen);
-            if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
-            {
-                if (!inventoryIsOpen)
-                {
-                    if (GameplayUtils.instance.GetOpenMenu()) return;
-                    //print("opening inventory");
-                    UIInputHandler.instance.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
-                    GameplayUtils.instance.OpenMenu();
 
-                }
-                else
-                {
-                    //print("closing inventory");
-                    GameplayUtils.instance.CloseMenu();
-                    OnInventoryClosed?.Invoke();
-                    UIInputHandler.instance.defaultButton = null;
-                }
-                inventoryIsOpen = !inventoryIsOpen;
-                canvasGroup.alpha = inventoryIsOpen ? 1 : 0;
-                canvasGroup.blocksRaycasts = inventoryIsOpen;
-                canvasGroup.interactable = inventoryIsOpen;
-
-            }
-        }
-    }
 
     public int getAmountOfItemByID(string item_id)
     {
@@ -244,8 +303,109 @@ public class InventoryManager : MonoBehaviour
                 if (remainingAmount <= 0) return true;
             }
         }
+        OnInventoryUpdated?.Invoke();
         return false;
+    }
+    /* #endregion */
+
+    /* #region Quests */
+    public void ShowQuestInfo(QuestData questData)
+    {
+        questInfoBox.ShowQuestInfo(questData);
+        selectedQuest = questData;
+    }
+
+    public void AssignQuest(string quest_id)
+    {
+        QuestData[] allQuests = Resources.LoadAll<QuestData>("QuestData");
+        foreach (var data in allQuests)
+        {
+            if (data.ID == quest_id)
+            {
+                foreach (QuestInfo info in activeQuests)
+                {
+                    if (info.QuestData == data) return;
+                }
+                GameObject questButton = Instantiate(QuestButton, QuestItemsParent.transform);
+
+                QuestInfoButton questInfoButton = questButton.GetComponent<QuestInfoButton>();
+                questInfoButton.QuestID = quest_id;
+                questInfoButton.questData = data;
+                questInfoButton.buttonName.text = data.Name;
+
+                QuestInfo questInfo = new QuestInfo(data);
+                activeQuests.Add(questInfo);
+
+                GameplayUtils.instance.ShowCustomNotif("Quest Added", 6);
+            }
+        }
+        //return null;
+    }
+
+    public void QuestsObjectiveCheck()
+    {
+        print("Checking quest info");
+        UpdatePinnedQuests();
+        foreach (QuestInfo info in activeQuests)
+        {
+            if (info.IsComplete) continue;
+            for (int i = 0; i < info.QuestData.questObjectives.Count; i++)
+            {
+                switch (info.QuestData.questObjectives[i])
+                {
+                    case ObjectiveCollectItems objectiveCollect:
+                        if (GameplayUtils.instance.get_item_holding_amount(objectiveCollect.Item_ID) >= objectiveCollect.Item_Amount)
+                        {
+                            continue;
+                        }
+                        return;
+
+                    case ObjectiveTalkToNPCFlag objectiveTalkToNPCFlag:
+                        if (FlagManager.Get_Flag_Value(objectiveTalkToNPCFlag.flag_id))
+                        {
+                            continue;
+                        }
+                        return;
+                }
+            }
+            info.IsComplete = true;
+            GameplayUtils.instance.ShowCustomNotif("Quest Complete!", 8);
+        }
+    }
+
+    void UpdatePinnedQuests()
+    {
+        foreach (PinnedQuestItem pinnedQuestItem in activedPinnedQuests)
+        {
+            pinnedQuestItem.UpdateText();
+         }
      }
+
+    public void AddNewPinnedQuest(QuestData questData)
+    {
+        foreach (PinnedQuestItem item in activedPinnedQuests)
+        {
+            if (item.storedQuestData == questData)
+            {
+                Destroy(item.gameObject);
+                activedPinnedQuests.Remove(item);
+                return;
+            }
+        }
+        GameObject pinnedQuest = Instantiate(PinnedQuestPrefab, PinnedQuestsParent);
+        PinnedQuestItem pinnedQuestItem = pinnedQuest.GetComponent<PinnedQuestItem>();
+
+        pinnedQuestItem.SetQuestText(questData);
+        activedPinnedQuests.Add(pinnedQuestItem);
+    }
+
+    public void PinSelectedQuest()
+    {
+        if (selectedQuest == null) return;
+        AddNewPinnedQuest(selectedQuest);
+     }
+
+    /* #endregion */
 }
 
 [Serializable]
@@ -278,3 +438,18 @@ public class InventoryItemStack
         MaxStackSize = _maxStack;
     }
 }
+
+[Serializable]
+public class QuestInfo
+{
+    public QuestData QuestData;
+    public bool IsComplete;
+
+    public QuestInfo(QuestData _questData, bool _complete = false)
+    {
+        QuestData = _questData;
+        IsComplete = _complete;
+     }
+}
+
+

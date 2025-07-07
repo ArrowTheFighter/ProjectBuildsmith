@@ -270,6 +270,21 @@ namespace DS.Utilities
                     };
                     graphData.Nodes.Add(closeNodeData);
                     break;
+                case DSAssignQuestNode assignQuestNode:
+                    DSAssignQuestSaveData assignQuestSaveData = new DSAssignQuestSaveData()
+                    {
+                        ID = assignQuestNode.ID,
+                        Name = assignQuestNode.DialogueName,
+                        Choices = choices,
+                        Text = assignQuestNode.Text,
+                        GroupID = assignQuestNode.Group?.ID,
+                        DialogueType = assignQuestNode.DialogueType,
+                        Position = assignQuestNode.GetPosition().position,
+                        CloseDialog = assignQuestNode.CloseDialog,
+                        quest_id = assignQuestNode.quest_id
+                    };
+                    graphData.Nodes.Add(assignQuestSaveData);
+                    break;
                 case DSNode _node:
                     DSNodeSaveData nodeData = new DSNodeSaveData()
                     {
@@ -366,6 +381,31 @@ namespace DS.Utilities
                     createdScriptableObjects.Add(node.ID, setFlagSO);
 
                     SaveAsset(setFlagSO);
+                    break;
+
+                case DSAssignQuestNode assignQuestNode:
+                    DSAssignQuestSO assignQuestSO;
+
+                    if (node.Group != null)
+                    {
+                        assignQuestSO = CreateAsset<DSAssignQuestSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                    }
+                    else
+                    {
+                        assignQuestSO = CreateAsset<DSAssignQuestSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                    }
+                    assignQuestSO.Initialize(
+                        assignQuestNode.DialogueName,
+                        assignQuestNode.Text,
+                        ConvertNodeChoicesToDialogueChoices(assignQuestNode.Choices),
+                        assignQuestNode.DialogueType,
+                        assignQuestNode.IsStartingNode(),
+                        assignQuestNode.quest_id
+                    );
+
+                    createdScriptableObjects.Add(node.ID, assignQuestSO);
+
+                    SaveAsset(assignQuestSO);
                     break;
 
                 case DSRequireFlagNode flagNode:
@@ -664,6 +704,27 @@ namespace DS.Utilities
                         }
                         break;
 
+                    case DSAssignQuestNode assignQuestNode:
+                        DSAssignQuestSO assignQuestSO = (DSAssignQuestSO)createdScriptableObjects[node.ID];
+
+                        for (int choiceIndex = 0; choiceIndex < node.Choices.Count; ++choiceIndex)
+                        {
+                            DSChoiceSaveData nodeChoice = node.Choices[choiceIndex];
+
+                            if (string.IsNullOrEmpty(nodeChoice.NodeID))
+                            {
+                                continue;
+                            }
+
+                            if (createdScriptableObjects.ContainsKey(nodeChoice.NodeID))
+                            {
+                                assignQuestSO.Choices[choiceIndex].NextDialogue = createdScriptableObjects[nodeChoice.NodeID];
+                            }
+
+                            SaveAsset(assignQuestSO);
+                        }
+                        break;
+
                     case DSItemRequirementNode itemNode:
                         DSItemRequirementSO itemDialogue = (DSItemRequirementSO)createdScriptableObjects[node.ID];
 
@@ -862,6 +923,16 @@ namespace DS.Utilities
                         DSSetFlagSaveData flagSaveData = (DSSetFlagSaveData)nodeData;
                         flagNode.flag_id = flagSaveData.flag_id;
                         flagNode.is_true = flagSaveData.is_true;
+                    }
+                }
+                if (nodeData is DSAssignQuestSaveData)
+                {
+                    if (node is DSAssignQuestNode)
+                    {
+                        DSAssignQuestNode assignQuestNode = (DSAssignQuestNode)node;
+
+                        DSAssignQuestSaveData assignQuestSaveData = (DSAssignQuestSaveData)nodeData;
+                        assignQuestNode.quest_id = assignQuestSaveData.quest_id;
                     }
                 }
                 if (nodeData is DSRunEventSaveData)

@@ -50,7 +50,6 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
     void ControllerMainPress()
     {
-        print(EventSystem.current.currentSelectedGameObject);
         if (EventSystem.current.currentSelectedGameObject == gameObject)
         {
             SlotMainPress();
