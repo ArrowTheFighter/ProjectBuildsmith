@@ -12,13 +12,18 @@ public class PauseMenu : MonoBehaviour
     {
         SettingsScreen.SetActive(false);
         MainScreen.SetActive(true);
-        ResumeButton.Select();
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = ResumeButton.gameObject;
+        UIInputHandler.instance.OpenedMenu();
     }
 
     public void OpenSettingsScreen()
     {
         MainScreen.SetActive(false);
         SettingsScreen.SetActive(true);
-        SettingsBackButton.Select();
+        UIInputHandler.instance.defaultButton = SettingsBackButton.gameObject;
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.OpenedMenu();
+        //SettingsBackButton.Select();
     }
 }

@@ -814,6 +814,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ClosePause",
+                    "type": "Button",
+                    "id": "57858f47-b77d-4a0f-adcb-c4fa597fc8c2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1375,6 +1384,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "UIInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a73942ee-bc7d-45d4-a7dd-b29a6d178155",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ClosePause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5713cc5-04b7-45df-b713-2f8ec993fed7",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClosePause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
