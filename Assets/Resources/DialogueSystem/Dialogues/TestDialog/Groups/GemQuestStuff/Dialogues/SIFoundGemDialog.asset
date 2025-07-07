@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: connector2
+  m_Name: SIFoundGemDialog
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 
-  <Text>k__BackingField: Dialogue text.
-  <LocalizedKey>k__BackingField: 
+  <DialogueName>k__BackingField: SIFoundGemDialog
+  <Text>k__BackingField: Oh you found a gem! That is so friken awesome.
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: 
-    LocalizeKey: 
+  - <Text>k__BackingField: Next Dialogue
+    LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 1d5901f542d1e2e41bbc933b6badf3a8, type: 2}
-  <DialogueType>k__BackingField: 7
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 29db8324981403d4c926836aee152da2, type: 2}
+  <DialogueType>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
