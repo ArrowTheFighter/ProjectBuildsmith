@@ -6,7 +6,6 @@ public class AnimationEvents : MonoBehaviour
     [SerializeField] CharacterMovement characterMovement;
     public void FootstepSound(AnimationEvent evt)
     {
-        print("Called footstepSound");
         if (IsHeaviestAnimClip(evt.animatorClipInfo.clip))
         {
             playerAudio.PlayClip(1, 0.5f);

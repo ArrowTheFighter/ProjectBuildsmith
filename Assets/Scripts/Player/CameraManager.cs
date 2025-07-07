@@ -9,6 +9,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] float base_speed_X = 200;
     [SerializeField] float base_speed_Y = -80;
     [SerializeField] float controller_percentage = 0.125f;
+    [Header("Sensitivity Adjustments")]
+    [SerializeField] float SensitivityLow = 0.01f;
+    [SerializeField] float SensitivityHigh = 3;
     float X_speed_adjustment = 1;
     float Y_speed_adjustment = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,6 +19,7 @@ public class CameraManager : MonoBehaviour
     {
         playerInput = GameplayInput.instance.playerInput;
         playerInput.onControlsChanged += OnControlsChanged;
+        set_camera_sensativity(0.25f);
     }
 
     // Update is called once per frame
@@ -23,6 +27,24 @@ public class CameraManager : MonoBehaviour
     {
         string currentScheme = input.currentControlScheme;
         if (currentScheme == "Keyboard&Mouse")
+        {
+            foreach (var c in axisController.Controllers)
+            {
+                if (c.Name == "Look Orbit X")
+                {
+                    c.Input.Gain = base_speed_X * X_speed_adjustment;
+                    continue;
+                }
+                if (c.Name == "Look Orbit Y")
+                {
+                    c.Input.Gain = base_speed_Y * Y_speed_adjustment;
+                    continue;
+                }
+                
+            }
+
+        }
+        else if (currentScheme == "Gamepad")
         {
             foreach (var c in axisController.Controllers)
             {
@@ -37,31 +59,21 @@ public class CameraManager : MonoBehaviour
                     continue;
                 }
             }
-
-        }
-        else if (currentScheme == "Gamepad")
-        {
-            foreach (var c in axisController.Controllers)
-            {
-                if (c.Name == "Look Orbit X")
-                {
-                    c.Input.Gain = base_speed_X * X_speed_adjustment;
-                    continue;
-                }
-                if (c.Name == "Look Orbit Y")
-                {
-                    c.Input.Gain = base_speed_Y * Y_speed_adjustment;
-                    continue;
-                }
-            }
         }
 
     }
 
+
     public void set_camera_sensativity(float sensativity)
     {
-        X_speed_adjustment = sensativity;
-        Y_speed_adjustment = sensativity;
+
+        float adjustedValue = Mathf.Lerp(0.01f, 3f, Mathf.Pow(sensativity, 1.75f));
+
+        //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensativity);
+        print(adjustedValue);
+        X_speed_adjustment = adjustedValue;
+        Y_speed_adjustment = adjustedValue;
+        OnControlsChanged(GameplayInput.instance.playerInput);
     }
 
 }

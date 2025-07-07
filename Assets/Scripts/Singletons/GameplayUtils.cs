@@ -145,29 +145,33 @@ public class GameplayUtils : MonoBehaviour
         //playerMovement_script.can_control_player = true;
     }
 
-    public bool OpenPauseMenu()
-    {
-        if (DialogIsOpen) return false;
-        PauseMenuIsOpen = true;
-        OpenMenu();
-        PauseMenu.SetActive(true);
-        PauseMenu.GetComponent<PauseMenu>().OpenMainScreen();
-        Time.timeScale = 0;
-        return true;
-    }
-
     public void set_can_use_dialog(bool can_use)
     {
         can_use_dialog = can_use;
     }
 
+    public bool OpenPauseMenu()
+    {
+        if (DialogIsOpen) return false;
+        PauseMenuIsOpen = true;
+        PauseMenu.SetActive(true);
+        PauseMenu.GetComponent<PauseMenu>().OpenMainScreen();
+        OpenMenu();
+        Time.timeScale = 0;
 
+
+
+        return true;
+    }
+
+    
     public void ClosePauseMenu()
     {
         PauseMenuIsOpen = false;
         CloseMenu();
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
+
     }
 
     public void Toggle_Pause_Menu()

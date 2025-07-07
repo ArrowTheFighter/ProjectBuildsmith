@@ -49,7 +49,6 @@ public class UIInputHandler : MonoBehaviour
     {
         if (currentScheme == "Gamepad" && defaultButton != null && EventSystem.current.currentSelectedGameObject == null)
         {
-            
             EventSystem.current.SetSelectedGameObject(defaultButton);
         }
     }
