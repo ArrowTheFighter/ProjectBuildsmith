@@ -164,7 +164,7 @@ public class GameplayUtils : MonoBehaviour
         return true;
     }
 
-    
+
     public void ClosePauseMenu()
     {
         PauseMenuIsOpen = false;
@@ -288,9 +288,9 @@ public class GameplayUtils : MonoBehaviour
         playerAudio.PlayClip(audio_id, volume, pitch);
     }
 
-    public void ShowCustomNotif(string custom_text,float duration = 4)
+    public void ShowCustomNotif(string custom_text, float duration = 4)
     {
-        itemPickupNotifcationScript.ShowCustomText(custom_text,duration);
+        itemPickupNotifcationScript.ShowCustomText(custom_text, duration);
     }
 
     public void PlayerDropItem(string item_id, int item_amount)
@@ -310,4 +310,45 @@ public class GameplayUtils : MonoBehaviour
             //GetComponent<AudioSource>().PlayOneShot(finished_sound, finished_sound_volume);
         }
     }
+
+    public static void DrawDebugBox(Vector3 center, Vector3 size, Quaternion rotation, Color color)
+    {
+        Vector3 half = size * 0.5f;
+
+        // Local corners of a unit cube
+        Vector3[] localCorners = new Vector3[8]
+        {
+        new Vector3(-half.x, -half.y, -half.z),
+        new Vector3( half.x, -half.y, -half.z),
+        new Vector3( half.x, -half.y,  half.z),
+        new Vector3(-half.x, -half.y,  half.z),
+        new Vector3(-half.x,  half.y, -half.z),
+        new Vector3( half.x,  half.y, -half.z),
+        new Vector3( half.x,  half.y,  half.z),
+        new Vector3(-half.x,  half.y,  half.z),
+        };
+
+        // Apply rotation and translate to center
+        for (int i = 0; i < localCorners.Length; i++)
+            localCorners[i] = center + rotation * localCorners[i];
+
+        // Bottom face
+        Debug.DrawLine(localCorners[0], localCorners[1], color);
+        Debug.DrawLine(localCorners[1], localCorners[2], color);
+        Debug.DrawLine(localCorners[2], localCorners[3], color);
+        Debug.DrawLine(localCorners[3], localCorners[0], color);
+
+        // Top face
+        Debug.DrawLine(localCorners[4], localCorners[5], color);
+        Debug.DrawLine(localCorners[5], localCorners[6], color);
+        Debug.DrawLine(localCorners[6], localCorners[7], color);
+        Debug.DrawLine(localCorners[7], localCorners[4], color);
+
+        // Vertical edges
+        Debug.DrawLine(localCorners[0], localCorners[4], color);
+        Debug.DrawLine(localCorners[1], localCorners[5], color);
+        Debug.DrawLine(localCorners[2], localCorners[6], color);
+        Debug.DrawLine(localCorners[3], localCorners[7], color);
+    }
+
 }

@@ -328,6 +328,7 @@ public class CharacterMovement : MonoBehaviour
             if (OnSteepSlope()) return;
         }
         if (!readyToJump) return;
+        if (MovementControlledByAbility) return;
         OnJump?.Invoke();
         readyToJump = false;
         GravityDir = Vector3.down;
