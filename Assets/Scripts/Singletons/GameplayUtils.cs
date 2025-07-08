@@ -10,7 +10,7 @@ public class GameplayUtils : MonoBehaviour
 {
     public static GameplayUtils instance;
 
-    [SerializeField] Transform PlayerTransform;
+    [SerializeField] public Transform PlayerTransform;
     [SerializeField] MouseLock mouseLock_script;
     [SerializeField] CinemachineInputAxisController cameraInputComponent;
     //[SerializeField] public PlayerMovement playerMovement_script;

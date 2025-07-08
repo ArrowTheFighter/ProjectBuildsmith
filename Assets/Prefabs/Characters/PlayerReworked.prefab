@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 4395142168333838905}
   m_Layer: 8
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -469,6 +469,8 @@ MonoBehaviour:
   base_speed_X: 200
   base_speed_Y: -80
   controller_percentage: 0.125
+  SensitivityLow: 0.01
+  SensitivityHigh: 3
 --- !u!114 &6291897510432782050
 MonoBehaviour:
   m_ObjectHideFlags: 0
