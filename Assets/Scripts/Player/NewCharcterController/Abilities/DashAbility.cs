@@ -56,7 +56,7 @@ public class DashAbility : PlayerAbility
                 characterMovement.orientation.forward,
                 1.5f, ~layerMask,QueryTriggerInteraction.Ignore))
             {
-                if (!isBonking && !characterMovement.grounded)
+                if (!isBonking && !characterMovement.grounded && !slideJumping)
                 {
                     Bonk();
                  }
