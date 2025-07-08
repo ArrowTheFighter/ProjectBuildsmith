@@ -75,9 +75,13 @@ public class DashAbility : PlayerAbility
                 }
                 if (groundSliding && characterMovement.rb.linearVelocity.magnitude < 0.2f && !slideJumping)
                 {
-                    print("player wasn't moving");
-                    StopAllCoroutines();
-                    EndDive();
+                    if (Time.time - lastTimeDashed > 0.75f)
+                    {
+
+                        print("player wasn't moving");
+                        StopAllCoroutines();
+                        EndDive();
+                    }
                 }
                 if (slideJumping && Time.time > lastTimeDashed)
                 {
@@ -103,7 +107,7 @@ public class DashAbility : PlayerAbility
         characterMovement.rb.AddForce(-characterMovement.transform.forward * bonkForce, ForceMode.Impulse);
         characterMovement.rb.AddForce(Vector3.up * bonkUpForce, ForceMode.Impulse);
         isBonking = true;
-        lastTimeDashed = Time.time + 0.2f;
+        lastTimeDashed = Time.time + 0.1f;
         characterMovement.playerAnimationController.animator.SetBool("Bonking", true);
     }
 
@@ -121,7 +125,7 @@ public class DashAbility : PlayerAbility
             characterMovement.rb.AddForce(Vector3.up * slideJumpUpForce, ForceMode.Impulse);
             StopAllCoroutines();
             slideJumping = true;
-            lastTimeDashed = Time.time + 0.2f;
+            lastTimeDashed = Time.time + 0.1f;
         }
     }
 
@@ -186,7 +190,7 @@ public class DashAbility : PlayerAbility
     {
         if (characterMovement.MovementControlledByAbility) return;
         characterMovement.OnDash?.Invoke();
-        lastTimeDashed = Time.time + 0.5f;
+        lastTimeDashed = Time.time + 0.1f;
         dashDirection = Vector3.ProjectOnPlane(characterMovement.orientation.forward, characterMovement.GravityDir);
         isDashing = true;
         characterMovement.MovementControlledByAbility = true;
