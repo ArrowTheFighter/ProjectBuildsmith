@@ -12,6 +12,7 @@ public class DashAbility : PlayerAbility
     Vector3 dashDirection;
     float lastTimeDashed;
     float dontDash;
+    bool dashButtonPressed;
     [SerializeField] float dashForce = 20;
     [SerializeField] float dashUpForce = 25;
     [SerializeField] float slideJumpForce = 22;
@@ -52,7 +53,7 @@ public class DashAbility : PlayerAbility
             if (Physics.Raycast(
                 characterMovement.transform.position + characterMovement.transform.forward * 0.5f,
                 characterMovement.orientation.forward,
-                1.5f, ~layerMask))
+                1.5f, ~layerMask,QueryTriggerInteraction.Ignore))
             {
                 if (!isBonking && !characterMovement.grounded)
                 {
@@ -164,10 +165,18 @@ public class DashAbility : PlayerAbility
         }
         float dashInputValue = characterMovement.characterInput.GetDashInput() ? 1 : 0;
 
-        if (dashInputValue > 0 && !isDashing && Time.time > dontDash && canDash && characterMovement.readyToJump)
+        if (dashInputValue > 0)
         {
-            Dash();
+            if (!dashButtonPressed && !isDashing && Time.time > dontDash && canDash && characterMovement.readyToJump)
+            {
+                Dash();
+                dashButtonPressed = true;
+            }
         }
+        else
+        {
+            dashButtonPressed = false;
+         }
     }
 
     void Dash()
