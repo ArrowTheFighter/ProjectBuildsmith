@@ -63,7 +63,9 @@ public class ChopSlamAbility : PlayerAbility
             if (IsFalling)
             {
                 Vector3 size = new Vector3(1, 0.5f, 2);
-                Collider[] hits = Physics.OverlapBox(transform.position + Vector3.down * 1.5f, size * 0.5f, transform.rotation);
+                Vector3 pos = characterMovement.transform.position + Vector3.down * 1.5f + characterMovement.transform.forward;
+                GameplayUtils.DrawDebugBox(pos, size, transform.rotation, Color.red);
+                Collider[] hits = Physics.OverlapBox(pos, size * 0.5f, transform.rotation);
                 foreach (Collider hit in hits)
                 {
                     if (hit.TryGetComponent(out IDamagable damagable))
@@ -79,6 +81,7 @@ public class ChopSlamAbility : PlayerAbility
                     }
                 }
             }
+            
 
             if (characterMovement.grounded)
                 {

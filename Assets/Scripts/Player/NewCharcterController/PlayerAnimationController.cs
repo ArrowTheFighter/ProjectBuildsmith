@@ -5,6 +5,7 @@ public class PlayerAnimationController : MonoBehaviour
     CharacterMovement characterMovement;
     [SerializeField] public Animator animator;
     bool diving;
+    [HideInInspector] public bool walking = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,7 +24,7 @@ public class PlayerAnimationController : MonoBehaviour
         float speed_blend = Mathf.InverseLerp(0, characterMovement.maxSpeed, HorVel.magnitude);
         animator.SetFloat("Speed_Blend", speed_blend);
         animator.SetBool("OnGround", characterMovement.grounded && !characterMovement.OnSteepSlope());
-        if (characterMovement.grounded) animator.SetLayerWeight(1, 1);
+        if (characterMovement.grounded && walking) animator.SetLayerWeight(1, 1);
         else animator.SetLayerWeight(1, 0);
 
     }
@@ -31,7 +32,6 @@ public class PlayerAnimationController : MonoBehaviour
 
     void PlayerDived()
     {
-        print("setting dive to true");
         animator.SetBool("Diving", true);
     }
 
