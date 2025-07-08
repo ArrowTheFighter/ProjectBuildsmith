@@ -16,14 +16,14 @@ public class QuickChopAbility : PlayerAbility
     {
         if (GameplayInput.instance.playerInput.actions["BasicAttack"].ReadValue<float>() > 0)
         {
-            if (IsChopping) return;
-            if (!BasicAttackPressed)
+            if (!IsChopping)
             {
                 if (characterMovement.grounded && !characterMovement.MovementControlledByAbility)
                 {
                     Chop();
                 }
             }
+            
             BasicAttackPressed = true;
         }
         else
