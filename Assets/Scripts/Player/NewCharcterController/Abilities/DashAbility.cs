@@ -9,6 +9,7 @@ public class DashAbility : PlayerAbility
     bool groundSliding;
     bool slideJumping;
     bool isBonking;
+    bool bonkLand;
     Vector3 dashDirection;
     float lastTimeDashed;
     float dontDash;
@@ -83,10 +84,10 @@ public class DashAbility : PlayerAbility
                     print("ending slide jump");
                     EndDive();
                 }
-                if (isBonking && Time.time > lastTimeDashed)
+                if (isBonking && !bonkLand && Time.time > lastTimeDashed)
                 {
                     print("Bonking player is on the ground");
-                    isBonking = false;
+                    bonkLand = true;
                     StartCoroutine(BonkCooldown());
                  }
             }
@@ -145,6 +146,8 @@ public class DashAbility : PlayerAbility
         characterMovement.MovementControlledByAbility = false;
         groundSliding = false;
         slideJumping = false;
+        bonkLand = false;
+        isBonking = false;
         StartCoroutine(EndDelay());
         StopCoroutine(BonkCooldown());
         StopCoroutine(SlideCooldown());
