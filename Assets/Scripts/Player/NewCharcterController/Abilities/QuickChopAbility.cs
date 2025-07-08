@@ -19,7 +19,7 @@ public class QuickChopAbility : PlayerAbility
             if (IsChopping) return;
             if (!BasicAttackPressed)
             {
-                if (characterMovement.grounded)
+                if (characterMovement.grounded && !characterMovement.MovementControlledByAbility)
                 {
                     Chop();
                 }
