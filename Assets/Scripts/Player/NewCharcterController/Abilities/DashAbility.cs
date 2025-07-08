@@ -63,7 +63,7 @@ public class DashAbility : PlayerAbility
              }
 
 
-
+            print(characterMovement.rb.linearVelocity.magnitude);
             if (characterMovement.grounded || characterMovement.OnSteepSlope())
             {
                 if (!groundSliding && Time.time > lastTimeDashed)
@@ -184,7 +184,7 @@ public class DashAbility : PlayerAbility
 
     void Dash()
     {
-
+        if (characterMovement.MovementControlledByAbility) return;
         characterMovement.OnDash?.Invoke();
         lastTimeDashed = Time.time + 0.5f;
         dashDirection = Vector3.ProjectOnPlane(characterMovement.orientation.forward, characterMovement.GravityDir);
