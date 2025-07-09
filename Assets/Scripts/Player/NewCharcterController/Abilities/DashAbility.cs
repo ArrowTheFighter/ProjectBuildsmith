@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Diagnostics;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class DashAbility : PlayerAbility
@@ -51,19 +52,25 @@ public class DashAbility : PlayerAbility
             //     characterMovement.rb.linearVelocity = new Vector3(limitedVel.x, characterMovement.rb.linearVelocity.y, limitedVel.z);
             // }
             LayerMask layerMask = characterMovement.IgnoreGroundLayerMask;
+            RaycastHit raycastHit;
             if (Physics.Raycast(
                 characterMovement.transform.position + characterMovement.transform.forward * 0.5f,
                 characterMovement.orientation.forward,
-                1.5f, ~layerMask,QueryTriggerInteraction.Ignore))
+                out raycastHit,
+                1.5f, ~layerMask, QueryTriggerInteraction.Ignore))
             {
-                if (!isBonking && !characterMovement.grounded && !slideJumping)
+                float maxSlopeDot = Mathf.Cos(characterMovement.maxSlopeAngle * Mathf.Deg2Rad);
+                if (Vector3.Dot(raycastHit.normal, Vector3.up) < maxSlopeDot)
                 {
-                    Bonk();
-                 }
+                    if (!isBonking && !characterMovement.grounded && !slideJumping)
+                    {
+                        Bonk();
+                    }
+                }
+                    
             }
 
 
-            print(characterMovement.rb.linearVelocity.magnitude);
             if (characterMovement.grounded || characterMovement.OnSteepSlope())
             {
                 if (!groundSliding && Time.time > lastTimeDashed)
@@ -77,20 +84,16 @@ public class DashAbility : PlayerAbility
                 {
                     if (Time.time - lastTimeDashed > 0.75f)
                     {
-
-                        print("player wasn't moving");
                         StopAllCoroutines();
                         EndDive();
                     }
                 }
                 if (slideJumping && Time.time > lastTimeDashed)
                 {
-                    print("ending slide jump");
                     EndDive();
                 }
                 if (isBonking && !bonkLand && Time.time > lastTimeDashed)
                 {
-                    print("Bonking player is on the ground");
                     bonkLand = true;
                     StartCoroutine(BonkCooldown());
                  }
@@ -176,8 +179,32 @@ public class DashAbility : PlayerAbility
         {
             if (!dashButtonPressed && !isDashing && Time.time > dontDash && canDash && characterMovement.readyToJump)
             {
-                Dash();
-                dashButtonPressed = true;
+                print("Atempting to dash");
+                if (!characterMovement.MovementControlledByAbility)
+                {
+                    Dash();
+                    dashButtonPressed = true;
+                }
+                else
+                {
+
+                    print("Checking abilities");
+                    foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+                    {
+                        switch (playerAbility)
+                        {
+                            case ChopSlamAbility slamAbility:
+                                if (slamAbility.MovingUp)
+                                {
+                                    slamAbility.StopAllCoroutines();
+                                    slamAbility.StopFall();
+                                    Dash();
+                                    dashButtonPressed = true;
+                                }
+                                break;
+                        }
+                    }
+                }
             }
         }
         else

@@ -22,6 +22,7 @@ public class CharacterMovement : MonoBehaviour
     bool jumpOveride;
 
     [Header("Rotation")]
+    [SerializeField] float rotationSpeed = 0.1f;
     [SerializeField] float maxTiltAngle = 25f;
     [HideInInspector] public float tilt_amount;
     float current_tilt;
@@ -35,7 +36,7 @@ public class CharacterMovement : MonoBehaviour
     [HideInInspector] public float sprintSpeed;
 
     [Header("Slopes")]
-    [SerializeField] float maxSlopeAngle;
+    [SerializeField] public float maxSlopeAngle;
     RaycastHit groundHit;
     Vector3 groundNormal;
     RaycastHit steepSlopHit;
@@ -233,7 +234,7 @@ public class CharacterMovement : MonoBehaviour
             tilt_amount = 0;
             return;
         }
-        transform.rotation = Quaternion.Slerp(transform.rotation, forwardTarget, 0.1f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, forwardTarget, rotationSpeed);
         int rot_direction = 1;
         if (Vector3.Cross(old_forward, transform.forward).y > 0)
         {

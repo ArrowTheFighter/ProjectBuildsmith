@@ -16,6 +16,8 @@ public class ChopSlamAbility : PlayerAbility
 
     bool AbilityActive;
     bool IsFalling;
+    bool groundLand;
+    [HideInInspector] public bool MovingUp;
     Action OnAbility;
 
     void Start()
@@ -49,6 +51,7 @@ public class ChopSlamAbility : PlayerAbility
                     characterMovement.rb.AddForce(Vector3.up * upForce, ForceMode.Impulse);
                     characterMovement.MovementControlledByAbility = true;
                     AbilityActive = true;
+                    MovingUp = true;
                     StartCoroutine(DownForceDelay());
                 }
             }
@@ -70,7 +73,7 @@ public class ChopSlamAbility : PlayerAbility
                 {
                     if (hit.TryGetComponent(out IDamagable damagable))
                     {
-                        damagable.TakeDamage(DamageStrength);
+                        damagable.TakeDamage(DamageStrength,characterMovement.gameObject);
 
 
                         Vector3 velocity = characterMovement.rb.linearVelocity;
@@ -83,20 +86,37 @@ public class ChopSlamAbility : PlayerAbility
             }
             
 
-            if (characterMovement.grounded)
+            if (characterMovement.grounded && !groundLand)
+            {
+                Vector3 pos = characterMovement.transform.position + Vector3.down;
+                Collider[] hits = Physics.OverlapSphere(pos,2);
+                foreach (Collider collider in hits)
                 {
-                    StopFall();
-                }
+                    if (collider.TryGetComponent(out IDamagable damagable))
+                    {
+                        damagable.TakeDamage(1, characterMovement.gameObject);
+                     }
+                 }
+
+                print("landed on ground");
+                groundLand = true;
+                characterMovement.playerAnimationController.animator.SetBool("ChopFall", false);
+                characterMovement.playerAnimationController.animator.SetBool("ChopLandGround", true);
+                Invoke("StopFall", 0.5f);
+                //StopFall();
+            }
          }
         
     }
 
-    void StopFall()
+    public void StopFall()
     {
         characterMovement.MovementControlledByAbility = false;
         AbilityActive = false;
         IsFalling = false;
+        groundLand = false;
         characterMovement.playerAnimationController.animator.SetBool("ChopFall", false);
+        characterMovement.playerAnimationController.animator.SetBool("ChopLandGround", false);
     }
 
     IEnumerator DownForceDelay()
@@ -109,6 +129,7 @@ public class ChopSlamAbility : PlayerAbility
         characterMovement.rb.AddForce(Vector3.down * downForce, ForceMode.Impulse);
         characterMovement.playerAnimationController.animator.SetBool("ChopFall", true);
         IsFalling = true;
+        MovingUp = false;
     }
 
 

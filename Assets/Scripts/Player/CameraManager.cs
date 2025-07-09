@@ -70,7 +70,6 @@ public class CameraManager : MonoBehaviour
         float adjustedValue = Mathf.Lerp(0.01f, 3f, Mathf.Pow(sensativity, 1.75f));
 
         //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensativity);
-        print(adjustedValue);
         X_speed_adjustment = adjustedValue;
         Y_speed_adjustment = adjustedValue;
         OnControlsChanged(GameplayInput.instance.playerInput);

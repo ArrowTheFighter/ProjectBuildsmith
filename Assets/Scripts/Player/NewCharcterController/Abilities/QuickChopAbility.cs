@@ -53,7 +53,7 @@ public class QuickChopAbility : PlayerAbility
             if (colliderHit.TryGetComponent(out IDamagable damagable))
             {
                 print("dealing Damage");
-                damagable.TakeDamage(damageStrength);
+                damagable.TakeDamage(damageStrength,characterMovement.gameObject);
             }
          }
      }

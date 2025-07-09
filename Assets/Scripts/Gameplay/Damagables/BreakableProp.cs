@@ -10,7 +10,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
     public Vector3 DestroyedParticleOffset;
     public LootTable[] Loot;
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount,GameObject source)
     {
         PlayParticle();
         Health -= amount;

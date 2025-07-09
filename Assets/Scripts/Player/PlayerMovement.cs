@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Splines;
 using UnityEngine.UI;
 
+[Obsolete]
 public class PlayerMovement : MonoBehaviour
 {
     //@Arrow
