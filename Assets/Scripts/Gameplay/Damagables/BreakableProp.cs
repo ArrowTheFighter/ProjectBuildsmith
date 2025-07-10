@@ -5,12 +5,14 @@ public class BreakableProps : MonoBehaviour, IDamagable
 {
     public int Health;
     public float ItemDropForce = 10;
+    public float RespawnTime;
+    public float ExtraBounceForce;
     public GameObject HitParticle;
     public GameObject DestoryedParticle;
     public Vector3 DestroyedParticleOffset;
     public LootTable[] Loot;
 
-    public void TakeDamage(int amount,GameObject source)
+    public void TakeDamage(int amount, GameObject source)
     {
         PlayParticle();
         Health -= amount;
@@ -18,6 +20,12 @@ public class BreakableProps : MonoBehaviour, IDamagable
         {
             Die();
         }
+    }
+
+    public void TakeDamage(int amount, GameObject source, out float ExtraForce)
+    {
+        TakeDamage(amount, source);
+        ExtraForce = ExtraBounceForce;
     }
 
     public void Die()
@@ -40,7 +48,15 @@ public class BreakableProps : MonoBehaviour, IDamagable
         {
             Instantiate(DestoryedParticle, transform.position + DestroyedParticleOffset, Quaternion.identity);
         }
-        Destroy(gameObject);
+        if (RespawnTime <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            ItemRespawnManager.instance.item_respawns.Add(gameObject, RespawnTime);
+            gameObject.SetActive(false);
+        }
     }
 
     void PlayParticle()
@@ -51,6 +67,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
          }
     }
 
+    
 }
 
 
@@ -64,6 +81,8 @@ public class LootTable
 
     public int GetRandomDropAmount()
     {
-        return UnityEngine.Random.Range(itemDropLow, ItemDropHigh);
+        int amount = UnityEngine.Random.Range(itemDropLow, ItemDropHigh + 1);
+        if (itemDropLow == ItemDropHigh) amount = itemDropLow;
+        return amount;
     }
 }

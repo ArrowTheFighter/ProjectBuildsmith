@@ -32,11 +32,12 @@ public class ChopAbility : PlayerAbility
 
     void Chop()
     {
+        if (this != null && gameObject != null)
         IsChopping = true;
         characterMovement.OnBasicAttack?.Invoke();
         characterMovement.MovementControlledByAbility = true;
         characterMovement.tilt_amount = 0;
-        StartCoroutine(finishedChopDelay());
+        characterMovement.StartCoroutine(finishedChopDelay());
     }
 
     IEnumerator finishedChopDelay()
@@ -44,5 +45,10 @@ public class ChopAbility : PlayerAbility
         yield return new WaitForSeconds(1.25f);
         IsChopping = false;
         characterMovement.MovementControlledByAbility = false;
+    }
+
+    void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

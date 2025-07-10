@@ -21,4 +21,10 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         print("respawning");
         transform.position = gameObject.GetComponent<PlayerSafeZone>().safePos;
     }
+
+    public void TakeDamage(int amount, GameObject source, out float ExtraForce)
+    {
+        ExtraForce = 0;
+        return;
+    }
 }

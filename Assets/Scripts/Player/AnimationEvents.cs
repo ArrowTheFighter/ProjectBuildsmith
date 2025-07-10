@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
 {
     [SerializeField] PlayerAudio playerAudio;
     [SerializeField] CharacterMovement characterMovement;
+    public Action OnAxeSwingStart;
+    public Action OnAxeSwingEnd;
     public void FootstepSound(AnimationEvent evt)
     {
         if (IsHeaviestAnimClip(evt.animatorClipInfo.clip))
@@ -25,6 +28,16 @@ public class AnimationEvents : MonoBehaviour
                 }
             }
         
+    }
+
+    public void AxeSwingStart()
+    {
+        OnAxeSwingStart?.Invoke();
+    }
+
+    public void AxeSwingEnd()
+    {
+        OnAxeSwingEnd?.Invoke();
     }
 
     bool IsHeaviestAnimClip(AnimationClip currentClip)

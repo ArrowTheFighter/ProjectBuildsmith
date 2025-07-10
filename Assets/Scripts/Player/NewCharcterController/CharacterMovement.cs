@@ -93,8 +93,9 @@ public class CharacterMovement : MonoBehaviour
         //playerInput.actions["Jump"].performed += Jump;
         AddAbility<DoubleJumpAbility>();
         AddAbility<DashAbility>();
-        AddAbility<QuickChopAbility>();
-        AddAbility<ChopSlamAbility>();
+        //AddAbility<QuickChopAbility>();
+        //AddAbility<ChopSlamAbility>();
+        AddAbility<NoClip>();
         //AddAbility<DoubleJumpChopAbility>();
         //AddAbility<ChopAbility>();
     }
@@ -115,8 +116,12 @@ public class CharacterMovement : MonoBehaviour
             ApplyGravity();
             // handle drag
             if (grounded)
+            {
                 rb.linearDamping = groundDrag;
+            }
             else
+            {
+
                 rb.linearDamping = 0;
                 Vector3 dragVelocity = rb.linearVelocity;
 
@@ -124,6 +129,7 @@ public class CharacterMovement : MonoBehaviour
                 dragVelocity.z /= (1 + horizontalAirDrag * Time.deltaTime);
 
                 rb.linearVelocity = new Vector3(dragVelocity.x, rb.linearVelocity.y, dragVelocity.z);
+            }
         }
 
         foreach (PlayerAbility ability in playerAbilities)
@@ -149,7 +155,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    void AddAbility<T>() where T : PlayerAbility
+    public void AddAbility<T>() where T : PlayerAbility
     {
 
         var newAbility = gameObject.AddComponent<T>();

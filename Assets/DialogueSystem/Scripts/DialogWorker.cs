@@ -4,10 +4,6 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using DS.Data;
 using EasyTextEffects;
-using System;
-using UnityEngine.Events;
-using UnityEditor.Localization.Plugins.XLIFF.V20;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {

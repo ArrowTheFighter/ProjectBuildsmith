@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Diagnostics;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class DashAbility : PlayerAbility
@@ -26,6 +24,7 @@ public class DashAbility : PlayerAbility
     //[SerializeField] float dashMaxSpeed = 15;
     [SerializeField] float extraGravity = 40;
     [SerializeField] float slideDuration = 0.5f;
+    [SerializeField] float slideJumpDuration = 0.5f;
 
     public override void Initialize(CharacterMovement player)
     {
@@ -129,8 +128,15 @@ public class DashAbility : PlayerAbility
             StopAllCoroutines();
             slideJumping = true;
             lastTimeDashed = Time.time + 0.1f;
+            StartCoroutine(EndDiveAfterDelay(slideJumpDuration));
         }
     }
+
+    IEnumerator EndDiveAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        EndDive();
+     }
 
     IEnumerator BonkCooldown()
     {
@@ -158,6 +164,7 @@ public class DashAbility : PlayerAbility
         StartCoroutine(EndDelay());
         StopCoroutine(BonkCooldown());
         StopCoroutine(SlideCooldown());
+        StopCoroutine(EndDiveAfterDelay(slideJumpDuration));
     }
 
     IEnumerator EndDelay()
@@ -179,7 +186,6 @@ public class DashAbility : PlayerAbility
         {
             if (!dashButtonPressed && !isDashing && Time.time > dontDash && canDash && characterMovement.readyToJump)
             {
-                print("Atempting to dash");
                 if (!characterMovement.MovementControlledByAbility)
                 {
                     Dash();
@@ -188,7 +194,6 @@ public class DashAbility : PlayerAbility
                 else
                 {
 
-                    print("Checking abilities");
                     foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
                     {
                         switch (playerAbility)

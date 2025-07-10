@@ -5,9 +5,6 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using DS.Data;
-using Unity.VisualScripting;
-using DS.ScriptableObjects;
-using Sirenix.OdinInspector.Editor;
 
 public class DialogManager : MonoBehaviour
 {

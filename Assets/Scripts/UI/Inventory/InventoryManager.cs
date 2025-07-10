@@ -12,8 +12,11 @@ public class InventoryManager : MonoBehaviour
     [Header("InventoryObjects")]
     public GameObject InventoryObject;
     public GameObject InventorySlotsParent;
+    public GameObject InventoryHotbarSlotsParent;
     public GameObject InventorySlotPrefab;
     [SerializeField] public InventorySlotComponent MouseSlot;
+    public int TotalInventorySlots = 30;
+    public int TotalHotbarSlots = 5;
 
     public Action OnInventoryClosed;
     public Action OnInventoryUpdated;
@@ -43,8 +46,13 @@ public class InventoryManager : MonoBehaviour
     {
         GameplayInput.instance.playerInput.actions["Inventory"].performed += ToggleInventory;
         GameplayInput.instance.playerInput.actions["CloseInventory"].performed += ToggleInventory;
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < TotalInventorySlots + TotalHotbarSlots; i++)
         {
+            if (i < TotalHotbarSlots)
+            {
+                AddHotbarSlots(i);
+                continue;
+             }
             AddInventorySlot(i);
         }
         OnInventoryUpdated += QuestsObjectiveCheck;
@@ -133,6 +141,20 @@ public class InventoryManager : MonoBehaviour
         GameObject slot = Instantiate(InventorySlotPrefab, InventorySlotsParent.transform);
         InventorySlotComponent inventorySlotComponent = slot.GetComponent<InventorySlotComponent>();
         inventorySlotComponent.SlotID = slotID;
+        inventorySlotComponent.inventorySlot = inventorySlot;
+        inventorySlot.inventorySlotComponent = inventorySlotComponent;
+    }
+
+    void AddHotbarSlots(int slotID)
+    {
+        InventorySlot inventorySlot = new InventorySlot();
+        //inventorySlot.inventoryItemStack = new InventoryItemStack();
+
+        inventorySlots.Add(inventorySlot);
+        GameObject slot = Instantiate(InventorySlotPrefab, InventoryHotbarSlotsParent.transform);
+        InventorySlotComponent inventorySlotComponent = slot.GetComponent<InventorySlotComponent>();
+        inventorySlotComponent.SlotID = slotID;
+        inventorySlotComponent.IsHotbar = true;
         inventorySlotComponent.inventorySlot = inventorySlot;
         inventorySlot.inventorySlotComponent = inventorySlotComponent;
     }
@@ -344,7 +366,6 @@ public class InventoryManager : MonoBehaviour
 
     public void QuestsObjectiveCheck()
     {
-        print("Checking quest info");
         UpdatePinnedQuests();
         foreach (QuestInfo info in activeQuests)
         {

@@ -1,17 +1,14 @@
 using System;
-using System.Threading;
-using NUnit.Framework;
 using TMPro;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.Interactions;
 using UnityEngine.UI;
 
 public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
     public InventorySlot inventorySlot;
     public int SlotID;
+    public bool  IsHotbar;
     public bool Selected;
     public Image slotImage;
     public TextMeshProUGUI slotText;
@@ -241,6 +238,10 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         slotImage.sprite = null;
         slotImage.color = new Color(0, 0, 0, 0);
         slotEmptied?.Invoke();
+        if (IsHotbar)
+        {
+            HotbarManager.instance.ClearSlotVisuals(SlotID);
+        }
     }
 
     public void DropItem(int amount = -1)
@@ -256,12 +257,20 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         slotImage.color = new Color(1, 1, 1, 1);
         slotImage.sprite = sprite;
         slotFilled?.Invoke();
+        if (IsHotbar)
+        {
+            HotbarManager.instance.SetSlotVisuals(SlotID,this);
+         }
     }
 
-    public void SetSlotFilled( int _amount)
+    public void SetSlotFilled(int _amount)
     {
         setSlotAmountText(_amount);
         slotFilled?.Invoke();
+        if (IsHotbar)
+        {
+            HotbarManager.instance.SetSlotVisuals(SlotID, this);
+        }
     }
 
     public void setSlotText(string _text)

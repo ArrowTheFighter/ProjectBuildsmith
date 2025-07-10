@@ -25,6 +25,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] UnityEvent InitalCutsceneEvent;
     [SerializeField] CutsceneBuilder InitialCutscene;
     [SerializeField] CanvasGroup black_fade_cover;
+    public AnimationEvents animationEvents;
     public List<Transform> respawnPoints = new List<Transform>();
     public bool can_use_dialog = true;
     public bool DialogIsOpen;
@@ -199,6 +200,7 @@ public class GameplayUtils : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
 
     public void SetMainVolume(System.Single vol)
     {

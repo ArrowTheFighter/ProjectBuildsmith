@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
@@ -10,6 +11,7 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] float cantPickupDelay = 0.5f;
     float cantPickupTime;
     [SerializeField] public float respawn_time = -1;
+    bool markedAsDestoryed;
 
     void Awake()
     {
@@ -28,8 +30,17 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        markedAsDestoryed = false;
+    }
+
     public void Pickup()
     {
+        if (markedAsDestoryed)
+        {
+            return;
+        }
         if (cantPickupTime > Time.time) return;
         int loosePieces = GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification);
         if (loosePieces == -1) return;
@@ -42,15 +53,18 @@ public class ItemPickup : MonoBehaviour
         {
             if (respawn_time <= 0)
             {
+                markedAsDestoryed = true;
                 Destroy(gameObject);
             }
             else
             {
+                markedAsDestoryed = true;
                 ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + respawn_time);
                 gameObject.SetActive(false);
             }
         }
     }
+
 
     void OnCollisionEnter(Collision collision)
     {

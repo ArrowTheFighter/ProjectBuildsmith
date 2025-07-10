@@ -73,14 +73,17 @@ public class ChopSlamAbility : PlayerAbility
                 {
                     if (hit.TryGetComponent(out IDamagable damagable))
                     {
-                        damagable.TakeDamage(DamageStrength,characterMovement.gameObject);
+                        float ExtraForce;
+                        damagable.TakeDamage(DamageStrength, characterMovement.gameObject,out ExtraForce);
 
 
                         Vector3 velocity = characterMovement.rb.linearVelocity;
                         velocity = new Vector3(0, 0, 0);
                         characterMovement.rb.linearVelocity = velocity;
-                        characterMovement.rb.AddForce(Vector3.up * bounceForce, ForceMode.Impulse);
+                        characterMovement.rb.AddForce(Vector3.up * (bounceForce + ExtraForce), ForceMode.Impulse);
                         StopFall();
+                        PlayerParticlesManager.instance.PlayChopSlamParticles();
+                        return;
                     }
                 }
             }
@@ -98,7 +101,7 @@ public class ChopSlamAbility : PlayerAbility
                      }
                  }
 
-                print("landed on ground");
+                PlayerParticlesManager.instance.PlayChopSlamParticles();
                 groundLand = true;
                 characterMovement.playerAnimationController.animator.SetBool("ChopFall", false);
                 characterMovement.playerAnimationController.animator.SetBool("ChopLandGround", true);
