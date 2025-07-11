@@ -107,8 +107,8 @@ namespace DS.Windows
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
-            this.AddManipulator(CreateNodeContextualMenu("Add Node (Single Choice)", DSDialogueType.SingleChoice));
-            this.AddManipulator(CreateNodeContextualMenu("Add Node (Multiple Choice)", DSDialogueType.MultipleChoice));
+            this.AddManipulator(CreateNodeContextualMenu("Add Node (NPC Dialog)", DSDialogueType.SingleChoice));
+            this.AddManipulator(CreateNodeContextualMenu("Add Node (NPC Dialog W Choices)", DSDialogueType.MultipleChoice));
             this.AddManipulator(CreateNodeContextualMenu("Add Node (Connector)", DSDialogueType.Connector, ""));
 
             this.AddManipulator(CreateGroupContextualMenu());

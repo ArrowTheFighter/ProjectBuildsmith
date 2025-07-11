@@ -23,14 +23,15 @@ public class DashAbility : PlayerAbility
     [SerializeField] float dashUpForceFromGround = 25;
     //[SerializeField] float dashMaxSpeed = 15;
     [SerializeField] float extraGravity = 40;
-    [SerializeField] float slideDuration = 0.5f;
-    [SerializeField] float slideJumpDuration = 0.5f;
+    [SerializeField] float slideDuration = 0.25f;
+    [SerializeField] float slideJumpDuration = 0.35f;
+    [SerializeField] float slideTurnAmount = 90f;
 
     public override void Initialize(CharacterMovement player)
     {
         base.Initialize(player);
         characterMovement.onDoubleJump += setCooldown;
-        characterMovement.characterInput.OnJump += SlideJump;
+        characterMovement.characterInput.OnDive += SlideJump;
     }
 
     public override void FixedUpdateAbility()
@@ -74,19 +75,64 @@ public class DashAbility : PlayerAbility
             {
                 if (!groundSliding && Time.time > lastTimeDashed)
                 {
-                    StartCoroutine(SlideCooldown());
+                    //StartCoroutine(SlideCooldown());
                     groundSliding = true;
 
                     characterMovement.rb.linearDamping = 2;
                 }
-                if (groundSliding && characterMovement.rb.linearVelocity.magnitude < 0.2f && !slideJumping)
+                if (groundSliding && !slideJumping)
                 {
-                    if (Time.time - lastTimeDashed > 0.75f)
+                    print(characterMovement.rb.linearVelocity.magnitude);
+                    if (characterMovement.rb.linearVelocity.magnitude < 5f && !slideJumping)
                     {
-                        StopAllCoroutines();
-                        EndDive();
+                        if (Time.time - lastTimeDashed > 0.75f)
+                        {
+                            StopAllCoroutines();
+                            EndDive();
+                        }
                     }
+                    if (characterMovement.characterInput.GetMovementInput() != Vector3.zero)
+                    {
+                        Vector3 camForward = Camera.main.transform.forward;
+                        camForward.y = 0;
+
+                        float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.forward);
+                        if (dot < -0.4f)
+                        {
+                            characterMovement.rb.linearVelocity = Vector3.Lerp(characterMovement.rb.linearVelocity, Vector3.zero, 0.1f);
+                        }
+                        if (dot > 0.4f)
+                        {
+                            characterMovement.rb.linearDamping = .4f;
+                        }
+                        else
+                        {
+                            characterMovement.rb.linearDamping = 3;
+                        }
+                        if (characterMovement.rb.linearVelocity.magnitude > 0.01)
+                        {
+                            float turnAmount = 0;
+                            float dotRight = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.right);
+                            if (dotRight > 0.1f)
+                            {
+                                turnAmount = slideTurnAmount;
+                            }
+                            else if (dotRight < -0.1f)
+                            {
+                                turnAmount = -slideTurnAmount;
+                            }
+                            if (turnAmount != 0)
+                            {
+                                Quaternion turn = Quaternion.AngleAxis(turnAmount * Time.fixedDeltaTime, Vector3.up);
+                                Vector3 newVelocity = turn * characterMovement.rb.linearVelocity;
+                                characterMovement.rb.linearVelocity = newVelocity;
+                            }
+                        }
+                    }
+                    characterMovement.transform.forward = Vector3.Lerp(characterMovement.transform.forward, characterMovement.rb.linearVelocity.normalized,0.2f);
+
                 }
+                
                 if (slideJumping && Time.time > lastTimeDashed)
                 {
                     EndDive();

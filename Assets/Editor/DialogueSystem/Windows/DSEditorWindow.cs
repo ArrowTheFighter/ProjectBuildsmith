@@ -5,11 +5,14 @@ using UnityEngine.UIElements;
 
 namespace DS.Windows
 {
-    using System;
+    using UnityEditor.ShortcutManagement;
+    using UnityEngine;
     using Utilities;
 
     public class DSEditorWindow : EditorWindow
     {
+        public static DSEditorWindow instance;
+
         private DSGraphView graphView;
 
         private readonly string defaultFileName = "DialoguesFileName";
@@ -26,10 +29,16 @@ namespace DS.Windows
 
         private void OnEnable()
         {
+            instance = this;
             AddGraphView();
             AddToolbar();
 
             AddStyles();
+        }
+
+        void OnDisable()
+        {
+            if (instance == this) instance = null;
         }
 
         private void AddGraphView()
@@ -75,6 +84,17 @@ namespace DS.Windows
             rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
         }
 
+        [Shortcut("DS/Save", typeof(DSEditorWindow), KeyCode.S, ShortcutModifiers.Action)]
+        static void SaveShortcut()
+        {
+            Debug.Log("Atempting to save");
+            if (instance != null && instance.hasFocus)
+            {
+                Debug.Log("saving");
+                instance.Save();
+            }
+        }
+
         private void Save()
         {
 
@@ -96,12 +116,14 @@ namespace DS.Windows
             {
                 DSIOUtility.Initialize(graphView, fileNameTextField.value);
                 DSIOUtility.Save();
+                Focus();
             }
             else
             {
+                Focus();
                 return;
             }
-            
+
         }
 
         private void Load()

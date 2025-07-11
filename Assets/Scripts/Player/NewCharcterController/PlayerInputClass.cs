@@ -8,6 +8,8 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
     Camera mainCamera;
 
     public event Action OnJump;
+    public event Action OnDive;
+
     GameplayInput gameplayInput;
 
     void Start()
@@ -17,6 +19,7 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
         mainCamera = Camera.main;
        
         playerInput.actions["Jump"].performed += Jump;
+        playerInput.actions["Sprint"].performed += Dive;
     }
 
 
@@ -39,11 +42,16 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
         OnJump?.Invoke();
     }
 
+    void Dive(InputAction.CallbackContext context)
+    {
+        OnDive?.Invoke();
+    }
+
 
     public bool GetDashInput()
     {
         return playerInput.actions["Sprint"].ReadValue<float>() > 0.1f;
-     }
+    }
 
     public bool GetJumpInput()
     {

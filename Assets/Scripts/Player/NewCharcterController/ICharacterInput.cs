@@ -8,4 +8,5 @@ public interface ICharacterInput
     bool GetDashInput();
 
     public event Action OnJump;
+    public event Action OnDive;
 }

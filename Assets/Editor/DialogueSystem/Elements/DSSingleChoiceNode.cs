@@ -33,7 +33,7 @@ namespace DS.Elements
 
             /* Title Extra */
 
-            Label label = new Label("Dialog");
+            Label label = new Label("NPC Dialog");
 
             label.style.paddingTop = 8;
             label.style.paddingBottom = 8;

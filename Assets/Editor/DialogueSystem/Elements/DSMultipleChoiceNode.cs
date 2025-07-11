@@ -66,7 +66,7 @@ namespace DS.Elements
 
             addChoiceButton.AddToClassList("ds-node__button");
 
-            Label label = new Label("Dialog with choices");
+            Label label = new Label("NPC Dialog with choices");
 
             label.style.paddingTop = 8;
             label.style.paddingBottom = 8;

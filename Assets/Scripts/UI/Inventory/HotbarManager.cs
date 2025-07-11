@@ -131,6 +131,7 @@ public class HotbarManager : MonoBehaviour
 
     void RotateHotbar(bool clockwise)
     {
+        if (GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>().MovementControlledByAbility) return;
         Slots[SelectedSlot].rectTransform.DOScale(Vector3.one, 0.25f);
         Slots[SelectedSlot].rectTransform.position = new Vector3(Slots[SelectedSlot].rectTransform.position.x, Slots[SelectedSlot].rectTransform.position.y, 0);
         float angleStep = 2 * Mathf.PI / totalSlots;

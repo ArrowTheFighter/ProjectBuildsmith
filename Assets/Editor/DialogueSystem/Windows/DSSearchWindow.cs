@@ -27,12 +27,12 @@ namespace DS.Windows
             {
                 new SearchTreeGroupEntry(new GUIContent("Create Elements")),
                 new SearchTreeGroupEntry(new GUIContent("Dialogue Nodes"), 1),
-                new SearchTreeEntry(new GUIContent("Single Choice", indentationIcon))
+                new SearchTreeEntry(new GUIContent("NPC Dialog", indentationIcon))
                 {
                     userData = DSDialogueType.SingleChoice,
                     level = 2
                 },
-                new SearchTreeEntry(new GUIContent("Multiple Choice", indentationIcon))
+                new SearchTreeEntry(new GUIContent("NPC Dialog With Choices", indentationIcon))
                 {
                     userData = DSDialogueType.MultipleChoice,
                     level = 2
