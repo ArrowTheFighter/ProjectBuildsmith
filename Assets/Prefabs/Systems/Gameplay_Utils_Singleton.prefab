@@ -44,8 +44,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4cddf517ddc1f498b5794d0abeb9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerTransform: {fileID: 0}
   mouseLock_script: {fileID: 0}
-  playerMovement_script: {fileID: 0}
+  cameraInputComponent: {fileID: 0}
+  inventoryManager: {fileID: 0}
+  inventoryItems: {fileID: 0}
+  inventory: {fileID: 0}
   PauseMenu: {fileID: 0}
+  UI_Canvases:
+  - {fileID: 0}
+  - {fileID: 0}
   Main_volume_slider: {fileID: 0}
+  itemPickupNotifcationScript: {fileID: 0}
+  playerAudio: {fileID: 0}
+  InitalCutsceneEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DelayedEventCall, Assembly-CSharp
+        m_MethodName: CallDelayedEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CutsceneBuilder, Assembly-CSharp
+        m_MethodName: StartCutscene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DelayedEventCall, Assembly-CSharp
+        m_MethodName: CallDelayedEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  InitialCutscene: {fileID: 0}
+  black_fade_cover: {fileID: 0}
+  animationEvents: {fileID: 0}
+  respawnPoints: []
   can_use_dialog: 1
+  DialogIsOpen: 0
+  PauseMenuIsOpen: 0

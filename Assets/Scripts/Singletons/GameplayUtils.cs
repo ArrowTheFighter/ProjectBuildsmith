@@ -15,16 +15,11 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] CinemachineInputAxisController cameraInputComponent;
     //[SerializeField] public PlayerMovement playerMovement_script;
     [SerializeField] public InventoryManager inventoryManager;
-    [SerializeField] InventoryItems inventoryItems;
-    [SerializeField] GameObject inventory;
     [SerializeField] GameObject PauseMenu;
     [SerializeField] GameObject[] UI_Canvases;
     [SerializeField] Slider Main_volume_slider;
     [SerializeField] ItemPickupNotifcationScript itemPickupNotifcationScript;
     [SerializeField] PlayerAudio playerAudio;
-    [SerializeField] UnityEvent InitalCutsceneEvent;
-    [SerializeField] CutsceneBuilder InitialCutscene;
-    [SerializeField] CanvasGroup black_fade_cover;
     public AnimationEvents animationEvents;
     public List<Transform> respawnPoints = new List<Transform>();
     public bool can_use_dialog = true;
@@ -46,15 +41,6 @@ public class GameplayUtils : MonoBehaviour
         FlagManager.wipe_flag_list();
         //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
         AudioListener.volume = Main_volume_slider.value;
-        if (SceneManagerUtils.instance != null)
-        {
-            print(SceneManagerUtils.instance.ShowStartCutscene);
-            if (SceneManagerUtils.instance.ShowStartCutscene)
-            {
-                InitalCutsceneEvent?.Invoke();
-                black_fade_cover.DOFade(0, 5).From(2);
-            }
-        }
     }
 
     public bool OpenDialogMenu()
