@@ -12,4 +12,6 @@ public abstract class PlayerAbility : MonoBehaviour
 
     public abstract void UpdateAbility();
 
+    public abstract void ResetAbility();
+
 }

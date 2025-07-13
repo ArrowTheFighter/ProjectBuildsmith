@@ -140,4 +140,13 @@ public class ChopSlamAbility : PlayerAbility
     {
 
     }
+
+    public override void ResetAbility()
+    {
+        if (AbilityActive)
+        {
+            StopAllCoroutines();
+            StopFall();
+         }
+    }
 }

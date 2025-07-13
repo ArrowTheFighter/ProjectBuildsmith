@@ -26,6 +26,7 @@ public class DashAbility : PlayerAbility
     [SerializeField] float slideDuration = 0.25f;
     [SerializeField] float slideJumpDuration = 0.35f;
     [SerializeField] float slideTurnAmount = 90f;
+    [SerializeField] float maxFallSpeed = 50;
 
     public override void Initialize(CharacterMovement player)
     {
@@ -43,6 +44,13 @@ public class DashAbility : PlayerAbility
             characterMovement.ApplyGravity();
             
             characterMovement.rb.AddForce(Vector3.down * extraGravity);
+
+            if (characterMovement.rb.linearVelocity.y < -maxFallSpeed)
+            {
+                Vector3 characterVel = characterMovement.rb.linearVelocity;
+                characterVel.y = -maxFallSpeed;
+                characterMovement.rb.linearVelocity = characterVel;
+            }
             //Vector3 flatVel = new Vector3(characterMovement.rb.linearVelocity.x, 0f, characterMovement.rb.linearVelocity.z);
 
             // limit velocity if needed
@@ -70,9 +78,10 @@ public class DashAbility : PlayerAbility
                     
             }
 
-
+            //print("character Grounded = " + characterMovement.grounded + " - OnSteepSlope = " + characterMovement.OnSteepSlope());
             if (characterMovement.grounded || characterMovement.OnSteepSlope())
             {
+                //print("Groundsliding = " + groundSliding + " - SlideJumping = " + slideJumping);
                 if (!groundSliding && Time.time > lastTimeDashed)
                 {
                     //StartCoroutine(SlideCooldown());
@@ -82,7 +91,7 @@ public class DashAbility : PlayerAbility
                 }
                 if (groundSliding && !slideJumping)
                 {
-                    print(characterMovement.rb.linearVelocity.magnitude);
+                    //print(characterMovement.rb.linearVelocity.magnitude);
                     if (characterMovement.rb.linearVelocity.magnitude < 5f && !slideJumping)
                     {
                         if (Time.time - lastTimeDashed > 0.75f)
@@ -129,19 +138,34 @@ public class DashAbility : PlayerAbility
                             }
                         }
                     }
-                    characterMovement.transform.forward = Vector3.Lerp(characterMovement.transform.forward, characterMovement.rb.linearVelocity.normalized,0.2f);
+                    if (characterMovement.rb.linearVelocity.magnitude > 0.1f && !isBonking)
+                    {
+                        characterMovement.orientation.forward = Vector3.Lerp(characterMovement.orientation.forward, characterMovement.rb.linearVelocity.normalized, 0.2f);
+                    }
+
 
                 }
-                
+
                 if (slideJumping && Time.time > lastTimeDashed)
                 {
                     EndDive();
+                }
+                if (isBonking)
+                {
+                    characterMovement.rb.linearDamping = 5;
                 }
                 if (isBonking && !bonkLand && Time.time > lastTimeDashed)
                 {
                     bonkLand = true;
                     StartCoroutine(BonkCooldown());
-                 }
+                }
+            }
+            else
+            {
+                if (isBonking)
+                {
+                    characterMovement.rb.linearDamping = 0;
+                }
             }
         }
     }
@@ -203,6 +227,11 @@ public class DashAbility : PlayerAbility
         characterMovement.OnDashStop?.Invoke();
         characterMovement.playerAnimationController.animator.SetBool("Bonking", false);
         characterMovement.MovementControlledByAbility = false;
+
+       // Vector3 characterForward = characterMovement.orientation.forward;
+        //characterForward.y = 0;
+        characterMovement.orientation.localEulerAngles = Vector3.zero;
+
         groundSliding = false;
         slideJumping = false;
         bonkLand = false;
@@ -296,5 +325,13 @@ public class DashAbility : PlayerAbility
     {
         dontDash = Time.time + 0.1f;
      }
-    
+
+    public override void ResetAbility()
+    {
+        if (isDashing)
+        {
+            StopAllCoroutines();
+            EndDive();
+         }
+    }
 }

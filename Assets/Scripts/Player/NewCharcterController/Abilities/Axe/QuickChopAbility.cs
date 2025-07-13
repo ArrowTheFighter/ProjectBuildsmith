@@ -75,4 +75,9 @@ public class QuickChopAbility : PlayerAbility
         yield return new WaitForSeconds(0.5f);
         IsChopping = false;
     }
+
+    public override void ResetAbility()
+    {
+        //No need to do anything
+    }
 }

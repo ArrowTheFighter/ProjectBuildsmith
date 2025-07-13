@@ -53,4 +53,9 @@ public class DoubleJumpAbility : PlayerAbility
     {
         
     }
+
+    public override void ResetAbility()
+    {
+        //No need to reset anything
+    }
 }

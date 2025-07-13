@@ -60,4 +60,9 @@ public class DoubleJumpChopAbility : PlayerAbility
     {
         
     }
+
+    public override void ResetAbility()
+    {
+        //No need to do anything
+    }
 }

@@ -12,6 +12,11 @@ public class NoClip : PlayerAbility
 
     }
 
+    public override void ResetAbility()
+    {
+        //no need to do anything
+    }
+
     public override void UpdateAbility()
     {
         if (GameplayInput.instance.playerInput.actions["NoClip"].ReadValue<float>() > 0)
@@ -21,6 +26,13 @@ public class NoClip : PlayerAbility
                 NoClipActive = !NoClipActive;
                 characterMovement.MovementControlledByAbility = NoClipActive;
                 NoClipButtonPressed = true;
+                if (NoClipActive)
+                {
+                    foreach (PlayerAbility ability in characterMovement.playerAbilities)
+                    {
+                        ability.ResetAbility();
+                     }
+                 }
             }
         }
         else
