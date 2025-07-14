@@ -33,6 +33,7 @@ public class DashAbility : PlayerAbility
         base.Initialize(player);
         characterMovement.onDoubleJump += setCooldown;
         characterMovement.characterInput.OnDive += SlideJump;
+        characterMovement.characterInput.OnDive += DashAction;
     }
 
     public override void FixedUpdateAbility()
@@ -100,7 +101,11 @@ public class DashAbility : PlayerAbility
                             EndDive();
                         }
                     }
-                    if (characterMovement.characterInput.GetMovementInput() != Vector3.zero)
+                    if (characterMovement.characterInput is NPCFollowTargetInput)
+                    {
+                        characterMovement.rb.linearDamping = 5;
+                     }
+                    else if (characterMovement.characterInput.GetMovementInput() != Vector3.zero)
                     {
                         Vector3 camForward = Camera.main.transform.forward;
                         camForward.y = 0;
@@ -291,6 +296,36 @@ public class DashAbility : PlayerAbility
         {
             dashButtonPressed = false;
          }
+    }
+
+    void DashAction()
+    {
+        if (!isDashing && Time.time > dontDash && canDash && characterMovement.readyToJump)
+        {
+            if (!characterMovement.MovementControlledByAbility)
+            {
+                Dash();
+            }
+        }
+        else
+        {
+
+            foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+            {
+                switch (playerAbility)
+                {
+                    case ChopSlamAbility slamAbility:
+                        if (slamAbility.MovingUp)
+                        {
+                            slamAbility.StopAllCoroutines();
+                            slamAbility.StopFall();
+                            Dash();
+                            dashButtonPressed = true;
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     void Dash()

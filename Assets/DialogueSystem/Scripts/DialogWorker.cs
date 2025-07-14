@@ -4,14 +4,14 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using DS.Data;
 using EasyTextEffects;
+using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.UI;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {
     [SerializeField] public string StartDialogGraphName;
-    [SerializeField] TextMeshProUGUI textBox;
-    [SerializeField] TextMeshProUGUI dialogNameTextBox;
-    [SerializeField] GameObject DialogMenu;
-    [SerializeField] TextEffect textEffect;
+    TextEffect textEffect;
 
     [Header("NPC")]
     [SerializeField] string NPC_Name;
@@ -32,6 +32,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public item_requirement[] item_Requirements;
     public item_requirement[] required_items => item_Requirements;
 
+    public bool NPCCanInteract = true;
+    public bool CanInteract { get => NPCCanInteract; set { NPCCanInteract = value; } }
+
     bool isActive;
 
     float interactCooldown;
@@ -45,10 +48,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
         //currentDialogSO = DialogRetriever.GetNextDialogSO(StartDialogGraphName,StarterNode);
         //ShowDialog();
         GameplayInput.instance.playerInput.actions["Submit"].performed += context => { ActiveAndInteract(); };
+        textEffect = DialogManager.instance.text_box.GetComponent<TextEffect>();
     }
 
     public bool Interact(Interactor interactor)
     {
+        if (!NPCCanInteract) return false;
         if (!isActive) isActive = true;
         ActiveAndInteract();
         return true;
@@ -61,22 +66,60 @@ public class DialogWorker : MonoBehaviour, IInteractable
     }
 
 
-
-    [Button("Show Next Dialog")]
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
         if (interactCooldown > Time.time) return;
+        //List<TextEffectStatus> textEffectStatus = textEffect.QueryEffectStatusesByTag(TextEffectType.Global, TextEffectEntry.TriggerWhen.Manual, "scale_text_in");
+        if (DialogManager.instance.TextIsAnimating)
+        {
+            print("text is animating");
+            textEffect.StopManualEffects();
+            DialogManager.instance.SetTextIsAnimating(false);
+            return;
+         }
+               
         if (!GameplayUtils.instance.OpenDialogMenu()) return;
         bool nextDialogResult = GetNextDialog(providedDialog);
         if (nextDialogResult)
         {
             ShowDialog();
+            ResetTMPSubMeshes(DialogManager.instance.text_box);
+            DialogManager.instance.text_box.ForceMeshUpdate();
+            //textEffect.StopAllEffects();
             textEffect.Refresh();
+            print("Starting manual effects");
             textEffect.StartManualEffects();
-            interactCooldown = Time.time + 0.2f;
+            DialogManager.instance.SetTextIsAnimating(true);
         }
+        interactCooldown = Time.time + 0.05f;
 
     }
+
+    void ResetTMPSubMeshes(TextMeshProUGUI tmp)
+    {
+        if (tmp == null) return;
+        if (!tmp.text.Contains("<sprite"))
+        {
+            tmp.ForceMeshUpdate(true, true);
+            var subMeshes = tmp.GetComponentsInChildren<TMP_SubMeshUI>();
+            foreach (var subMesh in subMeshes)
+            {
+                if (subMesh != null)
+                {
+#if UNITY_EDITOR
+                    if (!Application.isPlaying)
+                        DestroyImmediate(subMesh.gameObject);
+                    else Destroy(subMesh.gameObject);
+#else
+                    Destroy(subMesh.gameObject);
+#endif
+                }
+            }
+            tmp.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(tmp.rectTransform);
+         }
+     }
+
 
 
     bool GetNextDialog(ScriptableObject providedDialog = null)
@@ -152,9 +195,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     case DS.Enumerations.DSDialogueType.StartDialog:
                         for (int o = 0; o < dialogueSO.Choices.Count; o++)
                         {
-                            if (DialogRetriever.Choice_is_valid(dialogueSO.Choices[i].NextDialogue, this))
+                            if (DialogRetriever.Choice_is_valid(dialogueSO.Choices[o].NextDialogue, this))
                             {
-                                tempDialogSO = dialogueSO.Choices[i].NextDialogue;
+                                tempDialogSO = dialogueSO.Choices[o].NextDialogue;
                                 continueLoop = true;
                                 break;
                             }
@@ -217,7 +260,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 case DSCloseDialogSO closeDialogSO:
                     currentDialogSO = closeDialogSO;
                     CloseDialog();
-                    return true;
+                    return false;
                 case DSRunEventSO runEventSO:
                     runEvent(runEventSO.EventID);
 
@@ -262,7 +305,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void CloseDialog()
     {
         isActive = false;
-        DialogMenu.SetActive(false);
+        DialogManager.instance.DialogUI.SetActive(false);
         GameplayUtils.instance.CloseDialogMenu();
     }
 
@@ -270,17 +313,18 @@ public class DialogWorker : MonoBehaviour, IInteractable
     {
         if (currentDialogSO is DSDialogueSO)
         {
-            dialogNameTextBox.text = NPC_Name;
-            DialogMenu.SetActive(true);
+            string fontWeight = "<font-weight=500>";
+            DialogManager.instance.name_text.text = fontWeight + NPC_Name;
+            DialogManager.instance.DialogUI.SetActive(true);
             DSDialogueSO dialogSO = (DSDialogueSO)currentDialogSO;
             if (UseLocalization)
             {
                 string localizedText = LocalizationManager.GetLocalizedString(Localized_Table, dialogSO.LocalizedKey);
-                textBox.text = localizedText;
+                DialogManager.instance.text_box.text = localizedText;
             }
             else
             {
-                textBox.text = dialogSO.Text;
+                DialogManager.instance.text_box.text = dialogSO.Text;
             }
         }
     }

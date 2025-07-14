@@ -11,7 +11,10 @@ public class AnimationEvents : MonoBehaviour
     {
         if (IsHeaviestAnimClip(evt.animatorClipInfo.clip))
         {
-            playerAudio.PlayClip(1, 0.5f);
+            if (playerAudio != null)
+            {
+                playerAudio.PlayClip(1, 0.5f);
+            }
         }
     }
 

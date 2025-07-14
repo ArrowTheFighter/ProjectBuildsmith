@@ -28,6 +28,9 @@ public class Sawmill : MonoBehaviour, IInteractable
     public item_requirement[] item_requirements;
     public item_requirement[] required_items => item_requirements;
 
+    bool CInteract;
+    public bool CanInteract { get => CInteract; set { CInteract = value; } }
+
     private bool sawmillRunning;
 
     public GameObject log;

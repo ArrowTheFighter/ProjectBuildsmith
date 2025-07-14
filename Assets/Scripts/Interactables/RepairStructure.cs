@@ -14,6 +14,9 @@ public class RepairStructure : MonoBehaviour, IInteractable
     public item_requirement[] itemsRequired;
     public item_requirement[] required_items => itemsRequired;
 
+    bool CInteract;
+    public bool CanInteract { get => CInteract; set { CInteract = value; } }
+
     bool finished = false;
 
     public Vector3 scaleInSize;

@@ -10,6 +10,9 @@ public class RequireItemInteract : MonoBehaviour, IInteractable
     [SerializeField] item_requirement[] items_required;
     public item_requirement[] required_items => items_required;
 
+    bool CInteract;
+    public bool CanInteract { get => CInteract; set { CInteract = value; } }
+
     [SerializeField] bool remove_items = true;
     [SerializeField] bool only_once;
     [SerializeField] string finished_prompt;

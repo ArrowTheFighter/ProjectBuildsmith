@@ -14,6 +14,10 @@ public class BuildBridge : MonoBehaviour, IInteractable
 
     public item_requirement[] itemsRequired;
     public item_requirement[] required_items => itemsRequired;
+
+    bool CInteract;
+    public bool CanInteract { get => CInteract; set { CInteract = value; } }
+
     //public int required_wood;
     bool finished = false;
 

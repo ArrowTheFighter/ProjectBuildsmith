@@ -1,3 +1,4 @@
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,7 @@ public class Interactor : MonoBehaviour
 
             if (interactable != null)
             {
+                if (!interactable.CanInteract) return;
                 if (!interactionPromptUI.IsDisplayed) interactionPromptUI.SetUp(interactable.INTERACTION_PROMPT, interactable.required_items);
                 if (interactionPromptUI.IsDisplayed) interactionPromptUI.ChangeText(interactable.INTERACTION_PROMPT,interactable.required_items);
                 

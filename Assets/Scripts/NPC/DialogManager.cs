@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using DS.Data;
+using EasyTextEffects;
 
 public class DialogManager : MonoBehaviour
 {
     public static DialogManager instance;
     public TextMeshProUGUI text_box;
-    [SerializeField] GameObject DialogUI;
+    [SerializeField] public GameObject DialogUI;
+    public bool TextIsAnimating;
     public string text_box_text
     {
         get
@@ -19,12 +21,12 @@ public class DialogManager : MonoBehaviour
         }
         set
         {
-            if(value != "" && !DialogUI.activeInHierarchy)
+            if (value != "" && !DialogUI.activeInHierarchy)
             {
                 DialogUI.SetActive(true);
             }
             text_box.text = value;
-            if(value == null || value == "")
+            if (value == null || value == "")
             {
                 Close_Dialog();
             }
@@ -60,12 +62,11 @@ public class DialogManager : MonoBehaviour
         instance = this;
     }
 
-    void Start()
+    public void SetTextIsAnimating(bool isAnimating)
     {
-        // string read_string;
-        // read_string = FileManager.ReadStringFromGamePath("test.txt");
-        // print(read_string);
-    }
+        //print("setting text is animting to: " + isAnimating);
+        TextIsAnimating = isAnimating;
+     }
 
     public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker, bool UseLocalization = true)
     {
@@ -96,7 +97,7 @@ public class DialogManager : MonoBehaviour
             }
             choice.gameObject.SetActive(true);
             string text = data[i].Text;
-            if(UseLocalization) text = LocalizationManager.GetLocalizedString("NPC", data[i].LocalizeKey);
+            if (UseLocalization) text = LocalizationManager.GetLocalizedString("NPC", data[i].LocalizeKey);
             choice.GetComponentInChildren<TextMeshProUGUI>().text = text;
             ChoiceButton choiceButton = choice.GetComponentInChildren<ChoiceButton>();
             choiceButton.dialogueChoiceData = data[i];

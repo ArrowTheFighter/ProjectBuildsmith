@@ -87,10 +87,8 @@ namespace DS.Windows
         [Shortcut("DS/Save", typeof(DSEditorWindow), KeyCode.S, ShortcutModifiers.Action)]
         static void SaveShortcut()
         {
-            Debug.Log("Atempting to save");
             if (instance != null && instance.hasFocus)
             {
-                Debug.Log("saving");
                 instance.Save();
             }
         }

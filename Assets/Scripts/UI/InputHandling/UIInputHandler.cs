@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System;
 
 public class UIInputHandler : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class UIInputHandler : MonoBehaviour
 
     public string currentScheme;
     PlayerInput playerInput;
+
+    public Action<string> OnSchemeChange;
 
     void Awake()
     {
@@ -43,6 +46,7 @@ public class UIInputHandler : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(null);
         }
+        OnSchemeChange?.Invoke(currentScheme);
     }
 
     public void OpenedMenu()

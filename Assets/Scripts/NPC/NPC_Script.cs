@@ -20,6 +20,9 @@ public class NPC_Script : MonoBehaviour, IInteractable
     public item_requirement[] item_requirements;
     public item_requirement[] required_items => item_requirements;
 
+    bool CInteract;
+    public bool CanInteract { get => CInteract; set { CInteract = value; } }
+
     [SerializeField] public NPC_Event[] npc_events;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ public class CharacterMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float maxSpeed;
+    float currentMaxSpeed;
     public float moveSpeed;
 
     public float groundDrag;
@@ -86,6 +88,7 @@ public class CharacterMovement : MonoBehaviour
         GravityDir = Vector3.down;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        currentMaxSpeed = maxSpeed;
 
         readyToJump = true;
         Cursor.lockState = CursorLockMode.Locked;
@@ -104,7 +107,13 @@ public class CharacterMovement : MonoBehaviour
     {
         //DEBUG
         Application.targetFrameRate = TargetFPS;
-
+        if (characterInput is NPCFollowTargetInput)
+        {
+            NPCFollowTargetInput nPCFollow = (NPCFollowTargetInput)characterInput;
+            if (nPCFollow.IsWalking) currentMaxSpeed = maxSpeed * 0.5f;
+            else currentMaxSpeed = maxSpeed;
+         }
+         
 
         // Ground check
         GroundCheck();
@@ -154,6 +163,12 @@ public class CharacterMovement : MonoBehaviour
             ability.FixedUpdateAbility();
         }
     }
+
+    public void TurnAround(float duration = 0.5f)
+    {
+        Quaternion forwardTarget = Quaternion.LookRotation(-transform.forward, Vector3.up);
+        transform.DORotate(forwardTarget.eulerAngles, duration, RotateMode.FastBeyond360);
+     }
 
     public void AddAbility<T>() where T : PlayerAbility
     {
@@ -308,9 +323,9 @@ public class CharacterMovement : MonoBehaviour
 
         if (OnSlope() && !exitingSlope)
         {
-            if (rb.linearVelocity.magnitude > maxSpeed)
+            if (rb.linearVelocity.magnitude > currentMaxSpeed)
             {
-                rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+                rb.linearVelocity = rb.linearVelocity.normalized * currentMaxSpeed;
             }
         }
         else
@@ -318,9 +333,9 @@ public class CharacterMovement : MonoBehaviour
             Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
             // limit velocity if needed
-            if (flatVel.magnitude > maxSpeed)
+            if (flatVel.magnitude > currentMaxSpeed)
             {
-                Vector3 limitedVel = flatVel.normalized * maxSpeed;
+                Vector3 limitedVel = flatVel.normalized * currentMaxSpeed;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }

@@ -10,7 +10,8 @@ public class DoubleJumpAbility : PlayerAbility
 
     void Start()
     {
-        remainingDoubleJumps = maxDoubleJumps;   
+        remainingDoubleJumps = maxDoubleJumps;
+        characterMovement.characterInput.OnJump += DoubleJump;
     }
 
     public override void UpdateAbility()
@@ -21,21 +22,7 @@ public class DoubleJumpAbility : PlayerAbility
             if (jumpKeyValue > 0)
             {
                 JumpKeyHeld = true;
-                if (!characterMovement.grounded && remainingDoubleJumps > 0 && Time.time > lastTimeDoubleJumped)
-                {
-                    if (!characterMovement.readyToJump) return;
-                    if (characterMovement.MovementControlledByAbility) return;
-
-                    characterMovement.onDoubleJump?.Invoke();
-                    remainingDoubleJumps--;
-                    lastTimeDoubleJumped = Time.time + 0.2f;
-
-                    Vector3 velocity = characterMovement.rb.linearVelocity;
-                    velocity = new Vector3(velocity.x, 0, velocity.z);
-                    characterMovement.rb.linearVelocity = velocity;
-
-                    characterMovement.rb.AddForce(Vector3.up * (characterMovement.jumpForce - 3), ForceMode.Impulse);
-                }
+                DoubleJump();
             }
         }
         else if (jumpKeyValue <= 0)
@@ -49,9 +36,28 @@ public class DoubleJumpAbility : PlayerAbility
         
     }
 
+    public void DoubleJump()
+    {
+        if (!characterMovement.grounded && remainingDoubleJumps > 0 && Time.time > lastTimeDoubleJumped)
+        {
+            if (!characterMovement.readyToJump) return;
+            if (characterMovement.MovementControlledByAbility) return;
+
+            characterMovement.onDoubleJump?.Invoke();
+            remainingDoubleJumps--;
+            lastTimeDoubleJumped = Time.time + 0.2f;
+
+            Vector3 velocity = characterMovement.rb.linearVelocity;
+            velocity = new Vector3(velocity.x, 0, velocity.z);
+            characterMovement.rb.linearVelocity = velocity;
+
+            characterMovement.rb.AddForce(Vector3.up * (characterMovement.jumpForce - 3), ForceMode.Impulse);
+        }
+    }
+
     public override void FixedUpdateAbility()
     {
-        
+
     }
 
     public override void ResetAbility()

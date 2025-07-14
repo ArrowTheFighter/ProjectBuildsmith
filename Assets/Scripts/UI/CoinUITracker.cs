@@ -15,7 +15,7 @@ public class CoinUITracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        string coin_text = GameplayUtils.instance.get_item_holding_amount("gold_coin").ToString("000");
+        string coin_text = "<font-weight=500>" +GameplayUtils.instance.get_item_holding_amount("gold_coin").ToString("000");
         if (coinsAmountText.text != coin_text)
         {
             coinsAmountText.text = coin_text;

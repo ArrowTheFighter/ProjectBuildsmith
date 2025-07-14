@@ -9,6 +9,7 @@ public class InteractionPromptUI : MonoBehaviour
     public TextMeshProUGUI promptTextUI;
     item_requirement[] item_Requirements;
     [SerializeField] Transform item_requirement_parent;
+    string fontWeight = "<font-weight=500>";
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class InteractionPromptUI : MonoBehaviour
 
     public void SetUp(string promptText)
     {
-        promptTextUI.text = promptText;
+        promptTextUI.text = fontWeight + promptText;
         uiPanel.SetActive(true);
         IsDisplayed = true;
     }
@@ -42,7 +43,7 @@ public class InteractionPromptUI : MonoBehaviour
 
     public void ChangeText(string promptText, item_requirement[] required_items)
     {
-        promptTextUI.text = promptText;
+        promptTextUI.text = fontWeight + promptText;
         setup_item_requirements(required_items);
     }
 
