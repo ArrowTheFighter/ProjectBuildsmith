@@ -67,7 +67,10 @@ public class BreakableProps : MonoBehaviour, IDamagable
          }
     }
 
-    
+    public void TakeDamage(int amount, GameObject source, float knockbackStrength = 1)
+    {
+        //Does't need to do anything
+    }
 }
 
 

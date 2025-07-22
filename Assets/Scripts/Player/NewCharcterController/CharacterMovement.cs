@@ -21,6 +21,8 @@ public class CharacterMovement : MonoBehaviour
     public float airMultiplier;
     [HideInInspector] public bool readyToJump;
     [HideInInspector] public bool MovementControlledByAbility;
+    [HideInInspector] public bool OverrideGravity;
+    [HideInInspector] public float OverrideAirDragAmount;
     bool jumpOveride;
 
     [Header("Rotation")]
@@ -98,7 +100,10 @@ public class CharacterMovement : MonoBehaviour
         AddAbility<DashAbility>();
         //AddAbility<QuickChopAbility>();
         //AddAbility<ChopSlamAbility>();
-        AddAbility<NoClip>();
+        if (characterInput is PlayerInputClass)
+        {
+            AddAbility<NoClip>();
+        }
         //AddAbility<DoubleJumpChopAbility>();
         //AddAbility<ChopAbility>();
     }
@@ -130,16 +135,18 @@ public class CharacterMovement : MonoBehaviour
             }
             else
             {
-
-                rb.linearDamping = 0;
-                Vector3 dragVelocity = rb.linearVelocity;
-
-                dragVelocity.x /= (1 + horizontalAirDrag * Time.deltaTime);
-                dragVelocity.z /= (1 + horizontalAirDrag * Time.deltaTime);
-
-                rb.linearVelocity = new Vector3(dragVelocity.x, rb.linearVelocity.y, dragVelocity.z);
+                ApplyAirDrag(horizontalAirDrag);
             }
         }
+        else if (OverrideGravity)
+        {
+            ApplyGravity();
+         }
+
+        if (OverrideAirDragAmount > 0)
+        {
+            ApplyAirDrag(OverrideAirDragAmount);
+         }
 
         foreach (PlayerAbility ability in playerAbilities)
         {
@@ -169,6 +176,12 @@ public class CharacterMovement : MonoBehaviour
         Quaternion forwardTarget = Quaternion.LookRotation(-transform.forward, Vector3.up);
         transform.DORotate(forwardTarget.eulerAngles, duration, RotateMode.FastBeyond360);
      }
+
+    public void ManualTurn(Vector3 dir,float duration = 0.25f)
+    {
+        Quaternion forwardTarget = Quaternion.LookRotation(dir, Vector3.up);
+        transform.DORotate(forwardTarget.eulerAngles, duration, RotateMode.FastBeyond360);
+    }
 
     public void AddAbility<T>() where T : PlayerAbility
     {
@@ -275,6 +288,17 @@ public class CharacterMovement : MonoBehaviour
     public void ApplyGravity()
     {
         rb.AddForce(GravityDir * GravityForce * Time.deltaTime);
+    }
+
+    public void ApplyAirDrag(float amount)
+    {
+        rb.linearDamping = 0;
+        Vector3 dragVelocity = rb.linearVelocity;
+
+        dragVelocity.x /= (1 + amount * Time.deltaTime);
+        dragVelocity.z /= (1 + amount * Time.deltaTime);
+
+        rb.linearVelocity = new Vector3(dragVelocity.x, rb.linearVelocity.y, dragVelocity.z);
     }
 
     private void MyInput()

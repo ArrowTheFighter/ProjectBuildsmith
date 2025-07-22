@@ -23,9 +23,20 @@ public class PlayerParticlesManager : MonoBehaviour
             if (collection.ParticleID == "ChopSlam")
             {
                 collection.particleSystem.Play();
-             }
-         }
-     }
+            }
+        }
+    }
+
+    public void PlayPlayerTakeHitParticles()
+    {
+        foreach (ParticleSystemsCollection collection in particleSystems)
+        {
+            if (collection.ParticleID == "TakeDamage")
+            {
+                collection.particleSystem.Play();
+            }
+        }
+    }
 }
 
 [Serializable]
