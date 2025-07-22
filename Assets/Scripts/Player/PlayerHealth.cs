@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDamagable
 {
@@ -13,11 +14,97 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public Action<int> OnTakeDamage;
 
+    [SerializeField] Image[] heartImages;
+    [SerializeField] Transform heartImageHolder;
+    [SerializeField] CanvasGroup heartImageHolderCanvasGroup;
+    [SerializeField] Vector3 heartImageHolderScale = new Vector3(1, 1, 1);
+    [SerializeField] float heartScaleInTime = 1f;
+    private bool heartImagesOnScreen;
+
+    [SerializeField] float heartFadeOutDelay = 5f;
+    [SerializeField] float heartFadeOutTime = 2f;
+    private bool heartImagesIsFadingOut;
+
+    [SerializeField] Vector3 finalHeartBlinkSize = new Vector3(1.2f, 1.2f, 1.2f);
+    [SerializeField] float finalHeartBlinkSpeed = 0.25f;
+    private bool finalHeartBlinking;
+
     void Start()
     {
         characterMovement = GetComponent<CharacterMovement>();
     }
 
+
+    //This is DD's really unoptimized code, you will probably know how to make it more efficient, but I'm getting to a workable state first
+    public void Update()
+    {
+        if(Health <= 2)
+        {
+            DOTween.Kill("HeartFadeOut");
+            DOTween.Kill("HeartScaleOut");
+            heartImageHolderCanvasGroup.alpha = 1;
+
+            if (!heartImagesOnScreen)
+            {
+                heartImagesOnScreen = true;
+                heartImageHolder.DOScale(heartImageHolderScale, heartScaleInTime).SetEase(Ease.InOutElastic);
+            }  
+        }
+
+        if(Health == 3 && heartImagesOnScreen && !heartImagesIsFadingOut)
+        {
+            heartImagesIsFadingOut = true;
+            Invoke("FadeOutHealthUI", heartFadeOutDelay);
+        }
+        
+        if (Health == 3)
+        {
+            for (int i = 0; i < heartImages.Length; i++)
+            {
+                heartImages[i].fillAmount = 1f;
+            }
+        }
+
+        if(Health == 2)
+        {
+            heartImages[2].fillAmount = 0f;
+        }
+
+        if(Health == 1)
+        {
+            heartImages[1].fillAmount = 0f;
+            if (!finalHeartBlinking)
+            {
+                finalHeartBlinking = true;
+                heartImages[0].transform.DOScale(finalHeartBlinkSize, finalHeartBlinkSpeed).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).SetId("FinalHeartBlink");
+            }         
+        }
+
+        if(Health != 1)
+        {
+            if (finalHeartBlinking)
+            {
+                finalHeartBlinking = false;
+                DOTween.Kill("FinalHeartBlink");
+            }
+        }
+
+        if(Health == 0)
+        {
+            heartImages[0].fillAmount = 0f;
+        }
+    }
+
+    private void FadeOutHealthUI()
+    {
+        if (Health != 3) return;
+
+        heartImageHolderCanvasGroup.DOFade(0f, heartFadeOutTime).SetId("HeartFadeOut");
+        Sequence heartSequence = DOTween.Sequence();
+        heartSequence.Append(heartImageHolder.DOScale(new Vector3(0,0,0), heartFadeOutTime)).SetId("HeartScaleOut");
+        heartImagesOnScreen = false;
+        heartImagesIsFadingOut = false;
+    }
 
     public void TakeDamage(int amount, GameObject source)
     {
