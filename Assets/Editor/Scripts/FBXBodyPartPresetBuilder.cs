@@ -11,7 +11,7 @@ public class FBXBodyPartPresetBuilder : EditorWindow
     private List<SkinnedMeshData> meshRenderers = new List<SkinnedMeshData>();
     private Dictionary<SkinnedMeshData, string> partTypeMap = new Dictionary<SkinnedMeshData, string>();
 
-    private string[] bodyParts = new string[] { "Head", "Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg" };
+    private string[] bodyParts = new string[] { "Head", "Body", "LeftArm", "RightArm", "LeftLeg", "RightLeg" ,"None"};
     private string presetRootPath = "Assets/Art/Meshes/Characters/BodyParts";
 
     [MenuItem("Tools/FBX Body Part Preset Builder")]
@@ -105,6 +105,7 @@ public class FBXBodyPartPresetBuilder : EditorWindow
                 continue;
 
             string partType = partTypeMap[smr];
+            if (partType == "None") continue;
             string folderPath = Path.Combine(presetRootPath, partType);
 
             if (!AssetDatabase.IsValidFolder(folderPath))

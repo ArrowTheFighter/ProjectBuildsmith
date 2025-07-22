@@ -173,18 +173,21 @@ public class TextureAtlasEditor : EditorWindow
         if (selectedCellPixels == null || atlasTexture == null)
             return;
 
-        Color.RGBToHSV(cellTintColor, out float tintH, out float tintS, out float tintV);
+        // Extract tint hue and saturation only
+        Color.RGBToHSV(cellTintColor, out float tintH, out float tintS, out _); // ignore tintV
 
         for (int i = 0; i < selectedCellPixels.Length; i++)
         {
             Color pixel = selectedCellPixels[i];
 
-            Color.RGBToHSV(pixel, out float h, out float s, out float v);
+            // Sample original pixel's brightness
+            Color.RGBToHSV(pixel, out _, out _, out float originalV);
 
-            // Adjust brightness by slider
-            float newV = Mathf.Clamp01(v * brightnessMultiplier);
+            // Apply brightness multiplier
+            float adjustedV = Mathf.Clamp01(originalV * brightnessMultiplier);
 
-            Color tintedPixel = Color.HSVToRGB(tintH, tintS, newV);
+            // Apply new color using tint hue/saturation and original brightness
+            Color tintedPixel = Color.HSVToRGB(tintH, tintS, adjustedV);
             tintedPixel.a = pixel.a;
 
             selectedCellPixels[i] = tintedPixel;
@@ -195,6 +198,7 @@ public class TextureAtlasEditor : EditorWindow
 
         Repaint();
     }
+
 
 
     void DrawSelectedCellPreview()
