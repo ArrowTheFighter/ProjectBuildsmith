@@ -52,6 +52,9 @@ public class DoubleJumpAbility : PlayerAbility
             characterMovement.rb.linearVelocity = velocity;
 
             characterMovement.rb.AddForce(Vector3.up * (characterMovement.jumpForce - 3), ForceMode.Impulse);
+
+            AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Jump");
+            SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
         }
     }
 

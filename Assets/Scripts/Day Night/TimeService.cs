@@ -48,6 +48,20 @@ public class TimeService {
         return Mathf.Lerp(startDegree, startDegree + 180, (float) percentage);
     }
 
+    /*public float CalculateMoonAngle()
+    {
+        bool isDay = IsDayTime();
+        float startDegree = isDay ? 0 : 180;
+        TimeSpan start = isDay ? sunriseTime : sunsetTime;
+        TimeSpan end = isDay ? sunsetTime : sunriseTime;
+
+        TimeSpan totalTime = CalculateDifference(start, end);
+        TimeSpan elapsedTime = CalculateDifference(start, currentTime.TimeOfDay);
+
+        double percentage = elapsedTime.TotalMinutes / totalTime.TotalMinutes;
+        return Mathf.Lerp(startDegree, startDegree + 180, (float)percentage);
+    }*/
+
     // This method checks whether the current game time falls within the daytime period.
     // It returns true if the current time of day is later than sunriseTime and earlier than sunsetTime,
     // representing daytime. Otherwise, it returns false, indicating it is nighttime.

@@ -19,6 +19,10 @@ public class MushroomEnemy : MonoBehaviour
     Vector3 startPos;
     Animator animator;
 
+    [SerializeField] AudioClip attackSoundFX;
+    [SerializeField] float attackSoundFXVolume = 1f;
+    [SerializeField] float attackSoundFXPitch = 1f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -109,6 +113,7 @@ public class MushroomEnemy : MonoBehaviour
 
     public void ShowAttackParticles()
     {
+        SoundFXManager.instance.PlaySoundFXClip(attackSoundFX, transform, attackSoundFXVolume, attackSoundFXPitch);
         AttackParticles.Play();
      }
 }

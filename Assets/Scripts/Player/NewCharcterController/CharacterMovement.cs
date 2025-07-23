@@ -381,8 +381,9 @@ public class CharacterMovement : MonoBehaviour
         exitingSlope = true;
         // reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Jump");
+        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
         Invoke(nameof(ResetJump), jumpCooldown);
     }
     private void ResetJump()

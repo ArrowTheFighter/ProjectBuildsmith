@@ -20,6 +20,8 @@ public class ChopSlamAbility : PlayerAbility
     [HideInInspector] public bool MovingUp;
     Action OnAbility;
 
+    public float wooshSoundDelay = 0.2f;
+
     void Start()
     {
         if (characterMovement.playerAnimationController != null)
@@ -53,6 +55,7 @@ public class ChopSlamAbility : PlayerAbility
                     AbilityActive = true;
                     MovingUp = true;
                     StartCoroutine(DownForceDelay());
+                    Invoke("PlayWooshSoundDelayed", wooshSoundDelay);
                 }
             }
         }
@@ -98,9 +101,11 @@ public class ChopSlamAbility : PlayerAbility
                     if (collider.TryGetComponent(out IDamagable damagable))
                     {
                         damagable.TakeDamage(1, characterMovement.gameObject);
-                     }
+                    }
                  }
 
+                AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("AxeSlamGroundImpact");
+                SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
                 PlayerParticlesManager.instance.PlayChopSlamParticles();
                 groundLand = true;
                 characterMovement.playerAnimationController.animator.SetBool("ChopFall", false);
@@ -148,5 +153,11 @@ public class ChopSlamAbility : PlayerAbility
             StopAllCoroutines();
             StopFall();
          }
+    }
+
+    private void PlayWooshSoundDelayed()
+    {
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("AxeSlamWoosh");
+        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
     }
 }

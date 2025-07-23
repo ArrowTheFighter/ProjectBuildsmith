@@ -11,6 +11,9 @@ public class BreakableProps : MonoBehaviour, IDamagable
     public GameObject DestoryedParticle;
     public Vector3 DestroyedParticleOffset;
     public LootTable[] Loot;
+    public AudioClip destroyedSoundFX;
+    public float destroyedSoundFXVolume;
+    public float destroyedSoundFXPitch;
 
     public void TakeDamage(int amount, GameObject source)
     {
@@ -30,6 +33,11 @@ public class BreakableProps : MonoBehaviour, IDamagable
 
     public void Die()
     {
+        if (destroyedSoundFX != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(destroyedSoundFX, transform, destroyedSoundFXVolume, destroyedSoundFXPitch);
+        }
+
         foreach (LootTable lootTable in Loot)
         {
             int amount = lootTable.GetRandomDropAmount();
@@ -48,6 +56,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
         {
             Instantiate(DestoryedParticle, transform.position + DestroyedParticleOffset, Quaternion.identity);
         }
+        
         if (RespawnTime <= 0)
         {
             Destroy(gameObject);

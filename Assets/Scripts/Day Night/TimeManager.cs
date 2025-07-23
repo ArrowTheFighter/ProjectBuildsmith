@@ -58,6 +58,7 @@ public class TimeManager : MonoBehaviour {
         RotateSun();
         UpdateLightSettings();
         UpdateSkyBlend();
+        RotateMoon();
     }
 
     void UpdateSkyBlend() {
@@ -81,6 +82,11 @@ public class TimeManager : MonoBehaviour {
         float rotation = service.CalculateSunAngle();
         sun.transform.rotation = Quaternion.AngleAxis(rotation, Vector3.right);
         //dial.rotation = Quaternion.Euler(0, 0, rotation + initialDialRotation);
+    }
+
+    void RotateMoon()
+    {
+        moon.transform.rotation = Quaternion.Inverse(sun.transform.rotation);
     }
 
     void UpdateTimeOfDay() {
