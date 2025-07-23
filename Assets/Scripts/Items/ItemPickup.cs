@@ -44,7 +44,7 @@ public class ItemPickup : MonoBehaviour
         if (cantPickupTime > Time.time) return;
         int loosePieces = GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification);
         if (loosePieces == -1) return;
-        GameplayUtils.instance.Play_Audio_On_Player(2, 0.5f);
+        //GameplayUtils.instance.Play_Audio_On_Player(2, 0.5f);
         if (loosePieces > 0)
         {
             amount = loosePieces;

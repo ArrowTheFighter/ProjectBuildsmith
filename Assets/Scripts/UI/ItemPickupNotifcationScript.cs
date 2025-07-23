@@ -10,6 +10,11 @@ public class ItemPickupNotifcationScript : MonoBehaviour
     int cur_amount;
     Tween fadeoutTween;
 
+    [SerializeField] AudioClip pickupNotificationSoundFX;
+    [SerializeField] float pickupNotificationSoundFXVolume = 0.4f;
+    [SerializeField] float pickupNotificationSoundFXPitch = 1f;
+    
+
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -32,6 +37,7 @@ public class ItemPickupNotifcationScript : MonoBehaviour
         {
             fadeoutTween.Kill();
         }
+        SoundFXManager.instance.PlaySoundFXClip(pickupNotificationSoundFX, transform, pickupNotificationSoundFXVolume, pickupNotificationSoundFXPitch);
         fadeoutTween = DOVirtual.Float(3,0,2,(context) => {
             canvasGroup.alpha = context;
         }).OnComplete(finished_fadeout);
