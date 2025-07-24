@@ -15,6 +15,8 @@ public class BreakableProps : MonoBehaviour, IDamagable
     public float destroyedSoundFXVolume;
     public float destroyedSoundFXPitch;
 
+    public bool PlayerCanStomp { get; set ; }
+
     public void TakeDamage(int amount, GameObject source)
     {
         PlayParticle();

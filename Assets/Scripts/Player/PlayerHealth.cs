@@ -29,6 +29,8 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] float finalHeartBlinkSpeed = 0.25f;
     private bool finalHeartBlinking;
 
+    [HideInInspector] public bool PlayerCanStomp { get; set ; }
+
     void Start()
     {
         characterMovement = GetComponent<CharacterMovement>();

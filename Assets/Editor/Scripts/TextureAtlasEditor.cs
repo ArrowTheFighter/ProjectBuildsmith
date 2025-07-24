@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using System.IO;
 
 public class TextureAtlasEditor : EditorWindow
 {
@@ -84,14 +85,52 @@ public class TextureAtlasEditor : EditorWindow
                 }
             }
 
+
+            if (GUILayout.Button("Save Edited Atlas to PNG"))
+            {
+                SaveEditedAtlasToPNG();
+            }
+
             EditorGUILayout.Space();
 
             // Show the selected cell pixels zoomed in
             scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Height(cellHeight + 20), GUILayout.Width(cellWidth + 20));
             DrawSelectedCellPreview();
+
+
             EditorGUILayout.EndScrollView();
         }
+
+        
     }
+
+    void SaveEditedAtlasToPNG()
+    {
+        if (atlasTexture == null)
+        {
+            Debug.LogWarning("No atlas texture to save.");
+            return;
+        }
+
+        // Encode texture to PNG
+        byte[] pngData = atlasTexture.EncodeToPNG();
+        if (pngData == null)
+        {
+            Debug.LogError("Failed to encode texture to PNG.");
+            return;
+        }
+
+        // Open save file panel
+        string path = EditorUtility.SaveFilePanel("Save Edited Atlas", Application.dataPath, "EditedAtlas", "png");
+
+        if (!string.IsNullOrEmpty(path))
+        {
+            File.WriteAllBytes(path, pngData);
+            AssetDatabase.Refresh();
+            Debug.Log($"Atlas saved to: {path}");
+        }
+    }
+
 
     void DrawAtlasGrid()
     {

@@ -98,6 +98,7 @@ public class CharacterMovement : MonoBehaviour
         //playerInput.actions["Jump"].performed += Jump;
         AddAbility<DoubleJumpAbility>();
         AddAbility<DashAbility>();
+        AddAbility<PlayerStompAbility>();
         //AddAbility<QuickChopAbility>();
         //AddAbility<ChopSlamAbility>();
         if (characterInput is PlayerInputClass)

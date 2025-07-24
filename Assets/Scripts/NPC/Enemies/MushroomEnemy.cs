@@ -1,7 +1,8 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
-public class MushroomEnemy : MonoBehaviour
+public class MushroomEnemy : MonoBehaviour, IDamagable
 {
     [SerializeField] float searchRadius;
     [SerializeField] float attackRadius;
@@ -12,6 +13,13 @@ public class MushroomEnemy : MonoBehaviour
     [SerializeField] float AttackAnimationDelay = 0.2f;
     [SerializeField] ParticleSystem AttackRadiusParticles;
     [SerializeField] ParticleSystem AttackParticles;
+
+    [Header("Health")]
+    [SerializeField] int Health;
+    [SerializeField] float extraBounceForce;
+    [SerializeField] ParticleSystem onDamageParticles;
+    [SerializeField] GameObject onDeathParticlesPrefab;
+
     float AttackCooldown;
 
     bool EnemyActive = true;
@@ -19,9 +27,13 @@ public class MushroomEnemy : MonoBehaviour
     Vector3 startPos;
     Animator animator;
 
+    [Header("Audio")]
     [SerializeField] AudioClip attackSoundFX;
     [SerializeField] float attackSoundFXVolume = 1f;
     [SerializeField] float attackSoundFXPitch = 1f;
+
+    public bool CanBeStompedByPlayer;
+    public bool PlayerCanStomp {get {return CanBeStompedByPlayer;} set{ CanBeStompedByPlayer = value; }}
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -116,4 +128,37 @@ public class MushroomEnemy : MonoBehaviour
         SoundFXManager.instance.PlaySoundFXClip(attackSoundFX, transform, attackSoundFXVolume, attackSoundFXPitch);
         AttackParticles.Play();
      }
+
+    public void TakeDamage(int amount, GameObject source)
+    {
+        Health -= amount;
+        if (onDamageParticles != null)
+        {
+            onDamageParticles.Play();
+         }
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        if (onDeathParticlesPrefab != null)
+        {
+            Instantiate(onDeathParticlesPrefab, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
+     }
+
+    public void TakeDamage(int amount, GameObject source, out float ExtraForce)
+    {
+        ExtraForce = extraBounceForce;
+        TakeDamage(amount, source);
+    }
+
+    public void TakeDamage(int amount, GameObject source, float knockbackStrength = 1)
+    {
+        return;
+    }
 }

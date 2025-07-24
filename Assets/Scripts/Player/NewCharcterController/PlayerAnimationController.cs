@@ -63,7 +63,7 @@ public class PlayerAnimationController : MonoBehaviour
         Invoke("reset_jump", 0.05f);
     }
 
-    void PlayerDoubleJumped()
+    public void PlayerDoubleJumped()
     {
         animator.SetTrigger("DoubleJump");
     }
