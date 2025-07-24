@@ -8,11 +8,16 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     public bool CanNotTalkWhileMoving;
     public float followDistanceThreshold = 1;
     public float walkingDistanceThreshold = 3;
+    float jumpCooldown;
+    public float jumpCooldownLength = 0.5f;
 
     public bool IsWalking;
     [Header("Jumping")]
     public bool JumpWhenWallInFront;
     public float DistanceForWallCheck;
+    public bool JumpWhenEmptySpaceInFront;
+    public float emptySpaceForwardDistance = 2;
+    public float emptySpaceDownDistance = 3;
     public LayerMask wallCheckLayersIgnore;
 
     public event Action OnJump;
@@ -52,9 +57,23 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
         {
             if (Physics.Raycast(transform.position, transform.forward, DistanceForWallCheck, ~wallCheckLayersIgnore))
             {
-                OnJump?.Invoke();
-             }
-         }
+                Jump();
+            }
+        }
+        if (JumpWhenEmptySpaceInFront)
+        {
+            if (!Physics.Raycast(transform.position + transform.forward * emptySpaceForwardDistance, Vector3.down, emptySpaceDownDistance, ~wallCheckLayersIgnore))
+            {
+                Jump();
+            }
+        }
+    }
+
+    void Jump()
+    {
+        if (jumpCooldown > Time.time) return;
+        jumpCooldown = Time.time + jumpCooldownLength;
+        OnJump?.Invoke();
     }
 
     void OnTriggerEnter(Collider other)

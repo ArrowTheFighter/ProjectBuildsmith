@@ -6,6 +6,8 @@ public class PlayerAnimationController : MonoBehaviour
     [SerializeField] public Animator animator;
     bool diving;
     [HideInInspector] public bool walking = true;
+    bool currentlyOnGround;
+    float offGroundTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,6 +26,20 @@ public class PlayerAnimationController : MonoBehaviour
         float speed_blend = Mathf.InverseLerp(0, characterMovement.maxSpeed, HorVel.magnitude);
         animator.SetFloat("Speed_Blend", speed_blend);
         animator.SetBool("OnGround", characterMovement.grounded && !characterMovement.OnSteepSlope());
+        animator.SetFloat("OffGroundTime", offGroundTime);
+        if (characterMovement.grounded && !currentlyOnGround)
+        {
+            currentlyOnGround = true;
+            offGroundTime = 0;
+        }
+        if (currentlyOnGround && !characterMovement.grounded)
+        {
+            currentlyOnGround = false;
+        }
+        if (!currentlyOnGround)
+        {
+            offGroundTime += Time.deltaTime;
+        }
         if (characterMovement.grounded && walking) animator.SetLayerWeight(1, 1);
         else animator.SetLayerWeight(1, 0);
 

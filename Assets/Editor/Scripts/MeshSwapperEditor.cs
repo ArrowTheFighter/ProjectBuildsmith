@@ -190,7 +190,6 @@ public class MeshSwapperEditor : EditorWindow
 
                 skipLeftLegSelector = true;
             }
-            Debug.Log(skipLeftLegSelector);
             if (!skipLeftLegSelector)
             {
                 leftLegIndex = DrawPresetSelector("Left Leg", leftLegPresets, leftLegIndex, out leftLegChanged);
