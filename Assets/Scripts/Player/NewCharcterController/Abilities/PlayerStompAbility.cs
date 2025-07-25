@@ -28,7 +28,6 @@ public class PlayerStompAbility : PlayerAbility
             foreach (Collider target in hits)
             {
                 IDamagable damagable;
-                print(target.name);
                 if (target.TryGetComponent(out damagable))
                 {
                     if (damagable.PlayerCanStomp)

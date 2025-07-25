@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -81,6 +82,9 @@ public class CharacterMovement : MonoBehaviour
     public Action OnDash;
     public Action OnDashStop;
     public Action OnBasicAttack;
+
+    IMoveingPlatform moveingPlatform;
+    Vector3 platformDelta;
 
     private void Start()
     {
@@ -165,6 +169,7 @@ public class CharacterMovement : MonoBehaviour
             // Set max speed
             SpeedControl();
         }
+        ApplyPlatformDelta();
         UpdateTilt();
         foreach (PlayerAbility ability in playerAbilities)
         {
@@ -192,11 +197,42 @@ public class CharacterMovement : MonoBehaviour
         playerAbilities.Add(newAbility);
     }
 
+    void addPlatformPosistion(Vector3 delta)
+    {
+        platformDelta += delta;
+     }
+
+    void ApplyPlatformDelta()
+    {
+        if (platformDelta != Vector3.zero)
+        {
+            rb.MovePosition(rb.position + platformDelta);
+            platformDelta = Vector3.zero;
+        }
+     }
+
     void GroundCheck()
     {
         float distance = groundCheckDistance;
         if (rb.linearVelocity.y < -4) distance += 0.3f;
         grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask);
+
+        if (grounded && groundHit.collider.TryGetComponent(out IMoveingPlatform platform))
+        {
+            if (moveingPlatform != platform)
+            {
+                print("adding platform move");
+                moveingPlatform = platform;
+                platform.OnPlatformMove += addPlatformPosistion;
+            }
+            
+        }
+        else if (moveingPlatform != null)
+        {
+            print("removing platform move");
+            moveingPlatform.OnPlatformMove -= addPlatformPosistion;
+            moveingPlatform = null;
+        }
 
         if (grounded && OnSteepSlope())
         {
