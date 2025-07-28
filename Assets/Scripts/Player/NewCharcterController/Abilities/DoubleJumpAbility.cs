@@ -54,7 +54,7 @@ public class DoubleJumpAbility : PlayerAbility
             characterMovement.rb.AddForce(Vector3.up * (characterMovement.jumpForce - 3), ForceMode.Impulse);
 
             AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Jump");
-            SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
+            SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
         }
     }
 

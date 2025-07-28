@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
 {
-    [SerializeField] PlayerAudio playerAudio;
     [SerializeField] CharacterMovement characterMovement;
     public Action OnAxeSwingStart;
     public Action OnAxeSwingEnd;
+
+    public AudioClip footstepsSoundFX;
+    public float footstepsSoundFXVolume;
+    public float footstepsSoundFXPitch;
+
     public void FootstepSound(AnimationEvent evt)
     {
         if (IsHeaviestAnimClip(evt.animatorClipInfo.clip))
         {
-            if (playerAudio != null)
+            if (footstepsSoundFX != null)
             {
-                playerAudio.PlayClip(1, 0.5f);
+                SoundFXManager.instance.PlaySoundFXClip(footstepsSoundFX, transform, footstepsSoundFXVolume, footstepsSoundFXPitch);
             }
         }
     }

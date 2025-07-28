@@ -987,7 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a6273d56b33fc4eacd3cfceb885a74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystems: []
+  audioSystems: []
 --- !u!1 &1437492180148220061
 GameObject:
   m_ObjectHideFlags: 0
@@ -12775,8 +12775,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0072881c295083e42b01ced224b4fc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAudio: {fileID: 6530517958270040987}
   characterMovement: {fileID: 5595006324385926630}
+  footstepsSoundFX: {fileID: 8300000, guid: 32c24f195b86cce40baca3a65ab39ecf, type: 3}
+  footstepsSoundFXVolume: 0.6
+  footstepsSoundFXPitch: 1
 --- !u!1 &5094056938896187330
 GameObject:
   m_ObjectHideFlags: 0
