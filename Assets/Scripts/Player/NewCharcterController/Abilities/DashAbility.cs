@@ -186,6 +186,9 @@ public class DashAbility : PlayerAbility
         isBonking = true;
         lastTimeDashed = Time.time + 0.1f;
         characterMovement.playerAnimationController.animator.SetBool("Bonking", true);
+
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Bonk");
+        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     void SlideJump()
@@ -204,6 +207,9 @@ public class DashAbility : PlayerAbility
             slideJumping = true;
             lastTimeDashed = Time.time + 0.1f;
             StartCoroutine(EndDiveAfterDelay(slideJumpDuration));
+
+            AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
+            SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
         }
     }
 
@@ -354,6 +360,9 @@ public class DashAbility : PlayerAbility
         {
             characterMovement.rb.AddForce(Vector3.up * dashUpForce, ForceMode.Impulse);
         }
+
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
+        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     void setCooldown()

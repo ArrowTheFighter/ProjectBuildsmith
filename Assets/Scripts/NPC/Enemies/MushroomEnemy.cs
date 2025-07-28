@@ -32,6 +32,10 @@ public class MushroomEnemy : MonoBehaviour, IDamagable
     [SerializeField] float attackSoundFXVolume = 1f;
     [SerializeField] float attackSoundFXPitch = 1f;
 
+    [SerializeField] AudioClip takeDamageSoundFX;
+    [SerializeField] float takeDamageSoundFXVolume = 1f;
+    [SerializeField] float takeDamageSoundFXPitch = 1f;
+
     public bool CanBeStompedByPlayer;
     public bool PlayerCanStomp {get {return CanBeStompedByPlayer;} set{ CanBeStompedByPlayer = value; }}
 
@@ -125,7 +129,11 @@ public class MushroomEnemy : MonoBehaviour, IDamagable
 
     public void ShowAttackParticles()
     {
-        SoundFXManager.instance.PlaySoundFXClip(attackSoundFX, transform, attackSoundFXVolume, attackSoundFXPitch);
+        if(attackSoundFX != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(attackSoundFX, transform, attackSoundFXVolume, attackSoundFXPitch);
+        }
+
         AttackParticles.Play();
      }
 
@@ -135,7 +143,13 @@ public class MushroomEnemy : MonoBehaviour, IDamagable
         if (onDamageParticles != null)
         {
             onDamageParticles.Play();
-         }
+        }
+
+        if (takeDamageSoundFX != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(takeDamageSoundFX, transform, takeDamageSoundFXVolume, takeDamageSoundFXPitch);
+        }
+
         if (Health <= 0)
         {
             Die();
