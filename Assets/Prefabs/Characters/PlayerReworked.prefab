@@ -835,10 +835,18 @@ MonoBehaviour:
   heartImageHolderCanvasGroup: {fileID: 7694588763686388681}
   heartImageHolderScale: {x: 1, y: 1, z: 1}
   heartScaleInTime: 0.5
+  heartFadeInTime: 0.3
   heartFadeOutDelay: 5
   heartFadeOutTime: 2
   finalHeartBlinkSize: {x: 1.2, y: 1.2, z: 1.2}
   finalHeartBlinkSpeed: 0.25
+  heartDamageShakeTime: 0.3
+  heartDamageShakeStrength: 0.4
+  heartDamageShakeVibrato: 8
+  heartDamageShakeRandomness: 90
+  regenDelay: 5
+  regenInterval: 5
+  regenAmount: 1
 --- !u!114 &5581061302540799542
 MonoBehaviour:
   m_ObjectHideFlags: 0

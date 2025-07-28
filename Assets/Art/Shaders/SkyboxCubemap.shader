@@ -58,18 +58,9 @@
 
                 fixed4 colorTex1 = texCUBE(_Tex1, rotatedDir);
                 fixed4 colorTex2 = texCUBE(_Tex2, rotatedDir);
-                float blendA = 1.0 - saturate(_Blend * 2);
-                float blendB = saturate((_Blend - 0.5) * 2);
-
-                // Clamp blendA to 0 when _Blend ≥ 0.5
-                blendA *= step(_Blend, 0.5);
-
-                // Clamp blendB to 0 when _Blend ≤ 0.5
-                blendB *= step(0.5, _Blend);
-
-                float total = blendA + blendB + 1e-5;
-                blendA /= total;
-                blendB /= total;
+                // Blend softly between 0.25–0.75
+                float blendB = smoothstep(0.1, 0.9, _Blend);
+                float blendA = 1.0 - blendB;
 
                 return colorTex1 * blendA + colorTex2 * blendB;
             }

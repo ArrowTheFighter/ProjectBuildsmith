@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] CanvasGroup heartImageHolderCanvasGroup;
     [SerializeField] Vector3 heartImageHolderScale = new Vector3(1, 1, 1);
     [SerializeField] float heartScaleInTime = 1f;
+    [SerializeField] float heartFadeInTime = 0.3f;
     private bool heartImagesOnScreen;
 
     [SerializeField] float heartFadeOutDelay = 5f;
@@ -28,6 +29,24 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] Vector3 finalHeartBlinkSize = new Vector3(1.2f, 1.2f, 1.2f);
     [SerializeField] float finalHeartBlinkSpeed = 0.25f;
     private bool finalHeartBlinking;
+
+    [SerializeField] float heartDamageShakeTime = 0.3f;
+    [SerializeField] float heartDamageShakeStrength = 0.2f;
+    [SerializeField] int heartDamageShakeVibrato = 8;
+    [SerializeField] float heartDamageShakeRandomness = 90;
+
+    [SerializeField] float regenDelay = 10f;         // Time after last damage before regen starts
+    [SerializeField] float regenInterval = 10f;      // Time between each heart regen
+    [SerializeField] int regenAmount = 1;            // How much health to regenerate per tick
+
+    private Coroutine regenCoroutine;
+    private float timeSinceLastDamage;
+    private bool canRegen;
+
+    [SerializeField] AudioClip heartRefillPopSoundFX;
+    [SerializeField] float heartRefillPopSoundFXVolume = 0.4f;
+    [SerializeField] float heartRefillPopSoundFXPitch = 1f;
+
 
     [HideInInspector] public bool PlayerCanStomp { get; set ; }
 
@@ -40,11 +59,22 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     //This is DD's really unoptimized code, you will probably know how to make it more efficient, but I'm getting to a workable state first
     public void Update()
     {
-        if(Health <= 2)
+        if (Health < MaxHealth)
+        {
+            timeSinceLastDamage += Time.deltaTime;
+
+            if (!canRegen && timeSinceLastDamage >= regenDelay)
+            {
+                canRegen = true;
+                regenCoroutine = StartCoroutine(RegenerateHealthOverTime());
+            }
+        }
+
+        if (Health <= 2)
         {
             DOTween.Kill("HeartFadeOut");
             DOTween.Kill("HeartScaleOut");
-            heartImageHolderCanvasGroup.alpha = 1;
+            heartImageHolderCanvasGroup.DOFade(1f, heartFadeInTime).SetEase(Ease.OutQuad);
 
             if (!heartImagesOnScreen)
             {
@@ -59,13 +89,6 @@ public class PlayerHealth : MonoBehaviour, IDamagable
             Invoke("FadeOutHealthUI", heartFadeOutDelay);
         }
         
-        if (Health == 3)
-        {
-            for (int i = 0; i < heartImages.Length; i++)
-            {
-                heartImages[i].fillAmount = 1f;
-            }
-        }
 
         if(Health == 2)
         {
@@ -78,20 +101,24 @@ public class PlayerHealth : MonoBehaviour, IDamagable
             if (!finalHeartBlinking)
             {
                 finalHeartBlinking = true;
-                heartImages[0].transform.DOScale(finalHeartBlinkSize, finalHeartBlinkSpeed).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).SetId("FinalHeartBlink");
+                heartImages[0].transform.DOScale(finalHeartBlinkSize, finalHeartBlinkSpeed)
+                    .SetEase(Ease.InOutSine)
+                    .SetLoops(-1, LoopType.Yoyo)
+                    .SetId("FinalHeartBlink");
             }         
         }
 
-        if(Health != 1)
+        if (Health != 1)
         {
             if (finalHeartBlinking)
             {
                 finalHeartBlinking = false;
                 DOTween.Kill("FinalHeartBlink");
+                heartImages[0].transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutQuad);
             }
         }
 
-        if(Health == 0)
+        if (Health == 0)
         {
             heartImages[0].fillAmount = 0f;
         }
@@ -101,9 +128,9 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     {
         if (Health != 3) return;
 
-        heartImageHolderCanvasGroup.DOFade(0f, heartFadeOutTime).SetId("HeartFadeOut");
         Sequence heartSequence = DOTween.Sequence();
         heartSequence.Append(heartImageHolder.DOScale(new Vector3(0,0,0), heartFadeOutTime)).SetId("HeartScaleOut");
+        heartSequence.Join(heartImageHolderCanvasGroup.DOFade(0f, heartFadeOutTime).SetId("HeartFadeOut"));
         heartImagesOnScreen = false;
         heartImagesIsFadingOut = false;
     }
@@ -112,13 +139,36 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     {
         if (dying) return;
         if (source == GameplayUtils.instance.PlayerTransform.gameObject) return;
+
+        if (heartImagesOnScreen)
+        {
+            heartImageHolder.DOComplete();
+            heartImageHolder.DOShakeScale(heartDamageShakeTime, heartDamageShakeStrength, heartDamageShakeVibrato, heartDamageShakeRandomness)
+                            .SetEase(Ease.OutQuad)
+                            .SetId("HeartShake");
+        }
+
+        // Reset regen tracking
+        timeSinceLastDamage = 0f;
+        canRegen = false;
+        if (regenCoroutine != null)
+        {
+            StopCoroutine(regenCoroutine);
+            regenCoroutine = null;
+        }
+
         Health -= amount;
+
         if (Health <= 0)
         {
             Respawn();
         }
+
         OnTakeDamage?.Invoke(Health);
         PlayerParticlesManager.instance.PlayPlayerTakeHitParticles();
+
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Hurt");
+        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     public void TakeDamage(int amount, GameObject source, float knockbackStrength = 1)
@@ -127,6 +177,40 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         TakeKnockback(source, knockbackStrength);
         TakeDamage(amount, source);
      }
+
+    IEnumerator RegenerateHealthOverTime()
+    {
+        while (Health < MaxHealth)
+        {
+            yield return new WaitForSeconds(regenInterval);
+
+            // If player took damage during wait, cancel
+            if (!canRegen) yield break;
+
+            Health = Mathf.Min(Health + regenAmount, MaxHealth);
+            OnTakeDamage?.Invoke(Health); // To refresh UI (optional)
+
+            for (int i = 0; i < heartImages.Length; i++)
+            {
+                if (i == Health - 1) // Just filled this one
+                {
+                    heartImages[i].fillAmount = 1f;
+                    heartImages[i].transform.DOKill(); // <--- prevent conflicts
+                    heartImages[i].transform.localScale = Vector3.one * 0.6f;
+                    heartImages[i].transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+                    SoundFXManager.instance.PlaySoundFXClip(heartRefillPopSoundFX, transform, heartRefillPopSoundFXVolume, heartRefillPopSoundFXPitch);
+                }
+                else
+                {
+                    heartImages[i].fillAmount = (i < Health) ? 1f : 0f;
+                }
+            }
+
+            // Regen complete
+            regenCoroutine = null;
+            canRegen = false;
+        }
+    }
 
     void TakeKnockback(GameObject source, float knockbackStrength)
     {
@@ -165,6 +249,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         StartCoroutine(MovePlayerToRespawnPointDelay());
         StartCoroutine(RespawnDelay());
 
+        DOTween.Kill("HeartShake");
     }
 
     IEnumerator MovePlayerToRespawnPointDelay()
@@ -182,8 +267,30 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         characterMovement.orientation.gameObject.SetActive(true);
         characterMovement.MovementControlledByAbility = false;
         GetComponent<Rigidbody>().isKinematic = false;
-        Health = MaxHealth;
+
+        //Respawns the player back in with 1 health instead of full health
+        //We can decide which one we want, waiting for health to regenerate might be too slow/boring, but also might discourage players from being careless
+        //Mostly want to try it out and see how it feels
+        Health = 1;
+        //Health = MaxHealth;
+
         dying = false;
+
+        // Reset and show heart UI
+        for (int i = 0; i < heartImages.Length; i++)
+        {
+            heartImages[i].fillAmount = (i < Health) ? 1f : 0f;
+        }
+
+        heartImageHolderCanvasGroup.alpha = 1f;
+        heartImageHolder.localScale = heartImageHolderScale;
+        heartImagesOnScreen = true;
+
+        // Shake effect when hearts refill
+        heartImageHolder.DOComplete();
+        heartImageHolder.DOShakeScale(heartDamageShakeTime, heartDamageShakeStrength, heartDamageShakeVibrato, heartDamageShakeRandomness)
+            .SetEase(Ease.OutQuad)
+            .SetId("HeartShake");
     }
 
    
