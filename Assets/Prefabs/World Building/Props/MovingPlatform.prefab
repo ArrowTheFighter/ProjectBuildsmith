@@ -64,6 +64,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: c84038aa428f66a4780aad860259a6b8, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 6255687079079774844, guid: 9bb33d800f980d14fa458509f445ea97, type: 3}
+    - target: {fileID: 3451118302482216456, guid: c84038aa428f66a4780aad860259a6b8, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 932a723b41e7cd4419366b719cbf9696, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -94,7 +102,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveTo: {x: 0, y: 3.21, z: 0}
   duration: 1
-  rotationMultiplier: 0
+  easing:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!54 &4559692259920565140
 Rigidbody:
   m_ObjectHideFlags: 0

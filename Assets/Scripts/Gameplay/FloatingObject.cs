@@ -6,11 +6,13 @@ using System;
 public class FloatingObject : MonoBehaviour, IMoveingPlatform
 {
     [SerializeField] Vector3 MoveTo;
-    Vector3 startPos;
-    Vector3 lastPosition;
     [SerializeField] float duration;
-    [SerializeField] float speed;
-    [SerializeField] float rotationMultiplier;
+    [SerializeField] AnimationCurve easing = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    Vector3 startPos;
+    Vector3 endPos;
+    Vector3 lastPosition;
+    float elapsed;
     bool reverse;
     Rigidbody rb;
 
@@ -22,13 +24,16 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     {
         
         rb = GetComponent<Rigidbody>();
+        startPos = transform.position;
+        endPos = startPos + MoveTo;
+
         lastPosition = transform.position;
         //transform.DOMove(transform.position + MoveTo, duration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
-        if (rb != null)
-        {
-            startPos = transform.position;
-            //rb.DOMove(transform.position + MoveTo, duration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
-        }
+        // if (rb != null)
+        // {
+        //     startPos = transform.position;
+        //     rb.DOMove(transform.position + MoveTo, duration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad).SetUpdate(UpdateType.Fixed);
+        // }
     }
 
     // Update is called once per frame
@@ -40,30 +45,50 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     void FixedUpdate()
     {
         if (rb == null) return;
-        if (!reverse)
+        if (elapsed < duration)
         {
-            float distanceToEnd = Vector3.Distance(startPos, (startPos + MoveTo));
-            Vector3 dir = startPos - (startPos + MoveTo);
-            rb.MovePosition(transform.position + dir.normalized * speed);
-            if (Vector3.Distance(startPos, rb.position) > distanceToEnd) reverse = true;
+            elapsed += Time.fixedDeltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float easedT = easing.Evaluate(t);
+            Vector3 newPos = Vector3.Lerp(reverse ? startPos : endPos, reverse ? endPos : startPos, easedT);
+            rb.MovePosition(newPos);
+            // float distanceToEnd = Vector3.Distance(startPos, (startPos + MoveTo));
+            // Vector3 dir = startPos - (startPos + MoveTo);
+            // rb.MovePosition(transform.position + dir.normalized * speed);
+            //if (Vector3.Distance(startPos, rb.position) > distanceToEnd) reverse = true;
+
         }
         else
         {
-            float distanceToEnd = Vector3.Distance(startPos, (startPos + MoveTo));
-            Vector3 dir = (startPos + MoveTo) - startPos;
-            rb.MovePosition(transform.position + dir.normalized * speed);
-            if (Vector3.Distance((startPos + MoveTo), transform.position) > distanceToEnd) reverse = false;
-        }
-    }
+            reverse = !reverse;
+            elapsed = 0f;
 
-    void LateUpdate()
-    {
+            Vector3 currentPos = transform.position;
+            // startPos = currentPos;
+            // endPos = currentPos + (reverse ? MoveTo : -MoveTo);
+            // float distanceToEnd = Vector3.Distance(startPos, (startPos + MoveTo));
+            // Vector3 dir = (startPos + MoveTo) - startPos;
+            // rb.MovePosition(transform.position + dir.normalized * speed);
+            //if (Vector3.Distance((startPos + MoveTo), transform.position) > distanceToEnd) reverse = false;
+        }
+        
+
         if (rb == null) return;
         Vector3 delta = rb.position - lastPosition;
 
         OnPlatformMove?.Invoke(delta);
 
         lastPosition = rb.position;
+    }
+
+    void LateUpdate()
+    {
+        // if (rb == null) return;
+        // Vector3 delta = rb.position - lastPosition;
+
+        // OnPlatformMove?.Invoke(delta);
+
+        // lastPosition = rb.position;
 
     }
 

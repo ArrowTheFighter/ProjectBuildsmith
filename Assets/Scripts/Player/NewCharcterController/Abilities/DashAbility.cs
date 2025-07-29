@@ -93,7 +93,10 @@ public class DashAbility : PlayerAbility
                 if (groundSliding && !slideJumping)
                 {
                     //print(characterMovement.rb.linearVelocity.magnitude);
-                    if (characterMovement.rb.linearVelocity.magnitude < 5f && !slideJumping)
+                    Vector3 HorVel = new Vector3(characterMovement.rb.linearVelocity.x, 0, characterMovement.rb.linearVelocity.z);
+                    Vector3 platformVel = new Vector3(characterMovement.platformDelta.x, 0, characterMovement.platformDelta.z);
+                    Vector3 adjustedVel = HorVel - platformVel;
+                    if (adjustedVel.magnitude < 5f && !slideJumping)
                     {
                         if (Time.time - lastTimeDashed > 0.75f)
                         {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -37,7 +36,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float GravityForce;
     public Vector3 GravityDir;
 
-    [HideInInspector] public float walkSpeed;
+    [SerializeField] public float walkSpeed;
     [HideInInspector] public float sprintSpeed;
 
     [Header("Slopes")]
@@ -60,6 +59,9 @@ public class CharacterMovement : MonoBehaviour
     public float groundSnapRayDistance;
     public LayerMask IgnoreGroundLayerMask;
     [HideInInspector] public bool grounded;
+
+    [Header("Collider")]
+    [SerializeField] CapsuleCollider capsuleCollider;
 
     public Transform orientation;
 
@@ -84,7 +86,7 @@ public class CharacterMovement : MonoBehaviour
     public Action OnBasicAttack;
 
     IMoveingPlatform moveingPlatform;
-    Vector3 platformDelta;
+    public Vector3 platformDelta;
 
     private void Start()
     {
@@ -145,7 +147,10 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (OverrideGravity)
         {
-            ApplyGravity();
+            if (moveingPlatform == null)
+            {
+                ApplyGravity();
+            }
          }
 
         if (OverrideAirDragAmount > 0)
@@ -169,7 +174,17 @@ public class CharacterMovement : MonoBehaviour
             // Set max speed
             SpeedControl();
         }
-        ApplyPlatformDelta();
+        if (moveingPlatform != null)
+        {
+            //capsuleCollider.excludeLayers = 1 << 14;
+            //moveSpeed = walkSpeed * 2;
+        }
+        else
+        {
+            //capsuleCollider.excludeLayers &= ~(1 << 14);
+            //moveSpeed = walkSpeed;
+        }
+        //ApplyPlatformDelta();
         UpdateTilt();
         foreach (PlayerAbility ability in playerAbilities)
         {
@@ -197,19 +212,11 @@ public class CharacterMovement : MonoBehaviour
         playerAbilities.Add(newAbility);
     }
 
-    void addPlatformPosistion(Vector3 delta)
+    void trackPlatformDelta(Vector3 delta)
     {
-        platformDelta += delta;
+        platformDelta = delta / Time.fixedDeltaTime;
      }
 
-    void ApplyPlatformDelta()
-    {
-        if (platformDelta != Vector3.zero)
-        {
-            rb.MovePosition(rb.position + platformDelta);
-            platformDelta = Vector3.zero;
-        }
-     }
 
     void GroundCheck()
     {
@@ -223,15 +230,26 @@ public class CharacterMovement : MonoBehaviour
             {
                 print("adding platform move");
                 moveingPlatform = platform;
-                platform.OnPlatformMove += addPlatformPosistion;
+                Collider collider = ((Component)platform).gameObject.GetComponent<Collider>();
+                collider.sharedMaterial.dynamicFriction = 5;
+                collider.sharedMaterial.staticFriction = 5;
+                platform.OnPlatformMove += trackPlatformDelta;
             }
             
         }
         else if (moveingPlatform != null)
         {
             print("removing platform move");
-            moveingPlatform.OnPlatformMove -= addPlatformPosistion;
+            moveingPlatform.OnPlatformMove -= trackPlatformDelta;
+            //platformDelta = Vector3.zero;
+            Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
+            collider.sharedMaterial.dynamicFriction = 0;
+            collider.sharedMaterial.staticFriction = 0;
             moveingPlatform = null;
+        }
+        if (moveingPlatform == null && grounded)
+        {
+            platformDelta = Vector3.zero;
         }
 
         if (grounded && OnSteepSlope())
@@ -391,14 +409,79 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
-            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
-            // limit velocity if needed
-            if (flatVel.magnitude > currentMaxSpeed)
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            Vector3 platformFlatVel = new Vector3(platformDelta.x, 0, platformDelta.z);
+
+            float movingWithPlatformDot = Vector3.Dot(flatVel.normalized, platformFlatVel.normalized);
+
+            float adjustedMaxSpeed = currentMaxSpeed + platformFlatVel.magnitude * movingWithPlatformDot;
+
+            if (moveingPlatform == null && movingWithPlatformDot < -0.2f)
             {
-                Vector3 limitedVel = flatVel.normalized * currentMaxSpeed;
+                adjustedMaxSpeed = currentMaxSpeed;
+            }
+
+            if (moveingPlatform != null)
+            {
+                float lerpTime = Mathf.InverseLerp(9, 30, platformDelta.magnitude);
+                moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
+                if (platformDelta.y > 1)
+                {
+                    lerpTime = Mathf.InverseLerp(0, 5, platformDelta.y);
+                    moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
+                }
+            }
+            else
+            {
+                moveSpeed = walkSpeed;
+            }
+
+            print(flatVel.magnitude + " ::: " + adjustedMaxSpeed);
+
+            if (flatVel.magnitude > adjustedMaxSpeed)
+            {
+                Vector3 limitedVel = rb.linearVelocity.normalized * adjustedMaxSpeed;
+                //Vector3 newFlatVel = limitedRelativeVel + platformFlatVel;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
+            // Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+            // Vector3 platformFlatVel = new Vector3(platformDelta.x, 0, platformDelta.z);
+            // Vector3 relativeFlatVel = flatVel - platformFlatVel;
+
+            // Vector3 platformDir = platformFlatVel.normalized;
+            // float directionFactor = Vector3.Dot(relativeFlatVel.normalized, platformDir);
+            // float relativeSpeed = Vector3.Dot(relativeFlatVel, platformDir);
+
+            // // if (relativeFlatVel.sqrMagnitude > 0.001f && platformFlatVel.sqrMagnitude > 0.001f)
+            // // {
+            // //     directionFactor = Vector3.Dot(relativeFlatVel.normalized, platformDir);
+            // // }
+
+            // if (platformFlatVel.magnitude < 0.01f || flatVel.magnitude < 0.01f)
+            //     directionFactor = 0f;
+
+            // float directionBias = directionFactor * platformFlatVel.magnitude;
+            // float adjustedMaxSpeed = currentMaxSpeed + directionBias;
+
+
+            // // limit velocity if needed
+            // if (Mathf.Abs(relativeSpeed) > Mathf.Abs(adjustedMaxSpeed) && Mathf.Sign(relativeSpeed) == Mathf.Sign(adjustedMaxSpeed))
+            // {
+            //     Vector3 limitedRelativeVel = platformDir * adjustedMaxSpeed;
+            //     Vector3 newFlatVel = limitedRelativeVel + platformFlatVel;
+
+            //     Vector3 newMax = new Vector3(newFlatVel.x, rb.linearVelocity.y, newFlatVel.z);
+            //     rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, newMax, 1f); 
+            //     //print(rb.linearVelocity.magnitude);
+            // }
+
+            // if (flatVel.magnitude > maxSpeed)
+            // {
+            //     Vector3 limitedVel = rb.linearVelocity.normalized * maxSpeed;
+            //     //Vector3 newFlatVel = limitedRelativeVel + platformFlatVel;
+            //     rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+            // }
         }
 
     }

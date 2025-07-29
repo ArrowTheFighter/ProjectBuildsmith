@@ -1,123 +1,70 @@
 #if UNITY_EDITOR
-
-using System;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using System;
+using System.Reflection;
 
-/// <summary>
-/// Toggle fullscreen game view inside the unity editor
-/// 
-/// * works only Unity 6.000.40 or so, some minor version fixed that the game view toolbar wasn't hideable
-/// * use ctrl+shift+alt+2 for game view fullscreen
-/// * use ctrl+shift+alt+3 for default layout (fallback in case sth fails)
-/// 
-/// Precondition
-/// * when you start Unity the windows taskbar should have been removed, otherwise the area keeps on being reserved by Unity and won't be overlapped by the popup
-/// </summary>
-public static class FullscreenGameView
+[InitializeOnLoad]
+public static class EditorFullscreenGameView
 {
-    private static readonly Type GameViewType = Type.GetType("UnityEditor.GameView,UnityEditor");
-    private static readonly PropertyInfo ShowToolbarProperty = GameViewType.GetProperty("showToolbar", BindingFlags.Instance | BindingFlags.NonPublic);
+    static EditorWindow fullscreenWindow;
+    static Type gameViewType;
+    static PropertyInfo showToolbarProperty;
 
-    // display ids used to hide gameview while we render in the popup
-    private static int DISPLAY_0 = 0; // typical gameview display
-    private static int DISPLAY_1 = 1; // display gameview doesn't render to
-
-    static EditorWindow instance;
-
-    [MenuItem("Tools/Fullscreen Reset %#&3", priority = 3)]
-    static void ResetUnityLayout()
+    static EditorFullscreenGameView()
     {
-        EditorApplication.ExecuteMenuItem("Window/Layouts/Default");
+        gameViewType = typeof(EditorWindow).Assembly.GetType("UnityEditor.GameView");
+        showToolbarProperty = gameViewType?.GetProperty("showToolbar", BindingFlags.Instance | BindingFlags.NonPublic);
     }
 
-
-
-    [MenuItem("Tools/Fullscreen Game View (Toggle) %#&2", priority = 2)]
-    public static void Toggle()
+    [MenuItem("Tools/Toggle Fullscreen GameView %#&2")]
+    public static void ToggleFullscreen()
     {
-        if (GameViewType == null)
+        if (fullscreenWindow != null)
         {
-            Debug.LogError("GameView type not found.");
-            return;
-        }
-
-        if (ShowToolbarProperty == null)
-        {
-            Debug.LogWarning("GameView.showToolbar property not found.");
-        }
-
-        if (instance != null)
-        {
-            instance.Close();
-            instance = null;
-
-            // switch on display 0 again
-            SetGameViewTargetDisplay(DISPLAY_0);
-
+            fullscreenWindow.Close();
+            fullscreenWindow = null;
+            SetGameViewTargetDisplay(0); // back to display 0
         }
         else
         {
-            // switch off display 0, otherwise the rendering would happen to the game view and to our instance => performance
-            SetGameViewTargetDisplay(DISPLAY_1);
+            SetGameViewTargetDisplay(1); // hide main Game View
 
-            // gets the game window, but can't hide window title bar, ie can't be converted to popup
-            // EditorWindow gameView = GetMainGameView();
+            fullscreenWindow = ScriptableObject.CreateInstance(gameViewType) as EditorWindow;
 
-            // creates a 2nd window, costs performance
-            instance = (EditorWindow)ScriptableObject.CreateInstance(GameViewType);
+            if (showToolbarProperty != null)
+                showToolbarProperty.SetValue(fullscreenWindow, false);
 
-            // hide top toolbar
-            // note: unity 6.000.40 or sth required
-            ShowToolbarProperty?.SetValue(instance, false);
+            var res = Screen.currentResolution;
+            Rect fullscreenRect = new Rect(0, 0, res.width, res.height);
+            float scale = EditorGUIUtility.pixelsPerPoint;
+            fullscreenRect.width /= scale;
+            fullscreenRect.height /= scale;
 
-            // note: work area considers taskbar
-            // DisplayInfo displayInfo = Screen.mainWindowDisplayInfo;
-            // Vector2 resolution = new Vector2(displayInfo.workArea.width, displayInfo.workArea.height);
-            Vector2 position = new Vector2(0, 0); // Vector2.zero
-            Vector2 resolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
 
-            // consider windows scale (eg 150% results in 1.5)
-            resolution /= EditorGUIUtility.pixelsPerPoint;
-
-            var fullscreenRect = new Rect(position, resolution);
-
-            instance.ShowPopup(); // this fits screen, can't go into negative position            
-            instance.position = fullscreenRect;
-            instance.Focus();
+            fullscreenWindow.ShowPopup();
+            fullscreenWindow.position = fullscreenRect;
+            fullscreenWindow.Focus();
         }
     }
 
-    public static EditorWindow GetMainGameView()
+    [MenuItem("Tools/Reset Layout %#&3")]
+    public static void ResetLayout()
     {
-        // Get the type for the GameView from the UnityEditor assembly
-        System.Type gameViewType = typeof(EditorWindow).Assembly.GetType("UnityEditor.GameView");
-        if (gameViewType == null)
-        {
-            Debug.LogError("Unable to find the UnityEditor.GameView type.");
-            return null;
-        }
-        // Retrieve the game view window
+        EditorApplication.ExecuteMenuItem("Window/Layouts/Default");
+        fullscreenWindow = null;
+    }
+
+    static void SetGameViewTargetDisplay(int index)
+    {
+        var gameView = GetMainGameView();
+        var method = gameView.GetType().GetMethod("SetTargetDisplay", BindingFlags.Instance | BindingFlags.NonPublic);
+        method?.Invoke(gameView, new object[] { index });
+    }
+
+    static EditorWindow GetMainGameView()
+    {
         return EditorWindow.GetWindow(gameViewType);
-    }
-
-    /// <summary>
-    /// Set target display to display index
-    /// </summary>
-    /// <param name="displayIndex"></param>
-    private static void SetGameViewTargetDisplay( int displayIndex)
-    {
-        EditorWindow gameView = GetMainGameView();
-
-        System.Type type = gameView.GetType();
-        type.InvokeMember(
-            "SetTargetDisplay",
-            BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod,
-            null,
-            gameView,
-            new object[] { displayIndex }
-            );
     }
 }
 #endif
