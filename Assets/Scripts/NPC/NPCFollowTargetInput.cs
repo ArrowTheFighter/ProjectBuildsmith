@@ -20,6 +20,8 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     public float emptySpaceDownDistance = 3;
     public LayerMask wallCheckLayersIgnore;
 
+    bool canJump = true;
+
     public event Action OnJump;
     public event Action OnDive;
 
@@ -72,6 +74,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     void Jump()
     {
         if (jumpCooldown > Time.time) return;
+        if (!canJump) return;
         jumpCooldown = Time.time + jumpCooldownLength;
         OnJump?.Invoke();
     }
@@ -92,6 +95,9 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                 case NPCTriggers.NPCTriggerTypes.Stop:
                     SetIsMoving(false);
                     break;
+                case NPCTriggers.NPCTriggerTypes.DontJump:
+                    canJump = false;
+                    break;
             }
             if (trigger.activateTrigger != null)
             {
@@ -108,12 +114,29 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
          }
     }
 
+    void OnTriggerExit(Collider other) 
+    {
+        if (other.TryGetComponent(out NPCTriggers trigger))
+        {
+            if (trigger.Activated) return;
+            switch (trigger.TriggerType)
+            {
+                case NPCTriggers.NPCTriggerTypes.DontJump:
+                    canJump = true;
+                    break;
+            }
+        }
+    }
+
+
+
+
     public void SetIsMoving(bool _isMoving)
     {
         isMoving = _isMoving;
         if (CanNotTalkWhileMoving)
         {
-            if(TryGetComponent(out DialogWorker dialogWorker))
+            if (TryGetComponent(out DialogWorker dialogWorker))
             {
                 dialogWorker.NPCCanInteract = !isMoving;
             }
