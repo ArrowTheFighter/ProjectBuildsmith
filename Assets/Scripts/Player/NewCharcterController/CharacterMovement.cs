@@ -230,9 +230,15 @@ public class CharacterMovement : MonoBehaviour
             {
                 print("adding platform move");
                 moveingPlatform = platform;
-                Collider collider = ((Component)platform).gameObject.GetComponent<Collider>();
-                collider.sharedMaterial.dynamicFriction = 5;
-                collider.sharedMaterial.staticFriction = 5;
+                if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
+                {
+                    Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
+                    if (collider != null && collider.sharedMaterial != null)
+                    {
+                        collider.sharedMaterial.dynamicFriction = 5;
+                        collider.sharedMaterial.staticFriction = 5;
+                    }
+                }
                 platform.OnPlatformMove += trackPlatformDelta;
             }
             
@@ -242,9 +248,17 @@ public class CharacterMovement : MonoBehaviour
             print("removing platform move");
             moveingPlatform.OnPlatformMove -= trackPlatformDelta;
             //platformDelta = Vector3.zero;
-            Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
-            collider.sharedMaterial.dynamicFriction = 0;
-            collider.sharedMaterial.staticFriction = 0;
+            if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
+            {
+                Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
+                if (collider != null && collider.sharedMaterial != null)
+                {
+                    collider.sharedMaterial.dynamicFriction = 0;
+                    collider.sharedMaterial.staticFriction = 0;
+                }
+            }
+            
+            
             moveingPlatform = null;
         }
         if (moveingPlatform == null && grounded)

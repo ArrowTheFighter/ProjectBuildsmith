@@ -609,11 +609,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 822
   grounded: 0
+  capsuleCollider: {fileID: 4395142168333838905}
   orientation: {fileID: 8975765588202366076}
   rb: {fileID: 0}
   playerAbilities: []
   playerAnimationController: {fileID: 0}
   TargetFPS: 120
+  platformDelta: {x: 0, y: 0, z: 0}
 --- !u!114 &1413664540965735395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 8433584776643039513}
   walking: 1
+  printVel: 0
 --- !u!114 &2140258408911711875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,6 +850,9 @@ MonoBehaviour:
   regenDelay: 5
   regenInterval: 5
   regenAmount: 1
+  heartRefillPopSoundFX: {fileID: 8300000, guid: b17697c725833b6478c4fbb41f119f87, type: 3}
+  heartRefillPopSoundFXVolume: 0.2
+  heartRefillPopSoundFXPitch: 1
 --- !u!114 &5581061302540799542
 MonoBehaviour:
   m_ObjectHideFlags: 0
