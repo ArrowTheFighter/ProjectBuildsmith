@@ -75,8 +75,6 @@ public class CharacterMovement : MonoBehaviour
 
     [HideInInspector] public PlayerAnimationController playerAnimationController;
 
-    [Header("DEBUG")]
-    [SerializeField] int TargetFPS = 60;
 
     [Header("Ability Actions")]
     public Action onDoubleJump;
@@ -117,8 +115,6 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        //DEBUG
-        Application.targetFrameRate = TargetFPS;
         if (characterInput is NPCFollowTargetInput)
         {
             NPCFollowTargetInput nPCFollow = (NPCFollowTargetInput)characterInput;
@@ -451,7 +447,6 @@ public class CharacterMovement : MonoBehaviour
                 moveSpeed = walkSpeed;
             }
 
-            print(flatVel.magnitude + " ::: " + adjustedMaxSpeed);
 
             if (flatVel.magnitude > adjustedMaxSpeed)
             {

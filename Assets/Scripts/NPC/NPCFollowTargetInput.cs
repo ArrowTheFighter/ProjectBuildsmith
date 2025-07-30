@@ -12,6 +12,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     public float jumpCooldownLength = 0.5f;
 
     public bool IsWalking;
+    [HideInInspector] public bool ForceSliding;
     [Header("Jumping")]
     public bool JumpWhenWallInFront;
     public float DistanceForWallCheck;
@@ -98,6 +99,9 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                 case NPCTriggers.NPCTriggerTypes.DontJump:
                     canJump = false;
                     break;
+                case NPCTriggers.NPCTriggerTypes.ForceSlide:
+                    ForceSliding = true;
+                    break;
             }
             if (trigger.activateTrigger != null)
             {
@@ -123,6 +127,9 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
             {
                 case NPCTriggers.NPCTriggerTypes.DontJump:
                     canJump = true;
+                    break;
+                case NPCTriggers.NPCTriggerTypes.ForceSlide:
+                    ForceSliding = false;
                     break;
             }
         }

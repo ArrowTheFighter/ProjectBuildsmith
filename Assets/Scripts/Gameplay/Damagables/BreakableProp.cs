@@ -44,15 +44,20 @@ public class BreakableProps : MonoBehaviour, IDamagable
         {
             int amount = lootTable.GetRandomDropAmount();
             ItemData itemData = GameplayUtils.instance.GetItemDataByID(lootTable.itemID);
-            GameObject itemDropped = Instantiate(itemData.item_pickup_object, transform.position + Vector3.up, Quaternion.identity);
-            ItemPickup itemPickup = itemDropped.GetComponent<ItemPickup>();
+            for (int i = 0; i < amount; i++)
+            {
+                GameObject itemDropped = Instantiate(itemData.item_pickup_object, transform.position + Vector3.up, Quaternion.identity);
+                ItemPickup itemPickup = itemDropped.GetComponent<ItemPickup>();
 
-            itemPickup.amount = amount;
-            itemPickup.respawn_time = -1;
-            Rigidbody rigidbody = itemDropped.GetComponent<Rigidbody>();
-            rigidbody.useGravity = true;
-            Vector3 horDir = new Vector3(UnityEngine.Random.Range(-1, 1), 0, UnityEngine.Random.Range(-1, 1)).normalized;
-            rigidbody.AddForce((horDir + Vector3.up) * ItemDropForce, ForceMode.Impulse);
+                itemPickup.amount = 1;
+                itemPickup.respawn_time = -1;
+                Rigidbody rigidbody = itemDropped.GetComponent<Rigidbody>();
+                rigidbody.useGravity = true;
+                Vector3 horDir = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
+                print("horDir");
+                rigidbody.AddForce((horDir + Vector3.up) * ItemDropForce * UnityEngine.Random.Range(1f,1.25f), ForceMode.Impulse);
+            }
+            
         }
         if (DestoryedParticle != null)
         {

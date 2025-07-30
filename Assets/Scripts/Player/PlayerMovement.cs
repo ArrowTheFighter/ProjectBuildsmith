@@ -88,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Application.targetFrameRate = 120;
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         playerInput.actions["Jump"].performed += Jump;

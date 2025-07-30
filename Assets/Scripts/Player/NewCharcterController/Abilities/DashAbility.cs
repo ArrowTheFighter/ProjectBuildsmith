@@ -106,7 +106,17 @@ public class DashAbility : PlayerAbility
                     }
                     if (characterMovement.characterInput is NPCFollowTargetInput)
                     {
-                        characterMovement.rb.linearDamping = 5;
+                        NPCFollowTargetInput followTargetInput = (NPCFollowTargetInput)characterMovement.characterInput;
+                        if (followTargetInput.ForceSliding)
+                        {
+                            print("forceSliding");
+                            characterMovement.rb.linearDamping = 0;
+                        }
+                        else
+                        {
+                            print("not force sliding");
+                            characterMovement.rb.linearDamping = 5;
+                        }
                      }
                     else if (characterMovement.characterInput.GetMovementInput() != Vector3.zero)
                     {

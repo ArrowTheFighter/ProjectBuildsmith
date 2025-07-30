@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PickupCheck : MonoBehaviour
 {
-    void Update()
+    void FixedUpdate()
     {
         CapsuleCollider capsule = GetComponent<CapsuleCollider>();
         Vector3 center = capsule.center;
