@@ -50,6 +50,10 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     [SerializeField] private CinemachineImpulseSource impulseSource;
 
+    [SerializeField] Image damageFlashImage;
+    [SerializeField] float damageFlashFadeAlpha;
+    [SerializeField] float damageFlashFadeTime;
+
     [HideInInspector] public bool PlayerCanStomp { get; set ; }
 
     void Start()
@@ -175,6 +179,8 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         PlayerParticlesManager.instance.PlayPlayerTakeHitParticles();
 
         impulseSource.GenerateImpulse();
+
+        damageFlashImage.DOFade(damageFlashFadeAlpha,damageFlashFadeTime).SetLoops(2, LoopType.Yoyo);
 
         AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Hurt");
         SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
