@@ -178,9 +178,16 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         OnTakeDamage?.Invoke(Health);
         PlayerParticlesManager.instance.PlayPlayerTakeHitParticles();
 
-        impulseSource.GenerateImpulse();
+        if (!GameSettings.IsScreenShakeDisabled())
+        {
+            Debug.Log("Shake");
+            impulseSource.GenerateImpulse();
+        }         
 
-        damageFlashImage.DOFade(damageFlashFadeAlpha,damageFlashFadeTime).SetLoops(2, LoopType.Yoyo);
+        if (!GameSettings.IsScreenFlashDisabled())
+        {
+            damageFlashImage.DOFade(damageFlashFadeAlpha, damageFlashFadeTime).SetLoops(2, LoopType.Yoyo);
+        }
 
         AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Hurt");
         SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));

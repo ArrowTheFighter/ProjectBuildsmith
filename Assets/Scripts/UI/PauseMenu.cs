@@ -8,6 +8,9 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] Button ResumeButton;
     [SerializeField] Button SettingsBackButton;
 
+    [SerializeField] GameObject[] settingsTabs;
+
+
     public void OpenMainScreen()
     {
         SettingsScreen.SetActive(false);
@@ -25,5 +28,37 @@ public class PauseMenu : MonoBehaviour
         UIInputHandler.instance.ClosedMenu();
         UIInputHandler.instance.OpenedMenu();
         //SettingsBackButton.Select();
+    }
+
+    public void OpenControlsTab()
+    {
+        DisableAllSettingsPanels();
+        settingsTabs[0].SetActive(true);
+    }
+
+    public void OpenGraphicsTab()
+    {
+        DisableAllSettingsPanels();
+        settingsTabs[1].SetActive(true);
+    }
+
+    public void OpenAudioTab()
+    {
+        DisableAllSettingsPanels();
+        settingsTabs[2].SetActive(true);
+    }
+    
+    public void OpenAccessibilityTab()
+    {
+        DisableAllSettingsPanels();
+        settingsTabs[3].SetActive(true);
+    }
+
+    void DisableAllSettingsPanels()
+    {
+        for (int i = 0; i < settingsTabs.Length; i++)
+        {
+            settingsTabs[i].SetActive(false);
+        }
     }
 }
