@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,12 +48,18 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] float heartRefillPopSoundFXVolume = 0.4f;
     [SerializeField] float heartRefillPopSoundFXPitch = 1f;
 
+    [SerializeField] private CinemachineImpulseSource impulseSource;
 
     [HideInInspector] public bool PlayerCanStomp { get; set ; }
 
     void Start()
     {
         characterMovement = GetComponent<CharacterMovement>();
+
+        if(impulseSource != null)
+        {
+            impulseSource = GetComponent<CinemachineImpulseSource>();
+        } 
     }
 
 
@@ -166,6 +173,8 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
         OnTakeDamage?.Invoke(Health);
         PlayerParticlesManager.instance.PlayPlayerTakeHitParticles();
+
+        impulseSource.GenerateImpulse();
 
         AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Hurt");
         SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
