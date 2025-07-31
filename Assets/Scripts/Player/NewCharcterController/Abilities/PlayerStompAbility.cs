@@ -37,7 +37,8 @@ public class PlayerStompAbility : PlayerAbility
                             characterMovement.playerAnimationController.PlayerDoubleJumped();
                             Vector3 vel = characterMovement.rb.linearVelocity;
                             characterMovement.rb.linearVelocity = new Vector3(vel.x, 0, vel.z);
-                            characterMovement.rb.linearVelocity = new Vector3(vel.x, 15 + extraForce, vel.z);
+                            //characterMovement.rb.linearVelocity = new Vector3(vel.x, 15 + extraForce, vel.z);
+                            characterMovement.rb.AddForce(new Vector3(vel.x, 15 + extraForce, vel.z), ForceMode.Impulse);
                             playerStompCooldown = Time.time + 0.2f;
                         }
                     }
@@ -50,7 +51,8 @@ public class PlayerStompAbility : PlayerAbility
                             characterMovement.playerAnimationController.PlayerDoubleJumped();
                             Vector3 vel = characterMovement.rb.linearVelocity;
                             characterMovement.rb.linearVelocity = new Vector3(vel.x, 0, vel.z);
-                            characterMovement.rb.linearVelocity = new Vector3(vel.x, 15 + extraForce, vel.z);
+                            characterMovement.rb.AddForce(new Vector3(vel.x, 15 + extraForce, vel.z), ForceMode.Impulse);
+                            //characterMovement.rb.linearVelocity = new Vector3(vel.x, 15 + extraForce, vel.z);
                             playerStompCooldown = Time.time + 0.2f;
                         }
                     }

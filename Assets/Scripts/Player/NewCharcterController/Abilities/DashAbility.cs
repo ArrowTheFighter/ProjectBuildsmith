@@ -255,6 +255,7 @@ public class DashAbility : PlayerAbility
        // Vector3 characterForward = characterMovement.orientation.forward;
         //characterForward.y = 0;
         characterMovement.orientation.localEulerAngles = Vector3.zero;
+        Debug.Log(characterMovement.orientation.localEulerAngles);
 
         groundSliding = false;
         slideJumping = false;
@@ -270,6 +271,7 @@ public class DashAbility : PlayerAbility
     {
         yield return null;
         characterMovement.playerAnimationController.animator.ResetTrigger("Jump");
+        characterMovement.orientation.localEulerAngles = Vector3.zero;
     }
 
 
