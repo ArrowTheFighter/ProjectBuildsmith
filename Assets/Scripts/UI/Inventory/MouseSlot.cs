@@ -40,7 +40,11 @@ public class MouseSlot : MonoBehaviour
                 out pos
             );
 
-            rectTransform.localPosition = pos;
+            if (!ContainsNaN(pos))
+            {
+                rectTransform.localPosition = pos;
+            }
+
         }
         else if (UIInputHandler.instance.currentScheme == "Gamepad")
         {
@@ -94,6 +98,11 @@ public class MouseSlot : MonoBehaviour
                 }
             }
         }
+    }
+
+    bool ContainsNaN(Vector3 v)
+    {
+        return float.IsNaN(v.x) || float.IsNaN(v.y) || float.IsNaN(v.z);
     }
 
     void InventoryClosed()
