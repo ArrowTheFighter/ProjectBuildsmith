@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChopSlamAbility : PlayerAbility
 {
     public int DamageStrength = 3;
+    public AttackType[] attackTypes;
 
     public float upForce = 20;
     public float bounceForce = 12;
@@ -77,7 +78,7 @@ public class ChopSlamAbility : PlayerAbility
                     if (hit.TryGetComponent(out IDamagable damagable))
                     {
                         float ExtraForce;
-                        damagable.TakeDamage(DamageStrength, characterMovement.gameObject,out ExtraForce);
+                        damagable.TakeDamage(DamageStrength,attackTypes,characterMovement.gameObject,out ExtraForce);
 
 
                         Vector3 velocity = characterMovement.rb.linearVelocity;
@@ -100,7 +101,7 @@ public class ChopSlamAbility : PlayerAbility
                 {
                     if (collider.TryGetComponent(out IDamagable damagable))
                     {
-                        damagable.TakeDamage(1, characterMovement.gameObject);
+                        damagable.TakeDamage(1, attackTypes, characterMovement.gameObject);
                     }
                  }
 
@@ -123,6 +124,7 @@ public class ChopSlamAbility : PlayerAbility
         AbilityActive = false;
         IsFalling = false;
         groundLand = false;
+        MovingUp = false;
         characterMovement.playerAnimationController.animator.SetBool("ChopFall", false);
         characterMovement.playerAnimationController.animator.SetBool("ChopLandGround", false);
     }

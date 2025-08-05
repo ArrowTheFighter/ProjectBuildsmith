@@ -20,6 +20,19 @@ MonoBehaviour:
   PositionOffset: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 180, z: 0}
   item_ui_image: {fileID: 21300000, guid: 55410f0bfe494664095fa78516092edd, type: 3}
-  playerAbilities:
-  - ChopSlamAbility, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  - QuickChopAbility, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  abilityConfigs:
+  - rid: 579739595174838362
+  - rid: 579739618492022893
+  references:
+    version: 2
+    RefIds:
+    - rid: 579739595174838362
+      type: {class: QuickChopAbilityData, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 3
+        attackTypes: 000000000100000002000000
+    - rid: 579739618492022893
+      type: {class: ChopSlamAbilityData, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 5
+        attackTypes: 000000000100000002000000

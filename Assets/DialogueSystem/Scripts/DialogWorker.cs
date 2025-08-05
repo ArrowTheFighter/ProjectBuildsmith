@@ -257,6 +257,15 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         }
                     }
                     break;
+                case DSGiveItemSO giveItemSO:
+                    ItemData item = GameplayUtils.instance.GetItemDataByID(giveItemSO.ItemID);
+                    GameplayUtils.instance.inventoryManager.AddItemToInventory(item, int.Parse(giveItemSO.ItemAmount));
+                    foreach (DSDialogueChoiceData choice in giveItemSO.Choices)
+                    {
+                        tempDialogSO = choice.NextDialogue;
+                        break;
+                    }
+                    break;
                 case DSCloseDialogSO closeDialogSO:
                     currentDialogSO = closeDialogSO;
                     CloseDialog();

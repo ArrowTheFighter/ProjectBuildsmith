@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class NoClip : PlayerAbility
 {
     [SerializeField] float no_clip_speed = 20;
-    bool NoClipActive;
+    public bool NoClipActive;
     bool NoClipButtonPressed;
     public override void FixedUpdateAbility()
     {

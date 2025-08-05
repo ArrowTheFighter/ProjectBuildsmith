@@ -7,7 +7,10 @@ public class ThumbnailBatcher : EditorWindow
 {
     public ThumbnailGenerator thumbnailGenerator;
     public string prefabFolder = "Assets/Prefabs/Resources"; // Change this as needed
-    public string saveFolder = "Assets/Resources/ItemData/Thumbnails"; // Output folder for PNGs
+    public string saveFolder = "Assets/Art/ItemThumbnails"; // Output folder for PNGs
+
+    public string singleFileName;
+    public RenderTexture previewTexture;
 
     [MenuItem("Tools/Generate Prefab Thumbnails")]
     public static void ShowWindow()
@@ -23,10 +26,42 @@ public class ThumbnailBatcher : EditorWindow
         prefabFolder = EditorGUILayout.TextField("Prefab Folder", prefabFolder);
         saveFolder = EditorGUILayout.TextField("Save Folder", saveFolder);
 
-        if (GUILayout.Button("Generate Thumbnails"))
+        if (GUILayout.Button("Auto Generate All Thumbnails"))
         {
             GenerateThumbnails();
         }
+        singleFileName = EditorGUILayout.TextField("ItemName", singleFileName);
+        if (GUILayout.Button("Generate Single Thumbnail"))
+        {
+            GenerateSingleThumbnail();
+        }
+        previewTexture = (RenderTexture)EditorGUILayout.ObjectField("Render Texture", previewTexture, typeof(RenderTexture), true);
+
+        if (previewTexture != null)
+        {
+            GUILayout.Label("Preview", EditorStyles.boldLabel);
+            Rect previewRect = GUILayoutUtility.GetAspectRect(1.0f); // square preview
+            EditorGUI.DrawPreviewTexture(previewRect, previewTexture);
+        }
+    }
+
+    void GenerateSingleThumbnail()
+    {
+        if (thumbnailGenerator == null)
+        {
+            Debug.LogError("ThumbnailGenerator reference is missing.");
+            return;
+        }
+
+        if (!Directory.Exists(saveFolder))
+        {
+            Directory.CreateDirectory(saveFolder);
+        }
+
+        string savePath = Path.Combine(saveFolder, singleFileName + ".png");
+        thumbnailGenerator.CaptureThumbnail(null, savePath);
+        AssetDatabase.Refresh();
+        Debug.Log("Saved Single Thumbnail.");
     }
 
     void GenerateThumbnails()

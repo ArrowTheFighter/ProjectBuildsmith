@@ -20,86 +20,71 @@ public class ItemDataSpritePreview : Editor
 
         abilityTypes = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(a => a.GetTypes())
-            .Where(t => typeof(PlayerAbility).IsAssignableFrom(t) && !t.IsAbstract)
+            .Where(t => typeof(AbilityData).IsAssignableFrom(t) && !t.IsAbstract && !t.IsGenericType)
             .ToArray();
+
 
         abilityTypeNames = abilityTypes.Select(t => t.Name).ToArray();
     }
 
     public override void OnInspectorGUI()
     {
-        //Draw whatever we already have in SO definition
+        // Draw base inspector
         base.OnInspectorGUI();
-        //Guard clause
-        if (itemData.item_ui_image == null)
-            return;
 
-        //Convert the weaponSprite (see SO script) to Texture
-        Texture2D texture = AssetPreview.GetAssetPreview(itemData.item_ui_image);
-        //We create empty space 80x80 (you may need to tweak it to scale better your sprite
-        //This allows us to place the image JUST UNDER our default inspector
-        GUILayout.Label("", GUILayout.Height(80), GUILayout.Width(80));
-        //Draws the texture where we have defined our Label (empty space)
-        GUI.DrawTexture(GUILayoutUtility.GetLastRect(), texture);
-
-        for (int i = 0; i < itemData.playerAbilities.Count; i++)
+        // Show the item preview sprite
+        if (itemData.item_ui_image != null)
         {
-            string typeName = itemData.playerAbilities[i];
-            Type type = Type.GetType(typeName);
+            Texture2D texture = AssetPreview.GetAssetPreview(itemData.item_ui_image);
+            GUILayout.Label("", GUILayout.Height(80), GUILayout.Width(80));
+            GUI.DrawTexture(GUILayoutUtility.GetLastRect(), texture);
+        }
 
-            if (type == null) return;
+        GUILayout.Space(10);
+        EditorGUILayout.LabelField("Ability Configurations", EditorStyles.boldLabel);
 
+        for (int i = 0; i < itemData.abilityConfigs.Count; i++)
+        {
+            AbilityData ability = itemData.abilityConfigs[i];
+            if (ability == null) continue;
 
-            //var objective = itemData.playerAbilities[i];
+            string key = $"{i}_{ability.GetType().Name}";
+            if (!foldouts.ContainsKey(key))
+                foldouts[key] = true;
 
             EditorGUILayout.BeginVertical("box");
 
-
-            // if (objective == null)
-            // {
-            //     // EditorGUILayout.LabelField("Missing or null objective", EditorStyles.boldLabel);
-            //     // if (GUILayout.Button("Remove", GUILayout.Width(60)))
-            //     // {
-            //     //     questData.questObjectives.RemoveAt(i);
-            //     //     break;
-            //     // }
-            //     // EditorGUILayout.EndVertical();
-            //     continue;
-            // }
-
-            // Ensure there's a foldout state for this objective
-            if (!foldouts.ContainsKey(typeName))
-                foldouts[typeName] = true;
-
-            // Foldout header
             EditorGUILayout.BeginHorizontal();
-            foldouts[typeName] = EditorGUILayout.Foldout(foldouts[typeName], type.GetType().Name, true);
+            foldouts[key] = EditorGUILayout.Foldout(foldouts[key], ability.GetType().Name, true);
             if (GUILayout.Button("Remove", GUILayout.Width(60)))
             {
-                itemData.playerAbilities.RemoveAt(i);
-                foldouts.Remove(typeName);
+                itemData.abilityConfigs.RemoveAt(i);
+                foldouts.Remove(key);
                 break;
             }
             EditorGUILayout.EndHorizontal();
 
-            // If expanded, draw fields
-            if (foldouts[typeName])
+            if (foldouts[key])
             {
-                EditorGUILayout.LabelField("Type", type.FullName);
+                EditorGUI.indentLevel++;
+                DrawFields(ability); // 👈 This draws fields like "damage"
+                EditorGUI.indentLevel--;
             }
 
             EditorGUILayout.EndVertical();
-
         }
 
-        GUILayout.Space(10);
-        EditorGUILayout.LabelField("Add New Objective", EditorStyles.boldLabel);
-        selectedTypeIndex = EditorGUILayout.Popup("Objective Type", selectedTypeIndex, abilityTypeNames);
 
-        if (GUILayout.Button("Add Objective"))
+        // Add new ability config
+        GUILayout.Space(10);
+        EditorGUILayout.LabelField("Add New Ability", EditorStyles.boldLabel);
+        selectedTypeIndex = EditorGUILayout.Popup("Ability Type", selectedTypeIndex, abilityTypeNames);
+
+        if (GUILayout.Button("Add Ability"))
         {
-            //var newObjective = Activator.CreateInstance(abilityTypes[selectedTypeIndex]) as PlayerAbility;
-            itemData.playerAbilities.Add(abilityTypes[selectedTypeIndex].AssemblyQualifiedName);
+            var type = abilityTypes[selectedTypeIndex];
+            var newAbility = Activator.CreateInstance(type) as AbilityData;
+            itemData.abilityConfigs.Add(newAbility);
         }
 
         serializedObject.ApplyModifiedProperties();
@@ -112,12 +97,65 @@ public class ItemDataSpritePreview : Editor
         foreach (var field in fields)
         {
             object value = field.GetValue(obj);
+            Type fieldType = field.FieldType;
 
-            if (field.FieldType == typeof(string))
-                field.SetValue(obj, EditorGUILayout.TextField(field.Name, (string)value));
-            else if (field.FieldType == typeof(int))
-                field.SetValue(obj, EditorGUILayout.IntField(field.Name, (int)value));
-            // Add other types as needed...
+            EditorGUI.BeginChangeCheck();
+            string label = ObjectNames.NicifyVariableName(field.Name);
+
+            if (fieldType == typeof(string))
+            {
+                value = EditorGUILayout.TextField(label, (string)value);
+            }
+            else if (fieldType == typeof(int))
+            {
+                value = EditorGUILayout.IntField(label, (int)value);
+            }
+            else if (fieldType == typeof(float))
+            {
+                value = EditorGUILayout.FloatField(label, (float)value);
+            }
+            else if (fieldType == typeof(bool))
+            {
+                value = EditorGUILayout.Toggle(label, (bool)value);
+            }
+            else if (typeof(UnityEngine.Object).IsAssignableFrom(fieldType))
+            {
+                value = EditorGUILayout.ObjectField(label, (UnityEngine.Object)value, fieldType, true);
+            }
+            else if (fieldType.IsEnum)
+            {
+                value = EditorGUILayout.EnumPopup(label, (Enum)value);
+            }
+            else if (fieldType.IsArray && fieldType.GetElementType().IsEnum)
+            {
+                Array array = value as Array ?? Array.CreateInstance(fieldType.GetElementType(), 0);
+                Type enumType = fieldType.GetElementType();
+
+                int size = array.Length;
+                size = EditorGUILayout.IntField(label + " Size", size);
+
+                Array newArray = Array.CreateInstance(enumType, size);
+
+                for (int i = 0; i < size; i++)
+                {
+                    Enum element = (i < array.Length) ? (Enum)array.GetValue(i) : (Enum)Enum.GetValues(enumType).GetValue(0);
+                    element = EditorGUILayout.EnumPopup($"{label} [{i}]", element);
+                    newArray.SetValue(element, i);
+                }
+
+                value = newArray;
+            }
+            else
+            {
+                EditorGUILayout.LabelField(label, $"Unsupported Type ({fieldType.Name})");
+            }
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                field.SetValue(obj, value);
+            }
         }
     }
+
+
 }

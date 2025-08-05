@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Recipe")]
 public class Item_Recipe : ScriptableObject
 {
     public string ID;

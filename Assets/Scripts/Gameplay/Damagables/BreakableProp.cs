@@ -17,7 +17,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
 
     public bool PlayerCanStomp { get; set ; }
 
-    public void TakeDamage(int amount, GameObject source)
+    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
     {
         PlayParticle();
         Health -= amount;
@@ -27,9 +27,9 @@ public class BreakableProps : MonoBehaviour, IDamagable
         }
     }
 
-    public void TakeDamage(int amount, GameObject source, out float ExtraForce)
+    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
-        TakeDamage(amount, source);
+        TakeDamage(amount, attackTypes, source);
         ExtraForce = ExtraBounceForce;
     }
 
@@ -83,7 +83,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
          }
     }
 
-    public void TakeDamage(int amount, GameObject source, float knockbackStrength = 1)
+    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         //Does't need to do anything
     }

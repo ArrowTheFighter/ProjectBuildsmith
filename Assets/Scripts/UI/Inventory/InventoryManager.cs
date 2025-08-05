@@ -70,45 +70,75 @@ public class InventoryManager : MonoBehaviour
             {
                 if (!inventoryIsOpen)
                 {
-                    if (GameplayUtils.instance.GetOpenMenu()) return;
-                    //print("opening inventory");
-                    UIInputHandler.instance.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
-                    GameplayUtils.instance.OpenMenu();
+                    OpenInventory();
 
                 }
                 else
                 {
-                    //print("closing inventory");
-                    GameplayUtils.instance.CloseMenu();
-                    OnInventoryClosed?.Invoke();
-                    UIInputHandler.instance.defaultButton = null;
-                    if (QuestMenuObject.TryGetComponent(out CanvasGroup QuestCanvasGroup))
-                    {
-                        QuestCanvasGroup.alpha = 0;
-                        QuestCanvasGroup.interactable = false;
-                        QuestCanvasGroup.blocksRaycasts = false;
-                        questInfoBox.ClearQuestInfo();
-                        selectedQuest = null;
-                    }
+                    CloseInventory();
                 }
-                inventoryIsOpen = !inventoryIsOpen;
-                canvasGroup.alpha = inventoryIsOpen ? 1 : 0;
-                canvasGroup.blocksRaycasts = inventoryIsOpen;
-                canvasGroup.interactable = inventoryIsOpen;
 
             }
         }
     }
 
+    public void OpenInventory()
+    {
+        if (InventoryObject == null) return;
+        if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
+        {
+            InventoryObject.SetActive(true);
+            if (GameplayUtils.instance.GetOpenMenu()) return;
+            //print("opening inventory");
+            UIInputHandler.instance.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
+            GameplayUtils.instance.OpenMenu();
+
+            
+            inventoryIsOpen = true;
+            canvasGroup.alpha = 1;
+            canvasGroup.blocksRaycasts = true;
+            canvasGroup.interactable = true;
+
+        }
+    }
+
+    public void CloseInventory()
+    {
+        if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
+        {
+
+            InventoryObject.SetActive(false);
+            //print("closing inventory");
+            GameplayUtils.instance.CloseMenu();
+            OnInventoryClosed?.Invoke();
+            UIInputHandler.instance.defaultButton = null;
+            if (QuestMenuObject.TryGetComponent(out CanvasGroup QuestCanvasGroup))
+            {
+                QuestCanvasGroup.alpha = 0;
+                QuestCanvasGroup.interactable = false;
+                QuestCanvasGroup.blocksRaycasts = false;
+                questInfoBox.ClearQuestInfo();
+                selectedQuest = null;
+            }
+            inventoryIsOpen = false;
+            canvasGroup.alpha = 0;
+            canvasGroup.blocksRaycasts = false;
+            canvasGroup.interactable = false;
+            GameplayUtils.instance.CloseAllCraftingMenus();
+        }
+
+    }
+
 
     public void SwitchToQuestsMenu()
     {
+        InventoryObject.SetActive(false);
         CanvasGroup inventroyCanvasGroup = InventoryObject.GetComponent<CanvasGroup>();
         inventroyCanvasGroup.alpha = 0;
         inventroyCanvasGroup.blocksRaycasts = false;
         inventroyCanvasGroup.interactable = false;
 
-
+        QuestMenuObject.SetActive(true);
         CanvasGroup questsCanvasGroup = QuestMenuObject.GetComponent<CanvasGroup>();
         questsCanvasGroup.alpha = 1;
         questsCanvasGroup.blocksRaycasts = true;
@@ -117,12 +147,14 @@ public class InventoryManager : MonoBehaviour
 
     public void SwitchToInventoryMenu()
     {
+        InventoryObject.SetActive(true);
         CanvasGroup inventroyCanvasGroup = InventoryObject.GetComponent<CanvasGroup>();
         inventroyCanvasGroup.alpha = 1;
         inventroyCanvasGroup.blocksRaycasts = true;
         inventroyCanvasGroup.interactable = true;
 
 
+        QuestMenuObject.SetActive(false);
         CanvasGroup questsCanvasGroup = QuestMenuObject.GetComponent<CanvasGroup>();
         questsCanvasGroup.alpha = 0;
         questsCanvasGroup.blocksRaycasts = false;

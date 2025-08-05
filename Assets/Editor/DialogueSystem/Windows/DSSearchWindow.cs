@@ -43,6 +43,11 @@ namespace DS.Windows
                     userData = DSDialogueType.ItemRequirement,
                     level = 2
                 },
+                new SearchTreeEntry(new GUIContent("Give Item", indentationIcon))
+                {
+                    userData = DSDialogueType.GiveItem,
+                    level = 2
+                },
                 new SearchTreeEntry(new GUIContent("Close Dialog", indentationIcon))
                 {
                     userData = DSDialogueType.CloseDialog,
@@ -123,6 +128,15 @@ namespace DS.Windows
                     DSItemRequirementNode itemRequirementNode = (DSItemRequirementNode)graphView.CreateNode("ItemCheck", DSDialogueType.ItemRequirement, localMousePosition);
 
                     graphView.AddElement(itemRequirementNode);
+
+                    return true;
+                }
+
+                case DSDialogueType.GiveItem:
+                {
+                    DSGiveItemNode giveItemNode = (DSGiveItemNode)graphView.CreateNode("GiveItem", DSDialogueType.GiveItem, localMousePosition);
+
+                    graphView.AddElement(giveItemNode);
 
                     return true;
                 }

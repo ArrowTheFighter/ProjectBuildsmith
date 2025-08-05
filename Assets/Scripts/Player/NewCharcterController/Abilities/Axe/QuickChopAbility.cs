@@ -6,7 +6,8 @@ public class QuickChopAbility : PlayerAbility
     bool BasicAttackPressed;
     bool IsChopping;
     float finishChopDelay;
-    int damageStrength = 1;
+    public int damageStrength = 1;
+    public AttackType[] attackTypes;
 
     public override void FixedUpdateAbility()
     {
@@ -57,7 +58,7 @@ public class QuickChopAbility : PlayerAbility
             {
                 if (colliderHit.TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.TakeDamage(damageStrength, characterMovement.gameObject);
+                    damagable.TakeDamage(damageStrength, attackTypes, characterMovement.gameObject);
                     AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("AxeChop");
                     SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
                 }

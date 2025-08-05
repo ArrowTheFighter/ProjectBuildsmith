@@ -170,10 +170,9 @@ public class HotbarManager : MonoBehaviour
     {
         if (activeItem != null)
         {
-            foreach (string abilityName in activeItem.playerAbilities)
+            for (int i = 0; i < activeItem.abilityConfigs.Count; i++)
             {
-                Type type = Type.GetType(abilityName);
-
+                Type type = activeItem.abilityConfigs[i].GetAbilityType();
                 Component component = GameplayUtils.instance.PlayerTransform.GetComponent(type);
 
                 if (component != null)
@@ -207,14 +206,53 @@ public class HotbarManager : MonoBehaviour
             Quaternion quaternion = Quaternion.Euler(itemData.Rotation);
             heldItem.transform.localRotation = quaternion;
 
-            foreach (string abilityName in itemData.playerAbilities)
+            for (int i = 0; i < itemData.abilityConfigs.Count; i++)
             {
                 CharacterMovement characterMovement = GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>();
-                Type abilityType = Type.GetType(abilityName);
+                Type abilityType = itemData.abilityConfigs[i].GetAbilityType();
                 MethodInfo methodInfo = typeof(CharacterMovement).GetMethod("AddAbility");
                 MethodInfo genericMethod = methodInfo.MakeGenericMethod(abilityType);
                 genericMethod.Invoke(characterMovement, null);
+
+                switch (itemData.abilityConfigs[i])
+                {
+                    case QuickChopAbilityData quickChopAbilityData:
+                        foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+                        {
+                            if (playerAbility is QuickChopAbility)
+                            {
+                                QuickChopAbility chopAbility = (QuickChopAbility)playerAbility;
+                                QuickChopAbilityData data = (QuickChopAbilityData)itemData.abilityConfigs[i];
+                                chopAbility.damageStrength = data.damage;
+                                chopAbility.attackTypes = data.attackTypes;
+                            }
+                        }
+                        break;
+                    case ChopSlamAbilityData chopSlamAbilityData:
+                        foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+                        {
+                            switch (playerAbility)
+                            {
+                                case ChopSlamAbility chopSlamAbility:
+                                    chopSlamAbility.DamageStrength = chopSlamAbilityData.damage;
+                                    chopSlamAbility.attackTypes = chopSlamAbilityData.attackTypes;
+                                    break;
+                            }
+                        }
+
+                        break;
+                 }
+                
+                
             }
+            // foreach (string abilityName in itemData.playerAbilities)
+            // {
+            //     CharacterMovement characterMovement = GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>();
+            //     Type abilityType = Type.GetType(abilityName);
+            //     MethodInfo methodInfo = typeof(CharacterMovement).GetMethod("AddAbility");
+            //     MethodInfo genericMethod = methodInfo.MakeGenericMethod(abilityType);
+            //     genericMethod.Invoke(characterMovement, null);
+            // }
          }
      }
 

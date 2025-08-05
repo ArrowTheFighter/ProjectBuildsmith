@@ -121,7 +121,7 @@ public class MushroomEnemy : MonoBehaviour, IDamagable
         {
             if (Mathf.Abs(playerTransform.position.y - transform.position.y) < attackHeight && Vector3.Distance(playerTransform.position, transform.position) < attackRadius)
             {
-                playerHealth.TakeDamage(1, gameObject,1);
+                playerHealth.TakeDamage(1,new AttackType[] {AttackType.Simple}, gameObject,1);
             }
         }
     }
@@ -136,7 +136,7 @@ public class MushroomEnemy : MonoBehaviour, IDamagable
         AttackParticles.Play();
      }
 
-    public void TakeDamage(int amount, GameObject source)
+    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
     {
         Health -= amount;
         if (onDamageParticles != null)
@@ -164,13 +164,13 @@ public class MushroomEnemy : MonoBehaviour, IDamagable
         Destroy(gameObject);
      }
 
-    public void TakeDamage(int amount, GameObject source, out float ExtraForce)
+    public void TakeDamage(int amount,AttackType[] attackTypes,  GameObject source, out float ExtraForce)
     {
         ExtraForce = extraBounceForce;
-        TakeDamage(amount, source);
+        TakeDamage(amount, attackTypes, source);
     }
 
-    public void TakeDamage(int amount, GameObject source, float knockbackStrength = 1)
+    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         return;
     }

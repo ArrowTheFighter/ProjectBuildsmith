@@ -32,7 +32,7 @@ public class PlayerStompAbility : PlayerAbility
                 {
                     if (damagable.PlayerCanStomp)
                     {
-                        damagable.TakeDamage(1, gameObject, out float extraForce);
+                        damagable.TakeDamage(1, new AttackType[] { AttackType.Simple }, gameObject, out float extraForce);
                         {
                             characterMovement.playerAnimationController.PlayerDoubleJumped();
                             Vector3 vel = characterMovement.rb.linearVelocity;
@@ -46,7 +46,7 @@ public class PlayerStompAbility : PlayerAbility
                 {
                     if (damagable.PlayerCanStomp)
                     {
-                        damagable.TakeDamage(1, gameObject, out float extraForce);
+                        damagable.TakeDamage(1, new AttackType[] { AttackType.Simple },gameObject, out float extraForce);
                         {
                             characterMovement.playerAnimationController.PlayerDoubleJumped();
                             Vector3 vel = characterMovement.rb.linearVelocity;

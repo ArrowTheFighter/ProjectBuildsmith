@@ -17,5 +17,5 @@ public class ItemData : ScriptableObject
     public Sprite item_ui_image;
     [Header("Abilities")]
     [SerializeReference]
-    public List<string> playerAbilities = new List<string>();
+    public List<AbilityData> abilityConfigs = new List<AbilityData>();
 }

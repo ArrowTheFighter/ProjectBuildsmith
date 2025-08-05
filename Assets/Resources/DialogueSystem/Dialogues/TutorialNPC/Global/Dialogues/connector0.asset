@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
   m_Name: connector0
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 
+  <DialogueName>k__BackingField: Start Dialog
   <Text>k__BackingField: Dialogue text.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: 
+  - <Text>k__BackingField: Output
     LocalizeKey: 
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 3875c045fef1f664da8943ba882c4a72, type: 2}
-  <DialogueType>k__BackingField: 7
-  <IsStartingDialogue>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e466c3b91cec357408d37519a41038bb, type: 2}
+  - <Text>k__BackingField: Output
+    LocalizeKey: 
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 6c6273d0a29eda14993981504425a210, type: 2}
+  <DialogueType>k__BackingField: 8
+  <IsStartingDialogue>k__BackingField: 1
   CloseDialog: 0

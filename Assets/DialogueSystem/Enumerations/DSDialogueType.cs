@@ -4,6 +4,7 @@ namespace DS.Enumerations
     {
         SingleChoice,
         MultipleChoice,
+        GiveItem,
         ItemRequirement,
         CloseDialog,
         RequireFlag,

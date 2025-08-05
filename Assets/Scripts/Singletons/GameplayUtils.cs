@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameplayUtils : MonoBehaviour
@@ -20,12 +18,17 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] Slider Main_volume_slider;
     [SerializeField] ItemPickupNotifcationScript itemPickupNotifcationScript;
     [SerializeField] PlayerAudio playerAudio;
+    [Header("Crafting stations")]
+    [SerializeField] GameObject CraftingTableUI;
+    [SerializeField] GameObject ToolCraftingUI;
+    [Header("AnimationEvents")]
     public AnimationEvents animationEvents;
     public List<Transform> respawnPoints = new List<Transform>();
     public bool can_use_dialog = true;
     public bool DialogIsOpen;
     public bool PauseMenuIsOpen;
     bool open_menu;
+    public RecipeDatabase RecipeDatabase;
     void Awake()
     {
         if (instance != this)
@@ -33,6 +36,7 @@ public class GameplayUtils : MonoBehaviour
             Destroy(instance);
         }
         instance = this;
+        RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
     }
 
     void Start()
@@ -62,6 +66,54 @@ public class GameplayUtils : MonoBehaviour
     public bool GetOpenMenu()
     {
         return open_menu;
+    }
+
+    public void ToggleCraftingMenu(CraftingStationTypes stationType)
+    {
+        switch (stationType)
+        {
+            case CraftingStationTypes.Tool:
+                if (ToolCraftingUI.activeInHierarchy)
+                {
+                    OpenCraftingMenu(stationType);
+                }
+                else
+                {
+                    CloseCraftingMenu(stationType);
+                }
+                break;
+        }
+    }
+
+    public void OpenCraftingMenu(CraftingStationTypes stationType)
+    {
+        switch (stationType)
+        {
+            case CraftingStationTypes.Tool:
+                inventoryManager.OpenInventory();
+                CraftingTableUI.SetActive(true);
+                ToolCraftingUI.SetActive(true);
+                OpenMenu();
+                break;
+        }
+    }
+    public void CloseCraftingMenu(CraftingStationTypes stationType)
+    {
+        switch (stationType)
+        {
+            case CraftingStationTypes.Tool:
+                inventoryManager.CloseInventory();
+                CraftingTableUI.SetActive(false);
+                ToolCraftingUI.SetActive(false);
+                CloseMenu();
+                break;
+        }
+    }
+
+    public void CloseAllCraftingMenus()
+    {
+        CraftingTableUI.SetActive(false);
+        ToolCraftingUI.SetActive(false);
     }
 
 

@@ -256,6 +256,24 @@ namespace DS.Utilities
                     };
                     graphData.Nodes.Add(itemNodeData);
                     break;
+                case DSGiveItemNode giveItemNode:
+                    DSGiveItemSaveData giveItemNodeData = new DSGiveItemSaveData()
+                    {
+                        ID = node.ID,
+                        Name = node.DialogueName,
+                        Choices = choices,
+                        Text = node.Text,
+                        GroupID = node.Group?.ID,
+                        DialogueType = node.DialogueType,
+                        Position = node.GetPosition().position,
+                        CloseDialog = node.CloseDialog,
+                        item_id = giveItemNode.item_id,
+                        item_amount = giveItemNode.item_amount,
+
+
+                    };
+                    graphData.Nodes.Add(giveItemNodeData);
+                    break;
                 case DSCloseDialogNode closeNode:
                     DSCloseDialogSaveData closeNodeData = new DSCloseDialogSaveData()
                     {
@@ -466,6 +484,35 @@ namespace DS.Utilities
                     createdScriptableObjects.Add(node.ID, item_so);
 
                     SaveAsset(item_so);
+                    break;
+                case DSGiveItemNode giveItemNode:
+                    DSGiveItemSO giveItem_so;
+                    if (node.Group != null)
+                    {
+                        giveItem_so = CreateAsset<DSGiveItemSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+
+                        //dialogueContainer.DialogueGroups.AddItem(createdDialogueGroups[node.Group.ID], dialogue);
+                    }
+                    else
+                    {
+                        giveItem_so = CreateAsset<DSGiveItemSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+
+                        //dialogueContainer.UngroupedDialogues.Add(dialogue);
+                    }
+                    giveItem_so.Initialize(
+                        giveItemNode.DialogueName,
+                        giveItemNode.Text,
+                        ConvertNodeChoicesToDialogueChoices(giveItemNode.Choices),
+                        giveItemNode.DialogueType,
+                        giveItemNode.IsStartingNode(),
+                        giveItemNode.item_id,
+                        giveItemNode.item_amount
+                    );
+
+
+                    createdScriptableObjects.Add(node.ID, giveItem_so);
+
+                    SaveAsset(giveItem_so);
                     break;
                 case DSCloseDialogNode closeNode:
                     DSCloseDialogSO close_so;
@@ -750,6 +797,32 @@ namespace DS.Utilities
                             SaveAsset(itemDialogue);
                         }
                         break;
+
+                    case DSGiveItemNode giveItemNode:
+                        DSGiveItemSO giveItemDialogue = (DSGiveItemSO)createdScriptableObjects[node.ID];
+
+                        for (int choiceIndex = 0; choiceIndex < node.Choices.Count; ++choiceIndex)
+                        {
+                            DSChoiceSaveData nodeChoice = node.Choices[choiceIndex];
+
+                            if (string.IsNullOrEmpty(nodeChoice.NodeID))
+                            {
+                                continue;
+                            }
+
+                            // if (createdDialogues.ContainsKey(nodeChoice.NodeID))
+                            // {
+                            //     itemDialogue.Choices[choiceIndex].NextDialogue = createdItemDialogues[nodeChoice.NodeID];
+                            // }
+                            if (createdScriptableObjects.ContainsKey(nodeChoice.NodeID))
+                            {
+                                giveItemDialogue.Choices[choiceIndex].NextDialogue = createdScriptableObjects[nodeChoice.NodeID];
+                            }
+
+
+                            SaveAsset(giveItemDialogue);
+                        }
+                        break;
                     case DSCloseDialogNode closeNode:
                         DSCloseDialogSO closeDialog = (DSCloseDialogSO)createdScriptableObjects[node.ID];
 
@@ -903,6 +976,17 @@ namespace DS.Utilities
                         itemNode.remove_items_bool = itemNodeData.remove_items;
                     }
                 }
+                if (nodeData is DSGiveItemSaveData)
+                {
+                    if (node is DSGiveItemNode)
+                    {
+                        DSGiveItemNode giveItemNode = (DSGiveItemNode)node;
+
+                        DSGiveItemSaveData giveItemData = (DSGiveItemSaveData)nodeData;
+                        giveItemNode.item_id = giveItemData.item_id;
+                        giveItemNode.item_amount = giveItemData.item_amount;
+                     }
+                 }
                 if (nodeData is DSRequireFlagSaveData)
                 {
                     if (node is DSRequireFlagNode)
@@ -912,8 +996,8 @@ namespace DS.Utilities
                         DSRequireFlagSaveData flagSaveData = (DSRequireFlagSaveData)nodeData;
                         flagNode.flag_id = flagSaveData.flag_id;
                         flagNode.is_true = flagSaveData.is_true;
-                     }
-                 }
+                    }
+                }
                 if (nodeData is DSSetFlagSaveData)
                 {
                     if (node is DSSetFlagNode)

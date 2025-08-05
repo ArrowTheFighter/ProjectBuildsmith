@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.IO;
+using Sirenix.Serialization.Internal;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,9 +14,13 @@ public class ThumbnailGenerator : MonoBehaviour
     public void CaptureThumbnail(GameObject prefab, string savePath)
     {
         // Instantiate in front of camera
-        GameObject instance = Instantiate(prefab);
-        instance.transform.position = Vector3.zero;
-        instance.transform.rotation = Quaternion.identity;
+        GameObject instance = null;
+        if (prefab != null)
+        {
+            instance = Instantiate(prefab);
+            instance.transform.position = Vector3.zero;
+            instance.transform.rotation = Quaternion.identity;
+        }
 
         // Ensure prefab layer doesn't affect the scene (optional)
         //instance.layer = LayerMask.NameToLayer("Thumbnail");
@@ -60,6 +66,9 @@ public class ThumbnailGenerator : MonoBehaviour
         // Clean up
         RenderTexture.active = null;
         DestroyImmediate(tex);
-        DestroyImmediate(instance);
+        if (instance != null)
+        {
+            DestroyImmediate(instance);
+        }
     }
 }

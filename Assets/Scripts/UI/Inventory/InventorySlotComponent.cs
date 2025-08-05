@@ -1,4 +1,5 @@
 using System;
+using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     public int SlotID;
     public bool  IsHotbar;
     public bool Selected;
+    public bool PlayerCanPlace = true;
     public Image slotImage;
     public TextMeshProUGUI slotText;
     public TextMeshProUGUI slotAmountText;
@@ -69,6 +71,8 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
             // -- Mouse has an item but the click slot is empty --
             if (inventorySlot.isEmpty)
             {
+                print("placing item");
+                if (!PlayerCanPlace) return;
                 InventoryItemStack itemStack = GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
                 ItemData itemData = GameplayUtils.instance.GetItemDataByID(itemStack.ID);
                 GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, itemData, itemStack.Amount);
@@ -87,6 +91,28 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                 // -- Both stacks have the same ID
                 if (mouseStack.ID == slotStack.ID)
                 {
+
+                    if (!PlayerCanPlace)
+                    {
+                        int amountToMax = mouseStack.MaxStackSize - mouseStack.Amount;
+                        int newAmount = slotStack.Amount + mouseStack.Amount;
+                        if (slotStack.Amount <= amountToMax)
+                        {
+                            /// -- Move mouse stack fully into the clicked slot
+                            //GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, newAmount, true);
+                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(slotItemData, newAmount, true);
+                            RemoveItemFromSlot(false);
+                            //GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+                        }
+                        else
+                        {
+                            int leftOver = newAmount - mouseStack.MaxStackSize;
+
+                            GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, leftOver, true);
+
+                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.MaxStackSize, true);
+                        }
+                    }
                     // -- If the clicked slot is not a full stack
                     if (slotStack.Amount < slotStack.MaxStackSize)
                     {
@@ -111,6 +137,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                     }
                     else
                     {
+                        if (!PlayerCanPlace) return;
                         RemoveItemFromSlot(false);
                         GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
 
@@ -121,6 +148,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                     return;
                 }
 
+                if (!PlayerCanPlace) return;
                 // -- Swaping Items --
                 RemoveItemFromSlot(false);
                 GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
@@ -227,21 +255,23 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
 
 
-    public void RemoveItemFromSlot(bool dropInWorld)
+    public void RemoveItemFromSlot(bool dropInWorld, bool broadcastEvent = true)
     {
         if (dropInWorld) DropItem();
-
+        bool shouldBroadcast = (!string.IsNullOrEmpty(inventorySlot.inventoryItemStack.ID) && broadcastEvent);
+        print(inventorySlot.inventoryItemStack.ID);
         inventorySlot.inventoryItemStack = new InventoryItemStack();
         inventorySlot.isEmpty = true;
         setSlotText("");
         setSlotAmountText(0);
         slotImage.sprite = null;
         slotImage.color = new Color(0, 0, 0, 0);
-        slotEmptied?.Invoke();
+
         if (IsHotbar)
         {
             HotbarManager.instance.ClearSlotVisuals(SlotID);
         }
+        if (shouldBroadcast) slotEmptied?.Invoke();
     }
 
     public void DropItem(int amount = -1)
