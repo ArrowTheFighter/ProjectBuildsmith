@@ -7,6 +7,7 @@ public class ClickPlacerWindow : EditorWindow
     [SerializeField]
     private GameObject[] prefabOptions = new GameObject[0];
     private Transform parent_Transform;
+    bool ParentToClicked;
     bool randomizeYRotation = false;
     bool randomizeAllRotation = false;
     private bool isPlacingEnabled = false;
@@ -46,7 +47,16 @@ public class ClickPlacerWindow : EditorWindow
         EditorGUILayout.PropertyField(prefabArrayProp, new GUIContent("Prefabs to Place"), true);
         so.ApplyModifiedProperties();
 
-        parent_Transform = (Transform)EditorGUILayout.ObjectField("Parent for the object", parent_Transform, typeof(Transform), true);
+        ParentToClicked = EditorGUILayout.Toggle("Parent to clicked object", ParentToClicked);
+        if (!ParentToClicked)
+        {
+            parent_Transform = (Transform)EditorGUILayout.ObjectField("Parent for the object", parent_Transform, typeof(Transform), true);
+        }
+        else
+        {
+            parent_Transform = null;
+         }
+        
 
 
         int[] layerIndices;
@@ -116,8 +126,6 @@ public class ClickPlacerWindow : EditorWindow
                 if (hit.collider == null)
                     return;
 
-
-
                 if (prefabOptions != null && prefabOptions.Length > 0)
                 {
                     GameObject prefabToPlace = prefabOptions[Random.Range(0, prefabOptions.Length)];
@@ -125,7 +133,11 @@ public class ClickPlacerWindow : EditorWindow
                     {
                         GameObject placedObj = (GameObject)PrefabUtility.InstantiatePrefab(prefabToPlace);
                         Undo.RegisterCreatedObjectUndo(placedObj, "Place Object");
-                        if (parent_Transform != null)
+                        if (ParentToClicked)
+                        {
+                            placedObj.transform.SetParent(hit.transform,true);
+                        }
+                        else if (parent_Transform != null)
                         {
                             placedObj.transform.SetParent(parent_Transform);
                         }
@@ -160,7 +172,8 @@ public class ClickPlacerWindow : EditorWindow
                         {
                             scale = Random.Range(random_scale_min, random_scale_max);
                         }
-                        placedObj.transform.localScale = Vector3.one * scale;
+                        SetGlobalScale(placedObj.transform, Vector3.one * scale);
+                        //placedObj.transform.localScale = Vector3.one * scale;
 
 
                         if (align_to_normal && hit.normal != Vector3.zero)
@@ -198,22 +211,29 @@ public class ClickPlacerWindow : EditorWindow
             }
         }
     }
-    
+
+    public void SetGlobalScale(Transform transform, Vector3 globalScale)
+    {
+        transform.localScale = Vector3.one;
+        transform.localScale = new Vector3(globalScale.x / transform.lossyScale.x, globalScale.y / transform.lossyScale.y, globalScale.z / transform.lossyScale.z);
+    }
+
+
     private static string[] GetLayerNames(out int[] layerIndices)
     {
-    var names = new System.Collections.Generic.List<string>();
-    var indices = new System.Collections.Generic.List<int>();
-    for (int i = 0; i < 32; i++)
-    {
-        string layerName = LayerMask.LayerToName(i);
-        if (!string.IsNullOrEmpty(layerName))
+        var names = new System.Collections.Generic.List<string>();
+        var indices = new System.Collections.Generic.List<int>();
+        for (int i = 0; i < 32; i++)
         {
-            names.Add(layerName);
-            indices.Add(i);
+            string layerName = LayerMask.LayerToName(i);
+            if (!string.IsNullOrEmpty(layerName))
+            {
+                names.Add(layerName);
+                indices.Add(i);
+            }
         }
+        layerIndices = indices.ToArray();
+        return names.ToArray();
     }
-    layerIndices = indices.ToArray();
-    return names.ToArray();
-}
 
 }

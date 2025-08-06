@@ -50,8 +50,8 @@ public class CutsceneManager : MonoBehaviour
         StartCoroutine(playCutsceneEvent(pointData.cutsceneEvent));
         currentPoint++;
         Quaternion lookRotation = Quaternion.LookRotation(pointData.targetPoint.forward, Vector3.up);
-        CameraTransform.DORotate(lookRotation.eulerAngles, pointData.moveDelay);
-        CameraTransform.DOMove(pointData.targetPoint.position, pointData.moveDelay).OnComplete(() => { GoToNextPoint(); });
+        CameraTransform.DORotate(lookRotation.eulerAngles, pointData.moveDelay).SetUpdate(UpdateType.Fixed).SetEase(pointData.ease);
+        CameraTransform.DOMove(pointData.targetPoint.position, pointData.moveDelay).SetUpdate(UpdateType.Fixed).SetEase(pointData.ease).OnComplete(() => { GoToNextPoint(); });
     }
 
     IEnumerator playCutsceneEvent(CutsceneEvent cutsceneEvent)
@@ -82,6 +82,7 @@ public class CutsceneData
 public class CutscenePointData
 {
     public Transform targetPoint;
+    public Ease ease;
     public float moveDelay;
     public CutsceneEvent cutsceneEvent;
  }
