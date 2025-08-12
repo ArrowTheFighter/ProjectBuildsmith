@@ -124,11 +124,12 @@ public class DashAbility : PlayerAbility
                         camForward.y = 0;
 
                         float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.forward);
-                        if (dot < -0.4f)
+                        if ( dot < -0.4f)
                         {
                             characterMovement.rb.linearVelocity = Vector3.Lerp(characterMovement.rb.linearVelocity, Vector3.zero, 0.1f);
                         }
-                        if (dot > 0.4f)
+                        if(characterMovement.characterInput.GetDashInput())
+                        // (dot > 0.4f)
                         {
                             characterMovement.rb.linearDamping = .4f;
                         }
@@ -255,7 +256,6 @@ public class DashAbility : PlayerAbility
        // Vector3 characterForward = characterMovement.orientation.forward;
         //characterForward.y = 0;
         characterMovement.orientation.localEulerAngles = Vector3.zero;
-        Debug.Log(characterMovement.orientation.localEulerAngles);
 
         groundSliding = false;
         slideJumping = false;
@@ -282,8 +282,7 @@ public class DashAbility : PlayerAbility
             canDash = true;
         }
         float dashInputValue = characterMovement.characterInput.GetDashInput() ? 1 : 0;
-
-        if (dashInputValue > 0)
+        if (dashInputValue > 0.1f)
         {
             if (!dashButtonPressed && !isDashing && Time.time > dontDash && canDash && characterMovement.readyToJump)
             {
@@ -312,9 +311,11 @@ public class DashAbility : PlayerAbility
                     }
                 }
             }
+            print("Dash button pressed: " + dashButtonPressed);
         }
-        else
+        else if(dashButtonPressed)
         {
+            print("dash button released");
             dashButtonPressed = false;
          }
     }
@@ -326,6 +327,7 @@ public class DashAbility : PlayerAbility
             if (!characterMovement.MovementControlledByAbility)
             {
                 Dash();
+                dashButtonPressed = true;
             }
         }
         else
