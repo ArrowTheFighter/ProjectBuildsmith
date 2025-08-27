@@ -79,7 +79,7 @@ public class FloatingItem : MonoBehaviour
         spinTween.Play();
     }
 
-    void StopAnimating()
+    public void StopAnimating()
     {
         floatTween.Pause();
         spinTween.Pause();
