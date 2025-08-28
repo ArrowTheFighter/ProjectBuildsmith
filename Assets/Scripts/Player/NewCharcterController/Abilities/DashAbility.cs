@@ -311,11 +311,9 @@ public class DashAbility : PlayerAbility
                     }
                 }
             }
-            print("Dash button pressed: " + dashButtonPressed);
         }
         else if(dashButtonPressed)
         {
-            print("dash button released");
             dashButtonPressed = false;
          }
     }
