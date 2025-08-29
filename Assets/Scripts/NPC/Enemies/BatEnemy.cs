@@ -18,6 +18,9 @@ public class BatEnemy : EnemyBase
     bool charging;
     bool runningEnumerator;
 
+    [Header("Particles")]
+    public ParticleSystem ChargingParticles;
+
     [Header("Visuals")]
     public Transform VisualsTransform;
     public float rotationSpeed = 0.1f;
@@ -99,6 +102,7 @@ public class BatEnemy : EnemyBase
                     speed = 15;
                     animator.Play("CharacterArmature|Fast_Flying");
                     canAttack = true;
+                    ChargingParticles.Play();
                 }
                 if (canAttack && Physics.Raycast(transform.position, TargetDir, out RaycastHit rayhit, 1.5f, playerLayerMask))
                 {
@@ -109,6 +113,7 @@ public class BatEnemy : EnemyBase
                         AttackType[] attackTypes = { AttackType.Simple };
                         playerHealth.TakeDamage(1, new AttackType[] { AttackType.Simple }, gameObject);
                         canAttack = false;
+                        ChargingParticles.Stop();
                     } 
                  }
                 
@@ -123,6 +128,7 @@ public class BatEnemy : EnemyBase
                     animator.Play("CharacterArmature|Flying_Idle");
                     StartCoroutine(ChargeToCooldownDelay(1));
                     speed = 0;
+                    ChargingParticles.Stop();
                 }
                 break;
 
