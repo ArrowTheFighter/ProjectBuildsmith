@@ -1,8 +1,5 @@
 using UnityEngine;
-using DG.Tweening;
-using UnityEditor.ShaderGraph;
 using System;
-using System.Xml.Serialization;
 
 public class FloatingObject : MonoBehaviour, IMoveingPlatform
 {
@@ -51,6 +48,8 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
         if (elapsed < duration)
         {
             elapsed += Time.fixedDeltaTime;
+
+
             float t = Mathf.Clamp01(elapsed / duration);
             float easedT = easing.Evaluate(t);
             Vector3 newPos = Vector3.Lerp(reverse ? startPos : endPos, reverse ? endPos : startPos, easedT);

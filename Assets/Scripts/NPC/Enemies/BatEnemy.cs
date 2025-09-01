@@ -110,10 +110,13 @@ public class BatEnemy : EnemyBase
                     if (rayhit.collider.transform.parent.TryGetComponent(out PlayerHealth playerHealth))
                     {
                         print("hit player");
-                        AttackType[] attackTypes = { AttackType.Simple };
-                        playerHealth.TakeDamage(1, new AttackType[] { AttackType.Simple }, gameObject);
-                        canAttack = false;
-                        ChargingParticles.Stop();
+                        if (transform.position.y > rayhit.collider.bounds.min.y)
+                        {
+                            AttackType[] attackTypes = { AttackType.Simple };
+                            playerHealth.TakeDamage(1, new AttackType[] { AttackType.Simple }, gameObject);
+                            canAttack = false;
+                            ChargingParticles.Stop();
+                        }
                     } 
                  }
                 
