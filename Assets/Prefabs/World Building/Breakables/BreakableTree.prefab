@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 3
   ItemDropForce: 10
+  RespawnTime: 0
+  ExtraBounceForce: 0
   HitParticle: {fileID: 1444581033272233104}
   DestoryedParticle: {fileID: 4662947785959668623, guid: b271e4203c6ed724996977c864729bfc, type: 3}
   DestroyedParticleOffset: {x: 0, y: 1, z: 0}
@@ -161,3 +163,7 @@ MonoBehaviour:
   - itemID: wood
     itemDropLow: 1
     ItemDropHigh: 3
+  destroyedSoundFX: {fileID: 0}
+  destroyedSoundFXVolume: 0
+  destroyedSoundFXPitch: 0
+  AttackTypes: 0100000002000000
