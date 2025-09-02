@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerSafeZone : MonoBehaviour
 {
     CharacterMovement characterMovement;
+    public LayerMask safeLayers;
     public Vector3 safePos;
 
     void Start()
@@ -12,7 +13,7 @@ public class PlayerSafeZone : MonoBehaviour
 
     void Update()
     {
-        LayerMask layerMask = ~characterMovement.IgnoreGroundLayerMask;
+        LayerMask layerMask = safeLayers;
         if (!Physics.Raycast(transform.position, Vector3.down, 1.25f, layerMask)) return;
         if (!Physics.Raycast(transform.position + transform.forward, Vector3.down, 1.25f, layerMask)) return;
         if (!Physics.Raycast(transform.position - transform.forward, Vector3.down, 1.25f, layerMask)) return;

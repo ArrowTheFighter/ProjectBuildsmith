@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class BreakableProps : MonoBehaviour, IDamagable
@@ -14,11 +15,13 @@ public class BreakableProps : MonoBehaviour, IDamagable
     public AudioClip destroyedSoundFX;
     public float destroyedSoundFXVolume;
     public float destroyedSoundFXPitch;
+    public AttackType[] AttackTypes;
 
-    public bool PlayerCanStomp { get; set ; }
+    public bool PlayerCanStomp { get; set; }
 
     public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
     {
+        if (!hasAttackType(attackTypes)) return;
         PlayParticle();
         Health -= amount;
         if (Health <= 0)
@@ -29,9 +32,21 @@ public class BreakableProps : MonoBehaviour, IDamagable
 
     public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
+        ExtraForce = 0;
+        if (!hasAttackType(attackTypes)) return;
         TakeDamage(amount, attackTypes, source);
         ExtraForce = ExtraBounceForce;
     }
+
+    bool hasAttackType(AttackType[] attackTypes)
+    {
+        if (AttackTypes.Length <= 0) return true;
+        foreach (AttackType type in attackTypes)
+        {
+            if (AttackTypes.Contains(type)) return true;
+        }
+        return false;
+     }
 
     public void Die()
     {
@@ -55,15 +70,15 @@ public class BreakableProps : MonoBehaviour, IDamagable
                 rigidbody.useGravity = true;
                 Vector3 horDir = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
                 print("horDir");
-                rigidbody.AddForce((horDir + Vector3.up) * ItemDropForce * UnityEngine.Random.Range(1f,1.25f), ForceMode.Impulse);
+                rigidbody.AddForce((horDir + Vector3.up) * ItemDropForce * UnityEngine.Random.Range(1f, 1.25f), ForceMode.Impulse);
             }
-            
+
         }
         if (DestoryedParticle != null)
         {
             Instantiate(DestoryedParticle, transform.position + DestroyedParticleOffset, Quaternion.identity);
         }
-        
+
         if (RespawnTime <= 0)
         {
             Destroy(gameObject);

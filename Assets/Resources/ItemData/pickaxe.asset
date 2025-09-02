@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fc3100e344dd24099341c8c4cfbe76, type: 3}
+  m_Name: pickaxe
+  m_EditorClassIdentifier: 
+  item_id: pickaxe
+  item_name: Pickaxe
+  MaxStackSize: 1
+  item_pickup_object: {fileID: 7622291875105182048, guid: 33258067bc742384aa25a78497e24047, type: 3}
+  holdingItem: {fileID: 8041731572835079284, guid: a290431da6048824e81854b95de5d6e6, type: 3}
+  PositionOffset: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 180, z: 0}
+  item_ui_image: {fileID: 21300000, guid: b5a81a036c502ea48bd54163fa11b796, type: 3}
+  abilityConfigs:
+  - rid: 579739595174838362
+  - rid: 579739618492022893
+  references:
+    version: 2
+    RefIds:
+    - rid: 579739595174838362
+      type: {class: QuickChopAbilityData, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 3
+        attackTypes: 000000000300000004000000
+    - rid: 579739618492022893
+      type: {class: ChopSlamAbilityData, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 5
+        attackTypes: 000000000300000004000000

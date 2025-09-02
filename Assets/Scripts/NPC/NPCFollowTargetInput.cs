@@ -38,6 +38,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 
     public Vector3 GetMovementInput()
     {
+        if (target == null) return Vector3.zero;
         Vector3 character2DPosition = transform.position; character2DPosition.y = 0;
         Vector3 target2DPosition = target.position; target2DPosition.y = 0;
         if (isMoving && Vector3.Distance(character2DPosition, target2DPosition) > followDistanceThreshold)

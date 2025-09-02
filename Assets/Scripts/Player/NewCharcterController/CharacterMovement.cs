@@ -86,6 +86,9 @@ public class CharacterMovement : MonoBehaviour
     IMoveingPlatform moveingPlatform;
     public Vector3 platformDelta;
 
+    [Header("Debug")]
+    public bool printStrings;
+
     private void Start()
     {
         playerAnimationController = GetComponent<PlayerAnimationController>();
@@ -115,6 +118,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
+        
         if (characterInput is NPCFollowTargetInput)
         {
             NPCFollowTargetInput nPCFollow = (NPCFollowTargetInput)characterInput;
@@ -125,6 +129,10 @@ public class CharacterMovement : MonoBehaviour
 
         // Ground check
         GroundCheck();
+        if (printStrings)
+        {
+            print(grounded);
+        }
         // Handle Input
         MyInput();
 
@@ -134,6 +142,7 @@ public class CharacterMovement : MonoBehaviour
             // handle drag
             if (grounded)
             {
+                
                 rb.linearDamping = groundDrag;
             }
             else
@@ -219,7 +228,11 @@ public class CharacterMovement : MonoBehaviour
         float distance = groundCheckDistance;
         if (rb.linearVelocity.y < -4) distance += 0.3f;
         grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask);
-
+        if (groundHit.transform != null && groundHit.transform.tag == "CantWalk")
+        {
+            grounded = false;
+        }
+        
         if (grounded && groundHit.collider.TryGetComponent(out IMoveingPlatform platform))
         {
             if (moveingPlatform != platform)
@@ -237,7 +250,7 @@ public class CharacterMovement : MonoBehaviour
                 }
                 platform.OnPlatformMove += trackPlatformDelta;
             }
-            
+
         }
         else if (moveingPlatform != null)
         {
@@ -253,8 +266,8 @@ public class CharacterMovement : MonoBehaviour
                     collider.sharedMaterial.staticFriction = 0;
                 }
             }
-            
-            
+
+
             moveingPlatform = null;
         }
         if (moveingPlatform == null && grounded)
@@ -387,6 +400,7 @@ public class CharacterMovement : MonoBehaviour
         // on a steep slope
         else if (OnSteepSlope() && !exitingSlope)
         {
+            print("on steep slope");
             Vector3 wallNormal = new Vector3(groundHit.normal.x, 0, groundHit.normal.z);
 
             Vector3 moveInput = moveDirection.normalized;
@@ -524,6 +538,7 @@ public class CharacterMovement : MonoBehaviour
     bool OnSlope()
     {
         if (groundHit.normal == null) return false;
+        if (groundHit.transform != null && groundHit.transform.tag == "CantWalk") return false;
         float angle = Vector3.Angle(Vector3.up, groundHit.normal);
         return angle < maxSlopeAngle && angle != 0;
     }
@@ -531,6 +546,7 @@ public class CharacterMovement : MonoBehaviour
     public bool OnSteepSlope()
     {
         if (groundHit.normal == null) return false;
+        if (groundHit.transform != null && groundHit.transform.tag == "CantWalk") return true;
         float angle = Vector3.Angle(Vector3.up, groundHit.normal);
         return angle > maxSlopeAngle && angle + 1f != 0;
 

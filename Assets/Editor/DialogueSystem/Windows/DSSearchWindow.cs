@@ -48,11 +48,6 @@ namespace DS.Windows
                     userData = DSDialogueType.GiveItem,
                     level = 2
                 },
-                new SearchTreeEntry(new GUIContent("Close Dialog", indentationIcon))
-                {
-                    userData = DSDialogueType.CloseDialog,
-                    level = 2
-                },
                 new SearchTreeEntry(new GUIContent("Flag Check", indentationIcon))
                 {
                     userData = DSDialogueType.RequireFlag,
@@ -78,6 +73,11 @@ namespace DS.Windows
                 {
                     userData = new Group(),
                     level = 2
+                },
+                new SearchTreeEntry(new GUIContent("Close Dialog", indentationIcon))
+                {
+                    userData = DSDialogueType.CloseDialog,
+                    level = 1
                 },
                 new SearchTreeEntry(new GUIContent("Connector", indentationIcon))
                 {

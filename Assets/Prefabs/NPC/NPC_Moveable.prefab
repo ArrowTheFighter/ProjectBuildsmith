@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9072884975158461396}
   - component: {fileID: 1818153008708098137}
   m_Layer: 8
-  m_Name: Protagonist_A_Body
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 8149057301860939771}
   - component: {fileID: 4645601389840139001}
   m_Layer: 8
-  m_Name: Protagonist_A_LegRight
+  m_Name: RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,7 +496,7 @@ GameObject:
   - component: {fileID: 1072198524692862206}
   - component: {fileID: 1578941046431005629}
   m_Layer: 8
-  m_Name: Protagonist_A_ArmRight
+  m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 1325728791736549041}
   - component: {fileID: 8334214753007279673}
   m_Layer: 8
-  m_Name: Protagonist_A_Head
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5859,7 +5859,7 @@ Transform:
   m_GameObject: {fileID: 3107303319347045205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13928223, y: -1.0039997, z: 1.4289856}
+  m_LocalPosition: {x: -0.13928223, y: 0, z: 1.4289856}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10816,7 +10816,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: -0.0073821545, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3567950814673544362
 GameObject:
   m_ObjectHideFlags: 0
@@ -10994,7 +10994,7 @@ GameObject:
   - component: {fileID: 4040488892279191373}
   - component: {fileID: 7306702719694348603}
   m_Layer: 8
-  m_Name: Protagonist_A_ArmLeft
+  m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11192,6 +11192,8 @@ GameObject:
   - component: {fileID: 2140989698831599401}
   - component: {fileID: 2626227236627579030}
   - component: {fileID: 6053998421410733908}
+  - component: {fileID: 4494476586334733913}
+  - component: {fileID: -6623662390403149275}
   m_Layer: 8
   m_Name: NPC_Moveable
   m_TagString: Player
@@ -11244,7 +11246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e364d2d6fc8bdc5459dbdde5416bf4b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 9
+  maxSpeed: 7
   moveSpeed: 100
   groundDrag: 5
   airDrag: 3
@@ -11253,12 +11255,14 @@ MonoBehaviour:
   airMultiplier: 0.75
   readyToJump: 0
   MovementControlledByAbility: 0
+  OverrideGravity: 0
+  OverrideAirDragAmount: 0
   rotationSpeed: 0.2
   maxTiltAngle: 25
   tilt_amount: 0
   GravityForce: 1800
   GravityDir: {x: 0, y: 0, z: 0}
-  walkSpeed: 0
+  walkSpeed: 100
   sprintSpeed: 0
   maxSlopeAngle: 55
   playerInput: {fileID: 0}
@@ -11271,11 +11275,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 822
   grounded: 0
+  capsuleCollider: {fileID: 7922086010231133117}
   orientation: {fileID: 6633586483140337893}
   rb: {fileID: 0}
   playerAbilities: []
   playerAnimationController: {fileID: 0}
-  TargetFPS: 120
+  platformDelta: {x: 0, y: 0, z: 0}
+  printStrings: 0
 --- !u!114 &5717760502999971689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11290,11 +11296,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   isMoving: 0
+  CanNotTalkWhileMoving: 0
   followDistanceThreshold: 1
   walkingDistanceThreshold: 3
+  jumpCooldownLength: 0.5
   IsWalking: 0
+  ForceSliding: 0
   JumpWhenWallInFront: 1
   DistanceForWallCheck: 4
+  JumpWhenEmptySpaceInFront: 0
+  emptySpaceForwardDistance: 2
+  emptySpaceDownDistance: 3
   wallCheckLayersIgnore:
     serializedVersion: 2
     m_Bits: 6070
@@ -11312,6 +11324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 748308474800136416}
   walking: 1
+  printVel: 0
 --- !u!82 &2140989698831599401
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11449,16 +11462,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartDialogGraphName: 
-  textBox: {fileID: 0}
-  dialogNameTextBox: {fileID: 0}
-  DialogMenu: {fileID: 0}
-  textEffect: {fileID: 0}
   NPC_Name: 
   Localized_Table: NPC
   nPC_Events: []
   UseLocalization: 0
   PROMPT: 
   item_Requirements: []
+  NPCCanInteract: 1
+--- !u!136 &4494476586334733913
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5077461903126660071}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6623662390403149275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5077461903126660071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a83abda38db6a4a892f8b1a704ea0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundIgnore:
+    serializedVersion: 2
+    m_Bits: 2
+  rayDistance: 25
+  FallTime: 3
 --- !u!1 &5155165759434603823
 GameObject:
   m_ObjectHideFlags: 0
@@ -11580,7 +11630,7 @@ Transform:
   m_GameObject: {fileID: 5560720760774244626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.004, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -11630,8 +11680,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0072881c295083e42b01ced224b4fc94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAudio: {fileID: 0}
   characterMovement: {fileID: 2852194241156246853}
+  footstepsSoundFX: {fileID: 0}
+  footstepsSoundFXVolume: 0
+  footstepsSoundFXPitch: 0
 --- !u!1 &5799911754061485639
 GameObject:
   m_ObjectHideFlags: 0
@@ -12125,12 +12177,12 @@ GameObject:
   - component: {fileID: 5096186926746213340}
   - component: {fileID: 4012528492425800131}
   m_Layer: 8
-  m_Name: Protagonist_A_Glasses
+  m_Name: Hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5096186926746213340
 Transform:
   m_ObjectHideFlags: 0
@@ -12286,7 +12338,7 @@ GameObject:
   - component: {fileID: 1771942719370904062}
   - component: {fileID: 3571516459954758024}
   m_Layer: 8
-  m_Name: Protagonist_A_LegLeft
+  m_Name: LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
