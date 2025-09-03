@@ -1,4 +1,5 @@
 public enum CraftingStationTypes
 {
-    Tool
+    Tool,
+    Sawmill
 }

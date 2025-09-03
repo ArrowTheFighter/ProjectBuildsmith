@@ -71,7 +71,6 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
             // -- Mouse has an item but the click slot is empty --
             if (inventorySlot.isEmpty)
             {
-                print("placing item");
                 if (!PlayerCanPlace) return;
                 InventoryItemStack itemStack = GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
                 ItemData itemData = GameplayUtils.instance.GetItemDataByID(itemStack.ID);
@@ -259,8 +258,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         if (dropInWorld) DropItem();
         bool shouldBroadcast = (!string.IsNullOrEmpty(inventorySlot.inventoryItemStack.ID) && broadcastEvent);
-        print(inventorySlot.inventoryItemStack.ID);
-        inventorySlot.inventoryItemStack = new InventoryItemStack();
+        inventorySlot.inventoryItemStack = new InventoryItemStack(0);
         inventorySlot.isEmpty = true;
         setSlotText("");
         setSlotAmountText(0);
@@ -280,13 +278,13 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         GameplayUtils.instance.PlayerDropItem(inventorySlot.inventoryItemStack.ID, amount);
     }
 
-    public void SetSlotFilled(string _name, int _amount, Sprite sprite)
+    public void SetSlotFilled(string _name, int _amount, Sprite sprite,bool broadcastEvent = true)
     {
         //setSlotText(_name);
         setSlotAmountText(_amount);
         slotImage.color = new Color(1, 1, 1, 1);
         slotImage.sprite = sprite;
-        slotFilled?.Invoke();
+        if(broadcastEvent) slotFilled?.Invoke();
         if (IsHotbar)
         {
             HotbarManager.instance.SetSlotVisuals(SlotID,this);

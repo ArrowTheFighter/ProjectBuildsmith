@@ -3,6 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -19,8 +20,10 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] ItemPickupNotifcationScript itemPickupNotifcationScript;
     [SerializeField] PlayerAudio playerAudio;
     [Header("Crafting stations")]
-    [SerializeField] GameObject CraftingTableUI;
+    [SerializeField] CanvasGroup CraftingTableUI;
     [SerializeField] GameObject ToolCraftingUI;
+    [SerializeField] GameObject SawmillCraftingUI;
+    public event Action OnCraftingClosed;
     [Header("AnimationEvents")]
     public AnimationEvents animationEvents;
     public List<Transform> respawnPoints = new List<Transform>();
@@ -68,6 +71,26 @@ public class GameplayUtils : MonoBehaviour
         return open_menu;
     }
 
+    public void SetSawmillProgressBar(float progress)
+    {
+        SawmillCraftingUI.GetComponentInChildren<Slider>().value = progress;
+     }
+
+    void EnableCraftingTableUI()
+    {
+        CraftingTableUI.alpha = 1;
+        CraftingTableUI.blocksRaycasts = true;
+        CraftingTableUI.interactable = true;
+     }
+
+    void DisableCraftingTableUI()
+    {
+        CraftingTableUI.alpha = 0;
+        CraftingTableUI.blocksRaycasts = false;
+        CraftingTableUI.interactable = false;
+        OnCraftingClosed?.Invoke();
+    }
+
     public void ToggleCraftingMenu(CraftingStationTypes stationType)
     {
         switch (stationType)
@@ -87,12 +110,19 @@ public class GameplayUtils : MonoBehaviour
 
     public void OpenCraftingMenu(CraftingStationTypes stationType)
     {
+        CloseAllCraftingMenus();
         switch (stationType)
         {
             case CraftingStationTypes.Tool:
                 inventoryManager.OpenInventory();
-                CraftingTableUI.SetActive(true);
+                EnableCraftingTableUI();
                 ToolCraftingUI.SetActive(true);
+                OpenMenu();
+                break;
+            case CraftingStationTypes.Sawmill:
+                inventoryManager.OpenInventory();
+                EnableCraftingTableUI();
+                SawmillCraftingUI.SetActive(true);
                 OpenMenu();
                 break;
         }
@@ -103,7 +133,7 @@ public class GameplayUtils : MonoBehaviour
         {
             case CraftingStationTypes.Tool:
                 inventoryManager.CloseInventory();
-                CraftingTableUI.SetActive(false);
+                DisableCraftingTableUI();
                 ToolCraftingUI.SetActive(false);
                 CloseMenu();
                 break;
@@ -112,7 +142,7 @@ public class GameplayUtils : MonoBehaviour
 
     public void CloseAllCraftingMenus()
     {
-        CraftingTableUI.SetActive(false);
+        DisableCraftingTableUI();
         ToolCraftingUI.SetActive(false);
     }
 
@@ -342,7 +372,7 @@ public class GameplayUtils : MonoBehaviour
         Rigidbody spawned_item_rigidbody = spawned_item.GetComponent<Rigidbody>();
         spawned_item_rigidbody.useGravity = true;
         Vector3 direction = PlayerTransform.forward;
-        direction = new Vector3(direction.x + Random.Range(-0.25f, 0.25f), 1f, direction.z + Random.Range(-0.25f, 0.25f));
+        direction = new Vector3(direction.x + UnityEngine.Random.Range(-0.25f, 0.25f), 1f, direction.z + UnityEngine.Random.Range(-0.25f, 0.25f));
         float spawn_force = 5;
         spawned_item_rigidbody.linearVelocity = direction.normalized * spawn_force;
         if (GetComponent<AudioSource>() != null)

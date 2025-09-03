@@ -202,14 +202,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItemToSlot(InventorySlot inventorySlot, ItemData itemData, int amount = 1, bool force = false)
+    public void AddItemToSlot(InventorySlot inventorySlot, ItemData itemData, int amount = 1, bool force = false,bool broadcastEvent = true)
     {
         if (force || inventorySlot.isEmpty)
         {
             inventorySlot.isEmpty = false;
             InventoryItemStack newItemStack = new InventoryItemStack(itemData.item_id, itemData.item_name, amount, itemData.MaxStackSize);
             inventorySlot.inventoryItemStack = newItemStack;
-            inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image);
+            if (inventorySlot.inventorySlotComponent != null)
+            {
+                inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image,broadcastEvent);
+            }
             OnInventoryUpdated?.Invoke();
         }
     }
@@ -465,8 +468,20 @@ public class InventoryManager : MonoBehaviour
 public class InventorySlot
 {
     public bool isEmpty = true;
+    public int slot_id;
     public InventoryItemStack inventoryItemStack;
     public InventorySlotComponent inventorySlotComponent;
+
+    public InventorySlot()
+    {
+
+    }
+
+    public InventorySlot(int _id)
+    {
+        slot_id = _id;
+        inventoryItemStack = new InventoryItemStack(0);
+    }
 
  }
 
@@ -481,6 +496,11 @@ public class InventoryItemStack
     public InventoryItemStack()
     {
         Amount = 1;
+    }
+
+    public InventoryItemStack(int _amount)
+    {
+        Amount = _amount;
     }
 
     public InventoryItemStack(string _id, string _name, int _amount, int _maxStack = 5)
