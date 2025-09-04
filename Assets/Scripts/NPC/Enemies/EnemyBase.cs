@@ -9,6 +9,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     public LayerMask playerLayerMask;
     [HideInInspector] public Action OnPlayerFound;
     [HideInInspector] public Action OnPlayerLost;
+    [HideInInspector] public Action OnDeath;
     [HideInInspector] public Transform PlayerTransform;
 
     public bool EnemyActive;
@@ -94,6 +95,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         {
             Instantiate(onDeathParticlesPrefab, transform.position, Quaternion.identity);
         }
+        OnDeath?.Invoke();
         Destroy(gameObject);
     }
 }

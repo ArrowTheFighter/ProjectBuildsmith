@@ -7,6 +7,7 @@ public class PlayerParticlesManager : MonoBehaviour
     public static PlayerParticlesManager instance;
 
     public List<ParticleSystemsCollection> particleSystems = new List<ParticleSystemsCollection>();
+    public List<ParticlePrefabCollection> particlePrefabs = new List<ParticlePrefabCollection>();
 
     void Awake()
     {
@@ -37,6 +38,30 @@ public class PlayerParticlesManager : MonoBehaviour
             }
         }
     }
+
+    public GameObject GetTargetParticlePrefab()
+    {
+        foreach (ParticlePrefabCollection collection in particlePrefabs)
+        {
+            if (collection.ParticleID == "Target")
+            {
+                return collection.particlePredab;
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetParticlePredabByID(string id)
+    {
+        foreach (ParticlePrefabCollection collection in particlePrefabs)
+        {
+            if (collection.ParticleID == id)
+            {
+                return collection.particlePredab;
+            }
+        }
+        return null;
+    }
 }
 
 [Serializable]
@@ -44,4 +69,11 @@ public class ParticleSystemsCollection
 {
     public string ParticleID;
     public ParticleSystem particleSystem;
+}
+
+[Serializable]
+public class ParticlePrefabCollection
+{
+    public string ParticleID;
+    public GameObject particlePredab;
 }

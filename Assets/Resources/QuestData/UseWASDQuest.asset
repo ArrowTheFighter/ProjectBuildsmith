@@ -21,10 +21,24 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  ID: 
-  Name: 
-  Description: 
-  questObjectives: []
+  ID: UseMoveKey
+  Name: Move Around
+  Description: Use the WASD keys to move around
+  questObjectives:
+  - rid: 1000782177342849211
+  - rid: 1000782177342849224
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1000782177342849211
+      type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Move around
+        mapName: Player
+        InputName: Move
+    - rid: 1000782177342849224
+      type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Jump with space
+        mapName: Player
+        InputName: Jump

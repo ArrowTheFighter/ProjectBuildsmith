@@ -407,22 +407,26 @@ public class InventoryManager : MonoBehaviour
             if (info.IsComplete) continue;
             for (int i = 0; i < info.QuestData.questObjectives.Count; i++)
             {
-                switch (info.QuestData.questObjectives[i])
-                {
-                    case ObjectiveCollectItems objectiveCollect:
-                        if (GameplayUtils.instance.get_item_holding_amount(objectiveCollect.Item_ID) >= objectiveCollect.Item_Amount)
-                        {
-                            continue;
-                        }
-                        return;
+                if (!info.QuestData.questObjectives[i].ObjectiveComplete()) return;
+                // switch (info.QuestData.questObjectives[i])
+                // {
+                //     case ObjectiveCollectItems objectiveCollect:
+                //         if (GameplayUtils.instance.get_item_holding_amount(objectiveCollect.Item_ID) >= objectiveCollect.Item_Amount)
+                //         {
+                //             continue;
+                //         }
+                //         return;
 
-                    case ObjectiveTalkToNPCFlag objectiveTalkToNPCFlag:
-                        if (FlagManager.Get_Flag_Value(objectiveTalkToNPCFlag.flag_id))
-                        {
-                            continue;
-                        }
-                        return;
-                }
+                //     case ObjectiveTalkToNPCFlag objectiveTalkToNPCFlag:
+                //         if (FlagManager.Get_Flag_Value(objectiveTalkToNPCFlag.flag_id))
+                //         {
+                //             continue;
+                //         }
+                //         return;
+                //     case ObjectiveUseInput objectiveUseInput:
+                //         if (!objectiveUseInput.ObjectiveComplete()) return;
+                //         break;
+                // }
             }
             info.IsComplete = true;
             GameplayUtils.instance.ShowCustomNotif("Quest Complete!", 8);

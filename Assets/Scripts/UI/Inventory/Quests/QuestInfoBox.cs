@@ -32,19 +32,23 @@ public class QuestInfoBox : MonoBehaviour
     {
         string completionStatus = "<sprite name=\"CheckBoxEmpty\"> ";
         string returnText = "";
-        switch (questObjective)
-        {
-            case ObjectiveCollectItems collectItems:
+        if(questObjective.ObjectiveComplete()) completionStatus = "<sprite name=\"CheckBoxMarked\"> ";
+        returnText = completionStatus + questObjective.Description;
+        // switch (questObjective)
+        // {
+        //     case ObjectiveCollectItems collectItems:
 
-                if (collectItems.ObjectiveComplete()) completionStatus = "<sprite name=\"CheckBoxMarked\"> ";
-                returnText = completionStatus + collectItems.Description;
-                break;
+        //         if (collectItems.ObjectiveComplete()) completionStatus = "<sprite name=\"CheckBoxMarked\"> ";
+        //         returnText = completionStatus + collectItems.Description;
+        //         break;
 
-            case ObjectiveTalkToNPCFlag talkToNPCFlag:
-                if (talkToNPCFlag.ObjectiveComplete()) completionStatus = "<sprite name=\"CheckBoxMarked\"> ";
-                returnText = completionStatus + talkToNPCFlag.Description;
-                break;
-        }
+        //     case ObjectiveTalkToNPCFlag talkToNPCFlag:
+        //         if (talkToNPCFlag.ObjectiveComplete()) completionStatus = "<sprite name=\"CheckBoxMarked\"> ";
+        //         returnText = completionStatus + talkToNPCFlag.Description;
+        //         break;
+        //     case ObjectiveUseInput objectiveUseInput:
+        //         if (objectiveUseInput.ObjectiveComplete()) completionStatus =
+        // }
         return returnText;
     }
 }

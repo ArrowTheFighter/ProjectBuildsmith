@@ -177,6 +177,11 @@ public class HotbarManager : MonoBehaviour
 
                 if (component != null)
                 {
+                    if (component is PlayerAbility)
+                    {
+                        PlayerAbility playerAbility = (PlayerAbility)component;
+                        playerAbility.ResetAbility();
+                     }
                     DestroyImmediate(component);
                 }
                 CharacterMovement characterMovement = GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>();
@@ -241,6 +246,18 @@ public class HotbarManager : MonoBehaviour
                         }
 
                         break;
+                    case BoomerangAbilityData boomerangAbilityData:
+                        foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+                        {
+                            switch (playerAbility)
+                            {
+                                case BoomerangThrowAbility boomerangThrowAbility:
+                                    //boomerangThrowAbility.DamageStrength = chopSlamAbilityData.damage;
+                                    //boomerangThrowAbility.attackTypes = chopSlamAbilityData.attackTypes;
+                                    break;
+                            }
+                        }
+                        break;
                  }
                 
                 
@@ -255,6 +272,22 @@ public class HotbarManager : MonoBehaviour
             // }
          }
      }
+
+    public void HideActiveItem()
+    {
+        for (int i = RightHandObj.childCount - 1; i >= 0; i--)
+        {
+            RightHandObj.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    public void ShowActiveItem()
+    {
+        for (int i = RightHandObj.childCount - 1; i >= 0; i--)
+        {
+            RightHandObj.GetChild(i).gameObject.SetActive(true);
+        }
+    }
 
     int GetNextSelectedSlot(int slot)
     {

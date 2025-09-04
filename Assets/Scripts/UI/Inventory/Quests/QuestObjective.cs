@@ -6,6 +6,4 @@ public abstract class QuestObjective
 {
     public string Description;
     public abstract bool ObjectiveComplete();
-
-
 }

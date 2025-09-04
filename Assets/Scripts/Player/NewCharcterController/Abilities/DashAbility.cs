@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class DashAbility : PlayerAbility
@@ -117,18 +118,18 @@ public class DashAbility : PlayerAbility
                             print("not force sliding");
                             characterMovement.rb.linearDamping = 5;
                         }
-                     }
+                    }
                     else if (characterMovement.characterInput.GetMovementInput() != Vector3.zero)
                     {
                         Vector3 camForward = Camera.main.transform.forward;
                         camForward.y = 0;
 
                         float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.forward);
-                        if ( dot < -0.4f)
+                        if (dot < -0.4f)
                         {
                             characterMovement.rb.linearVelocity = Vector3.Lerp(characterMovement.rb.linearVelocity, Vector3.zero, 0.1f);
                         }
-                        if(characterMovement.characterInput.GetDashInput())
+                        if (characterMovement.characterInput.GetDashInput())
                         // (dot > 0.4f)
                         {
                             characterMovement.rb.linearDamping = .4f;
@@ -161,7 +162,14 @@ public class DashAbility : PlayerAbility
                     {
                         characterMovement.orientation.forward = Vector3.Lerp(characterMovement.orientation.forward, characterMovement.rb.linearVelocity.normalized, 0.2f);
                     }
-
+                    Collider[] colliders = Physics.OverlapSphere(transform.position, 1);
+                    foreach (Collider c in colliders)
+                    {
+                        if (c.tag == "BoostPad")
+                        {
+                            characterMovement.rb.AddForce(characterMovement.orientation.forward * 50);
+                         }
+                     }
 
                 }
 
