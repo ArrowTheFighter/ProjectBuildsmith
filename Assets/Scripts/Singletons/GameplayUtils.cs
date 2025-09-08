@@ -23,7 +23,9 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] CanvasGroup CraftingTableUI;
     [SerializeField] GameObject ToolCraftingUI;
     [SerializeField] GameObject SawmillCraftingUI;
-    public event Action OnCraftingClosed;
+    [Header("Inventory UI")]
+    [SerializeField] GameObject PedistalUI;
+    public event Action OnInventoryClosed;
     [Header("AnimationEvents")]
     public AnimationEvents animationEvents;
     public List<Transform> respawnPoints = new List<Transform>();
@@ -71,13 +73,27 @@ public class GameplayUtils : MonoBehaviour
         return open_menu;
     }
 
+    public void OpenInventoryUI(InventroyTypes inventroyType)
+    {
+        switch (inventroyType)
+        {
+            case InventroyTypes.Pedistal:
+
+                inventoryManager.OpenInventory();
+                PedistalUI.SetActive(true);
+                OpenMenu();
+                break;
+         }
+    }
+
     public void SetSawmillProgressBar(float progress)
     {
         SawmillCraftingUI.GetComponentInChildren<Slider>().value = progress;
-     }
+    }
 
     void EnableCraftingTableUI()
     {
+        CraftingTableUI.gameObject.SetActive(true);
         CraftingTableUI.alpha = 1;
         CraftingTableUI.blocksRaycasts = true;
         CraftingTableUI.interactable = true;
@@ -88,7 +104,8 @@ public class GameplayUtils : MonoBehaviour
         CraftingTableUI.alpha = 0;
         CraftingTableUI.blocksRaycasts = false;
         CraftingTableUI.interactable = false;
-        OnCraftingClosed?.Invoke();
+        CraftingTableUI.gameObject.SetActive(false);
+        OnInventoryClosed?.Invoke();
     }
 
     public void ToggleCraftingMenu(CraftingStationTypes stationType)
@@ -108,6 +125,8 @@ public class GameplayUtils : MonoBehaviour
         }
     }
 
+
+
     public void OpenCraftingMenu(CraftingStationTypes stationType)
     {
         CloseAllCraftingMenus();
@@ -120,6 +139,8 @@ public class GameplayUtils : MonoBehaviour
                 OpenMenu();
                 break;
             case CraftingStationTypes.Sawmill:
+            case CraftingStationTypes.Furnace:
+            case CraftingStationTypes.StoneCutter:
                 inventoryManager.OpenInventory();
                 EnableCraftingTableUI();
                 SawmillCraftingUI.SetActive(true);
@@ -137,6 +158,12 @@ public class GameplayUtils : MonoBehaviour
                 ToolCraftingUI.SetActive(false);
                 CloseMenu();
                 break;
+            case CraftingStationTypes.Sawmill:
+                inventoryManager.CloseInventory();
+                DisableCraftingTableUI();
+                SawmillCraftingUI.SetActive(false);
+                CloseMenu();
+                break;
         }
     }
 
@@ -144,6 +171,8 @@ public class GameplayUtils : MonoBehaviour
     {
         DisableCraftingTableUI();
         ToolCraftingUI.SetActive(false);
+        SawmillCraftingUI.SetActive(false);
+        PedistalUI.SetActive(false);
     }
 
 
@@ -245,6 +274,13 @@ public class GameplayUtils : MonoBehaviour
 
     public void Toggle_Pause_Menu()
     {
+        if (open_menu)
+        {
+            CloseAllCraftingMenus();
+            inventoryManager.CloseInventory();
+            ClosePauseMenu();
+            return;
+         }
         if (PauseMenu.activeInHierarchy)
         {
             ClosePauseMenu();

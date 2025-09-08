@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryDataSaver : MonoBehaviour
@@ -18,16 +19,29 @@ public class InventoryDataSaver : MonoBehaviour
         {
             slot.slotFilled += UpdateSavedSlots;
             slot.slotEmptied += UpdateSavedSlots;
-            savedSlots.Add(new InventorySlot(slot.SlotID));
+            bool slotExists = false;
+            foreach (InventorySlot inventorySlot in savedSlots)
+            {
+                if (inventorySlot.slot_id == slot.SlotID)
+                {
+                    slotExists = true;
+                    break;
+                }
+            }
+            if (!slotExists)
+                savedSlots.Add(new InventorySlot(slot.SlotID));
         }
         GetComponent<IStorable>().OnOpened += ContainerOpened;
         OnFinshedInitalizing?.Invoke();
+        SendInventoryUpdate();
     }
 
-    // Update is called once per frame
-    void Update()
+    void SendInventoryUpdate()
     {
-
+        if(TryGetComponent(out IStorable storable))
+        {
+            storable.InventoryUpdated(savedSlots);
+        };
     }
 
     public void UpdateSavedSlots()
@@ -51,19 +65,20 @@ public class InventoryDataSaver : MonoBehaviour
             }
         }
         slotsUpdated?.Invoke();
+        SendInventoryUpdate();
     }
 
     void ContainerOpened()
     {
         ActiveContainer = true;
         SetContainerSlots();
-        GameplayUtils.instance.OnCraftingClosed += ContainerClosed;
+        GameplayUtils.instance.OnInventoryClosed += ContainerClosed;
     }
 
     void ContainerClosed()
     {
         ActiveContainer = false;
-        GameplayUtils.instance.OnCraftingClosed -= ContainerClosed;
+        GameplayUtils.instance.OnInventoryClosed -= ContainerClosed;
         ClearSlots();
     }
 

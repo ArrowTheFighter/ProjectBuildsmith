@@ -14,6 +14,10 @@ public class InventoryManager : MonoBehaviour
     public GameObject InventorySlotsParent;
     public GameObject InventoryHotbarSlotsParent;
     public GameObject InventorySlotPrefab;
+
+    enum InventoryMenus { none, Inventory, Quests }
+    InventoryMenus openMenu = InventoryMenus.none;
+
     [SerializeField] public InventorySlotComponent MouseSlot;
     public int TotalInventorySlots = 30;
     public int TotalHotbarSlots = 5;
@@ -32,6 +36,7 @@ public class InventoryManager : MonoBehaviour
     public QuestInfoBox questInfoBox;
     public GameObject QuestItemsParent;
     [SerializeField] GameObject QuestButton;
+    [SerializeField] GameObject PinQuest;
     List<QuestInfo> activeQuests = new List<QuestInfo>();
 
     [Header("Pinned Quests")]
@@ -45,6 +50,8 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         GameplayInput.instance.playerInput.actions["Inventory"].performed += ToggleInventory;
+        GameplayInput.instance.playerInput.actions["Quests"].performed += ToggleQuests;
+        GameplayInput.instance.playerInput.actions["CloseQuests"].performed += ToggleQuests;
         GameplayInput.instance.playerInput.actions["CloseInventory"].performed += ToggleInventory;
         for (int i = 0; i < TotalInventorySlots + TotalHotbarSlots; i++)
         {
@@ -75,7 +82,48 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    CloseInventory();
+                    switch (openMenu)
+                    {
+                        case InventoryMenus.none:
+                        case InventoryMenus.Inventory:
+                            CloseInventory();
+                            break;
+                        case InventoryMenus.Quests:
+                            SwitchToInventoryMenu();
+                            break;
+                    }
+                }
+
+            }
+        }
+    }
+
+    void ToggleQuests(InputAction.CallbackContext context)
+    {
+        if (inventoryToggleCooldown > Time.time) return;
+        inventoryToggleCooldown = Time.time + 0.1f;
+        if (InventoryObject != null)
+        {
+            //InventoryObject.SetActive(inventoryIsOpen);
+            if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
+            {
+                if (!inventoryIsOpen)
+                {
+                    OpenInventory();
+                    SwitchToQuestsMenu();
+                }
+                else
+                {
+                    switch (openMenu)
+                    {
+                        case InventoryMenus.none:
+                        case InventoryMenus.Quests:
+                            CloseInventory();
+                            break;
+                        case InventoryMenus.Inventory:
+                            SwitchToQuestsMenu();
+                            break;
+                    }
                 }
 
             }
@@ -91,13 +139,18 @@ public class InventoryManager : MonoBehaviour
             if (GameplayUtils.instance.GetOpenMenu()) return;
             //print("opening inventory");
             UIInputHandler.instance.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
+            GameplayUtils.instance.CloseAllCraftingMenus();
             GameplayUtils.instance.OpenMenu();
 
-            
+
             inventoryIsOpen = true;
             canvasGroup.alpha = 1;
             canvasGroup.blocksRaycasts = true;
             canvasGroup.interactable = true;
+
+            SwitchToInventoryMenu();
+
+            openMenu = InventoryMenus.Inventory;
 
         }
     }
@@ -106,7 +159,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
         {
-
+            SwitchToInventoryMenu();
             InventoryObject.SetActive(false);
             //print("closing inventory");
             GameplayUtils.instance.CloseMenu();
@@ -125,6 +178,8 @@ public class InventoryManager : MonoBehaviour
             canvasGroup.blocksRaycasts = false;
             canvasGroup.interactable = false;
             GameplayUtils.instance.CloseAllCraftingMenus();
+
+            openMenu = InventoryMenus.none;
         }
 
     }
@@ -143,6 +198,8 @@ public class InventoryManager : MonoBehaviour
         questsCanvasGroup.alpha = 1;
         questsCanvasGroup.blocksRaycasts = true;
         questsCanvasGroup.interactable = true;
+
+        openMenu = InventoryMenus.Quests;
     }
 
     public void SwitchToInventoryMenu()
@@ -161,6 +218,10 @@ public class InventoryManager : MonoBehaviour
         questsCanvasGroup.interactable = false;
 
         selectedQuest = null;
+        PinQuest.SetActive(false);
+        questInfoBox.ClearQuestInfo();
+
+        openMenu = InventoryMenus.Inventory;
     }
 
     /* #region Inventory */
@@ -370,7 +431,12 @@ public class InventoryManager : MonoBehaviour
     {
         questInfoBox.ShowQuestInfo(questData);
         selectedQuest = questData;
+        if (PinQuest != null)
+        {
+            PinQuest.SetActive(true);
+        }
     }
+
 
     public void AssignQuest(string quest_id)
     {

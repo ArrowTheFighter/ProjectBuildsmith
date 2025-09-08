@@ -25,6 +25,11 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         // button.onClick.AddListener(slotClicked);
         GameplayInput.instance.playerInput.actions["Submit"].performed += context => { ControllerMainPress(); };
         GameplayInput.instance.playerInput.actions["Cancel"].performed += context => { ControllerSecondaryPress(); };
+
+        if (inventorySlot.inventorySlotComponent == null)
+        {
+            inventorySlot.inventorySlotComponent = this;
+         }
     }
 
 

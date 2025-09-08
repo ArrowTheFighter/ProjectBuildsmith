@@ -166,6 +166,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Quests",
+                    "type": "Button",
+                    "id": "137b0358-9872-492d-ac91-56f633d27bee",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -762,6 +771,17 @@
                     "action": "HotbarPrevious",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f48afc5a-a261-42bf-b290-1735aebfe012",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quests",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -881,6 +901,15 @@
                     "name": "ClosePause",
                     "type": "Button",
                     "id": "57858f47-b77d-4a0f-adcb-c4fa597fc8c2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseQuests",
+                    "type": "Button",
+                    "id": "0ff7acba-9e9d-489f-8616-2e16b5132203",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1468,6 +1497,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ClosePause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a7a082e-98a8-41f8-b52d-94abfcf4804a",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseQuests",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

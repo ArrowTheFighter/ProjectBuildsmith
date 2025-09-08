@@ -31,6 +31,9 @@ public class BatEnemy : EnemyBase
     public float randomMoveDistance;
     public float randomMoveVariance;
     public LayerMask groundIgnore;
+
+    [Header("Attacks")]
+    public float chargeAttackCooldown = 1.5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -129,7 +132,7 @@ public class BatEnemy : EnemyBase
                 {
                     canAttack = false;
                     animator.Play("CharacterArmature|Flying_Idle");
-                    StartCoroutine(ChargeToCooldownDelay(1));
+                    StartCoroutine(ChargeToCooldownDelay(chargeAttackCooldown));
                     speed = 0;
                     ChargingParticles.Stop();
                 }

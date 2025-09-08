@@ -79,7 +79,7 @@ public class CraftingProcessor : CraftingTableBase
     {
         if (inventoryDataSaver.ActiveContainer)
         {
-            GameplayUtils.instance.SetSawmillProgressBar(processTime);
+            GameplayUtils.instance.SetSawmillProgressBar(processTime / CraftTime);
         }
     }
 

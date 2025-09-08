@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NewCraftingTable : MonoBehaviour, IInteractable, IStorable
@@ -9,7 +10,7 @@ public class NewCraftingTable : MonoBehaviour, IInteractable, IStorable
     public item_requirement[] item_requirements;
     public item_requirement[] required_items => item_requirements;
 
-    public bool CanUse;
+    public bool CanUse = true;
     public bool CanInteract { get => CanUse; set { CanUse = value; } }
 
 
@@ -25,4 +26,8 @@ public class NewCraftingTable : MonoBehaviour, IInteractable, IStorable
         return true;
     }
 
+    public void InventoryUpdated(List<InventorySlot> inventorySlots)
+    {
+        return;
+    }
 }
