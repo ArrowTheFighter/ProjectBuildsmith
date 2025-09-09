@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: TutorialNPC17
+  m_Name: TutorialNPC23
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: TutorialNPC17
-  <Text>k__BackingField: It's up on those islands, let me show you!
+  <DialogueName>k__BackingField: TutorialNPC23
+  <Text>k__BackingField: Do you want me to teach you how to get wood or plant fiber?
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: Wood, please.
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: d0a329f88b299934eaf911c2da82dfa8, type: 2}
-  <DialogueType>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: b423e6892dc06df45952ad1bb4b7a3a7, type: 2}
+  - <Text>k__BackingField: Plant Fiber, please.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 90eeb513728b78742a470d83d31eb420, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0

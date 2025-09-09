@@ -9,22 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e6b184fd5a78944c8c74a36e658c209, type: 3}
-  m_Name: ItemCheck
+  m_Script: {fileID: 11500000, guid: 031c767504c2a1149ae3decbe21bb3f9, type: 3}
+  m_Name: GiveFlimsyToolItem
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: ItemCheck
+  <DialogueName>k__BackingField: GiveFlimsyToolItem
   <Text>k__BackingField: Dialogue text.
   <Choices>k__BackingField:
   - <Text>k__BackingField: Has items
     LocalizeKey: 
-    OutputID: IsTrue
-    <NextDialogue>k__BackingField: {fileID: 0}
-  - <Text>k__BackingField: Doesn't have items
-    LocalizeKey: 
-    OutputID: IsFalse
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: b1835e9ccc835bc4c802f948f276e6c6, type: 2}
-  <DialogueType>k__BackingField: 3
+    OutputID: Output
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 7393628154f651342a6e94193a679f0d, type: 2}
+  <DialogueType>k__BackingField: 2
   <IsStartingDialogue>k__BackingField: 0
   <ItemID>k__BackingField: FLIMSY TOOL
   <ItemAmount>k__BackingField: 1
-  RemoveItems: 0
