@@ -5,8 +5,10 @@ public class LongFallReset : MonoBehaviour
     public LayerMask groundIgnore;
     public float rayDistance = 25;
     public float FallTime = 3;
+    public float WorldBottom = 0;
     float timeOffGround;
     CharacterMovement characterMovement;
+    public bool CanReset = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,7 +21,7 @@ public class LongFallReset : MonoBehaviour
     void ResetTime()
     {
         timeOffGround = 0;
-     }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -31,8 +33,14 @@ public class LongFallReset : MonoBehaviour
                 case NoClip noClip:
                     if (noClip.NoClipActive) return;
                     break;
-             }
-         }
+            }
+        }
+        if (transform.position.y < WorldBottom)
+        {
+            ResetPosition();
+        }
+
+        if (!CanReset) return;
         if (!Physics.Raycast(transform.position, Vector3.down, rayDistance, ~groundIgnore))
         {
             timeOffGround += Time.deltaTime;
@@ -43,18 +51,23 @@ public class LongFallReset : MonoBehaviour
         }
         if (timeOffGround > FallTime)
         {
-            if (TryGetComponent(out PlayerSafeZone playerSafeZone))
+            ResetPosition();
+        }
+    }
+
+    void ResetPosition()
+    {
+        if (TryGetComponent(out PlayerSafeZone playerSafeZone))
+        {
+            print("moving player to safe position");
+            transform.position = playerSafeZone.safePos;
+            timeOffGround = 0;
+
+            characterMovement.rb.linearVelocity = Vector3.zero;
+            foreach (PlayerAbility ability in characterMovement.playerAbilities)
             {
-                print("moving player to safe position");
-                transform.position = playerSafeZone.safePos;
-                timeOffGround = 0;
-                
-                characterMovement.rb.linearVelocity = Vector3.zero;
-                foreach (PlayerAbility ability in characterMovement.playerAbilities)
-                {
-                    ability.ResetAbility();
-                }
-             }
-         }
+                ability.ResetAbility();
+            }
+        }
     }
 }

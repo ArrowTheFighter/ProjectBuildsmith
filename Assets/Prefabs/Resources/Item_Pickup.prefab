@@ -96,7 +96,11 @@ MonoBehaviour:
   item_id: 
   amount: 1
   show_notification: 1
+  cantPickupDelay: 0.5
   respawn_time: -1
+  layersToIgnore:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!114 &5068911953624632504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +117,9 @@ MonoBehaviour:
   animation_duration_float: 2
   animation_duration_spin: 4
   ease_type: 7
+  triggerDistance: 100
+  checkDelay: 0.3
+  desyncDelayRange: 0.5
 --- !u!54 &309935234275959978
 Rigidbody:
   m_ObjectHideFlags: 0

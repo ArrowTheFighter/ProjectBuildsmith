@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -163,7 +164,7 @@ public class CharacterMovement : MonoBehaviour
             ApplyAirDrag(OverrideAirDragAmount);
          }
 
-        foreach (PlayerAbility ability in playerAbilities)
+        foreach (PlayerAbility ability in playerAbilities.ToList())
         {
             ability.UpdateAbility();
         }
@@ -191,7 +192,7 @@ public class CharacterMovement : MonoBehaviour
         }
         //ApplyPlatformDelta();
         UpdateTilt();
-        foreach (PlayerAbility ability in playerAbilities)
+        foreach (PlayerAbility ability in playerAbilities.ToList())
         {
             ability.FixedUpdateAbility();
         }
@@ -215,6 +216,40 @@ public class CharacterMovement : MonoBehaviour
         var newAbility = gameObject.AddComponent<T>();
         newAbility.Initialize(this);
         playerAbilities.Add(newAbility);
+    }
+
+    public void RemoveAbility<T>() where T : PlayerAbility
+    {
+        // List<PlayerAbility> abilitiesToRemove = new List<PlayerAbility>();
+        // foreach (PlayerAbility playerAbility in playerAbilities)
+        // {
+        //     if (TryGetComponent(out T component))
+        //     {
+        //         abilitiesToRemove.Add(playerAbility);
+        //     }
+        // }
+
+        // foreach (PlayerAbility abilityToRemove in abilitiesToRemove)
+        // {
+        //     playerAbilities.RemoveAll(ability => ability.GetType() == T);
+        //     DestroyImmediate(abilityToRemove);
+        // }
+
+        
+        Type type = typeof(T);
+        Component component = GameplayUtils.instance.PlayerTransform.GetComponent(type);
+
+        if (component != null)
+        {
+            if (component is PlayerAbility)
+            {
+                PlayerAbility playerAbility = (PlayerAbility)component;
+                playerAbility.ResetAbility();
+            }
+            DestroyImmediate(component);
+        }
+        playerAbilities.RemoveAll(ability => ability.GetType() == type);
+        
     }
 
     void trackPlatformDelta(Vector3 delta)
@@ -363,9 +398,9 @@ public class CharacterMovement : MonoBehaviour
         orientation.eulerAngles = new Vector3(orientation.eulerAngles.x, orientation.eulerAngles.y, current_tilt);
     }
 
-    public void ApplyGravity()
+    public void ApplyGravity(float multipler = 1f)
     {
-        rb.AddForce(GravityDir * GravityForce * Time.deltaTime);
+        rb.AddForce(GravityDir * (GravityForce * multipler) * Time.deltaTime);
     }
 
     public void ApplyAirDrag(float amount)

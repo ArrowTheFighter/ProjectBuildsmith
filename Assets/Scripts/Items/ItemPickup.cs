@@ -12,6 +12,7 @@ public class ItemPickup : MonoBehaviour
     float cantPickupTime;
     [SerializeField] public float respawn_time = -1;
     bool markedAsDestoryed;
+    public LayerMask layersToIgnore;
 
     void Awake()
     {
@@ -68,6 +69,10 @@ public class ItemPickup : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        GetComponent<Rigidbody>().linearDamping = 5;
+        if (((1 << collision.gameObject.layer) & layersToIgnore) == 0)
+        {
+            GetComponent<Rigidbody>().linearDamping = 5;
+        }
+        
     }
 }
