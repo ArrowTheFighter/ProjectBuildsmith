@@ -22,9 +22,43 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   ID: CraftingTutorial
-  Name: 
-  Description: 
-  questObjectives: []
+  Name: Tree Bridge
+  Description: An island got destroyed, so I need to get an axe from the old workshop
+    to cut down a tree to get across.
+  questObjectives:
+  - rid: 4434709946380320852
+  - rid: 4434709946380320853
+  - rid: 4434709946380320854
+  - rid: 4434709946380320855
+  - rid: 4434709946380320856
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4434709946380320852
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Go get the axe head
+        Item_ID: rusty_axe_head
+        Item_Amount: 1
+    - rid: 4434709946380320853
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Rose
+        flag_id: CraftingTutorialAxeHeadComplete
+    - rid: 4434709946380320854
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Get some wood
+        Item_ID: WOOD
+        Item_Amount: 5
+    - rid: 4434709946380320855
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Get some plant fiber
+        Item_ID: PLANT FIBER
+        Item_Amount: 5
+    - rid: 4434709946380320856
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Rose
+        flag_id: CraftingTutorialMaterialsComplete
