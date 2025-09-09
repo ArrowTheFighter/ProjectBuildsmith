@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,10 +15,42 @@ public class PinnedQuestItem : MonoBehaviour
         storedQuestData = questData;
         QuestName.text = questData.Name;
         QuestObjectives.text = "";
+        // for (int i = 0; i < questData.questObjectives.Count; i++)
+        // {
+        //     QuestObjectives.text += QuestInfoBox.GetObjectiveText(questData.questObjectives[i]);
+        //     QuestObjectives.text += "\n";
+        //     if (questData.questObjectives[i].StopAtThisObjective && !questData.questObjectives[i].ObjectiveComplete())
+        //     {
+        //         break;
+        //     }
+        // }
+        List<QuestObjective> questsToShow = new List<QuestObjective>();
         for (int i = 0; i < questData.questObjectives.Count; i++)
         {
-            QuestObjectives.text += QuestInfoBox.GetObjectiveText(questData.questObjectives[i]);
+            // QuestObjectivesTextBox.text += GetObjectiveText(questData.questObjectives[i]);
+            // QuestObjectivesTextBox.text += "\n";
+            if (questData.questObjectives[i].StopAtThisObjective && !questData.questObjectives[i].ObjectiveComplete())
+            {
+                foreach (QuestObjective questObjective in questData.questObjectives)
+                {
+                    if (questObjective.ObjectiveIDCollection == questData.questObjectives[i].ObjectiveIDCollection)
+                    {
+                        questsToShow.Add(questObjective);
+                    }
+                }
+                break;
+            }
+        }
+
+        foreach (QuestObjective objective in questsToShow)
+        {
+            QuestObjectives.text += QuestInfoBox.GetObjectiveText(objective);
             QuestObjectives.text += "\n";
+
+            if (objective.StopAtThisObjective && !objective.ObjectiveComplete())
+            {
+                break;
+            }
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());

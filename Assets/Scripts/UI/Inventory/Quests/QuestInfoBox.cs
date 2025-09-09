@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +14,32 @@ public class QuestInfoBox : MonoBehaviour
         QuestNameTextBox.text = questData.Name;
         QuestDescriptionTextBox.text = questData.Description;
         QuestObjectivesTextBox.text = "";
+        List<QuestObjective> questsToShow = new List<QuestObjective>();
         for (int i = 0; i < questData.questObjectives.Count; i++)
         {
-            QuestObjectivesTextBox.text += GetObjectiveText(questData.questObjectives[i]);
+            // QuestObjectivesTextBox.text += GetObjectiveText(questData.questObjectives[i]);
+            // QuestObjectivesTextBox.text += "\n";
+            if (!questData.questObjectives[i].ObjectiveComplete() && questData.questObjectives[i].StopAtThisObjective)
+            {
+                foreach (QuestObjective questObjective in questData.questObjectives)
+                {
+                    if (questObjective.ObjectiveIDCollection == questData.questObjectives[i].ObjectiveIDCollection)
+                    {
+                        questsToShow.Add(questObjective);
+                    }
+                }
+                break;
+            }
+        }
+        foreach (QuestObjective objective in questsToShow)
+        {
+            QuestObjectivesTextBox.text += GetObjectiveText(objective);
             QuestObjectivesTextBox.text += "\n";
+
+            if (objective.StopAtThisObjective && !objective.ObjectiveComplete())
+            {
+                break;
+            }
         }
         LayoutRebuilder.ForceRebuildLayoutImmediate(QuestDescriptionTextBox.transform.parent.GetComponent<RectTransform>());
     }

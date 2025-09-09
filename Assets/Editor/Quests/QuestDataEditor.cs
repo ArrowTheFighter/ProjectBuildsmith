@@ -35,6 +35,7 @@ public class QuestDataEditor : Editor
         questData.ID = EditorGUILayout.TextField("ID", questData.ID);
         questData.Name = EditorGUILayout.TextField("Name", questData.Name);
         questData.Description = EditorGUILayout.TextField("Description", questData.Description);
+        questData.AutoPinQuest = EditorGUILayout.Toggle("Auto Pin Quest", questData.AutoPinQuest);
 
         GUILayout.Space(10);
 
@@ -108,6 +109,8 @@ public class QuestDataEditor : Editor
                 field.SetValue(obj, EditorGUILayout.TextField(field.Name, (string)value));
             else if (field.FieldType == typeof(int))
                 field.SetValue(obj, EditorGUILayout.IntField(field.Name, (int)value));
+            else if (field.FieldType == typeof(bool))
+                field.SetValue(obj, EditorGUILayout.Toggle(field.Name, (bool)value));
             // Add other types as needed...
         }
     }

@@ -16,7 +16,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     public TextMeshProUGUI slotText;
     public TextMeshProUGUI slotAmountText;
 
-    public Action slotEmptied;
+    public Action<InventoryItemStack> slotEmptied;
     public Action slotFilled;
 
     void Start()
@@ -263,6 +263,12 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         if (dropInWorld) DropItem();
         bool shouldBroadcast = (!string.IsNullOrEmpty(inventorySlot.inventoryItemStack.ID) && broadcastEvent);
+        InventoryItemStack oldStack = new InventoryItemStack(
+            inventorySlot.inventoryItemStack.ID,
+            inventorySlot.inventoryItemStack.Name,
+            inventorySlot.inventoryItemStack.Amount,
+            inventorySlot.inventoryItemStack.MaxStackSize
+        );
         inventorySlot.inventoryItemStack = new InventoryItemStack(0);
         inventorySlot.isEmpty = true;
         setSlotText("");
@@ -274,7 +280,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         {
             HotbarManager.instance.ClearSlotVisuals(SlotID);
         }
-        if (shouldBroadcast) slotEmptied?.Invoke();
+        if (shouldBroadcast) slotEmptied?.Invoke(oldStack);
     }
 
     public void DropItem(int amount = -1)

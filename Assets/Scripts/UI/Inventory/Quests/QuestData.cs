@@ -1,5 +1,4 @@
 using UnityEngine;
-using Sirenix.Serialization;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 
@@ -10,6 +9,7 @@ public class QuestData : SerializedScriptableObject
     public string ID;
     public string Name;
     public string Description;
+    public bool AutoPinQuest;
 
     [SerializeReference]
     public List<QuestObjective> questObjectives = new List<QuestObjective>();

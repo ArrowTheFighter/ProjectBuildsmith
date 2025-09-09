@@ -34,6 +34,7 @@ public class GameplayUtils : MonoBehaviour
     public bool PauseMenuIsOpen;
     bool open_menu;
     public RecipeDatabase RecipeDatabase;
+    public Dictionary<string, int> ItemsCrafted = new Dictionary<string, int>();
     void Awake()
     {
         if (instance != this)
@@ -356,6 +357,25 @@ public class GameplayUtils : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public int GetItemCraftedAmount(string item_id)
+    {
+        if (ItemsCrafted.ContainsKey(item_id))
+        {
+            return ItemsCrafted[item_id];
+        }
+        return 0;
+     }
+
+    public void AddItemCraftedAmount(string item_id, int amount)
+    {
+        if (ItemsCrafted.ContainsKey(item_id))
+        {
+            ItemsCrafted[item_id] += amount;
+        }
+        ItemsCrafted[item_id] = amount;
+        inventoryManager.QuestsObjectiveCheck();
     }
 
     public int get_item_holding_amount(string item_id)

@@ -18,7 +18,7 @@ public class InventoryDataSaver : MonoBehaviour
         foreach (InventorySlotComponent slot in inventorySlots)
         {
             slot.slotFilled += UpdateSavedSlots;
-            slot.slotEmptied += UpdateSavedSlots;
+            slot.slotEmptied += (context) => { UpdateSavedSlots(); };
             bool slotExists = false;
             foreach (InventorySlot inventorySlot in savedSlots)
             {

@@ -10,7 +10,7 @@ public class ToolCraftingTable : CraftingTableBase
     {
         foreach (InventorySlotComponent slotComponent in craftingTableSlots)
         {
-            slotComponent.slotEmptied += InventoryUpdated;
+            slotComponent.slotEmptied += (context) => { InventoryUpdated(); };
             slotComponent.slotFilled += InventoryUpdated;
         }
         outputSlot.slotEmptied += itemCrafted;
@@ -64,7 +64,7 @@ public class ToolCraftingTable : CraftingTableBase
         return false;
      }
 
-    void itemCrafted()
+    void itemCrafted(InventoryItemStack inventoryItemStack)
     {
         CheckingForRecipe = false;
         foreach (InventorySlotComponent slotComponent in craftingTableSlots)
@@ -80,6 +80,7 @@ public class ToolCraftingTable : CraftingTableBase
             }
         }
         CheckingForRecipe = true;
+        GameplayUtils.instance.AddItemCraftedAmount(inventoryItemStack.ID, inventoryItemStack.Amount);
         InventoryUpdated();
         print("item was crafted");
     }

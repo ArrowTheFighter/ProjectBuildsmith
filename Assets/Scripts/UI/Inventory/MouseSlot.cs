@@ -18,7 +18,7 @@ public class MouseSlot : MonoBehaviour
         InventorySlot inventorySlot = new InventorySlot();
         inventorySlotComponent.inventorySlot = inventorySlot;
         inventorySlot.inventorySlotComponent = inventorySlotComponent;
-        inventorySlotComponent.slotEmptied += hideSlot;
+        inventorySlotComponent.slotEmptied += (context) => { hideSlot(); };
         inventorySlotComponent.slotFilled += showSlot;
 
         GameplayUtils.instance.inventoryManager.OnInventoryClosed += InventoryClosed;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,7 +37,8 @@ public class InventoryManager : MonoBehaviour
     public QuestInfoBox questInfoBox;
     public GameObject QuestItemsParent;
     [SerializeField] GameObject QuestButton;
-    [SerializeField] GameObject PinQuest;
+    [SerializeField] GameObject PinQuestButton;
+    [SerializeField] TextMeshProUGUI PinQuestText;
     List<QuestInfo> activeQuests = new List<QuestInfo>();
 
     [Header("Pinned Quests")]
@@ -218,7 +220,7 @@ public class InventoryManager : MonoBehaviour
         questsCanvasGroup.interactable = false;
 
         selectedQuest = null;
-        PinQuest.SetActive(false);
+        PinQuestButton.SetActive(false);
         questInfoBox.ClearQuestInfo();
 
         openMenu = InventoryMenus.Inventory;
@@ -431,9 +433,17 @@ public class InventoryManager : MonoBehaviour
     {
         questInfoBox.ShowQuestInfo(questData);
         selectedQuest = questData;
-        if (PinQuest != null)
+        if (PinQuestButton != null)
         {
-            PinQuest.SetActive(true);
+            PinQuestButton.SetActive(true);
+            PinQuestText.text = "Pin Quest";
+            foreach (PinnedQuestItem pinnedQuestItem in activedPinnedQuests)
+            {
+                if (pinnedQuestItem.storedQuestData == questData)
+                {
+                    PinQuestText.text = "Unpin Quest";
+                }
+            }
         }
     }
 
@@ -454,12 +464,17 @@ public class InventoryManager : MonoBehaviour
                 QuestInfoButton questInfoButton = questButton.GetComponent<QuestInfoButton>();
                 questInfoButton.QuestID = quest_id;
                 questInfoButton.questData = data;
-                questInfoButton.buttonName.text = data.Name;
+                questInfoButton.buttonName.text = $"<font-weight=700>!</font-weight> {data.Name}";
 
                 QuestInfo questInfo = new QuestInfo(data);
                 activeQuests.Add(questInfo);
 
-                GameplayUtils.instance.ShowCustomNotif("Quest Added", 6);
+                if (data.AutoPinQuest)
+                {
+                    AddNewPinnedQuest(data);
+                 }
+
+                GameplayUtils.instance.ShowCustomNotif($"Quest Added {data.name}", 6);
             }
         }
         //return null;
@@ -515,6 +530,7 @@ public class InventoryManager : MonoBehaviour
             {
                 Destroy(item.gameObject);
                 activedPinnedQuests.Remove(item);
+                PinQuestText.text = "Pin Quest";
                 return;
             }
         }
@@ -523,6 +539,8 @@ public class InventoryManager : MonoBehaviour
 
         pinnedQuestItem.SetQuestText(questData);
         activedPinnedQuests.Add(pinnedQuestItem);
+
+        PinQuestText.text = "Unpin Quest";
     }
 
     public void PinSelectedQuest()

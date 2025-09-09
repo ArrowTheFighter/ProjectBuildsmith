@@ -24,6 +24,7 @@ MonoBehaviour:
   ID: MovementTutorial
   Name: Follow Rose
   Description: Head back to town with Rose
+  AutoPinQuest: 1
   questObjectives:
   - rid: 4434709854316396544
   - rid: 4434709854316396650
@@ -47,84 +48,114 @@ MonoBehaviour:
       type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
       data:
         Description: Run <sprite name=Icon_Move> to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 0
         mapName: Player
         InputName: Move
     - rid: 4434709854316396650
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 0
         flag_id: MovementTutorialMoveComplete
     - rid: 4434709854316396651
       type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
       data:
         Description: Jump <sprite name=Icon_Jump> up the ledge
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 1
         mapName: Player
         InputName: Jump
     - rid: 4434709854316396652
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 1
         flag_id: MovementTutorialJumpComplete
     - rid: 4434709854316396654
       type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
       data:
         Description: Jump <sprite name=Icon_Jump> while Running <sprite name=Icon_Move>
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 2
         mapName: Player
         InputName: Jump
     - rid: 4434709854316396655
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 2
         flag_id: MovementTutorialRunningJumpComplete
     - rid: 4434709854316396656
       type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
       data:
         Description: Jump <sprite name=Icon_Jump> while in the air to double jump
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 3
         mapName: Player
         InputName: Jump
     - rid: 4434709854316396657
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 3
         flag_id: MovementTutorialDoubleJumpComplete
     - rid: 4434709854316396658
       type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
       data:
         Description: Dive <sprite name=Icon_Dive> after a double jump <sprite name=Icon_Jump>
           to get across
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 4
         mapName: Player
         InputName: Sprint
     - rid: 4434709854316396659
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 4
         flag_id: MovementTutorialDiveJumpComplete
     - rid: 4434709854316396660
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Keep following Rose across the islands
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 5
         flag_id: MovementTutorialFollowRoseComplete
     - rid: 4434709854316396661
       type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
       data:
         Description: Jump <sprite name=Icon_Jump> on the mushroom and avoid its smelly
           spores
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 5
         mapName: Player
         InputName: Jump
     - rid: 4434709854316396662
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 6
         flag_id: MovementTutorialMushroomComplete
     - rid: 4434709854316396663
       type: {class: ObjectiveUseInput, ns: , asm: Assembly-CSharp}
       data:
         Description: Hold down dive <sprite name=Icon_Dive> to slide down the hill
           and meet up with Rose at the big tree
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 6
         mapName: Player
         InputName: Sprint
     - rid: 4434709854316396664
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 7
         flag_id: MovementTutorialHillSlideComplete
