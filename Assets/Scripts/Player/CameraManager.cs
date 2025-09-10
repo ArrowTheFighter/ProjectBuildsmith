@@ -15,11 +15,14 @@ public class CameraManager : MonoBehaviour
     float X_speed_adjustment = 1;
     float Y_speed_adjustment = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         playerInput = GameplayInput.instance.playerInput;
         playerInput.onControlsChanged += OnControlsChanged;
-        set_camera_sensativity(0.25f);
+
+        //This gets set in GameSettings instead to save/load the value
+        //set_camera_sensitivity(0.25f);
     }
 
     // Update is called once per frame
@@ -64,14 +67,13 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    public void set_camera_sensativity(float sensativity)
+    public void set_camera_sensitivity(float sensitivity)
     {
-        float adjustedValue = Mathf.Lerp(0.01f, 3f, Mathf.Pow(sensativity, 1.75f));
+        float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, Mathf.Pow(sensitivity, 1.75f));
 
-        //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensativity);
+        //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensitivity);
         X_speed_adjustment = adjustedValue;
         Y_speed_adjustment = adjustedValue;
         OnControlsChanged(GameplayInput.instance.playerInput);
     }
-
 }
