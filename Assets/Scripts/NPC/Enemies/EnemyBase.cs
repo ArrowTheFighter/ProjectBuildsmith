@@ -27,6 +27,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     public bool CanBeStompedByPlayer;
     public bool PlayerCanStomp { get { return CanBeStompedByPlayer; } set { CanBeStompedByPlayer = value; } }
 
+    //These are currently used for the tutorial quest for killing the mushroom, but they can probably be used for other quest objectives
+    [SerializeField] public string flag_id;
+    [SerializeField] public bool is_true;
+
     public IEnumerator CheckForPlayerRoutine(float checkDelay = 0.5f)
     {
         EnemyActive = true;
@@ -96,6 +100,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             Instantiate(onDeathParticlesPrefab, transform.position, Quaternion.identity);
         }
         OnDeath?.Invoke();
+
+        if(flag_id != null)
+        {
+            is_true = true;
+            FlagManager.Set_Flag(flag_id, is_true);
+        }
+
         Destroy(gameObject);
     }
 }

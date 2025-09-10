@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-
+/*
 [Serializable]
 public class ObjectiveUseInput : QuestObjective
 {
@@ -13,4 +13,4 @@ public class ObjectiveUseInput : QuestObjective
     }
 
 
-}
+}*/
