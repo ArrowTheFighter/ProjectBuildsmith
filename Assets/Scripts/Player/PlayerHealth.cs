@@ -180,7 +180,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
         if (!GameSettings.IsScreenShakeDisabled())
         {
-            Debug.Log("Shake");
+            //Debug.Log("Shake");
             impulseSource.GenerateImpulse();
         }         
 

@@ -69,9 +69,13 @@ public class BatEnemy : EnemyBase
         {
             case AttackingStates.Roaming:
                 //Rotate visuals
-                Quaternion lookRotation = Quaternion.LookRotation(TargetDir, Vector3.up);
-                VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, lookRotation, rotationSpeed);
-
+                if(TargetDir.sqrMagnitude > 0.0001f)
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(TargetDir, Vector3.up);
+                    VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+                }
+                
+                
                 transform.position += TargetDir * speed * Time.fixedDeltaTime;
                 if (Vector3.Distance(transform.position, TargetPos) < 2f)
                 {
