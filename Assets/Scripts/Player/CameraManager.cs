@@ -66,7 +66,6 @@ public class CameraManager : MonoBehaviour
 
     public void set_camera_sensativity(float sensativity)
     {
-
         float adjustedValue = Mathf.Lerp(0.01f, 3f, Mathf.Pow(sensativity, 1.75f));
 
         //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensativity);

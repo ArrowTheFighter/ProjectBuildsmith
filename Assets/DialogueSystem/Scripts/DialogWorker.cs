@@ -65,6 +65,18 @@ public class DialogWorker : MonoBehaviour, IInteractable
         GetAndShowNextDialog();
     }
 
+    public void ForceDialog()
+    {
+        if (!isActive) isActive = true;
+        GetAndShowNextDialog();    
+    }
+
+    public void ForceDialog(ScriptableObject providedDialog)
+    {
+        if (!isActive) isActive = true;
+        GetAndShowNextDialog(providedDialog);
+    }
+
 
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
@@ -76,8 +88,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
             textEffect.StopManualEffects();
             DialogManager.instance.SetTextIsAnimating(false);
             return;
-         }
-               
+        }
+
         if (!GameplayUtils.instance.OpenDialogMenu()) return;
         bool nextDialogResult = GetNextDialog(providedDialog);
         if (nextDialogResult)

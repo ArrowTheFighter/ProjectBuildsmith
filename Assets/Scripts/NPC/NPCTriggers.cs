@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class NPCTriggers : MonoBehaviour
 {
-    public enum NPCTriggerTypes { Jump, Dive, Stop, DontJump, ForceSlide }
+    public enum NPCTriggerTypes { Jump, Dive, Stop, DontJump, ForceSlide,EnableTriggers }
     public NPCTriggerTypes TriggerType;
     public PlayerSetNPCMovingTrigger activateTrigger;
     public bool OnlyOnce;

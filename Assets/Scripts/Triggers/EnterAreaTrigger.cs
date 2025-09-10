@@ -10,7 +10,7 @@ public class EnterAreaTrigger : MonoBehaviour
     [SerializeField] UnityEvent OnEnterCall;
     void OnTriggerEnter(Collider other)
     {
-        if(used) return;
+        if (used) return;
         if ((playerLayerMask.value & (1 << other.gameObject.layer)) != 0)
         {
             OnEnterCall?.Invoke();

@@ -22,6 +22,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     public LayerMask wallCheckLayersIgnore;
 
     bool canJump = true;
+    bool checkingForTriggers = true;
 
     public event Action OnJump;
     public event Action OnDive;
@@ -81,8 +82,14 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
         OnJump?.Invoke();
     }
 
+    public void SetCheckingForTriggers(bool set)
+    {
+        checkingForTriggers = set;
+     }
+
     void OnTriggerEnter(Collider other)
     {
+        
         if (other.TryGetComponent(out NPCTriggers trigger))
         {
             if (trigger.Activated) return;
@@ -95,6 +102,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                     OnDive?.Invoke();
                     break;
                 case NPCTriggers.NPCTriggerTypes.Stop:
+                    if (!checkingForTriggers) return;
                     SetIsMoving(false);
                     break;
                 case NPCTriggers.NPCTriggerTypes.DontJump:
@@ -102,6 +110,9 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                     break;
                 case NPCTriggers.NPCTriggerTypes.ForceSlide:
                     ForceSliding = true;
+                    break;
+                case NPCTriggers.NPCTriggerTypes.EnableTriggers:
+                    checkingForTriggers = true;
                     break;
             }
             if (trigger.activateTrigger != null)
@@ -114,9 +125,9 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                 if (TryGetComponent(out CharacterMovement characterMovement))
                 {
                     characterMovement.TurnAround();
-                 }
+                }
             }
-         }
+        }
     }
 
     void OnTriggerExit(Collider other) 
