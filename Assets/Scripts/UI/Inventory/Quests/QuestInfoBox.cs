@@ -11,7 +11,7 @@ public class QuestInfoBox : MonoBehaviour
 
     public void ShowQuestInfo(QuestData questData)
     {
-        QuestNameTextBox.text = questData.Name;
+        QuestNameTextBox.text = questData.QuestName;
         QuestDescriptionTextBox.text = questData.Description;
         QuestObjectivesTextBox.text = "";
         List<QuestObjective> questsToShow = new List<QuestObjective>();

@@ -7,7 +7,7 @@ public class QuestData : SerializedScriptableObject
 {
 
     public string ID;
-    public string Name;
+    public string QuestName;
     public string Description;
     public bool AutoPinQuest;
 

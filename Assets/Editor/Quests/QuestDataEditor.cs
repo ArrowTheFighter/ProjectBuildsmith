@@ -33,7 +33,7 @@ public class QuestDataEditor : Editor
         // Draw QuestData fields
         EditorGUILayout.LabelField("Quest Info", EditorStyles.boldLabel);
         questData.ID = EditorGUILayout.TextField("ID", questData.ID);
-        questData.Name = EditorGUILayout.TextField("Name", questData.Name);
+        questData.QuestName = EditorGUILayout.TextField("Name", questData.QuestName);
         questData.Description = EditorGUILayout.TextField("Description", questData.Description);
         questData.AutoPinQuest = EditorGUILayout.Toggle("Auto Pin Quest", questData.AutoPinQuest);
 

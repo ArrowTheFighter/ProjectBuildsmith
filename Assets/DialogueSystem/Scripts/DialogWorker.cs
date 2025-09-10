@@ -1,11 +1,8 @@
 using DS.ScriptableObjects;
 using TMPro;
 using UnityEngine;
-using Sirenix.OdinInspector;
 using DS.Data;
 using EasyTextEffects;
-using System.Collections.Generic;
-using System.Collections;
 using UnityEngine.UI;
 
 public class DialogWorker : MonoBehaviour, IInteractable
@@ -39,6 +36,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     float interactCooldown;
 
+    bool hasMarker;
+    [SerializeField] ParticleSystem MarkerParticle;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -68,7 +68,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void ForceDialog()
     {
         if (!isActive) isActive = true;
-        GetAndShowNextDialog();    
+        GetAndShowNextDialog();
     }
 
     public void ForceDialog(ScriptableObject providedDialog)
@@ -81,6 +81,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
         if (interactCooldown > Time.time) return;
+        if (hasMarker) EnableMarker(false);
         //List<TextEffectStatus> textEffectStatus = textEffect.QueryEffectStatusesByTag(TextEffectType.Global, TextEffectEntry.TriggerWhen.Manual, "scale_text_in");
         if (DialogManager.instance.TextIsAnimating)
         {
@@ -129,8 +130,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
             }
             tmp.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
             LayoutRebuilder.ForceRebuildLayoutImmediate(tmp.rectTransform);
-         }
-     }
+        }
+    }
 
 
 
@@ -183,10 +184,10 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         {
                             print("on same multi");
                             return false;
-                         }
+                        }
                         if (dialogueSO.Choices.Count > 0)
                         {
-                            DialogManager.instance.Setup_Choices(dialogueSO.Choices, this,UseLocalization);
+                            DialogManager.instance.Setup_Choices(dialogueSO.Choices, this, UseLocalization);
                         }
                         currentDialogSO = dialogueSO;
                         breakLoop = true;
@@ -321,11 +322,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 nPC_Events[i].run_event?.Invoke();
             }
         }
-     }
+    }
 
     void CloseDialog()
     {
         isActive = false;
+        DialogManager.instance.Clear_choices();
         DialogManager.instance.DialogUI.SetActive(false);
         GameplayUtils.instance.CloseDialogMenu();
     }
@@ -349,6 +351,20 @@ public class DialogWorker : MonoBehaviour, IInteractable
             }
         }
     }
+
+    public void EnableMarker(bool enabled)
+    {
+        if (enabled)
+        {
+            MarkerParticle.Play();
+            hasMarker = true;
+        }
+        else
+        {
+            MarkerParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            hasMarker = false;
+         }
+     }
 
 
 

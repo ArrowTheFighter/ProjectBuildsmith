@@ -13,7 +13,7 @@ public class PinnedQuestItem : MonoBehaviour
     public void SetQuestText(QuestData questData)
     {
         storedQuestData = questData;
-        QuestName.text = questData.Name;
+        QuestName.text = questData.QuestName;
         QuestObjectives.text = "";
         // for (int i = 0; i < questData.questObjectives.Count; i++)
         // {

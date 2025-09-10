@@ -35,6 +35,8 @@ public class CutsceneManager : MonoBehaviour
         CameraTransform.forward = cutsceneData.startPos.forward;
         cutsceneIsRunning = true;
         currentPoint = 0;
+        GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>().MovementControlledByAbility = true;
+        GameplayUtils.instance.HideUI();
         GoToNextPoint();
     }
 
@@ -63,6 +65,10 @@ public class CutsceneManager : MonoBehaviour
     void EndCutscene()
     {
         print("ending cutscene");
+
+        GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>().MovementControlledByAbility = false;
+
+        GameplayUtils.instance.ShowUI();
         cutsceneCam.gameObject.SetActive(false);
      }
 

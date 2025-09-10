@@ -464,7 +464,7 @@ public class InventoryManager : MonoBehaviour
                 QuestInfoButton questInfoButton = questButton.GetComponent<QuestInfoButton>();
                 questInfoButton.QuestID = quest_id;
                 questInfoButton.questData = data;
-                questInfoButton.buttonName.text = $"<font-weight=700>!</font-weight> {data.Name}";
+                questInfoButton.buttonName.text = $"<font-weight=700>!</font-weight> {data.QuestName}";
 
                 QuestInfo questInfo = new QuestInfo(data);
                 activeQuests.Add(questInfo);
@@ -474,7 +474,7 @@ public class InventoryManager : MonoBehaviour
                     AddNewPinnedQuest(data);
                  }
 
-                GameplayUtils.instance.ShowCustomNotif($"Quest Added {data.name}", 6);
+                GameplayUtils.instance.ShowCustomNotif($"Quest Added {data.QuestName}", 6);
             }
         }
         //return null;
