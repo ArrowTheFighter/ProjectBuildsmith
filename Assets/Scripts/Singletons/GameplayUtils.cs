@@ -17,7 +17,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] GameObject PauseMenu;
     [SerializeField] GameObject[] UI_Canvases;
     [SerializeField] Slider Main_volume_slider;
-    [SerializeField] ItemPickupNotifcationScript itemPickupNotifcationScript;
+    [SerializeField] public ItemPickupNotifcationScript itemPickupNotifcationScript;
     [SerializeField] PlayerAudio playerAudio;
     [Header("Crafting stations")]
     [SerializeField] CanvasGroup CraftingTableUI;
@@ -386,7 +386,7 @@ public class GameplayUtils : MonoBehaviour
         return inventoryManager.getAmountOfItemByID(item_id);
     }
 
-    public int add_items_to_inventory(string item_id, int amount, bool show_notif = true)
+    public int add_items_to_inventory(string item_id, int amount, bool show_notif = true,bool playSound = false)
     {
         //inventoryItems.AddToItemAmount(item_id, amount);
         ItemData itemData = GetItemDataByID(item_id);
@@ -395,6 +395,10 @@ public class GameplayUtils : MonoBehaviour
         if (show_notif)
         {
             itemPickupNotifcationScript.ShowItem(itemData, amount);
+        }
+        else if (playSound)
+        {
+            itemPickupNotifcationScript.PlayNotificationSound();
         }
         // TODO FIX THIS
         if (item_id == "gold_coin")

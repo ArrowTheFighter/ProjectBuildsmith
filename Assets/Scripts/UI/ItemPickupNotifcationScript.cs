@@ -37,21 +37,27 @@ public class ItemPickupNotifcationScript : MonoBehaviour
         {
             fadeoutTween.Kill();
         }
-        SoundFXManager.instance.PlaySoundFXClip(pickupNotificationSoundFX, transform, pickupNotificationSoundFXVolume, pickupNotificationSoundFXPitch);
+        PlayNotificationSound();
         fadeoutTween = DOVirtual.Float(3,0,2,(context) => {
             canvasGroup.alpha = context;
         }).OnComplete(finished_fadeout);
     }
 
-    public void ShowCustomText(string text,float duration = 4)
+    public void PlayNotificationSound()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(pickupNotificationSoundFX, transform, pickupNotificationSoundFXVolume, pickupNotificationSoundFXPitch);
+    }
+
+    public void ShowCustomText(string text, float duration = 4)
     {
         GetComponent<RectTransform>().DOScale(1.1f, 0.1f).From(1f);
         notification_text.text = text;
-        if(fadeoutTween.IsActive())
+        if (fadeoutTween.IsActive())
         {
             fadeoutTween.Kill();
         }
-        fadeoutTween = DOVirtual.Float(duration,0,2,(context) => {
+        fadeoutTween = DOVirtual.Float(duration, 0, 2, (context) =>
+        {
             canvasGroup.alpha = context;
         }).OnComplete(finished_fadeout);
     }

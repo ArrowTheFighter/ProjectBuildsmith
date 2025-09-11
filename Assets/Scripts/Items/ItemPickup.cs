@@ -47,10 +47,11 @@ public class ItemPickup : MonoBehaviour
         if (isSpecialItem)
         {
             GameplayUtils.instance.inventoryManager.AddSpecialItem(item_id, amount);
+            GameplayUtils.instance.itemPickupNotifcationScript.PlayNotificationSound();
             PickupComplete();
             return;
         }
-        int loosePieces = GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification);
+        int loosePieces = GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification,true);
         if (loosePieces == -1) return;
         //GameplayUtils.instance.Play_Audio_On_Player(2, 0.5f);
         if (loosePieces > 0)
