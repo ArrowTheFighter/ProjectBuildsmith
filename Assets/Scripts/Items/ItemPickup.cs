@@ -8,6 +8,7 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] string item_id;
     [SerializeField] public int amount = 1;
     [SerializeField] bool show_notification = true;
+    [SerializeField] bool isSpecialItem;
     [SerializeField] float cantPickupDelay = 0.5f;
     float cantPickupTime;
     [SerializeField] public float respawn_time = -1;
@@ -43,6 +44,12 @@ public class ItemPickup : MonoBehaviour
             return;
         }
         if (cantPickupTime > Time.time) return;
+        if (isSpecialItem)
+        {
+            GameplayUtils.instance.inventoryManager.AddSpecialItem(item_id, amount);
+            PickupComplete();
+            return;
+        }
         int loosePieces = GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification);
         if (loosePieces == -1) return;
         //GameplayUtils.instance.Play_Audio_On_Player(2, 0.5f);
@@ -52,17 +59,22 @@ public class ItemPickup : MonoBehaviour
         }
         else
         {
-            if (respawn_time <= 0)
-            {
-                markedAsDestoryed = true;
-                Destroy(gameObject);
-            }
-            else
-            {
-                markedAsDestoryed = true;
-                ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + respawn_time);
-                gameObject.SetActive(false);
-            }
+            PickupComplete();
+        }
+    }
+
+    void PickupComplete()
+    {
+        if (respawn_time <= 0)
+        {
+            markedAsDestoryed = true;
+            Destroy(gameObject);
+        }
+        else
+        {
+            markedAsDestoryed = true;
+            ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + respawn_time);
+            gameObject.SetActive(false);
         }
     }
 

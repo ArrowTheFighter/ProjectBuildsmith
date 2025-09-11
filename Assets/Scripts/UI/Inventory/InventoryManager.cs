@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -30,6 +31,7 @@ public class InventoryManager : MonoBehaviour
 
     [Header("InventorySlots")]
     public List<InventorySlot> inventorySlots = new List<InventorySlot>();
+    public Dictionary<string, int> specialItems = new Dictionary<string, int>();
 
     [Space(20)]
     [Header("QuestMenu")]
@@ -393,6 +395,29 @@ public class InventoryManager : MonoBehaviour
         }
         return itemAmount;
     }
+
+    public int GetSpecialItemAmount(string item_id)
+    {
+        if (specialItems.ContainsKey(item_id))
+        {
+            return specialItems[item_id];
+        }
+        return -1;
+    }
+
+    public void AddSpecialItem(string item_id, int amount)
+    {
+        if (specialItems.ContainsKey(item_id))
+        {
+            specialItems[item_id] += amount;
+        }
+        else
+        {
+            specialItems[item_id] = amount;
+        }
+        OnInventoryUpdated?.Invoke();
+
+    } 
 
     public bool removeItemsByID(string item_id, int amount = 1)
     {

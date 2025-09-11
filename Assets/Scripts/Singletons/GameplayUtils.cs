@@ -381,6 +381,8 @@ public class GameplayUtils : MonoBehaviour
     public int get_item_holding_amount(string item_id)
     {
         //return inventoryItems.GetItemAmount(item_id);
+        int specialItemAmount = inventoryManager.GetSpecialItemAmount(item_id);
+        if (specialItemAmount != -1) return specialItemAmount;
         return inventoryManager.getAmountOfItemByID(item_id);
     }
 
