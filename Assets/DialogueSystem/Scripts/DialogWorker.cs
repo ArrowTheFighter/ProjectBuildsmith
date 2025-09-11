@@ -54,10 +54,15 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public bool Interact(Interactor interactor)
     {
         if (!NPCCanInteract) return false;
-        if (!isActive) isActive = true;
+        if (!isActive) SetIsActive(true);
         ActiveAndInteract();
         return true;
     }
+
+    void SetIsActive(bool active)
+    {
+        isActive = active;
+     }
 
     public void ActiveAndInteract()
     {
@@ -67,13 +72,13 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     public void ForceDialog()
     {
-        if (!isActive) isActive = true;
+        if (!isActive) SetIsActive(true);
         GetAndShowNextDialog();
     }
 
     public void ForceDialog(ScriptableObject providedDialog)
     {
-        if (!isActive) isActive = true;
+        if (!isActive) SetIsActive(true);
         GetAndShowNextDialog(providedDialog);
     }
 
@@ -326,7 +331,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     void CloseDialog()
     {
-        isActive = false;
+        SetIsActive(false);
         DialogManager.instance.Clear_choices();
         DialogManager.instance.DialogUI.SetActive(false);
         GameplayUtils.instance.CloseDialogMenu();

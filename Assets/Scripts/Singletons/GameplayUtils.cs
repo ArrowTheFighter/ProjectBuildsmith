@@ -275,13 +275,14 @@ public class GameplayUtils : MonoBehaviour
 
     public void Toggle_Pause_Menu()
     {
+        if (DialogIsOpen) return;
         if (open_menu)
         {
             CloseAllCraftingMenus();
             inventoryManager.CloseInventory();
             ClosePauseMenu();
             return;
-         }
+        }
         if (PauseMenu.activeInHierarchy)
         {
             ClosePauseMenu();
