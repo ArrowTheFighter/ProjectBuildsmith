@@ -1,4 +1,3 @@
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
