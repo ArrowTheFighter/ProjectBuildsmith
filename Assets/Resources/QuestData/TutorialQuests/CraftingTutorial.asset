@@ -22,43 +22,113 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   ID: CraftingTutorial
-  Name: Tree Bridge
+  QuestName: Crafting Tutorial (placeholder)
   Description: An island got destroyed, so I need to get an axe from the old workshop
-    to cut down a tree to get across.
+    to cut down a tree to get across
+  AutoPinQuest: 0
   questObjectives:
-  - rid: 4434709946380320852
-  - rid: 4434709946380320853
-  - rid: 4434709946380320854
-  - rid: 4434709946380320855
-  - rid: 4434709946380320856
+  - rid: 4434710013077880833
+  - rid: 4434710013077880834
+  - rid: 4434710013077880835
+  - rid: 4434710013077880836
+  - rid: 4434710013077880837
+  - rid: 4434710013077880838
+  - rid: 4434710013077880928
+  - rid: 4434710013077880929
+  - rid: 4434710013077880930
+  - rid: 4434710013077880931
+  - rid: 4434710013077880932
+  - rid: 4434710013077880934
   references:
     version: 2
     RefIds:
-    - rid: 4434709946380320852
+    - rid: 4434710013077880833
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Head to the old workshop to look for old tools
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 0
+        flag_id: CraftingTutorialWorkshopTriggered
+    - rid: 4434710013077880834
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Go get the axe head
+        Description: Collect the rusty axe head
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 0
         Item_ID: rusty_axe_head
         Item_Amount: 1
-    - rid: 4434709946380320853
+    - rid: 4434710013077880835
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 0
         flag_id: CraftingTutorialAxeHeadComplete
-    - rid: 4434709946380320854
+    - rid: 4434710013077880836
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Get some wood
-        Item_ID: WOOD
+        Description: Gather wood
+        StopAtThisObjective: 0
+        ObjectiveIDCollection: 1
+        Item_ID: wood
         Item_Amount: 5
-    - rid: 4434709946380320855
+    - rid: 4434710013077880837
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Get some plant fiber
-        Item_ID: PLANT FIBER
+        Description: Gather plant fiber
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 1
+        Item_ID: plant_fiber
         Item_Amount: 5
-    - rid: 4434709946380320856
+    - rid: 4434710013077880838
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 1
         flag_id: CraftingTutorialMaterialsComplete
+    - rid: 4434710013077880928
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Add the wood and plant fiber to the workbench blueprint next
+          to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 2
+        flag_id: CraftingTutorialWorkbenchRebuilt
+    - rid: 4434710013077880929
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Rose
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 2
+        flag_id: CraftingTutorialWorkbenchComplete
+    - rid: 4434710013077880930
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft a rope
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 3
+        Item_ID: rope
+        Item_Amount: 1
+    - rid: 4434710013077880931
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft an axe
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 3
+        Item_ID: simple_axe
+        Item_Amount: 1
+    - rid: 4434710013077880932
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Use the newly crafted axe to chop down the big tree
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 4
+        flag_id: CraftingTutorialBigTreeChopComplete
+    - rid: 4434710013077880934
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Cross the tree bridge
+        StopAtThisObjective: 1
+        ObjectiveIDCollection: 4
+        flag_id: CraftingTutorialBridgeCrossedComplete
