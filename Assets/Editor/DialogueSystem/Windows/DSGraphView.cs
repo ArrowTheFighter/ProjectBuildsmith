@@ -452,23 +452,24 @@ namespace DS.Windows
             List<DSNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
 
 
-                ungroupedNodesList.Remove(node);
+            ungroupedNodesList.Remove(node);
 
-                node.ResetStyle();
+            node.ResetStyle();
 
-                if (ungroupedNodesList.Count == 1)
-                {
-                    --NameErrorsAmount;
+            if (ungroupedNodesList.Count == 1)
+            {
+                --NameErrorsAmount;
 
-                    ungroupedNodesList[0].ResetStyle();
+                ungroupedNodesList[0].ResetStyle();
 
-                    return;
-                }
+                return;
+            }
 
-                if (ungroupedNodesList.Count == 0)
-                {
-                    ungroupedNodes.Remove(nodeName);
-                }
+            if (ungroupedNodesList.Count == 0)
+            {
+                ungroupedNodes.Remove(nodeName);
+            }
+            if (nodeName == "" && NameErrorsAmount > 0) --NameErrorsAmount;
             
         }
 
@@ -526,6 +527,7 @@ namespace DS.Windows
             {
                 groups.Remove(oldGroupName);
             }
+            if (oldGroupName == "" && NameErrorsAmount > 0) --NameErrorsAmount;
         }
 
         public void AddGroupedNode(DSNode node, DSGroup group)
@@ -604,6 +606,7 @@ namespace DS.Windows
                     groupedNodes.Remove(group);
                 }
             }
+            if (nodeName == "" && NameErrorsAmount > 0) --NameErrorsAmount;
         }
 
         private void AddGridBackground()
