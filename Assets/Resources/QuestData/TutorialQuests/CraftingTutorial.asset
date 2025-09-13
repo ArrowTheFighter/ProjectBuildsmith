@@ -25,7 +25,7 @@ MonoBehaviour:
   QuestName: Chop Chop
   Description: An island got destroyed, so I need to get an axe from the old workshop
     to cut down a tree to get across
-  AutoPinQuest: 0
+  AutoPinQuest: 1
   questObjectives:
   - rid: 4434710013077880833
   - rid: 4434710013077880834
@@ -67,7 +67,7 @@ MonoBehaviour:
     - rid: 4434710013077880836
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Gather wood
+        Description: Gather 5 wood
         StopAtThisObjective: 0
         ObjectiveIDCollection: 1
         Item_ID: wood
@@ -75,7 +75,7 @@ MonoBehaviour:
     - rid: 4434710013077880837
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Gather plant fiber
+        Description: Gather 5 plant fiber
         StopAtThisObjective: 1
         ObjectiveIDCollection: 1
         Item_ID: plant_fiber
