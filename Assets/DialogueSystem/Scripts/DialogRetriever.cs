@@ -2,10 +2,8 @@ using DS.ScriptableObjects;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using DS;
 using DS.Data;
 using System;
-using UnityEngine.Analytics;
 
 
 public class DialogRetriever : MonoBehaviour
@@ -224,6 +222,7 @@ public class DialogRetriever : MonoBehaviour
     public static bool Choice_is_valid(ScriptableObject choice, DialogWorker dialogWorker)
     {
         if (choice == null) return false;
+        print("checking if choice is valid");
         ScriptableObject currentChoice = choice;
         for (int i = 0; i < 1000; i++)
         {
@@ -244,6 +243,9 @@ public class DialogRetriever : MonoBehaviour
                     }
 
                     break;
+                case DSCloseDialogSO dSCloseDialogSO:
+                    return true;
+
                 case DSItemRequirementSO itemRequirementSO:
                     string item_output_check = "IsFalse";
                     if (GameplayUtils.instance.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
@@ -255,7 +257,11 @@ public class DialogRetriever : MonoBehaviour
                     {
                         if (item_choice.OutputID == item_output_check)
                         {
-                            if (item_choice.NextDialogue == null) return false;
+                            if (item_choice.NextDialogue == null)
+                            {
+                                print("itemRequirementNode didn't have a connection");
+                                return false;
+                            } 
                             currentChoice = item_choice.NextDialogue;
                             foundNextNodeFromItem = true;
                             break;
@@ -275,7 +281,12 @@ public class DialogRetriever : MonoBehaviour
                     {
                         if (flag_choice.OutputID == check)
                         {
-                            if (flag_choice.NextDialogue == null) return false;
+                            if (flag_choice.NextDialogue == null)
+                            {
+
+                                print("RequireFlagNode didn't have a connection");
+                                return false;
+                            } 
                             currentChoice = flag_choice.NextDialogue;
                             foundNextNode = true;
                             break;
@@ -292,7 +303,12 @@ public class DialogRetriever : MonoBehaviour
                 {
                     foreach (DSDialogueChoiceData listed_choice in myList)
                     {
-                        if (listed_choice.NextDialogue == null) return false;
+                        if (listed_choice.NextDialogue == null)
+                        {
+                            print("couldn't find a connection from the current node");
+                            return false;
+                        }
+                        print(listed_choice.NextDialogue);
                         currentChoice = listed_choice.NextDialogue;
                         break;
                     }

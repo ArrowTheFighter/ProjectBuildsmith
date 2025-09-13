@@ -14,7 +14,7 @@ public class RepairStructure : MonoBehaviour, IInteractable
     public item_requirement[] itemsRequired;
     public item_requirement[] required_items => itemsRequired;
 
-    bool CInteract;
+    public bool CInteract;
     public bool CanInteract { get => CInteract; set { CInteract = value; } }
 
     bool finished = false;
@@ -27,6 +27,7 @@ public class RepairStructure : MonoBehaviour, IInteractable
 
     public bool Interact(Interactor interactor)
     {
+        if (!CanInteract) return false;
         foreach (item_requirement item in itemsRequired)
         {
             int current_item_amount = GameplayUtils.instance.get_item_holding_amount(item.item_id);

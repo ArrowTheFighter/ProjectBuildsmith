@@ -42,7 +42,6 @@ public class CutsceneManager : MonoBehaviour
 
     void GoToNextPoint()
     {
-        print(currentData.cameraPoints.Length);
         if (currentPoint > currentData.cameraPoints.Length - 1)
         {
             EndCutscene();

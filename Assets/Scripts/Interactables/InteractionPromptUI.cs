@@ -58,7 +58,7 @@ public class InteractionPromptUI : MonoBehaviour
                 {
 
                     item_requiremenjt_ui_object.SetActive(true);
-                    item_requiremenjt_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = item_Requirements[i].item_name + " x" + item_Requirements[i].item_amount;
+                    item_requiremenjt_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = "<font-weight=500>" + item_Requirements[i].item_name + " x" + item_Requirements[i].item_amount;
                 }
                 else
                 {
