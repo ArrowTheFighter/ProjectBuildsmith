@@ -41,11 +41,14 @@ public class PinnedQuestItem : MonoBehaviour
                 break;
             }
         }
-
+        bool allQuestsInCollectionComplete = true;
         foreach (QuestObjective objective in questsToShow)
         {
             QuestObjectives.text += QuestInfoBox.GetObjectiveText(objective);
             QuestObjectives.text += "\n";
+
+            if (!objective.ObjectiveComplete()) allQuestsInCollectionComplete = false;
+            if (objective.StopAtThisObjective && !allQuestsInCollectionComplete) break;
 
             if (objective.StopAtThisObjective && !objective.ObjectiveComplete())
             {

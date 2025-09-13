@@ -31,10 +31,14 @@ public class QuestInfoBox : MonoBehaviour
                 break;
             }
         }
+        bool allQuestsInCollectionComplete = true;
         foreach (QuestObjective objective in questsToShow)
         {
             QuestObjectivesTextBox.text += GetObjectiveText(objective);
             QuestObjectivesTextBox.text += "\n";
+
+            if (!objective.ObjectiveComplete()) allQuestsInCollectionComplete = false;
+            if (objective.StopAtThisObjective && !allQuestsInCollectionComplete) break;
 
             if (objective.StopAtThisObjective && !objective.ObjectiveComplete())
             {

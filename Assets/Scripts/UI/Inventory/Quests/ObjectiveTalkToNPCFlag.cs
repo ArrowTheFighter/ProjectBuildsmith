@@ -4,7 +4,7 @@ public class ObjectiveTalkToNPCFlag : QuestObjective
 {
     public string flag_id;
 
-    public override bool ObjectiveComplete()
+    protected override bool CheckObjectiveComplete()
     {
         return FlagManager.Get_Flag_Value(flag_id);
     }

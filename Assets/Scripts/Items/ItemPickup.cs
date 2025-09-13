@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
@@ -12,12 +13,31 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] float cantPickupDelay = 0.5f;
     float cantPickupTime;
     [SerializeField] public float respawn_time = -1;
+    [SerializeField] public float despawn_time = -1;
+    float time_to_despawn;
     bool markedAsDestoryed;
     public LayerMask layersToIgnore;
 
     void Awake()
     {
         cantPickupTime = Time.time + cantPickupDelay;
+        if (respawn_time == -1 && despawn_time != -1)
+        {
+            StartCoroutine(DespawnItem());
+        }
+    }
+
+    IEnumerator DespawnItem()
+    {
+        yield return new WaitForSeconds(despawn_time);
+        if (TryGetComponent(out PlayerCheckpointPosition component))
+        {
+            component.SetPlayerToCheckpointPosition();
+        }
+        else
+        {
+            Destroy(gameObject);
+         }
     }
 
     public void OnTriggerEnter(Collider other)
@@ -27,8 +47,8 @@ public class ItemPickup : MonoBehaviour
         if ((player_layer.value & (1 << other.gameObject.layer)) != 0)
         {
 
-           // Pickup();
-            
+            // Pickup();
+
         }
     }
 

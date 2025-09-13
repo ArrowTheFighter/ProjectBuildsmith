@@ -492,6 +492,12 @@ public class InventoryManager : MonoBehaviour
                 questInfoButton.buttonName.text = $"<font-weight=700>!</font-weight> {data.QuestName}";
 
                 QuestInfo questInfo = new QuestInfo(data);
+
+                foreach (QuestObjective questObjective in data.questObjectives)
+                {
+                    questObjective.isComplete = false;
+                 }
+
                 activeQuests.Add(questInfo);
 
                 if (data.AutoPinQuest)

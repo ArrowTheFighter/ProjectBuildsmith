@@ -12,10 +12,13 @@ public class LongFallReset : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        characterMovement = GetComponent<CharacterMovement>();
-        groundIgnore = characterMovement.IgnoreGroundLayerMask;
-        characterMovement.onDoubleJump += ResetTime;
-        characterMovement.OnDash += ResetTime;
+        if (TryGetComponent(out CharacterMovement component))
+        {
+            characterMovement = component;
+            groundIgnore = characterMovement.IgnoreGroundLayerMask;
+            characterMovement.onDoubleJump += ResetTime;
+            characterMovement.OnDash += ResetTime;
+        }
     }
 
     void ResetTime()
@@ -26,19 +29,23 @@ public class LongFallReset : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+        if (characterMovement != null)
         {
-            switch (playerAbility)
+            foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
             {
-                case NoClip noClip:
-                    if (noClip.NoClipActive) return;
-                    break;
+                switch (playerAbility)
+                {
+                    case NoClip noClip:
+                        if (noClip.NoClipActive) return;
+                        break;
+                }
             }
         }
-        if (transform.position.y < WorldBottom)
-        {
-            ResetPosition();
-        }
+        
+        // if (transform.position.y < WorldBottom)
+        // {
+        //     ResetPosition();
+        // }
 
         if (!CanReset) return;
         if (!Physics.Raycast(transform.position, Vector3.down, rayDistance, ~groundIgnore))

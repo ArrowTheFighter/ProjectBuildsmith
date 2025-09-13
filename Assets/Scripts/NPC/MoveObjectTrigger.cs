@@ -1,6 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class MoveObjectTrigger : MonoBehaviour
 {
@@ -11,6 +10,8 @@ public class MoveObjectTrigger : MonoBehaviour
 
     public Transform ObjectToMove;
     public Transform NewPos;
+
+    public UnityEvent ActivateEvent;
 
     void OnTriggerEnter(Collider other)
     {
@@ -35,12 +36,14 @@ public class MoveObjectTrigger : MonoBehaviour
         }
     }
 
-    void Activate()
+    public void Activate()
     {
         if (ObjectToMove != null && NewPos != null)
         {
+            print("moving target");
             ObjectToMove.position = NewPos.position;
             activated = true;
         }
+        ActivateEvent?.Invoke();
      }
 }

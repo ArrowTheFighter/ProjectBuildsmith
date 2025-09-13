@@ -8,7 +8,7 @@ public class ObjectiveCraftItem : QuestObjective
     public string Item_ID;
     public int Item_Amount;
 
-    public override bool ObjectiveComplete()
+    protected override bool CheckObjectiveComplete()
     {
         if (GameplayUtils.instance.GetItemCraftedAmount(Item_ID) >= Item_Amount) return true;
         return false;

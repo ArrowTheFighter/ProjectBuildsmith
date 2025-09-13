@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCheckpointPosition : MonoBehaviour
 {
     Vector3 pos;
+    public bool UseCheckpoints = true;
 
     void Start()
     {
@@ -13,7 +14,7 @@ public class PlayerCheckpointPosition : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Checkpoint")
+        if (other.tag == "Checkpoint" && UseCheckpoints)
         {
             print("setting checkpoint position");
             pos = other.transform.position + Vector3.up;
