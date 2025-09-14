@@ -35,7 +35,14 @@ public class ThumbnailBatcher : EditorWindow
         {
             GenerateSingleThumbnail();
         }
-        previewTexture = (RenderTexture)EditorGUILayout.ObjectField("Render Texture", previewTexture, typeof(RenderTexture), true);
+        if (thumbnailGenerator != null && thumbnailGenerator.renderTexture != null && previewTexture == null)
+        {
+            previewTexture = thumbnailGenerator.renderTexture;
+        }
+        else
+        {
+            previewTexture = (RenderTexture)EditorGUILayout.ObjectField("Render Texture", previewTexture, typeof(RenderTexture), true);
+        }
 
         if (previewTexture != null)
         {

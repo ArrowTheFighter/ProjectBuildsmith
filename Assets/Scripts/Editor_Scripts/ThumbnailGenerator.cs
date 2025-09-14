@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.IO;
-using Sirenix.Serialization.Internal;
 
 #if UNITY_EDITOR
 using UnityEditor;
