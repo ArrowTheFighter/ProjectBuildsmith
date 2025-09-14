@@ -4,6 +4,7 @@ using UnityEngine;
 using DS.Data;
 using EasyTextEffects;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {
@@ -277,7 +278,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     break;
                 case DSGiveItemSO giveItemSO:
                     ItemData item = GameplayUtils.instance.GetItemDataByID(giveItemSO.ItemID);
-                    GameplayUtils.instance.inventoryManager.AddItemToInventory(item, int.Parse(giveItemSO.ItemAmount));
+                    //GameplayUtils.instance.inventoryManager.AddItemToInventory(item, int.Parse(giveItemSO.ItemAmount));
+                    GameplayUtils.instance.add_items_to_inventory(giveItemSO.ItemID, int.Parse(giveItemSO.ItemAmount), true);
                     foreach (DSDialogueChoiceData choice in giveItemSO.Choices)
                     {
                         tempDialogSO = choice.NextDialogue;
