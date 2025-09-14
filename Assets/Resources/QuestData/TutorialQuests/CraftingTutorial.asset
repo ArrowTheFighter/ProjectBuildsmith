@@ -113,7 +113,8 @@ MonoBehaviour:
     - rid: 4434710013077880930
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
-        Description: Craft a rope
+        Description: 'Craft 1 rope (hint: place 1 plant fiber in each slot of the
+          workbench)'
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -122,7 +123,8 @@ MonoBehaviour:
     - rid: 4434710013077880931
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
-        Description: Craft an axe
+        Description: 'Craft 1 simple axe (hint: place the rusty axe head on top,
+          the rope in the middle, and the simple stick in the bottom of the workbench)'
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -139,8 +141,8 @@ MonoBehaviour:
     - rid: 4434710013077880934
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Cross the tree bridge
+        Description: Talk to Rose
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 4
-        flag_id: CraftingTutorialBridgeCrossedComplete
+        flag_id: CraftingTutorialComplete
