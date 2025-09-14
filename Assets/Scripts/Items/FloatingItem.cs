@@ -27,7 +27,7 @@ public class FloatingItem : MonoBehaviour
     {
         delayTimer = Time.time + checkDelay;
 
-        objectToAnimate = transform;
+        objectToAnimate = transform.GetChild(0);
 
         float originalY = objectToAnimate.localPosition.y;
         objectToAnimate.localPosition = new Vector3(objectToAnimate.localPosition.x, originalY + Random.Range(-0.1f, 0.1f), objectToAnimate.localPosition.z);
