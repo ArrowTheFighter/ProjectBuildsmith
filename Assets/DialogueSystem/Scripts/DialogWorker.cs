@@ -343,7 +343,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     {
         if (currentDialogSO is DSDialogueSO)
         {
-            string fontWeight = "<font-weight=500>";
+            string fontWeight = "<font-weight=400>";
             DialogManager.instance.name_text.text = fontWeight + NPC_Name;
             DialogManager.instance.DialogUI.SetActive(true);
             DSDialogueSO dialogSO = (DSDialogueSO)currentDialogSO;

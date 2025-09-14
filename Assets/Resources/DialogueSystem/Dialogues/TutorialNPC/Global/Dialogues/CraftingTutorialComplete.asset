@@ -9,17 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e1d548be11e2ab409c0b46832fc8deb, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a24acc19b71f4c4b99f6ab09172d3bd, type: 3}
   m_Name: CraftingTutorialComplete
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: CraftingTutorialComplete
   <Text>k__BackingField: Dialogue text.
   <Choices>k__BackingField:
-  - <Text>k__BackingField: output
+  - <Text>k__BackingField: Flag is true
     LocalizeKey: 
     OutputID: IsTrue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 67d6cfbfd41513b46ba949962ab13a61, type: 2}
-  <DialogueType>k__BackingField: 6
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: c7015eef06f1ce54ea3e0638af619d6b, type: 2}
+  - <Text>k__BackingField: Flag is false
+    LocalizeKey: 
+    OutputID: IsFalse
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 96afd0c1a757e9d43af02eee179687d0, type: 2}
+  <DialogueType>k__BackingField: 5
   <IsStartingDialogue>k__BackingField: 0
   <FlagID>k__BackingField: CraftingTutorialComplete
   IsTrue: 1
