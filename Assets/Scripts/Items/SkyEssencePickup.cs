@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SkyEssencePickup : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SkyEssencePickup : MonoBehaviour
     public Vector3 SkyEngineOffset;
     public float maxSpeed;
     float speed;
+    public UnityEvent onTouched;
 
     void OnTriggerEnter(Collider other)
     {
@@ -20,7 +22,8 @@ public class SkyEssencePickup : MonoBehaviour
             if (GetComponent<FloatingItem>() != null)
             {
                 GetComponent<FloatingItem>().StopAnimating();
-             }
+            }
+            onTouched?.Invoke();
         }
     }
 

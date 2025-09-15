@@ -89,7 +89,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 
     void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.TryGetComponent(out NPCTriggers trigger))
         {
             if (trigger.Activated) return;
@@ -125,6 +125,13 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                 if (TryGetComponent(out CharacterMovement characterMovement))
                 {
                     characterMovement.TurnAround();
+                }
+            }
+            if (trigger.EnableQuestMarker)
+            {
+                if (TryGetComponent(out DialogWorker dialogWorker))
+                {
+                    dialogWorker.EnableMarker(true);
                 }
             }
         }

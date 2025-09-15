@@ -63,7 +63,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void SetIsActive(bool active)
     {
         isActive = active;
-     }
+    }
 
     public void ActiveAndInteract()
     {
@@ -371,7 +371,17 @@ public class DialogWorker : MonoBehaviour, IInteractable
         {
             MarkerParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             hasMarker = false;
-         }
+        }
+    }
+
+    public void SetCurrentDialogNode(ScriptableObject scriptableObject)
+    {
+        currentDialogSO = scriptableObject;
+    }
+
+    public void SetCurrentNodeToStart()
+    {
+        currentDialogSO = StarterNode;
      }
 
 
