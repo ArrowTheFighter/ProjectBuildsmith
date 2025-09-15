@@ -23,9 +23,9 @@ MonoBehaviour:
     SerializationNodes: []
   ID: CraftingTutorial
   QuestName: Chop Chop
-  Description: "A fallen island left a gap in the path back to town. I\u2019ll need
-    to look around the old workshop to find something to cut down the big tree and
-    make a bridge."
+  Description: A fallen island left a gap in the path back to town. I'll need to
+    look around the old workshop to find something to cut down the big tree and make
+    a bridge.
   AutoPinQuest: 1
   questObjectives:
   - rid: 4434710013077880833
@@ -46,7 +46,7 @@ MonoBehaviour:
     - rid: 4434710013077880833
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Head to the old workshop to search for toolsls
+        Description: Head to the old workshop to search for tools
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
     - rid: 4434710013077880834
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Collect the rusty axe head
+        Description: Collect the <style=Item>rusty axe head</style>
         StopAtThisObjective: 1
         StayCompleted: 1
         ObjectiveIDCollection: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
     - rid: 4434710013077880835
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
     - rid: 4434710013077880836
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Gather 5 pieces of wood
+        Description: Gather 5 pieces of <style=Item>wood</style>
         StopAtThisObjective: 0
         StayCompleted: 1
         ObjectiveIDCollection: 1
@@ -80,7 +80,7 @@ MonoBehaviour:
     - rid: 4434710013077880837
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Gather 5 plant fibers
+        Description: Gather 5 <style=Item>plant fiber</style>
         StopAtThisObjective: 1
         StayCompleted: 1
         ObjectiveIDCollection: 1
@@ -89,7 +89,7 @@ MonoBehaviour:
     - rid: 4434710013077880838
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 1
@@ -97,7 +97,8 @@ MonoBehaviour:
     - rid: 4434710013077880928
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Add the wood and plant fiber to the workbench beside Rose
+        Description: Add the <style=Item>wood</style> and <style=Item>plant fibers</style>
+          to the workbench beside Rose
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 2
@@ -105,7 +106,7 @@ MonoBehaviour:
     - rid: 4434710013077880929
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 2
@@ -113,7 +114,8 @@ MonoBehaviour:
     - rid: 4434710013077880930
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
-        Description: 'Craft a rope (hint: place 1 plant fiber in each slot)'
+        Description: 'Craft a <style=Item>rope</style> (hint: place 1 <style=Item>plant
+          fiber</style> in each slot)'
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -122,8 +124,9 @@ MonoBehaviour:
     - rid: 4434710013077880931
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
-        Description: 'Craft a simple axe (hint: place the axe head on top, the rope
-          in the middle, and the stick on the bottom)'
+        Description: 'Craft a <style=Item>simple axe</style> (hint: place the <style=Item>axe
+          head</style> on top, the <style=Item>rope</style> in the middle, and the
+          <style=Item>stick</style> on the bottom)'
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -140,7 +143,7 @@ MonoBehaviour:
     - rid: 4434710013077880934
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 4

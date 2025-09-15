@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes: []
   ID: MovementTutorial
   QuestName: First Steps
-  Description: It's getting late, I should head back to town together with Rose.
+  Description: It's getting late, I should head back to town together with <style=Rose>Rose</style>.
   AutoPinQuest: 1
   questObjectives:
   - rid: 4434709966018052277
@@ -51,7 +51,7 @@ MonoBehaviour:
     - rid: 4434709966018052277
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Catch up to Rose
+        Description: Catch up to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
@@ -59,7 +59,7 @@ MonoBehaviour:
     - rid: 4434709966018052278
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
@@ -67,7 +67,8 @@ MonoBehaviour:
     - rid: 4434709966018052279
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Jump <sprite name=Icon_Jump> up the ledge
+        Description: <style=TutorialHint>Jump</style> <sprite name=Icon_Jump> up
+          the ledge
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 1
@@ -75,7 +76,7 @@ MonoBehaviour:
     - rid: 4434709966018052280
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 1
@@ -83,7 +84,8 @@ MonoBehaviour:
     - rid: 4434709966018052281
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Jump <sprite name=Icon_Jump> across the gap
+        Description: <style=TutorialHint>Jump</style> <sprite name=Icon_Jump> across
+          the gap
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 2
@@ -91,7 +93,7 @@ MonoBehaviour:
     - rid: 4434709966018052282
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 2
@@ -99,7 +101,8 @@ MonoBehaviour:
     - rid: 4434709966018052283
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Jump <sprite name=Icon_Jump> again while midair to double jump
+        Description: <style=TutorialHint>Jump</style> <sprite name=Icon_Jump> again
+          while midair to double jump
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -107,7 +110,7 @@ MonoBehaviour:
     - rid: 4434709966018052284
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Catch up to Rose
+        Description: Catch up to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -115,7 +118,7 @@ MonoBehaviour:
     - rid: 4434709966018052286
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -123,8 +126,8 @@ MonoBehaviour:
     - rid: 4434709966018052287
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: After a double jump <sprite name=Icon_Jump>, dive <sprite name=Icon_Dive>
-          to clear the gap
+        Description: After a double <style=TutorialHint>jump</style> <sprite name=Icon_Jump>,
+          <style=TutorialHint>dive</style> <sprite name=Icon_Dive> to clear the gap
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 4
@@ -132,7 +135,7 @@ MonoBehaviour:
     - rid: 4434709966018052288
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 4
@@ -140,7 +143,7 @@ MonoBehaviour:
     - rid: 4434709966018052289
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Follow Rose across the islands
+        Description: Follow <style=Rose>Rose</style> across the islands
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 5
@@ -148,7 +151,7 @@ MonoBehaviour:
     - rid: 4434709966018052292
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 5
@@ -156,7 +159,8 @@ MonoBehaviour:
     - rid: 4434709966018052293
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: '[Optional] Jump <sprite name=Icon_Jump> on the Stink-Shroom'
+        Description: '[Optional] <style=TutorialHint>Jump</style> <sprite name=Icon_Jump>
+          on the <style=Enemy>Stink-Shroom</style>'
         StopAtThisObjective: 0
         StayCompleted: 0
         ObjectiveIDCollection: 6
@@ -164,7 +168,7 @@ MonoBehaviour:
     - rid: 4434709966018052295
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Make it past the Stink-Shroom
+        Description: Make it past the <style=Enemy>Stink-Shroom</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 6
@@ -172,7 +176,7 @@ MonoBehaviour:
     - rid: 4434709966018052296
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 6
@@ -180,7 +184,8 @@ MonoBehaviour:
     - rid: 4434709966018052297
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Hold dive <sprite name=Icon_Dive> to slide down the hill
+        Description: Hold <style=TutorialHint>dive</style> <sprite name=Icon_Dive>
+          to slide down the hill
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 7
@@ -188,7 +193,7 @@ MonoBehaviour:
     - rid: 4434709966018052301
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Meet Rose at the big tree
+        Description: Meet <style=Rose>Rose</style> at the big tree
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 7
@@ -196,7 +201,7 @@ MonoBehaviour:
     - rid: 4434709966018052306
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 7
