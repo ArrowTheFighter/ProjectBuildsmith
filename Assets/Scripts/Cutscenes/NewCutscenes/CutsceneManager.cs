@@ -35,7 +35,11 @@ public class CutsceneManager : MonoBehaviour
         CameraTransform.forward = cutsceneData.startPos.forward;
         cutsceneIsRunning = true;
         currentPoint = 0;
-        GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>().MovementControlledByAbility = true;
+        if (GameplayUtils.instance.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
+        {
+            characterMovement.MovementControlledByAbility = true;
+            characterMovement.rb.isKinematic = true;
+        }
         GameplayUtils.instance.HideUI();
         GoToNextPoint();
     }
@@ -65,8 +69,11 @@ public class CutsceneManager : MonoBehaviour
     {
         print("ending cutscene");
 
-        GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>().MovementControlledByAbility = false;
-
+        if (GameplayUtils.instance.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
+        {
+            characterMovement.MovementControlledByAbility = false;
+            characterMovement.rb.isKinematic = false;
+        }
         GameplayUtils.instance.ShowUI();
         cutsceneCam.gameObject.SetActive(false);
      }

@@ -137,16 +137,19 @@ MonoBehaviour:
   takeDamageSoundFXVolume: 1
   takeDamageSoundFXPitch: 1
   CanBeStompedByPlayer: 1
+  flag_id: 
+  is_true: 0
   animator: {fileID: 3865240802627499812}
   ChargingParticles: {fileID: 2946489480635704507}
   VisualsTransform: {fileID: 58188588520077123}
-  rotationSpeed: 0.1
+  rotationSpeed: 5
   MaxSpeed: 10
   randomMoveDistance: 8
   randomMoveVariance: 3
   groundIgnore:
     serializedVersion: 2
     m_Bits: 294
+  chargeAttackCooldown: 1.5
 --- !u!1 &5108313647834188227
 GameObject:
   m_ObjectHideFlags: 0

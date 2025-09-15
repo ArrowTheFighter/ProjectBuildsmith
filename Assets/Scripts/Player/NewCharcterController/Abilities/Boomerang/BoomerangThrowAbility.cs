@@ -188,6 +188,10 @@ public class BoomerangThrowAbility : PlayerAbility
         if (TargetEffect != null)
         {
             DestroyImmediate(TargetEffect);
+        }
+        if (boomerang != null)
+        {
+            Destroy(boomerang);
          }
     }
 

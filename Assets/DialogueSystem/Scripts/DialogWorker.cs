@@ -86,6 +86,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
+        if (StarterNode == null) return;
         if (interactCooldown > Time.time) return;
         if (hasMarker) EnableMarker(false);
         //List<TextEffectStatus> textEffectStatus = textEffect.QueryEffectStatusesByTag(TextEffectType.Global, TextEffectEntry.TriggerWhen.Manual, "scale_text_in");

@@ -540,8 +540,10 @@ public class InventoryManager : MonoBehaviour
                 //         break;
                 // }
             }
+            print("quest competed!");
             info.IsComplete = true;
             GameplayUtils.instance.ShowCustomNotif("Quest Complete!", 8);
+            RemovePinnedQuest(info.QuestData);
         }
     }
 
@@ -574,11 +576,25 @@ public class InventoryManager : MonoBehaviour
         PinQuestText.text = "Unpin Quest";
     }
 
+    void RemovePinnedQuest(QuestData questData)
+    {
+        foreach (PinnedQuestItem item in activedPinnedQuests)
+        {
+            if (item.storedQuestData == questData)
+            {
+                Destroy(item.gameObject);
+                activedPinnedQuests.Remove(item);
+                PinQuestText.text = "Pin Quest";
+                return;
+            }
+        }
+    }
+
     public void PinSelectedQuest()
     {
         if (selectedQuest == null) return;
         AddNewPinnedQuest(selectedQuest);
-     }
+    }
 
     /* #endregion */
 }
