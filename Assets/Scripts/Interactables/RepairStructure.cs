@@ -60,7 +60,7 @@ public class RepairStructure : MonoBehaviour, IInteractable
         Destroy(HologramStructure);
         FinishedStructure.SetActive(true);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(FinishedStructure.transform.DOScale(scaleInSize, 0.9f).SetEase(Ease.InOutExpo)).Append(FinishedStructure.transform.DOScale(scaleOutSize, 0.3f).SetEase(Ease.InOutExpo));
+        sequence.Append(FinishedStructure.transform.DOScale(scaleInSize, 0.9f).SetEase(Ease.OutExpo)).Append(FinishedStructure.transform.DOScale(scaleOutSize, 0.3f).SetEase(Ease.InOutExpo));
         gameObject.SetActive(false);
     }
 

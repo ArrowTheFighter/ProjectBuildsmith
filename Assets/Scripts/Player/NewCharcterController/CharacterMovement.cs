@@ -17,6 +17,9 @@ public class CharacterMovement : MonoBehaviour
     public float airDrag;
     float horizontalAirDrag = 5f;
 
+    public float coyoteTime = 0.2f;
+    float coyoteCheck;
+
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
@@ -119,14 +122,14 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        
+
         if (characterInput is NPCFollowTargetInput)
         {
             NPCFollowTargetInput nPCFollow = (NPCFollowTargetInput)characterInput;
             if (nPCFollow.IsWalking) currentMaxSpeed = maxSpeed * 0.5f;
             else currentMaxSpeed = maxSpeed;
-         }
-         
+        }
+
 
         // Ground check
         GroundCheck();
@@ -143,7 +146,7 @@ public class CharacterMovement : MonoBehaviour
             // handle drag
             if (grounded)
             {
-                
+
                 rb.linearDamping = groundDrag;
             }
             else
@@ -157,17 +160,18 @@ public class CharacterMovement : MonoBehaviour
             {
                 ApplyGravity();
             }
-         }
+        }
 
         if (OverrideAirDragAmount > 0)
         {
             ApplyAirDrag(OverrideAirDragAmount);
-         }
+        }
 
         foreach (PlayerAbility ability in playerAbilities.ToList())
         {
             ability.UpdateAbility();
         }
+        if (coyoteCheck > 0) coyoteCheck -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -255,11 +259,12 @@ public class CharacterMovement : MonoBehaviour
     void trackPlatformDelta(Vector3 delta)
     {
         platformDelta = delta / Time.fixedDeltaTime;
-     }
+    }
 
 
     void GroundCheck()
     {
+        bool wasGrounded = grounded;
         float distance = groundCheckDistance;
         if (rb.linearVelocity.y < -4) distance += 0.3f;
         grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask);
@@ -351,6 +356,10 @@ public class CharacterMovement : MonoBehaviour
         else
         {
             GravityDir = Vector3.down;
+        }
+        if (wasGrounded && !grounded && readyToJump)
+        {
+            coyoteCheck = coyoteTime;    
         }
         jumpOveride = false;
     }
@@ -546,14 +555,18 @@ public class CharacterMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (!jumpOveride)
+        if (coyoteCheck <= 0)
         {
-            if (!grounded) return;
-            if (OnSteepSlope()) return;
+            if (!jumpOveride)
+            {
+                if (!grounded) return;
+                if (OnSteepSlope()) return;
+            }
         }
         if (!readyToJump) return;
         if (MovementControlledByAbility) return;
         OnJump?.Invoke();
+        coyoteCheck = 0;
         readyToJump = false;
         GravityDir = Vector3.down;
         exitingSlope = true;
