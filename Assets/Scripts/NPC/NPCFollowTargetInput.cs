@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 {
+    public string NPCType;
     public Transform target;
     public bool isMoving;
     public bool CanNotTalkWhileMoving;

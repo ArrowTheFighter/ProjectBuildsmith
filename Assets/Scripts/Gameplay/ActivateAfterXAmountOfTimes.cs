@@ -19,4 +19,9 @@ public class ActivateAfterXAmountOfTimes : MonoBehaviour
             activated = true;
         }
     }
+
+    public void DecreaseAmount()
+    {
+        currentAmount--;
+     }
 }
