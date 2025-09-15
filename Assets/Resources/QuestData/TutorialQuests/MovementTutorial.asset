@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes: []
   ID: MovementTutorial
   QuestName: First Steps
-  Description: Head back to town with Rose
+  Description: It's getting late, I should head back to town together with Rose.
   AutoPinQuest: 1
   questObjectives:
   - rid: 4434709966018052277
@@ -99,7 +99,7 @@ MonoBehaviour:
     - rid: 4434709966018052283
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Jump <sprite name=Icon_Jump> while in the air to double jump
+        Description: Jump <sprite name=Icon_Jump> again while midair to double jump
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -123,8 +123,8 @@ MonoBehaviour:
     - rid: 4434709966018052287
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Dive <sprite name=Icon_Dive> after a double jump <sprite name=Icon_Jump>
-          to get across
+        Description: After a double jump <sprite name=Icon_Jump>, dive <sprite name=Icon_Dive>
+          to clear the gap
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 4
@@ -140,7 +140,7 @@ MonoBehaviour:
     - rid: 4434709966018052289
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Keep following Rose across the islands
+        Description: Follow Rose across the islands
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 5
@@ -164,7 +164,7 @@ MonoBehaviour:
     - rid: 4434709966018052295
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Get past the Stink-Shroom
+        Description: Make it past the Stink-Shroom
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 6
@@ -180,7 +180,7 @@ MonoBehaviour:
     - rid: 4434709966018052297
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Hold down dive <sprite name=Icon_Dive> to slide down the hill
+        Description: Hold dive <sprite name=Icon_Dive> to slide down the hill
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 7
@@ -188,7 +188,7 @@ MonoBehaviour:
     - rid: 4434709966018052301
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Meet up with Rose at the big tree
+        Description: Meet Rose at the big tree
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 7

@@ -23,8 +23,9 @@ MonoBehaviour:
     SerializationNodes: []
   ID: CraftingTutorial
   QuestName: Chop Chop
-  Description: An island got destroyed, so I need to get an axe from the old workshop
-    to cut down a tree to get across
+  Description: "A fallen island left a gap in the path back to town. I\u2019ll need
+    to look around the old workshop to find something to cut down the big tree and
+    make a bridge."
   AutoPinQuest: 1
   questObjectives:
   - rid: 4434710013077880833
@@ -45,7 +46,7 @@ MonoBehaviour:
     - rid: 4434710013077880833
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Head to the old workshop to look for old tools
+        Description: Head to the old workshop to search for toolsls
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
@@ -70,7 +71,7 @@ MonoBehaviour:
     - rid: 4434710013077880836
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Gather 5 wood
+        Description: Gather 5 pieces of wood
         StopAtThisObjective: 0
         StayCompleted: 1
         ObjectiveIDCollection: 1
@@ -79,7 +80,7 @@ MonoBehaviour:
     - rid: 4434710013077880837
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Gather 5 plant fiber
+        Description: Gather 5 plant fibers
         StopAtThisObjective: 1
         StayCompleted: 1
         ObjectiveIDCollection: 1
@@ -96,8 +97,7 @@ MonoBehaviour:
     - rid: 4434710013077880928
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Add the wood and plant fiber to the workbench blueprint next
-          to Rose
+        Description: Add the wood and plant fiber to the workbench beside Rose
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 2
@@ -113,8 +113,7 @@ MonoBehaviour:
     - rid: 4434710013077880930
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
-        Description: 'Craft 1 rope (hint: place 1 plant fiber in each slot of the
-          workbench)'
+        Description: 'Craft a rope (hint: place 1 plant fiber in each slot)'
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -123,8 +122,8 @@ MonoBehaviour:
     - rid: 4434710013077880931
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
-        Description: 'Craft 1 simple axe (hint: place the rusty axe head on top,
-          the rope in the middle, and the simple stick in the bottom of the workbench)'
+        Description: 'Craft a simple axe (hint: place the axe head on top, the rope
+          in the middle, and the stick on the bottom)'
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 3
@@ -133,7 +132,7 @@ MonoBehaviour:
     - rid: 4434710013077880932
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Use the newly crafted axe to chop down the big tree
+        Description: Use your new axe to chop down the big tree
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 4
