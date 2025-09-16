@@ -17,10 +17,10 @@ public class TreeChopBridge : MonoBehaviour, IDamagable
     public bool PlayerCanStomp { get; set; }
 
     int currentStage;
-    int currentHealth;
+    float currentHealth;
     bool finished;
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
         if (finished) return;
         if (attackTypes.Contains(AttackType.Chop))
@@ -57,13 +57,13 @@ public class TreeChopBridge : MonoBehaviour, IDamagable
 
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
         ExtraForce = 0;
         TakeDamage(amount, attackTypes, source);
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         TakeDamage(amount, attackTypes, source);
     }

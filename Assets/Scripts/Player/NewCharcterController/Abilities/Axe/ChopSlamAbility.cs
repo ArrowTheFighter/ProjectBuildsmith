@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChopSlamAbility : PlayerAbility
 {
-    public int DamageStrength = 3;
+    public float DamageStrength = 3;
     public AttackType[] attackTypes;
 
     public float upForce = 20;

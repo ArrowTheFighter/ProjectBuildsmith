@@ -22,7 +22,7 @@ public class CraftingProcessor : CraftingTableBase
 
     bool CheckingForRecipe = true;
 
-    public event Action<float> SliderUpdated;
+    //public event Action<float> SliderUpdated;
 
 
 

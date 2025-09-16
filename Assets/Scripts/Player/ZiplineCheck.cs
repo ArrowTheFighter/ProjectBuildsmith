@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.Splines;
-
+[Obsolete]
 public class ZiplineCheck : MonoBehaviour
 {
     [SerializeField] float check_radius = 1f;

@@ -6,17 +6,17 @@ public class BouncyPlatform : MonoBehaviour,IDamagable
 
     public bool PlayerCanStomp { get => true; set => PlayerCanStomp = true; }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
         return;
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
         ExtraForce = BounceHeight;
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         return;
     }

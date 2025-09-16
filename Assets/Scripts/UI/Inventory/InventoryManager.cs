@@ -436,8 +436,8 @@ public class InventoryManager : MonoBehaviour
                 // -- Stack has exactly the right amount to remove --
                 else if (inventorySlots[i].inventoryItemStack.Amount == remainingAmount)
                 {
-                    inventorySlots[i].inventorySlotComponent.RemoveItemFromSlot(false);
                     remainingAmount -= inventorySlots[i].inventoryItemStack.Amount;
+                    inventorySlots[i].inventorySlotComponent.RemoveItemFromSlot(false);
                 }
                 // -- The amount to remove is bigger then the stack --
                 else

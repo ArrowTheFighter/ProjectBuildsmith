@@ -10,10 +10,10 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     CharacterMovement characterMovement;
     [SerializeField] int MaxHealth;
-    [SerializeField] int Health;
+    [SerializeField] float Health;
     bool dying;
 
-    public Action<int> OnTakeDamage;
+    public Action<float> OnTakeDamage;
 
     [SerializeField] Image[] heartImages;
     [SerializeField] Transform heartImageHolder;
@@ -146,7 +146,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         heartImagesIsFadingOut = false;
     }
 
-    public void TakeDamage(int amount,AttackType[] attackTypes, GameObject source)
+    public void TakeDamage(float amount,AttackType[] attackTypes, GameObject source)
     {
         if (dying) return;
         if (source == GameplayUtils.instance.PlayerTransform.gameObject) return;
@@ -193,7 +193,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         if (dying) return;
         TakeKnockback(source, knockbackStrength);
@@ -317,7 +317,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
    
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
         ExtraForce = 0;
         return;

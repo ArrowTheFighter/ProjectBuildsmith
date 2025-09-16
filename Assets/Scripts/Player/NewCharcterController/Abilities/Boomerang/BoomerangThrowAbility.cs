@@ -5,7 +5,7 @@ public class BoomerangThrowAbility : PlayerAbility
 {
 
     bool IsThrowing;
-    public int damageStrength = 1;
+    public float damageStrength = 1;
     public AttackType[] attackTypes;
     GameObject boomerang;
     GameObject TargetEffect;

@@ -18,6 +18,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] GameObject[] UI_Canvases;
     [SerializeField] Slider Main_volume_slider;
     [SerializeField] public ItemPickupNotifcationScript itemPickupNotifcationScript;
+    [SerializeField] public ItemPickupNotifcationScript centerScreenNotifcationScript;
     [SerializeField] PlayerAudio playerAudio;
     [Header("Crafting stations")]
     [SerializeField] CanvasGroup CraftingTableUI;
@@ -43,6 +44,7 @@ public class GameplayUtils : MonoBehaviour
         }
         instance = this;
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
+        QualitySettings.vSyncCount = 1;
     }
 
     void Start()
@@ -425,6 +427,11 @@ public class GameplayUtils : MonoBehaviour
     {
         itemPickupNotifcationScript.ShowCustomText(custom_text, duration);
     }
+
+    public void ShowCustomNotifCenter(string custom_text,float duration = 4)
+    {
+        centerScreenNotifcationScript.ShowCustomText(custom_text, duration);
+     }
 
     public void PlayerDropItem(string item_id, int item_amount)
     {

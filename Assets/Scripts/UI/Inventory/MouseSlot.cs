@@ -1,14 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class MouseSlot : MonoBehaviour
 {
     RectTransform rectTransform;
     [SerializeField] Canvas canvas;
-    [SerializeField] float controllerIconOffset = 30;
+    //[SerializeField] float controllerIconOffset = 30;
     CanvasGroup canvasGroup;
     InventorySlotComponent inventorySlotComponent;
+
+    //Used this to debug what i was clicking
+    //public GraphicRaycaster graphicRaycaster;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -69,8 +75,10 @@ public class MouseSlot : MonoBehaviour
         // -- Drop item if clicking off the ui with an item stack --
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
+            print("left clicked");
             if (!inventorySlotComponent.inventorySlot.isEmpty)
             {
+                print(IsPointerOverUI());
                 if (!IsPointerOverUI())
                 {
                     inventorySlotComponent.RemoveItemFromSlot(true);

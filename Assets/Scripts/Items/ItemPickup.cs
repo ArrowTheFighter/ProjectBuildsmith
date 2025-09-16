@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class ItemPickup : MonoBehaviour
     float time_to_despawn;
     bool markedAsDestoryed;
     public LayerMask layersToIgnore;
+    public UnityEvent onPickedUp;
 
     void Awake()
     {
@@ -86,6 +88,7 @@ public class ItemPickup : MonoBehaviour
 
     void PickupComplete()
     {
+        onPickedUp?.Invoke();
         if (respawn_time <= 0)
         {
             markedAsDestoryed = true;

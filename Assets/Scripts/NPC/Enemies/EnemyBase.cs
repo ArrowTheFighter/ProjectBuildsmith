@@ -14,7 +14,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     public bool EnemyActive;
     [Header("Health")]
-    public int Health;
+    public float Health;
     public float extraBounceForce;
     public ParticleSystem onDamageParticles;
     public GameObject onDeathParticlesPrefab;
@@ -63,7 +63,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     }
 
-    public virtual void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
+    public virtual void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
         Health -= amount;
         if (onDamageParticles != null)
@@ -82,13 +82,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         }
     }
 
-    public virtual void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
+    public virtual void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
         ExtraForce = extraBounceForce;
         TakeDamage(amount, attackTypes, source);
     }
 
-    public virtual void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
+    public virtual void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         return;
     }

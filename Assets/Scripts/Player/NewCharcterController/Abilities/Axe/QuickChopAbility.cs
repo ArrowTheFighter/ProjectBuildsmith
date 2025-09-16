@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class QuickChopAbility : PlayerAbility
 {
-    bool BasicAttackPressed;
+    //bool BasicAttackPressed;
     bool IsChopping;
     float finishChopDelay;
-    public int damageStrength = 1;
+    public float damageStrength = 1;
     public AttackType[] attackTypes;
 
     public override void FixedUpdateAbility()
@@ -26,11 +26,11 @@ public class QuickChopAbility : PlayerAbility
                 }
             }
             
-            BasicAttackPressed = true;
+            //BasicAttackPressed = true;
         }
         else
         {
-            BasicAttackPressed = false;
+            //BasicAttackPressed = false;
         }
 
         if (Time.time > finishChopDelay) IsChopping = false;

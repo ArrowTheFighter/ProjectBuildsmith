@@ -13,7 +13,7 @@ public class CutsceneManager : MonoBehaviour
 
     CutsceneData currentData;
 
-    bool cutsceneIsRunning;
+    public bool cutsceneIsRunning;
     int currentPoint;
 
     void Awake()

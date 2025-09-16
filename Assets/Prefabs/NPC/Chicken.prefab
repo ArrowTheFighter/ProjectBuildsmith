@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 2376550218172654260}
   - component: {fileID: 3727427888905604643}
   - component: {fileID: 590573161937706336}
+  - component: {fileID: 5617393049266265604}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Untagged
@@ -147,6 +148,7 @@ MonoBehaviour:
   moveSpeed: 100
   groundDrag: 5
   airDrag: 3
+  coyoteTime: 0.2
   jumpForce: 20
   jumpCooldown: 0.1
   airMultiplier: 0.75
@@ -214,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcf0500b2a07641bc03e5a90ff09da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NPCType: 
   target: {fileID: 0}
   isMoving: 1
   CanNotTalkWhileMoving: 0
@@ -277,6 +280,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   safePos: {x: 0, y: 0, z: 0}
+  checkOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &590573161937706336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +300,20 @@ MonoBehaviour:
   FallTime: 3
   WorldBottom: 0
   CanReset: 1
+  alwaysUseCheckpoints: 1
+--- !u!114 &5617393049266265604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4327466647704093699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54aa6f8683af62649b5864eecb8b0acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseCheckpoints: 0
 --- !u!1 &4546151981772710427
 GameObject:
   m_ObjectHideFlags: 0

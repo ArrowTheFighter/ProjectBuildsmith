@@ -22,7 +22,7 @@ public class ActivatorCrystal : MonoBehaviour, IDamagable
         mat = GetComponent<MeshRenderer>().material;
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
         StartCoroutine(CooldownProcess());
     }
@@ -54,13 +54,13 @@ public class ActivatorCrystal : MonoBehaviour, IDamagable
 
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
         ExtraForce = 0;
         TakeDamage(amount, attackTypes, source);
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         TakeDamage(amount, attackTypes, source);
     }

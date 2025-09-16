@@ -33,6 +33,7 @@ public class RepairStructure : MonoBehaviour, IInteractable
             int current_item_amount = GameplayUtils.instance.get_item_holding_amount(item.item_id);
             if (current_item_amount < item.item_amount)
             {
+                GameplayUtils.instance.ShowCustomNotifCenter("Not enough resources");
                 return false;
             }
         }
@@ -42,6 +43,7 @@ public class RepairStructure : MonoBehaviour, IInteractable
 
         foreach (item_requirement item in itemsRequired)
         {
+            print($"removing {item.item_amount} {item.item_name} from the players inventory");
             GameplayUtils.instance.remove_items_from_inventory(item.item_id, item.item_amount);
         }
 

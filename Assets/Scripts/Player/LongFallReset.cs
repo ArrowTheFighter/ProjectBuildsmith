@@ -9,6 +9,7 @@ public class LongFallReset : MonoBehaviour
     float timeOffGround;
     CharacterMovement characterMovement;
     public bool CanReset = true;
+    public bool alwaysUseCheckpoints;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,17 +65,22 @@ public class LongFallReset : MonoBehaviour
 
     void ResetPosition()
     {
-        if (TryGetComponent(out PlayerSafeZone playerSafeZone))
+        if (alwaysUseCheckpoints && TryGetComponent(out PlayerCheckpointPosition playerCheckpointPosition))
         {
-            print("moving player to safe position");
+            playerCheckpointPosition.SetPlayerToCheckpointPosition();
+            timeOffGround = 0;
+        }
+        else if (TryGetComponent(out PlayerSafeZone playerSafeZone))
+        {
             transform.position = playerSafeZone.safePos;
             timeOffGround = 0;
 
-            characterMovement.rb.linearVelocity = Vector3.zero;
-            foreach (PlayerAbility ability in characterMovement.playerAbilities)
-            {
-                ability.ResetAbility();
-            }
+        }
+
+        characterMovement.rb.linearVelocity = Vector3.zero;
+        foreach (PlayerAbility ability in characterMovement.playerAbilities)
+        {
+            ability.ResetAbility();
         }
     }
 }

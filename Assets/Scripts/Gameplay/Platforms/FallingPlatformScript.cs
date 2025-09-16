@@ -63,6 +63,8 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         });
         yield return new WaitUntil(() => !isScaling);
         isFalling = false;
+        //TODO probably should change this when re doing moving platforms
+        OnPlatformMove?.Invoke(Vector3.zero);
     }
 
     void OnCollisionEnter(Collision collision)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BreakableProps : MonoBehaviour, IDamagable
 {
-    public int Health;
+    public float Health;
     public float ItemDropForce = 10;
     public float RespawnTime;
     public float ExtraBounceForce;
@@ -19,7 +19,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
 
     public bool PlayerCanStomp { get; set; }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
         if (!hasAttackType(attackTypes)) return;
         PlayParticle();
@@ -30,7 +30,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
         }
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
         ExtraForce = 0;
         if (!hasAttackType(attackTypes)) return;
@@ -98,7 +98,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
          }
     }
 
-    public void TakeDamage(int amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         //Does't need to do anything
     }

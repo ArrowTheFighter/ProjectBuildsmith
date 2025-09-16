@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class BoomerangAbilityData : AbilityData
 {
-    public int damage;
+    public float damage;
     public AttackType[] attackTypes;
 
     public override Type GetAbilityType()
