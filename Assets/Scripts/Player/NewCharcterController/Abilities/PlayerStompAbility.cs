@@ -34,6 +34,7 @@ public class PlayerStompAbility : PlayerAbility
                     {
                         damagable.TakeDamage(1, new AttackType[] { AttackType.Simple }, gameObject, out float extraForce);
                         {
+                            print("Bouncing player");
                             characterMovement.playerAnimationController.PlayerDoubleJumped();
                             Vector3 vel = characterMovement.rb.linearVelocity;
                             characterMovement.rb.linearVelocity = new Vector3(vel.x, 0, vel.z);

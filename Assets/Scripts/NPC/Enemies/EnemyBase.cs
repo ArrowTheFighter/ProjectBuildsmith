@@ -26,6 +26,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     public bool CanBeStompedByPlayer;
     public bool PlayerCanStomp { get { return CanBeStompedByPlayer; } set { CanBeStompedByPlayer = value; } }
+    public bool CanTakeDamage = true;
 
     //These are currently used for the tutorial quest for killing the mushroom, but they can probably be used for other quest objectives
     [SerializeField] public string flag_id;
@@ -65,6 +66,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     public virtual void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
+        if (!CanTakeDamage) return;
         Health -= amount;
         if (onDamageParticles != null)
         {
@@ -85,11 +87,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     public virtual void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
     {
         ExtraForce = extraBounceForce;
+        if (!CanTakeDamage) return;
         TakeDamage(amount, attackTypes, source);
     }
 
     public virtual void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
+        if (!CanTakeDamage) return;
         return;
     }
 

@@ -35,8 +35,9 @@ public class ScareNPCTargetSetter : MonoBehaviour
             }
 
 
-            Vector3 dirToMove = (transform.position - GameplayUtils.instance.PlayerTransform.position).normalized;
-            targetTransform.position = transform.position + dirToMove * 2;
+            Vector3 dirToMove = transform.position - GameplayUtils.instance.PlayerTransform.position;
+            dirToMove.y = 0;
+            targetTransform.position = transform.position + dirToMove.normalized * 2;
             timeAloneCooldown = Time.time + Random.Range(wonderCooldown - wonderCooldown * 0.2f, wonderCooldown + wonderCooldown * 0.2f);
             wonderPos = targetTransform.position;
             wonderTarget = wonderPos;

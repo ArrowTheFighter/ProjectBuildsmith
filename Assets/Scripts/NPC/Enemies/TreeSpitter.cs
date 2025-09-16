@@ -24,6 +24,7 @@ public class TreeSpitter : EnemyBase
     Vector3 projectileStartPos;
     Vector3 projectileControlPoint;
     float timeElapsed;
+    bool hidden;
 
     [Header("Delays")]
     public float shootDelay = 1;
@@ -201,11 +202,12 @@ public class TreeSpitter : EnemyBase
         currentSpawnPoint = availableSpots[UnityEngine.Random.Range(0, availableSpots.Count)];
         transform.position = currentSpawnPoint.position + Vector3.down * 2.5f;
         transform.DOMove(transform.position + Vector3.up * 2.5f, 0.35f).SetEase(Ease.InOutQuad);
+        CanTakeDamage = true;
     }
 
     void Hide()
     {
-        transform.DOMove(transform.position + Vector3.down * 2.5f, 0.35f).SetEase(Ease.InOutQuad);
+        transform.DOMove(transform.position + Vector3.down * 2.5f, 0.35f).SetEase(Ease.InOutQuad).OnComplete(() => { CanTakeDamage = false; });
     }
 
     void PlayerLost()

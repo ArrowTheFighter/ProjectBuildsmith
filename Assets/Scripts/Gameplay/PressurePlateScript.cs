@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public class PressurePlateScript : MonoBehaviour
 {
@@ -7,10 +8,39 @@ public class PressurePlateScript : MonoBehaviour
     public UnityEvent DeactivatedEvent;
     bool isActive;
     Collider col;
+
+    Tween PlateTween;
+    public Transform PlateVisual;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         col = GetComponent<Collider>();
+        ActivatedEvent.AddListener(MovePlateDown);
+        DeactivatedEvent.AddListener(MovePlatUp);
+    }
+
+    public void MovePlateDown()
+    {
+        if (PlateVisual != null)
+        {
+            if (PlateTween != null && PlateTween.IsPlaying())
+            {
+                PlateTween.Kill();
+            }
+            PlateTween = PlateVisual.DOLocalMoveY(-0.2f,0.5f).SetEase(Ease.OutQuad);
+        }
+    }
+
+    public void MovePlatUp()
+    {
+        if (PlateVisual != null)
+        {
+            if (PlateTween != null && PlateTween.IsPlaying())
+            {
+                PlateTween.Kill();
+            }
+            PlateTween = PlateVisual.DOLocalMoveY(0, 0.5f).SetEase(Ease.OutQuad);
+        }
     }
 
     void Activated()
