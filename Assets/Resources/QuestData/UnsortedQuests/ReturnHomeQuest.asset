@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: ReturnHomeQuest
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: ReturnHomeQuest
+  QuestName: Return Home
+  Description: "With <style=Rose>Rose</style>\u2019s help, I\u2019ve made it part
+    of the way back to town. I should continue along the path and meet her up ahead."
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 4434710103579951192
+  - rid: 4434710103579951193
+  references:
+    version: 2
+    RefIds:
+    - rid: 4434710103579951192
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Head back to town
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        flag_id: ReturnedToTownForReturnHomeQuest
+    - rid: 4434710103579951193
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: No Objective - Quest is a WIP
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 1
+        flag_id: 
