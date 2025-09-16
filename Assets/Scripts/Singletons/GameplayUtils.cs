@@ -55,6 +55,11 @@ public class GameplayUtils : MonoBehaviour
         AudioListener.volume = Main_volume_slider.value;
     }
 
+    public void SetVsync(bool value)
+    {
+        QualitySettings.vSyncCount = value ? 1 : 0;
+     }
+
     public bool OpenDialogMenu()
     {
         if (PauseMenuIsOpen) return false;
