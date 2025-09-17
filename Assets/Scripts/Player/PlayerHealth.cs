@@ -178,13 +178,13 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         OnTakeDamage?.Invoke(Health);
         PlayerParticlesManager.instance.PlayPlayerTakeHitParticles();
 
-        if (!GameSettings.IsScreenShakeDisabled())
+        if (!GameSettings.instance.IsScreenShakeDisabled())
         {
             //Debug.Log("Shake");
             impulseSource.GenerateImpulse();
         }         
 
-        if (!GameSettings.IsScreenFlashDisabled())
+        if (!GameSettings.instance.IsScreenFlashDisabled())
         {
             damageFlashImage.DOFade(damageFlashFadeAlpha, damageFlashFadeTime).SetLoops(2, LoopType.Yoyo);
         }

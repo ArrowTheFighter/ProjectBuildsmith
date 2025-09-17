@@ -1,3 +1,4 @@
+using EasyTextEffects.Editor.EditorDocumentation;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,9 +22,11 @@ public class CameraManager : MonoBehaviour
         playerInput = GameplayInput.instance.playerInput;
         playerInput.onControlsChanged += OnControlsChanged;
 
+        GameSettings.instance.OnCameraSensativityChanged += set_camera_sensitivity;
         //This gets set in GameSettings instead to save/load the value
         //set_camera_sensitivity(0.25f);
     }
+
 
     // Update is called once per frame
     void OnControlsChanged(PlayerInput input)
