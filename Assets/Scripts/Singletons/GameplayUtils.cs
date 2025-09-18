@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -34,6 +36,7 @@ public class GameplayUtils : MonoBehaviour
     public bool DialogIsOpen;
     public bool PauseMenuIsOpen;
     bool open_menu;
+    public bool CanPause;
     public RecipeDatabase RecipeDatabase;
     public Dictionary<string, int> ItemsCrafted = new Dictionary<string, int>();
     void Awake()
@@ -53,12 +56,38 @@ public class GameplayUtils : MonoBehaviour
         FlagManager.wipe_flag_list();
         //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
         AudioListener.volume = Main_volume_slider.value;
+        GameSettings.instance.OnVsyncChanged += SetVsync;
+        GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
+        GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
     }
 
     public void SetVsync(bool value)
     {
         QualitySettings.vSyncCount = value ? 1 : 0;
-     }
+    }
+
+    public void SetAntiAliasing(bool value)
+    {
+        var urpAsset = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
+        if (urpAsset != null)
+        {
+            urpAsset.msaaSampleCount = value ? 4 : 1;
+        }
+    }
+
+    public void SetRenderScale(float value)
+    {
+        var urpAsset = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
+        if (urpAsset != null)
+        {
+            urpAsset.renderScale = Mathf.Clamp(value,0.1f,1f);
+        }
+    }
+
+    public void SetCanPause(bool value)
+    {
+        CanPause = value;
+    }
 
     public bool OpenDialogMenu()
     {
@@ -258,6 +287,7 @@ public class GameplayUtils : MonoBehaviour
 
     public bool OpenPauseMenu()
     {
+        if (!CanPause) return false;
         if (DialogIsOpen) return false;
         PauseMenuIsOpen = true;
         PauseMenu.SetActive(true);
