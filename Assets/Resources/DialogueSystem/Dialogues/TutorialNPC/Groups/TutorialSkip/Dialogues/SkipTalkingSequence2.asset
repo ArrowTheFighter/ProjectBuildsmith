@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: SkipTutorial
+  m_Name: SkipTalkingSequence2
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: SkipTutorial
-  <Text>k__BackingField: I'll meet you up ahead, see you there!
+  <DialogueName>k__BackingField: SkipTalkingSequence2
+  <Text>k__BackingField: No problem, I'll meet you up ahead!
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 0}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 63f82dd98fa79cf459bb2a2cc72b2d80, type: 2}
   <DialogueType>k__BackingField: 0
-  <IsStartingDialogue>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
