@@ -11,6 +11,12 @@ public class PressurePlateScript : MonoBehaviour
 
     Tween PlateTween;
     public Transform PlateVisual;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip pressurePlateDownSoundFX;
+    [SerializeField] float pressurePlateDownSoundFXVolume = 1f;
+    [SerializeField] float pressurePlateDownSoundFXPitch = 1f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,6 +34,11 @@ public class PressurePlateScript : MonoBehaviour
                 PlateTween.Kill();
             }
             PlateTween = PlateVisual.DOLocalMoveY(-0.2f,0.5f).SetEase(Ease.OutQuad);
+        }
+
+        if (pressurePlateDownSoundFX != null)
+        {
+            SoundFXManager.instance.PlaySoundFXClip(pressurePlateDownSoundFX, transform, pressurePlateDownSoundFXVolume, pressurePlateDownSoundFXPitch);
         }
     }
 

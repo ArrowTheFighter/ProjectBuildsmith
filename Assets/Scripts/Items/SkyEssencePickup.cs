@@ -12,12 +12,23 @@ public class SkyEssencePickup : MonoBehaviour
     float speed;
     public UnityEvent onTouched;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip essencePickupSoundFX;
+    [SerializeField] float essencePickupSoundFXVolume = 1f;
+    [SerializeField] float essencePickupSoundFXPitch = 1f;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
             if (FlyTowardsEngine) return;
             touchedVFX.Play();
+
+            if (essencePickupSoundFX != null)
+            {
+                SoundFXManager.instance.PlaySoundFXClip(essencePickupSoundFX, transform, essencePickupSoundFXVolume, essencePickupSoundFXPitch);
+            }
+
             FlyTowardsEngine = true;
             if (GetComponent<FloatingItem>() != null)
             {
