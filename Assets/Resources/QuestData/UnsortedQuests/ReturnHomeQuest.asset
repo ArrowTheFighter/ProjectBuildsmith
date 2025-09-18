@@ -23,8 +23,8 @@ MonoBehaviour:
     SerializationNodes: []
   ID: ReturnHomeQuest
   QuestName: Return Home
-  Description: "With <style=Rose>Rose</style>\u2019s help, I\u2019ve made it part
-    of the way back to town. I should continue along the path and meet her up ahead."
+  Description: With <style=Rose>Rose</style>'s help, I've made it part of the way
+    back to town. I should continue along the path and meet her up ahead.
   AutoPinQuest: 1
   questObjectives:
   - rid: 4434710103579951192
@@ -37,7 +37,7 @@ MonoBehaviour:
       data:
         Description: Head back to town
         StopAtThisObjective: 1
-        StayCompleted: 1
+        StayCompleted: 0
         ObjectiveIDCollection: 0
         flag_id: ReturnedToTownForReturnHomeQuest
     - rid: 4434710103579951193
@@ -45,6 +45,6 @@ MonoBehaviour:
       data:
         Description: No Objective - Quest is a WIP
         StopAtThisObjective: 1
-        StayCompleted: 1
+        StayCompleted: 0
         ObjectiveIDCollection: 1
         flag_id: 
