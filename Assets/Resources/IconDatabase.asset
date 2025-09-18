@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2534b9adc6f336e43aa8c0cbfe6b5785, type: 3}
+  m_Name: IconDatabase
+  m_EditorClassIdentifier: 
+  icons:
+  - Icon_Name: Icon_Space
+    Action_Name: Action_Jump
+  - Icon_Name: Icon_Move
+    Action_Name: Action_Move
+  - Icon_Name: Icon_Shift
+    Action_Name: Action_Dive
+  - Icon_Name: Icon_ScrollUp
+    Action_Name: Action_NextHotbar
+  - Icon_Name: Icon_ScrollDown
+    Action_Name: Action_PreviousHotbar
+  - Icon_Name: Icon_LeftClick
+    Action_Name: Action_Attack
+  - Icon_Name: Icon_Tab
+    Action_Name: Action_Inventory

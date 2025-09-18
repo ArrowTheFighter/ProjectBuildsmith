@@ -1,11 +1,22 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class UIIconHandler : MonoBehaviour
 {
+    public static UIIconHandler instance;
+    public IconDatabase iconDatabase;
     public TextMeshProUGUI[] TextBoxes;
     public TMP_SpriteAsset KeyboardIcons;
     public TMP_SpriteAsset PS4Icons;
+
+    void Awake()
+    {
+        if (instance != this)
+            Destroy(instance);
+        instance = this;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,6 +41,16 @@ public class UIIconHandler : MonoBehaviour
         foreach (TextMeshProUGUI textMesh in TextBoxes)
         {
             textMesh.spriteAsset = set;
-         }
-     }
+        }
+    }
+
+    public string FormatText(string rawText)
+    {
+
+        foreach (var iconEntry in iconDatabase.icons)
+        {
+            rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Icon_Name}>");
+        }
+        return rawText;
+    }
 }
