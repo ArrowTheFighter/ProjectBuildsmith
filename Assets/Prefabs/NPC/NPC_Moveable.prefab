@@ -11196,7 +11196,7 @@ GameObject:
   - component: {fileID: -6623662390403149275}
   m_Layer: 7
   m_Name: NPC_Moveable
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11250,6 +11250,7 @@ MonoBehaviour:
   moveSpeed: 100
   groundDrag: 5
   airDrag: 3
+  coyoteTime: 0.2
   jumpForce: 20
   jumpCooldown: 0.1
   airMultiplier: 0.75
@@ -11294,6 +11295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bcf0500b2a07641bc03e5a90ff09da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NPCType: 
   target: {fileID: 0}
   isMoving: 0
   CanNotTalkWhileMoving: 0
@@ -11466,7 +11468,7 @@ MonoBehaviour:
   Localized_Table: NPC
   nPC_Events: []
   UseLocalization: 0
-  PROMPT: 
+  PROMPT: Talk
   item_Requirements: []
   NPCCanInteract: 1
   MarkerParticle: {fileID: 4321131716949761933}
@@ -11512,6 +11514,7 @@ MonoBehaviour:
   FallTime: 3
   WorldBottom: 0
   CanReset: 1
+  alwaysUseCheckpoints: 0
 --- !u!1 &5155165759434603823
 GameObject:
   m_ObjectHideFlags: 0
