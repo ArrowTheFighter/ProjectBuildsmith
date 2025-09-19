@@ -22,8 +22,9 @@ public class ChoiceButton : MonoBehaviour
 
     void Button_Pressed()
     {
+        print("button pressed");
         dialogWorker.GetAndShowNextDialog(dialogueChoiceData.NextDialogue);
-     }
+    }
 
     [Obsolete]
     void button_clicked()

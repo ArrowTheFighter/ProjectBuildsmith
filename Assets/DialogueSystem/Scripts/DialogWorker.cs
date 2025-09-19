@@ -87,7 +87,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
         if (StarterNode == null) return;
+        print("start node was not null");
         if (interactCooldown > Time.time) return;
+        print("Interact cooldown was fine");
         if (hasMarker) EnableMarker(false);
         //List<TextEffectStatus> textEffectStatus = textEffect.QueryEffectStatusesByTag(TextEffectType.Global, TextEffectEntry.TriggerWhen.Manual, "scale_text_in");
         if (DialogManager.instance.TextIsAnimating)
@@ -97,11 +99,14 @@ public class DialogWorker : MonoBehaviour, IInteractable
             DialogManager.instance.SetTextIsAnimating(false);
             return;
         }
-
         if (!GameplayUtils.instance.OpenDialogMenu()) return;
+        print("Dialog menu safe to open");
+        if(providedDialog != null)
+            print(providedDialog.name);
         bool nextDialogResult = GetNextDialog(providedDialog);
         if (nextDialogResult)
         {
+            print("got next dialog");
             ShowDialog();
             ResetTMPSubMeshes(DialogManager.instance.text_box);
             DialogManager.instance.text_box.ForceMeshUpdate();
@@ -110,8 +115,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
             print("Starting manual effects");
             textEffect.StartManualEffects();
             DialogManager.instance.SetTextIsAnimating(true);
+            interactCooldown = Time.time + 0.05f;
         }
-        interactCooldown = Time.time + 0.05f;
 
     }
 

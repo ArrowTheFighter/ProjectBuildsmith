@@ -11,6 +11,7 @@ public class TextFormater : MonoBehaviour
     {
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
         rawStoredText = textMeshProUGUI.text;
+        ReformatText();
     }
 
     public void SetText(string rawText)
