@@ -19,7 +19,7 @@ public class RegionNameUIText : MonoBehaviour
     private string PLAYER = "Player";
 
     //The string we set in editor for the region's name that will be displayed to the player
-    private string currentRegionString;
+    public string currentRegionString;
 
     [SerializeField] string localized_string_key;
 
@@ -43,7 +43,8 @@ public class RegionNameUIText : MonoBehaviour
                 //Checks to see if there is a change in the region text to not repeat the text on screen for a region
                 if (regionText.text != currentRegionString)
                 {
-                    queueUpText = true;
+                    currentRegionString = LocalizationManager.GetLocalizedString("Menu Lables", localized_string_key);
+                    queueUpText = true;               
                 } 
         }
     }

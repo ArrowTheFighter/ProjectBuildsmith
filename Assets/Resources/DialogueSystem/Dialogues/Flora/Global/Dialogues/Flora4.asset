@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: Flora4
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: Flora4
+  <Text>k__BackingField: Good choice, knowing your enemy makes all the difference.
+    What do you want to know about first?
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Stink-Shrooms
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 8b6118e9d8c035b45892b3d2cf41e9a1, type: 2}
+  - <Text>k__BackingField: Puffwings
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 13a9fd64eb4e7774ebe4bba1986a1d9f, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  CloseDialog: 0
