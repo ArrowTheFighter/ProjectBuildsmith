@@ -7,14 +7,15 @@ using UnityEngine.UI;
 public class PinnedQuestItem : MonoBehaviour
 {
     public TextMeshProUGUI QuestName;
-    public TextMeshProUGUI QuestObjectives;
+    public TextMeshProUGUI QuestObjectivesTextBox;
     public QuestData storedQuestData;
 
     public void SetQuestText(QuestData questData)
     {
         storedQuestData = questData;
         QuestName.text = questData.QuestName;
-        QuestObjectives.text = "";
+        string QuestText = "";
+        QuestObjectivesTextBox.text = "";
         // for (int i = 0; i < questData.questObjectives.Count; i++)
         // {
         //     QuestObjectives.text += QuestInfoBox.GetObjectiveText(questData.questObjectives[i]);
@@ -44,8 +45,8 @@ public class PinnedQuestItem : MonoBehaviour
         bool allQuestsInCollectionComplete = true;
         foreach (QuestObjective objective in questsToShow)
         {
-            QuestObjectives.text += QuestInfoBox.GetObjectiveText(objective);
-            QuestObjectives.text += "\n";
+            QuestText += QuestInfoBox.GetObjectiveText(objective);
+            QuestText += "\n";
 
             if (!objective.ObjectiveComplete()) allQuestsInCollectionComplete = false;
             if (objective.StopAtThisObjective && !allQuestsInCollectionComplete) break;
@@ -55,6 +56,8 @@ public class PinnedQuestItem : MonoBehaviour
                 break;
             }
         }
+
+        QuestObjectivesTextBox.GetComponent<TextFormater>().SetText(QuestText);
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
         StartCoroutine(ForceRebuildNextFrame());

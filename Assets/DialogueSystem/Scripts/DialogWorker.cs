@@ -351,13 +351,15 @@ public class DialogWorker : MonoBehaviour, IInteractable
             if (UseLocalization)
             {
                 string localizedText = LocalizationManager.GetLocalizedString(Localized_Table, dialogSO.LocalizedKey);
-                string formatedText = UIIconHandler.instance.FormatText(localizedText);
-                DialogManager.instance.text_box.text = formatedText;
+                //string formatedText = UIIconHandler.instance.FormatText(localizedText);
+                DialogManager.instance.DialogTextFormater.SetText(localizedText);
+                //DialogManager.instance.text_box.text = formatedText;
             }
             else
             {
-                string formatedText = UIIconHandler.instance.FormatText(dialogSO.Text);
-                DialogManager.instance.text_box.text = formatedText;
+                //string formatedText = UIIconHandler.instance.FormatText(dialogSO.Text);
+                DialogManager.instance.DialogTextFormater.SetText(dialogSO.Text);
+                //DialogManager.instance.text_box.text = formatedText;
             }
         }
     }

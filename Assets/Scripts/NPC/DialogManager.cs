@@ -11,6 +11,7 @@ public class DialogManager : MonoBehaviour
 {
     public static DialogManager instance;
     public TextMeshProUGUI text_box;
+    public TextFormater DialogTextFormater;
     [SerializeField] public GameObject DialogUI;
     public bool TextIsAnimating;
     public string text_box_text

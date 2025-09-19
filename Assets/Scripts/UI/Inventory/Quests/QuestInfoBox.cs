@@ -13,6 +13,7 @@ public class QuestInfoBox : MonoBehaviour
     {
         QuestNameTextBox.text = questData.QuestName;
         QuestDescriptionTextBox.text = questData.Description;
+        string QuestText = "";
         QuestObjectivesTextBox.text = "";
         List<QuestObjective> questsToShow = new List<QuestObjective>();
         for (int i = 0; i < questData.questObjectives.Count; i++)
@@ -34,8 +35,9 @@ public class QuestInfoBox : MonoBehaviour
         bool allQuestsInCollectionComplete = true;
         foreach (QuestObjective objective in questsToShow)
         {
-            QuestObjectivesTextBox.text += GetObjectiveText(objective);
-            QuestObjectivesTextBox.text += "\n";
+        
+            QuestText += GetObjectiveText(objective);
+            QuestText += "\n";
 
             if (!objective.ObjectiveComplete()) allQuestsInCollectionComplete = false;
             if (objective.StopAtThisObjective && !allQuestsInCollectionComplete) break;
@@ -45,6 +47,8 @@ public class QuestInfoBox : MonoBehaviour
                 break;
             }
         }
+        QuestObjectivesTextBox.GetComponent<TextFormater>().SetText(QuestText);
+
         LayoutRebuilder.ForceRebuildLayoutImmediate(QuestDescriptionTextBox.transform.parent.GetComponent<RectTransform>());
     }
 

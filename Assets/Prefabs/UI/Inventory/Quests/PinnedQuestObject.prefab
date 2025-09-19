@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1447345991750552103}
   - component: {fileID: 3772588469253909661}
   - component: {fileID: 3252502995552677900}
+  - component: {fileID: 3100198537242950686}
   m_Layer: 5
   m_Name: QuestName
   m_TagString: Untagged
@@ -84,7 +85,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 0ce80282211d04644a31c79590fc980a, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -136,6 +137,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3100198537242950686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319522915243408642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3d92d0db76d3242a6edb488e368206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1414051160889136931
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +160,7 @@ GameObject:
   - component: {fileID: 5161342465199981192}
   - component: {fileID: 2617686762887827483}
   - component: {fileID: 2479095373441397981}
+  - component: {fileID: 452973475726526883}
   m_Layer: 5
   m_Name: QuestObjectives
   m_TagString: Untagged
@@ -272,6 +286,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &452973475726526883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414051160889136931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3d92d0db76d3242a6edb488e368206, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1884313863054834743
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   QuestName: {fileID: 3252502995552677900}
-  QuestObjectives: {fileID: 2479095373441397981}
+  QuestObjectivesTextBox: {fileID: 2479095373441397981}
   storedQuestData: {fileID: 0}
 --- !u!114 &1894872818408717083
 MonoBehaviour:

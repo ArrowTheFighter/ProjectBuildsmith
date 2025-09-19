@@ -34,7 +34,9 @@ public class QuestDataEditor : Editor
         EditorGUILayout.LabelField("Quest Info", EditorStyles.boldLabel);
         questData.ID = EditorGUILayout.TextField("ID", questData.ID);
         questData.QuestName = EditorGUILayout.TextField("Name", questData.QuestName);
-        questData.Description = EditorGUILayout.TextField("Description", questData.Description);
+        //questData.Description = EditorGUILayout.TextField("Description", questData.Description);
+        EditorGUILayout.LabelField("Description");
+        questData.Description = EditorGUILayout.TextArea(questData.Description, GUILayout.MinHeight(40));
         questData.AutoPinQuest = EditorGUILayout.Toggle("Auto Pin Quest", questData.AutoPinQuest);
 
         GUILayout.Space(10);
@@ -106,7 +108,14 @@ public class QuestDataEditor : Editor
             object value = field.GetValue(obj);
 
             if (field.FieldType == typeof(string))
-                field.SetValue(obj, EditorGUILayout.TextField(field.Name, (string)value));
+            {
+                string strValue = (string)value ?? string.Empty;
+                GUIStyle textAreaStyle = EditorStyles.textArea;
+                float minHeight = textAreaStyle.CalcHeight(new GUIContent(strValue), EditorGUIUtility.currentViewWidth - 46f);
+                EditorGUILayout.LabelField(ObjectNames.NicifyVariableName(field.Name));
+                string newValue = EditorGUILayout.TextArea(strValue, textAreaStyle, GUILayout.MinHeight(minHeight));
+                field.SetValue(obj, newValue);
+            }
             else if (field.FieldType == typeof(int))
                 field.SetValue(obj, EditorGUILayout.IntField(field.Name, (int)value));
             else if (field.FieldType == typeof(bool))
