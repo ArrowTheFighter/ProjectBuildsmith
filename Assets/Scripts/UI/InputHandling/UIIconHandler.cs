@@ -10,6 +10,9 @@ public class UIIconHandler : MonoBehaviour
     public TMP_SpriteAsset KeyboardIcons;
     public TMP_SpriteAsset PS4Icons;
 
+    public Action InputDeviceChanged;
+    string currentControlScheme = "Keyboard&Mouse";
+
     void Awake()
     {
         if (instance != this)
@@ -25,15 +28,17 @@ public class UIIconHandler : MonoBehaviour
 
     void UpdateTextBoxesIcons(string scheme)
     {
-        switch (scheme)
-        {
-            case "Keyboard&Mouse":
-                SetTextBoxesToUseIconSet(KeyboardIcons);
-                break;
-            case "Gamepad":
-                SetTextBoxesToUseIconSet(PS4Icons);
-                break;
-        }
+        currentControlScheme = scheme;
+        InputDeviceChanged?.Invoke();
+        // switch (scheme)
+        // {
+        //     case "Keyboard&Mouse":
+        //         SetTextBoxesToUseIconSet(KeyboardIcons);
+        //         break;
+        //     case "Gamepad":
+        //         SetTextBoxesToUseIconSet(PS4Icons);
+        //         break;
+        // }
     }
 
     void SetTextBoxesToUseIconSet(TMP_SpriteAsset set)
@@ -46,11 +51,25 @@ public class UIIconHandler : MonoBehaviour
 
     public string FormatText(string rawText)
     {
-
-        foreach (var iconEntry in iconDatabase.icons)
+        switch (currentControlScheme)
         {
-            rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Icon_Name}>");
+            case "Keyboard&Mouse":
+                foreach (var iconEntry in iconDatabase.icons)
+                {
+                    rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Icon_Name}>");
+                }
+                break;
+            case "Gamepad":
+                foreach (var iconEntry in iconDatabase.icons)
+                {
+                    rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Playstation_Icon_Name}>");
+                }
+                break;
         }
+        // foreach (var iconEntry in iconDatabase.icons)
+        // {
+        //     rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Icon_Name}>");
+        // }
         return rawText;
     }
 }

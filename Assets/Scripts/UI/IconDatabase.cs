@@ -6,8 +6,9 @@ public class IconDatabase : ScriptableObject
     [System.Serializable]
     public class IconEntry
     {
-        public string Icon_Name;
         public string Action_Name;
+        public string Icon_Name;
+        public string Playstation_Icon_Name;
     }
 
     public IconEntry[] icons;
