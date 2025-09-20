@@ -71,6 +71,13 @@ public class GameSettings : MonoBehaviour
         SetUIValues();
     }
 
+    public void ResetSettingsToDefault()
+    {
+        settingsContainer = new SettingsContainer();
+        SetInitalSettings();
+        SetUIValues();
+    }
+
     void SetUIValues()
     {
         //Accessibilitiy settings

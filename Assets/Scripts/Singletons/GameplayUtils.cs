@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -47,11 +48,12 @@ public class GameplayUtils : MonoBehaviour
         }
         instance = this;
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
-        QualitySettings.vSyncCount = 1;
+        StartCoroutine(InitalFade());
     }
 
     void Start()
     {
+        Invoke("InitalFade", 0.5f);
         // -- Reset Flags --
         FlagManager.wipe_flag_list();
         //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
@@ -59,6 +61,15 @@ public class GameplayUtils : MonoBehaviour
         GameSettings.instance.OnVsyncChanged += SetVsync;
         GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
         GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
+    }
+
+    IEnumerator InitalFade()
+    {
+        yield return null;
+        FadeUIToBlack fadeUIToBlack = GetComponent<FadeUIToBlack>();
+        fadeUIToBlack.SetToBlack();
+        yield return new WaitForSecondsRealtime(0.5f);
+        fadeUIToBlack.Fade_From_Black();
     }
 
     public void SetVsync(bool value)
@@ -341,7 +352,8 @@ public class GameplayUtils : MonoBehaviour
 
     public void MoveToMainMenu()
     {
-        SceneManager.LoadScene(0);
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
 

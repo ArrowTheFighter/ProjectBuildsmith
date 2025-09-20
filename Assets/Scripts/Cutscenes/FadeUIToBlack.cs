@@ -16,4 +16,9 @@ public class FadeUIToBlack : MonoBehaviour
     {
         blackImageGroup.DOFade(0, fade_duration).SetUpdate(true);
     }
+
+    public void SetToBlack()
+    {
+        blackImageGroup.alpha = 1;
+    }
 }

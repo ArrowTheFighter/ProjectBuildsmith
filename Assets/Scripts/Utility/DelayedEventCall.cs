@@ -14,7 +14,7 @@ public class DelayedEventCall : MonoBehaviour
 
     IEnumerator DelayCall()
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         unityEvent?.Invoke();
     }
 }
