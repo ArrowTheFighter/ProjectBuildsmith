@@ -4,7 +4,6 @@ using UnityEngine;
 using DS.Data;
 using EasyTextEffects;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {

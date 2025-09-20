@@ -40,6 +40,10 @@ public class GameplayUtils : MonoBehaviour
     public bool CanPause;
     public RecipeDatabase RecipeDatabase;
     public Dictionary<string, int> ItemsCrafted = new Dictionary<string, int>();
+    [Header("DemoEndScreen")]
+    public GameObject DemoEndScreenUI;
+    public GameObject DemoEndScreenDefaultButton;
+
     void Awake()
     {
         if (instance != this)
@@ -110,7 +114,7 @@ public class GameplayUtils : MonoBehaviour
 
     public bool CloseDialogMenu()
     {
-        if (PauseMenuIsOpen) return false;
+        //if (PauseMenuIsOpen) return false;
         DialogIsOpen = false;
         CloseMenu();
         return true;
@@ -294,6 +298,33 @@ public class GameplayUtils : MonoBehaviour
     public void set_can_use_dialog(bool can_use)
     {
         can_use_dialog = can_use;
+    }
+
+    public void OpenDemoEndScreen()
+    {
+        PauseMenuIsOpen = true;
+        DemoEndScreenUI.SetActive(true);
+        OpenMenu();
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = DemoEndScreenDefaultButton;
+        UIInputHandler.instance.OpenedMenu();
+
+        Invoke("OpenDemoEndScreenDelay", 0.1f);
+    }
+
+    void OpenDemoEndScreenDelay()
+    {
+        OpenMenu();
+        Time.timeScale = 0;
+    }
+
+    public void CloseDemoEndScreen()
+    {
+        PauseMenuIsOpen = false;
+        CloseMenu();
+        DemoEndScreenUI.SetActive(false);
+        Time.timeScale = 1;
+        UIInputHandler.instance.ClosedMenu();
     }
 
     public bool OpenPauseMenu()
