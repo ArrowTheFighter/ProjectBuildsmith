@@ -15,6 +15,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] public Transform PlayerTransform;
     [SerializeField] MouseLock mouseLock_script;
     [SerializeField] CinemachineInputAxisController cameraInputComponent;
+    [SerializeField] public CinemachineBrain cinemachineBrain;
     //[SerializeField] public PlayerMovement playerMovement_script;
     [SerializeField] public InventoryManager inventoryManager;
     [SerializeField] GameObject PauseMenu;
