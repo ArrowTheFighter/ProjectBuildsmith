@@ -8,8 +8,8 @@ public class QuestInfoButton : MonoBehaviour
     public QuestData questData;
     public TextMeshProUGUI buttonName;
     public bool HasViewed;
-    
-    
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +23,12 @@ public class QuestInfoButton : MonoBehaviour
         {
             buttonName.text = questData.QuestName;
             HasViewed = true;
-         }
-     }
+        }
+    }
+
+    public void SetComplete()
+    {
+        HasViewed = true;
+        buttonName.text = $"<font-weight=700>[x]</font-weight> {questData.QuestName}";
+    }
 }

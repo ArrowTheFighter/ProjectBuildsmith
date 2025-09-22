@@ -496,14 +496,14 @@ public class InventoryManager : MonoBehaviour
                 foreach (QuestObjective questObjective in data.questObjectives)
                 {
                     questObjective.isComplete = false;
-                 }
+                }
 
                 activeQuests.Add(questInfo);
 
                 if (data.AutoPinQuest)
                 {
                     AddNewPinnedQuest(data);
-                 }
+                }
 
                 GameplayUtils.instance.ShowCustomNotif($"Quest Added {data.QuestName}", 6);
             }
@@ -551,6 +551,13 @@ public class InventoryManager : MonoBehaviour
                 info.IsComplete = true;
                 GameplayUtils.instance.ShowCustomNotif("Quest Complete!", 8);
                 RemovePinnedQuest(info.QuestData);
+                for (int i = 0; i < QuestItemsParent.transform.childCount; i++)
+                {
+                    if (QuestItemsParent.transform.GetChild(i).TryGetComponent(out QuestInfoButton questInfoButton))
+                    {
+                        questInfoButton.SetComplete();
+                    }
+                }
             }
         }
     }
