@@ -45,11 +45,13 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public GameObject NPCCamera;
     GameObject frozenCam;
     public bool TurnTowardsPlayer;
+    Vector3 startingForward;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        startingForward = transform.forward;
         StarterNode = (DSDialogueSO)DialogRetriever.GetStarterNode(StartDialogGraphName);
         //currentDialogSO = DialogRetriever.GetDialogDataByName(StartDialogGraphName, startDialogName);
         //currentDialogSO = DialogRetriever.GetNextDialogSO(StartDialogGraphName,StarterNode);
@@ -86,27 +88,39 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     Vector3 playerPos = GameplayUtils.instance.PlayerTransform.position;
                     playerPos.y = transform.position.y;
                     Vector3 dirToPlayer = playerPos - transform.position;
-                    characterMovement.ManualTurn(dirToPlayer.normalized, 0.25f);    
-                }    
+                    characterMovement.ManualTurn(dirToPlayer.normalized, 0.25f);
+                }
             }
         }
-        else if (isActive && !active && NPCCamera != null)
+        else if (isActive && !active)
         {
-
-            if (frozenCam != null) Destroy(frozenCam);
-            frozenCam = Instantiate(NPCCamera);
-            frozenCam.AddComponent<CinemachineCamera>();
-            frozenCam.transform.position = NPCCamera.transform.position;
-            frozenCam.transform.rotation = NPCCamera.transform.rotation;
-            NPCCamera.SetActive(false);
-
-            if (GameplayUtils.instance.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
+            if (NPCCamera != null)
             {
-                cinemachineBrainEvents.BlendCreatedEvent.AddListener(setCameraBlendInstant);
+                if (frozenCam != null) Destroy(frozenCam);
+                frozenCam = Instantiate(NPCCamera);
+                //frozenCam.AddComponent<CinemachineCamera>();
+                frozenCam.transform.position = NPCCamera.transform.position;
+                frozenCam.transform.rotation = NPCCamera.transform.rotation;
+                NPCCamera.SetActive(false);
+
+                if (GameplayUtils.instance.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
+                {
+                    cinemachineBrainEvents.BlendCreatedEvent.AddListener(setCameraBlendInstant);
+                }
+            }
+            
+
+            if (TurnTowardsPlayer)
+            {
+                if (TryGetComponent(out CharacterMovement characterMovement))
+                {
+                    characterMovement.ManualTurn(startingForward, 0.25f);
+                }
             }
         }
         isActive = active;
     }
+
 
     public void setCameraBlend(CinemachineCore.BlendEventParams value)
     {

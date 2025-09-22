@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class UIIconHandler : MonoBehaviour
 {
@@ -51,18 +52,31 @@ public class UIIconHandler : MonoBehaviour
 
     public string FormatText(string rawText)
     {
+
         switch (currentControlScheme)
         {
             case "Keyboard&Mouse":
                 foreach (var iconEntry in iconDatabase.icons)
                 {
-                    rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Icon_Name}>");
+                    //rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Icon_Name}>");
+                    rawText = Regex.Replace(
+                        rawText,
+                        $@"<icon={Regex.Escape(iconEntry.Action_Name)}>",  // pattern
+                        $"<sprite name={iconEntry.Icon_Name}>",            // replacement
+                        RegexOptions.IgnoreCase                           // ignore case
+                    );
                 }
                 break;
             case "Gamepad":
                 foreach (var iconEntry in iconDatabase.icons)
                 {
-                    rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Playstation_Icon_Name}>");
+                    //rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Playstation_Icon_Name}>");
+                    rawText = Regex.Replace(
+                        rawText,
+                        $@"<icon={Regex.Escape(iconEntry.Action_Name)}>",  // pattern
+                        $"<sprite name={iconEntry.Playstation_Icon_Name}>",            // replacement
+                        RegexOptions.IgnoreCase                           // ignore case
+                    );
                 }
                 break;
         }
