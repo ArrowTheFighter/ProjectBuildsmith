@@ -34,18 +34,27 @@ public class TimeService {
         isDayTime.Value = IsDayTime();
         currentHour.Value = currentTime.Hour;
     }
+
+    public void SetTime(float time)
+    {
+        time = Mathf.Repeat(time, 24f);
+
+        currentTime = currentTime.Date + TimeSpan.FromHours(time);
+        currentHour.Value = currentTime.Hour;
+    }
     
-    public float CalculateSunAngle() {
+    public float CalculateSunAngle()
+    {
         bool isDay = IsDayTime();
         float startDegree = isDay ? 0 : 180;
         TimeSpan start = isDay ? sunriseTime : sunsetTime;
         TimeSpan end = isDay ? sunsetTime : sunriseTime;
-        
+
         TimeSpan totalTime = CalculateDifference(start, end);
         TimeSpan elapsedTime = CalculateDifference(start, currentTime.TimeOfDay);
 
         double percentage = elapsedTime.TotalMinutes / totalTime.TotalMinutes;
-        return Mathf.Lerp(startDegree, startDegree + 180, (float) percentage);
+        return Mathf.Lerp(startDegree, startDegree + 180, (float)percentage);
     }
 
     /*public float CalculateMoonAngle()

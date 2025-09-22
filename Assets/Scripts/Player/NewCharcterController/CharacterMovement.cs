@@ -87,6 +87,8 @@ public class CharacterMovement : MonoBehaviour
     public Action OnDashStop;
     public Action OnBasicAttack;
 
+    public Action<Vector3> OnFinishedTurning;
+
     IMoveingPlatform moveingPlatform;
     public Vector3 platformDelta;
 

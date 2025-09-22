@@ -517,9 +517,14 @@ public class InventoryManager : MonoBehaviour
         foreach (QuestInfo info in activeQuests)
         {
             if (info.IsComplete) continue;
+            bool questComplete = true;
             for (int i = 0; i < info.QuestData.questObjectives.Count; i++)
             {
-                if (!info.QuestData.questObjectives[i].ObjectiveComplete()) return;
+                if (!info.QuestData.questObjectives[i].ObjectiveComplete())
+                {
+                    questComplete = false;
+                    break;
+                } 
                 // switch (info.QuestData.questObjectives[i])
                 // {
                 //     case ObjectiveCollectItems objectiveCollect:
@@ -540,10 +545,13 @@ public class InventoryManager : MonoBehaviour
                 //         break;
                 // }
             }
-            print("quest competed!");
-            info.IsComplete = true;
-            GameplayUtils.instance.ShowCustomNotif("Quest Complete!", 8);
-            RemovePinnedQuest(info.QuestData);
+            if (questComplete)
+            {
+                print("quest competed!");
+                info.IsComplete = true;
+                GameplayUtils.instance.ShowCustomNotif("Quest Complete!", 8);
+                RemovePinnedQuest(info.QuestData);
+            }
         }
     }
 

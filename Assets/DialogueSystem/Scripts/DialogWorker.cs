@@ -45,13 +45,11 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public GameObject NPCCamera;
     GameObject frozenCam;
     public bool TurnTowardsPlayer;
-    Vector3 startingForward;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        startingForward = transform.forward;
         StarterNode = (DSDialogueSO)DialogRetriever.GetStarterNode(StartDialogGraphName);
         //currentDialogSO = DialogRetriever.GetDialogDataByName(StartDialogGraphName, startDialogName);
         //currentDialogSO = DialogRetriever.GetNextDialogSO(StartDialogGraphName,StarterNode);
@@ -114,7 +112,10 @@ public class DialogWorker : MonoBehaviour, IInteractable
             {
                 if (TryGetComponent(out CharacterMovement characterMovement))
                 {
-                    characterMovement.ManualTurn(startingForward, 0.25f);
+                    if (TryGetComponent(out NPCFollowTargetInput nPCFollowTargetInput))
+                    {
+                        characterMovement.ManualTurn(nPCFollowTargetInput.forwardDir, 0.25f);
+                    }
                 }
             }
         }

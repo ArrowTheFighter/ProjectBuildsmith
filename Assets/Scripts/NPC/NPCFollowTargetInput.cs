@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
@@ -22,11 +23,19 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     public float emptySpaceDownDistance = 3;
     public LayerMask wallCheckLayersIgnore;
 
+    [HideInInspector]
+    public Vector3 forwardDir;
+
     bool canJump = true;
     bool checkingForTriggers = true;
 
     public event Action OnJump;
     public event Action OnDive;
+
+    void Start()
+    {
+        forwardDir = transform.forward;
+    } 
 
     public bool GetDashInput()
     {
@@ -125,6 +134,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
             {
                 if (TryGetComponent(out CharacterMovement characterMovement))
                 {
+                    forwardDir = -transform.forward;
                     characterMovement.TurnAround();
                 }
             }
