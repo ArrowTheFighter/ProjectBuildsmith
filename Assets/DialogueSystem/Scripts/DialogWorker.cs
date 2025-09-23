@@ -45,6 +45,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public GameObject NPCCamera;
     GameObject frozenCam;
     public bool TurnTowardsPlayer;
+    public bool TurnBackToOrigin;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -64,6 +65,11 @@ public class DialogWorker : MonoBehaviour, IInteractable
         if (!isActive) SetIsActive(true);
         ActiveAndInteract();
         return true;
+    }
+
+    public void SetCanInteract(bool value)
+    {
+        NPCCanInteract = value;
     }
 
     void SetIsActive(bool active)
@@ -108,7 +114,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
             }
             
 
-            if (TurnTowardsPlayer)
+            if (TurnTowardsPlayer && TurnBackToOrigin)
             {
                 if (TryGetComponent(out CharacterMovement characterMovement))
                 {

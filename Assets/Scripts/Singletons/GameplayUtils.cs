@@ -7,6 +7,7 @@ using System;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class GameplayUtils : MonoBehaviour
     public bool PauseMenuIsOpen;
     bool open_menu;
     public bool CanPause;
+    bool UI_Is_Hidden;
     public RecipeDatabase RecipeDatabase;
     public Dictionary<string, int> ItemsCrafted = new Dictionary<string, int>();
     [Header("DemoEndScreen")]
@@ -66,6 +68,8 @@ public class GameplayUtils : MonoBehaviour
         GameSettings.instance.OnVsyncChanged += SetVsync;
         GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
         GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
+
+        GameplayInput.instance.playerInput.actions["HideUI"].performed += (context) => { ToggleUI(); };
     }
 
     IEnumerator InitalFade()
@@ -81,6 +85,20 @@ public class GameplayUtils : MonoBehaviour
     {
         QualitySettings.vSyncCount = value ? 1 : 0;
     }
+
+    public void ToggleUI()
+    {
+        if (UI_Is_Hidden)
+        {
+            ShowUI();
+        }
+        else
+        {
+            HideUI();
+        }
+        UI_Is_Hidden = !UI_Is_Hidden;
+    }
+
 
     public void SetAntiAliasing(bool value)
     {
