@@ -47,6 +47,13 @@ public class GameplayUtils : MonoBehaviour
     public GameObject DemoEndScreenUI;
     public GameObject DemoEndScreenDefaultButton;
 
+    [Header("CollectAllGemsScreen")]
+    public GameObject CollectAllGemsScreenUI;
+    public GameObject CollectAllGemsScreenButton;
+
+    [Header("MainMenuDefault")]
+    public GameObject MainMenuDemoScreenButton;
+
     void Awake()
     {
         if (instance != this)
@@ -70,8 +77,15 @@ public class GameplayUtils : MonoBehaviour
         GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
 
         GameplayInput.instance.playerInput.actions["HideUI"].performed += (context) => { ToggleUI(); };
-    }
 
+        inventoryManager.OnInventoryUpdated += gemScreenCheck;
+        if (MainMenuDemoScreenButton != null)
+        {
+            UIInputHandler.instance.ClosedMenu();
+            UIInputHandler.instance.defaultButton = MainMenuDemoScreenButton;
+            UIInputHandler.instance.OpenedMenu();
+        }
+    }
     IEnumerator InitalFade()
     {
         yield return null;
@@ -79,6 +93,18 @@ public class GameplayUtils : MonoBehaviour
         fadeUIToBlack.SetToBlack();
         yield return new WaitForSecondsRealtime(0.5f);
         fadeUIToBlack.Fade_From_Black();
+    }
+
+    void gemScreenCheck()
+    {
+        if (get_item_holding_amount("gem") >= 20)
+        {
+            CollectAllGemsScreenUI.SetActive(true);
+            OpenMenu();
+            UIInputHandler.instance.ClosedMenu();
+            UIInputHandler.instance.defaultButton = CollectAllGemsScreenButton;
+            UIInputHandler.instance.OpenedMenu();
+        }
     }
 
     public void SetVsync(bool value)

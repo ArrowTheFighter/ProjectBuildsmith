@@ -24,6 +24,7 @@ public class PauseMenu : MonoBehaviour
     {
         MainScreen.SetActive(false);
         SettingsScreen.SetActive(true);
+        GetComponent<SettingsMenuManager>().OpenControlsMenu();
         UIInputHandler.instance.defaultButton = SettingsBackButton.gameObject;
         UIInputHandler.instance.ClosedMenu();
         UIInputHandler.instance.OpenedMenu();
