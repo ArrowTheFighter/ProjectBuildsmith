@@ -100,20 +100,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 4|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+      Data: 4|DSCloseDialogSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
-      Data: 5aaa8c2a-b2a9-4975-852c-d609bca3d781
+      Data: 9121e080-14a4-4863-bbab-0cc327990446
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: DialogueName
+      Data: CloseDialog
     - Name: <Text>k__BackingField
       Entry: 1
-      Data: Ugh, my father won't let me come hunting with him, even tho I've more
-        then proved my skills.
+      Data: Dialogue text.
     - Name: <LocalizedKey>k__BackingField
-      Entry: 1
-      Data: LOCAL_DIALOG_KEY
+      Entry: 6
+      Data: 
     - Name: <Choices>k__BackingField
       Entry: 7
       Data: 5|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor]],
@@ -126,16 +125,16 @@ MonoBehaviour:
       Data: 6|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
-      Data: Next Dialogue
+      Data: Output
     - Name: LocalizeKey
-      Entry: 1
-      Data: LOCAL_CHOICE_KEY
+      Entry: 6
+      Data: 
     - Name: OutputID
       Entry: 6
       Data: 
     - Name: <NodeID>k__BackingField
       Entry: 1
-      Data: 9121e080-14a4-4863-bbab-0cc327990446
+      Data: 6bc94a74-65dd-45fb-9073-cb7ebe91a210
     - Name: 
       Entry: 8
       Data: 
@@ -150,16 +149,16 @@ MonoBehaviour:
       Data: 
     - Name: <DialogueType>k__BackingField
       Entry: 3
-      Data: 0
+      Data: 4
     - Name: <Position>k__BackingField
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 299
+      Data: 819
     - Name: 
       Entry: 4
-      Data: 430
+      Data: 418
     - Name: 
       Entry: 8
       Data: 
@@ -208,10 +207,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1123
+      Data: 1120
     - Name: 
       Entry: 4
-      Data: 454
+      Data: 455
     - Name: 
       Entry: 8
       Data: 
@@ -223,19 +222,20 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|DSCloseDialogSaveData, Assembly-CSharp-Editor
+      Data: 9|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
-      Data: 9121e080-14a4-4863-bbab-0cc327990446
+      Data: 5aaa8c2a-b2a9-4975-852c-d609bca3d781
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: CloseDialog
+      Data: DialogueName
     - Name: <Text>k__BackingField
       Entry: 1
-      Data: Dialogue text.
+      Data: Ugh... my father won't let me come hunting with him! Even though I've
+        more than proved my skills. It's no fair!
     - Name: <LocalizedKey>k__BackingField
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
     - Name: <Choices>k__BackingField
       Entry: 7
       Data: 10|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
@@ -248,16 +248,16 @@ MonoBehaviour:
       Data: 11|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
-      Data: Output
+      Data: Next Dialogue
     - Name: LocalizeKey
-      Entry: 6
-      Data: 
+      Entry: 1
+      Data: LOCAL_CHOICE_KEY
     - Name: OutputID
       Entry: 6
       Data: 
     - Name: <NodeID>k__BackingField
       Entry: 1
-      Data: 6bc94a74-65dd-45fb-9073-cb7ebe91a210
+      Data: 9121e080-14a4-4863-bbab-0cc327990446
     - Name: 
       Entry: 8
       Data: 
@@ -272,16 +272,16 @@ MonoBehaviour:
       Data: 
     - Name: <DialogueType>k__BackingField
       Entry: 3
-      Data: 4
+      Data: 0
     - Name: <Position>k__BackingField
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 821
+      Data: 297
     - Name: 
       Entry: 4
-      Data: 430
+      Data: 418
     - Name: 
       Entry: 8
       Data: 
@@ -302,8 +302,8 @@ MonoBehaviour:
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
   - Start Dialog
-  - DialogueName
-  - Return To Start
   - CloseDialog
+  - Return To Start
+  - DialogueName
   <OldGroupedNodeNames>k__BackingField:
     list: []
