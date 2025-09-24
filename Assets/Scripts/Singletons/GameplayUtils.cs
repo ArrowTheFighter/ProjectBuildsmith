@@ -38,6 +38,7 @@ public class GameplayUtils : MonoBehaviour
     public bool can_use_dialog = true;
     public bool DialogIsOpen;
     public bool PauseMenuIsOpen;
+    float pauseMenuCooldown;
     bool open_menu;
     public bool CanPause;
     bool UI_Is_Hidden;
@@ -61,8 +62,19 @@ public class GameplayUtils : MonoBehaviour
             Destroy(instance);
         }
         instance = this;
+        Reset();
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
         StartCoroutine(InitalFade());
+    }
+
+    void Reset()
+    {
+        can_use_dialog = true;
+        DialogIsOpen = false;
+        PauseMenuIsOpen = false;
+        open_menu = false;
+        CanPause = true;
+        UI_Is_Hidden = false;
     }
 
     void Start()
@@ -384,6 +396,7 @@ public class GameplayUtils : MonoBehaviour
 
 
 
+        pauseMenuCooldown = Time.realtimeSinceStartup + 0.1f;
         return true;
     }
 
@@ -394,11 +407,14 @@ public class GameplayUtils : MonoBehaviour
         CloseMenu();
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
+        pauseMenuCooldown = Time.realtimeSinceStartup + 0.1f;
 
     }
 
     public void Toggle_Pause_Menu()
     {
+        print($"Toggeling pause menu - {open_menu}");
+        if (Time.realtimeSinceStartup < pauseMenuCooldown) return;
         if (DialogIsOpen) return;
         if (open_menu)
         {
@@ -428,6 +444,10 @@ public class GameplayUtils : MonoBehaviour
 
     public void MoveToMainMenu()
     {
+        CanPause = true;
+        PauseMenuIsOpen = false;
+        CloseMenu();
+
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }

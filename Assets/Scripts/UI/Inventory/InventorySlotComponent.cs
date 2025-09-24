@@ -54,7 +54,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
     void ControllerMainPress()
     {
-        if (EventSystem.current.currentSelectedGameObject == gameObject)
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject == gameObject)
         {
             SlotMainPress();
         }
@@ -62,7 +62,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
     void ControllerSecondaryPress()
     {
-        if (EventSystem.current.currentSelectedGameObject == gameObject)
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject == gameObject)
         {
             SlotSecondaryPress();
         }
