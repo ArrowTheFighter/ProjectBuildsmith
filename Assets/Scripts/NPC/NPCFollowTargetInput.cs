@@ -35,7 +35,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     void Start()
     {
         forwardDir = transform.forward;
-    } 
+    }
 
     public bool GetDashInput()
     {
@@ -95,7 +95,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     public void SetCheckingForTriggers(bool set)
     {
         checkingForTriggers = set;
-     }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -148,7 +148,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
         }
     }
 
-    void OnTriggerExit(Collider other) 
+    void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent(out NPCTriggers trigger))
         {
@@ -178,5 +178,10 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                 dialogWorker.NPCCanInteract = !isMoving;
             }
         }
+    }
+
+    public void SetTargetTransform(Transform newTarget)
+    {
+        target = newTarget;    
     }
 }

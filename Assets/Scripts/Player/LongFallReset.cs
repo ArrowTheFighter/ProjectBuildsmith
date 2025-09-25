@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LongFallReset : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class LongFallReset : MonoBehaviour
     CharacterMovement characterMovement;
     public bool CanReset = true;
     public bool alwaysUseCheckpoints;
+
+    public UnityEvent onResetEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -81,6 +84,10 @@ public class LongFallReset : MonoBehaviour
         foreach (PlayerAbility ability in characterMovement.playerAbilities)
         {
             ability.ResetAbility();
+        }
+        onResetEvent?.Invoke();
+        {
+            
         }
     }
 }

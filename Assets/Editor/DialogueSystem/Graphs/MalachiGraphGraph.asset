@@ -27,19 +27,20 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 25
     - Name: 
       Entry: 7
       Data: 1|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
-      Data: 09e627e9-ab7e-4771-ad11-4ab83f15951c
+      Data: 401a3a0b-e7ea-46fe-b1e2-44286f2b9c27
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: Start Dialog
+      Data: DialogueName3
     - Name: <Text>k__BackingField
       Entry: 1
-      Data: Dialogue text.
+      Data: Can you lead me back home? we'll have to take this weird bridge and go
+        slowly.
     - Name: <LocalizedKey>k__BackingField
       Entry: 1
       Data: LOCAL_DIALOG_KEY
@@ -55,16 +56,16 @@ MonoBehaviour:
       Data: 3|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
-      Data: Output
+      Data: Next Dialogue
     - Name: LocalizeKey
       Entry: 1
-      Data: 
+      Data: LOCAL_CHOICE_KEY
     - Name: OutputID
       Entry: 6
       Data: 
     - Name: <NodeID>k__BackingField
       Entry: 1
-      Data: 1a689b21-5d9c-4c9b-a8d4-dab87b6c6a14
+      Data: adfb71a1-f82e-4d50-94c8-06e92be47a1e
     - Name: 
       Entry: 8
       Data: 
@@ -79,16 +80,16 @@ MonoBehaviour:
       Data: 
     - Name: <DialogueType>k__BackingField
       Entry: 3
-      Data: 9
+      Data: 0
     - Name: <Position>k__BackingField
       Entry: 7
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 501
+      Data: 1319
     - Name: 
       Entry: 4
-      Data: 469
+      Data: 454
     - Name: 
       Entry: 8
       Data: 
@@ -135,7 +136,7 @@ MonoBehaviour:
       Data: 
     - Name: <NodeID>k__BackingField
       Entry: 1
-      Data: d45fc998-e8ff-4d08-b7a6-614bb851365c
+      Data: 401a3a0b-e7ea-46fe-b1e2-44286f2b9c27
     - Name: 
       Entry: 8
       Data: 
@@ -156,7 +157,7 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 750
+      Data: 753
     - Name: 
       Entry: 4
       Data: 454
@@ -171,13 +172,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 7|DSCloseDialogSaveData, Assembly-CSharp-Editor
+      Data: 7|DSSetFlagSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
-      Data: 89f3657f-90ae-4de7-b3e3-5135525cc0d1
+      Data: adfb71a1-f82e-4d50-94c8-06e92be47a1e
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: CloseDialog
+      Data: SetFlag
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Dialogue text.
@@ -196,6 +197,194 @@ MonoBehaviour:
       Data: 9|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
+      Data: output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 3d994086-10e6-4d05-b684-ce2bd03425d4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 6
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1853
+    - Name: 
+      Entry: 4
+      Data: 454
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: MalachiInitalTalk
+    - Name: is_true
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 10|DSRequireFlagSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: d4227efe-225d-41d0-a9b4-64ad821d3257
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: FlagCheck
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 12|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is true
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 13|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is false
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsFalse
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 1a689b21-5d9c-4c9b-a8d4-dab87b6c6a14
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 5
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 379
+    - Name: 
+      Entry: 4
+      Data: 454
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: MalachiInitalTalk
+    - Name: is_true
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 14|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 09e627e9-ab7e-4771-ad11-4ab83f15951c
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: Start Dialog
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 4
+    - Name: 
+      Entry: 7
+      Data: 16|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 1
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: ad335b23-5595-4192-b85c-fabfc8cdb57f
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
       Data: Output
     - Name: LocalizeKey
       Entry: 6
@@ -205,7 +394,113 @@ MonoBehaviour:
       Data: 
     - Name: <NodeID>k__BackingField
       Entry: 1
-      Data: 9d465c40-7b11-480e-8515-5a55c7d11109
+      Data: d4227efe-225d-41d0-a9b4-64ad821d3257
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 18|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 7434c29b-c88f-45c1-b13b-8cff7f184d76
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 19|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 222ca1b5-36ab-4fbf-bfcd-f483d8f4b1b8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 9
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: -243
+    - Name: 
+      Entry: 4
+      Data: 509
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 20|DSCloseDialogSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 6be934af-e5d4-49c8-91e0-2e04fab2dc1f
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: CloseDialog
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 21|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 22|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 65a2fafa-f3f6-456b-a14e-9ea982799e6d
     - Name: 
       Entry: 8
       Data: 
@@ -226,10 +521,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1805
+      Data: 2548
     - Name: 
       Entry: 4
-      Data: 453
+      Data: 254
     - Name: 
       Entry: 8
       Data: 
@@ -241,10 +536,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 10|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+      Data: 23|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
-      Data: 9d465c40-7b11-480e-8515-5a55c7d11109
+      Data: 65a2fafa-f3f6-456b-a14e-9ea982799e6d
     - Name: <Name>k__BackingField
       Entry: 1
       Data: Return To Start
@@ -256,7 +551,7 @@ MonoBehaviour:
       Data: LOCAL_DIALOG_KEY
     - Name: <Choices>k__BackingField
       Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+      Data: 24|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
         Assembly-CSharp-Editor]], mscorlib
     - Name: 
       Entry: 12
@@ -278,10 +573,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 2109
+      Data: 2833
     - Name: 
       Entry: 4
-      Data: 489
+      Data: 290
     - Name: 
       Entry: 8
       Data: 
@@ -293,7 +588,321 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 12|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+      Data: 25|DSRequireFlagSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: ad335b23-5595-4192-b85c-fabfc8cdb57f
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: MalachiFell
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 26|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 27|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is true
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 875fadbb-4a5d-46c2-9f17-782b30800f68
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 28|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is false
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsFalse
+    - Name: <NodeID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 5
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 132
+    - Name: 
+      Entry: 4
+      Data: 71
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: MalachiFell
+    - Name: is_true
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 29|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 875fadbb-4a5d-46c2-9f17-782b30800f68
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: DialogueName6
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: OMG, That was scary. Good thing those sky engines saved me. Anyways lets
+        get going again.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 30|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 31|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Next Dialogue
+    - Name: LocalizeKey
+      Entry: 1
+      Data: LOCAL_CHOICE_KEY
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: ce115223-23c0-4234-9491-9cc793bf62c0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 482
+    - Name: 
+      Entry: 4
+      Data: 71
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 32|DSSetFlagSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: ce115223-23c0-4234-9491-9cc793bf62c0
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: SetFlag2
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 33|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 34|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 3d994086-10e6-4d05-b684-ce2bd03425d4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 6
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1040
+    - Name: 
+      Entry: 4
+      Data: 84
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: MalachiFell
+    - Name: is_true
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 35|DSRunEventSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 3d994086-10e6-4d05-b684-ce2bd03425d4
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: RunEvent
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 36|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 37|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 6be934af-e5d4-49c8-91e0-2e04fab2dc1f
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 7
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2171
+    - Name: 
+      Entry: 4
+      Data: 254
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: event_id
+      Entry: 1
+      Data: StartMoving
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 38|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
       Data: d45fc998-e8ff-4d08-b7a6-614bb851365c
@@ -309,14 +918,14 @@ MonoBehaviour:
       Data: LOCAL_DIALOG_KEY
     - Name: <Choices>k__BackingField
       Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+      Data: 39|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
         Assembly-CSharp-Editor]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 14|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+      Data: 40|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Next Dialogue
@@ -349,10 +958,920 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1268
+      Data: -132
     - Name: 
       Entry: 4
-      Data: 454
+      Data: -762
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 41|DSCloseDialogSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 89f3657f-90ae-4de7-b3e3-5135525cc0d1
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: CloseDialog
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 42|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 43|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 9d465c40-7b11-480e-8515-5a55c7d11109
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 4
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 405
+    - Name: 
+      Entry: 4
+      Data: -763
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 44|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 9d465c40-7b11-480e-8515-5a55c7d11109
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: Return To Start
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 45|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 10
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 709
+    - Name: 
+      Entry: 4
+      Data: -727
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 46|DSCloseDialogSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 4acdfd42-5f97-418c-bb7e-2b740be4f65e
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: CloseDialog
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 47|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 48|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 1e9c1e19-3ae7-4fa7-9d64-f9cc0317715d
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 4
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 403
+    - Name: 
+      Entry: 4
+      Data: 1656
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 49|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 222ca1b5-36ab-4fbf-bfcd-f483d8f4b1b8
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: DialogueName4
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Long time no see lad.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 50|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 51|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Next Dialogue
+    - Name: LocalizeKey
+      Entry: 1
+      Data: LOCAL_CHOICE_KEY
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 4acdfd42-5f97-418c-bb7e-2b740be4f65e
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 68
+    - Name: 
+      Entry: 4
+      Data: 1656
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 52|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 1e9c1e19-3ae7-4fa7-9d64-f9cc0317715d
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: Return To Start
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 53|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 10
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 652
+    - Name: 
+      Entry: 4
+      Data: 1692
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 54|DSRequireFlagSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 7434c29b-c88f-45c1-b13b-8cff7f184d76
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: FlagCheck4
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 55|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 56|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is true
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 57|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is false
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsFalse
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 03a75793-3f81-492e-8bd9-8e457ef19b5e
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 5
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 227
+    - Name: 
+      Entry: 4
+      Data: 868
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: MalachiReturnedHomeAnd TalkedWith
+    - Name: is_true
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 58|DSRequireFlagSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 03a75793-3f81-492e-8bd9-8e457ef19b5e
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: FlagCheck2
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 59|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 60|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is true
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 003514d8-0ac7-4dcd-a80e-cbadc31b531a
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 61|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Flag is false
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsFalse
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 4ccc8369-443d-40d6-8742-9a7a8c4a5878
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 5
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 658
+    - Name: 
+      Entry: 4
+      Data: 868
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: MalachiReturnedHome
+    - Name: is_true
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 62|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 4ccc8369-443d-40d6-8742-9a7a8c4a5878
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: DialogueName5
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Let's head across the bridge and get back home!
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 63|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 64|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Next Dialogue
+    - Name: LocalizeKey
+      Entry: 1
+      Data: LOCAL_CHOICE_KEY
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: d54d1afb-e2cc-4ae9-b2d6-b48c1eb9d1c1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1031
+    - Name: 
+      Entry: 4
+      Data: 1121
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 65|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 003514d8-0ac7-4dcd-a80e-cbadc31b531a
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: DialogueName7
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Yes! We made it back!
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 66|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 67|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Next Dialogue
+    - Name: LocalizeKey
+      Entry: 1
+      Data: LOCAL_CHOICE_KEY
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: d01317d5-6658-462b-9d35-1b7c52a0c3f5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1031
+    - Name: 
+      Entry: 4
+      Data: 820
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 68|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: d01317d5-6658-462b-9d35-1b7c52a0c3f5
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: DialogueName8
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Thank you so much lad.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 69|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 70|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Next Dialogue
+    - Name: LocalizeKey
+      Entry: 1
+      Data: LOCAL_CHOICE_KEY
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: cb5c6f8b-a108-43dd-98e3-93f2e04323f1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1408
+    - Name: 
+      Entry: 4
+      Data: 820
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 71|DSSetFlagSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: cb5c6f8b-a108-43dd-98e3-93f2e04323f1
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: SetFlag3
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 72|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 73|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: d54d1afb-e2cc-4ae9-b2d6-b48c1eb9d1c1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 6
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 1763
+    - Name: 
+      Entry: 4
+      Data: 830
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: MalachiReturnedHomeAnd TalkedWith
+    - Name: is_true
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 74|DSCloseDialogSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: d54d1afb-e2cc-4ae9-b2d6-b48c1eb9d1c1
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: CloseDialog
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 75|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 76|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 6a428611-23c4-430b-81fc-78f16b36e877
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 4
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2233
+    - Name: 
+      Entry: 4
+      Data: 1121
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 77|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 6a428611-23c4-430b-81fc-78f16b36e877
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: Return To Start
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 78|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 10
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2532
+    - Name: 
+      Entry: 4
+      Data: 1157
     - Name: 
       Entry: 8
       Data: 
@@ -372,10 +1891,30 @@ MonoBehaviour:
   <Groups>k__BackingField: []
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - Start Dialog
+  - DialogueName3
   - DialogueName
+  - SetFlag
+  - FlagCheck
+  - Start Dialog
   - CloseDialog
   - Return To Start
+  - MalachiFell
+  - DialogueName6
+  - SetFlag2
+  - RunEvent
   - DialogueName2
+  - CloseDialog
+  - Return To Start
+  - CloseDialog
+  - DialogueName4
+  - Return To Start
+  - FlagCheck4
+  - FlagCheck2
+  - DialogueName5
+  - DialogueName7
+  - DialogueName8
+  - SetFlag3
+  - CloseDialog
+  - Return To Start
   <OldGroupedNodeNames>k__BackingField:
     list: []
