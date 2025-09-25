@@ -1,11 +1,13 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class ToolCraftingTable : CraftingTableBase
 {
     bool CheckingForRecipe = true;
+    public UnityEvent OnItemCraftedEvent;
     void Start()
     {
         foreach (InventorySlotComponent slotComponent in craftingTableSlots)
@@ -82,6 +84,7 @@ public class ToolCraftingTable : CraftingTableBase
         CheckingForRecipe = true;
         GameplayUtils.instance.AddItemCraftedAmount(inventoryItemStack.ID, inventoryItemStack.Amount);
         InventoryUpdated();
+        OnItemCraftedEvent?.Invoke();
         print("item was crafted");
     }
 }
