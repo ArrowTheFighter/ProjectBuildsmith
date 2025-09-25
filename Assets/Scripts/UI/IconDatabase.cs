@@ -9,6 +9,8 @@ public class IconDatabase : ScriptableObject
         public string Action_Name;
         public string Icon_Name;
         public string Playstation_Icon_Name;
+        public string Xbox_Icon_Name;
+        public string Switch_Icon_Name;
     }
 
     public IconEntry[] icons;

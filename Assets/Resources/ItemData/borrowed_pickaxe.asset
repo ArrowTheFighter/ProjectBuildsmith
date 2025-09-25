@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fc3100e344dd24099341c8c4cfbe76, type: 3}
+  m_Name: borrowed_pickaxe
+  m_EditorClassIdentifier: 
+  item_id: borrowed_pickaxe
+  item_name: Borrowed Pickaxe
+  MaxStackSize: 1
+  item_pickup_object: {fileID: 7622291875105182048, guid: 5d7383aa2f92359498c4c1079e7f630e, type: 3}
+  holdingItem: {fileID: 8041731572835079284, guid: 235f73c6c91e2a343bc1c18e3d33be58, type: 3}
+  PositionOffset: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 180, z: 0}
+  item_ui_image: {fileID: 21300000, guid: 7b9dd0b3594e2fc49a5802db04abb13d, type: 3}
+  abilityConfigs:
+  - rid: 579739595174838362
+  references:
+    version: 2
+    RefIds:
+    - rid: 579739595174838362
+      type: {class: QuickChopAbilityData, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 0.5
+        attackTypes: 0000000003000000

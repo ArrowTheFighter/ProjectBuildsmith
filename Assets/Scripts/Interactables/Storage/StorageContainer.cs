@@ -9,8 +9,9 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
     public string PROMPT;
     public string INTERACTION_PROMPT => PROMPT;
 
-    public item_requirement[] item_requirements;
-    public item_requirement[] required_items => item_requirements;
+    public bool IsLocked;
+    public item_requirement[] required_keys;
+    public item_requirement[] required_items => required_keys;
 
     public bool CanUse = true;
     public bool CanInteract { get => CanUse; set { CanUse = value; } }
@@ -25,9 +26,22 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
     public bool ContainerIsEmpty = true;
 
 
+
     public bool Interact(Interactor interactor)
     {
         if (!CanUse) return false;
+        if (IsLocked && required_keys.Length > 0)
+        {
+            foreach (item_requirement item in required_keys)
+            {
+                int current_item_amount = GameplayUtils.instance.get_item_holding_amount(item.item_id);
+                if (current_item_amount < item.item_amount)
+                {
+                    GameplayUtils.instance.ShowCustomNotifCenter("Incorrect Key");
+                    return false;
+                }
+            }
+        }
         GameplayUtils.instance.OpenInventoryUI(inventroyType);
         OnOpened?.Invoke();
         return true;

@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 
 public class InteractionPromptUI : MonoBehaviour
@@ -53,16 +55,29 @@ public class InteractionPromptUI : MonoBehaviour
         {
             for (int i = 0; i < item_requirement_parent.childCount; i++)
             {
-                GameObject item_requiremenjt_ui_object = item_requirement_parent.GetChild(i).gameObject;
+                GameObject item_requirement_ui_object = item_requirement_parent.GetChild(i).gameObject;
                 if (i < required_items.Length)
                 {
 
-                    item_requiremenjt_ui_object.SetActive(true);
-                    item_requiremenjt_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = "<font-weight=500>" + item_Requirements[i].item_name + " x" + item_Requirements[i].item_amount;
+                    item_requirement_ui_object.SetActive(true);
+                    item_requirement_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = "<font-weight=500>x" + item_Requirements[i].item_amount;
+                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(item_Requirements[i].item_id);
+                    Image iconImage = null;
+                    for (int o = 0; o < item_requirement_ui_object.transform.childCount; o++)
+                    {
+                        if (item_requirement_ui_object.transform.GetChild(o).GetComponent<Image>() != null)
+                        {
+                            iconImage = item_requirement_ui_object.transform.GetChild(o).GetComponent<Image>();
+                        }
+                    }
+                    if (iconImage != null)
+                    {
+                        iconImage.sprite = itemData.item_ui_image;
+                    }
                 }
                 else
                 {
-                    item_requiremenjt_ui_object.SetActive(false);
+                    item_requirement_ui_object.SetActive(false);
                 }
             }
          }
