@@ -73,7 +73,6 @@ public class GameplayUtils : MonoBehaviour
         DialogIsOpen = false;
         PauseMenuIsOpen = false;
         open_menu = false;
-        CanPause = true;
         UI_Is_Hidden = false;
     }
 
@@ -413,10 +412,10 @@ public class GameplayUtils : MonoBehaviour
 
     public void Toggle_Pause_Menu()
     {
-        print($"Toggeling pause menu - {open_menu}");
+
         if (Time.realtimeSinceStartup < pauseMenuCooldown) return;
         if (DialogIsOpen) return;
-        if (open_menu)
+        if (open_menu && CanPause)
         {
             CloseAllCraftingMenus();
             inventoryManager.CloseInventory();
