@@ -184,6 +184,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "consoleUI",
+                    "type": "Button",
+                    "id": "ec4adad3-6f0b-43cc-ad21-80586a535d1d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -662,17 +671,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a0dfba00-1711-4d08-8921-26393313ebe9",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Inventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "49864ace-4963-417a-8e07-77b490d4536f",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
@@ -813,6 +811,17 @@
                     "action": "HideUI",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82c7bfba-a5b4-4323-a1e9-b47b25088d83",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "consoleUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -941,6 +950,15 @@
                     "name": "CloseQuests",
                     "type": "Button",
                     "id": "0ff7acba-9e9d-489f-8616-2e16b5132203",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "console",
+                    "type": "Button",
+                    "id": "0cd336bb-9a60-48d5-a035-76f85137e321",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1539,6 +1557,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CloseQuests",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "63b839fc-1830-4a59-93a9-b1b7126dd08f",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "console",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

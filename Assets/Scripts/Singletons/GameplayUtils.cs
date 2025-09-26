@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System.Collections;
 using UnityEngine.InputSystem;
+using CI.PowerConsole;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -65,6 +66,52 @@ public class GameplayUtils : MonoBehaviour
         Reset();
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
         StartCoroutine(InitalFade());
+        PowerConsole.Initialise();
+
+        PowerConsole.CommandEntered += CommandCheck;
+        //PowerConsole.OpenCloseHotkeys = new List<KeyCode> { KeyCode.LeftControl,KeyCode.BackQuote};
+
+        GameplayInput.instance.playerInput.actions["console"].performed += (context) => { ToggleConsole(); };
+        GameplayInput.instance.playerInput.actions["consoleUI"].performed += (context) => { ToggleConsole(); };
+    }
+
+    void ToggleConsole()
+    {
+        print("toggling console");
+        if (!PowerConsole.IsVisible)
+        {
+            OpenMenu();
+        }
+        else
+        {
+            CloseMenu();
+        }
+        PowerConsole.IsVisible = !PowerConsole.IsVisible;
+        PowerConsole.Clear();
+    }
+
+    void CommandCheck(object sender, CommandEnteredEventArgs args)
+    {
+        print(args.Command);
+        string[] arguments = args.Command.Split(" ");
+        if (arguments.Length <= 0) return;
+
+        switch (arguments[0].ToLower())
+        {
+            case "giveitem":
+                if (arguments.Length > 2)
+                {
+                    add_items_to_inventory(arguments[1], int.Parse(arguments[2]));
+                }
+                else if (arguments.Length > 1)
+                {
+                    add_items_to_inventory(arguments[1], 1);
+                }
+                break;    
+        }
+        // string id = callback.Args["-i"];
+        // int amount = int.Parse(callback.Args["-a"]);
+        // add_items_to_inventory(id, amount);
     }
 
     void Reset()

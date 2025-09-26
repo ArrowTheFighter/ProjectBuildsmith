@@ -207,13 +207,13 @@ public class CharacterMovement : MonoBehaviour
     public void TurnAround(float duration = 0.5f)
     {
         Quaternion forwardTarget = Quaternion.LookRotation(-transform.forward, Vector3.up);
-        transform.DORotate(forwardTarget.eulerAngles, duration, RotateMode.FastBeyond360);
+        transform.DORotate(forwardTarget.eulerAngles, duration, RotateMode.Fast);
      }
 
     public void ManualTurn(Vector3 dir,float duration = 0.25f)
     {
         Quaternion forwardTarget = Quaternion.LookRotation(dir, Vector3.up);
-        transform.DORotate(forwardTarget.eulerAngles, duration, RotateMode.FastBeyond360);
+        transform.DORotate(forwardTarget.eulerAngles, duration, RotateMode.Fast);
     }
 
     public void AddAbility<T>() where T : PlayerAbility
