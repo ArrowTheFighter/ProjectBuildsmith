@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public InventorySlot inventorySlot;
     public int SlotID;
@@ -29,13 +29,66 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         if (inventorySlot.inventorySlotComponent == null)
         {
             inventorySlot.inventorySlotComponent = this;
-         }
+        }
+        SelectionWatcher.OnSelectionChanged += HandleSelectionChange;
+    }
+
+    void HandleSelectionChange(GameObject _gameObject)
+    {
+        print("selection changed");
+        if (UIInputHandler.instance.currentScheme == "Gamepad" && gameObject == _gameObject)
+        {
+            if (!Selected)
+            {
+                slotEmptied += HideAndUnsubscribeItemPopup;
+                slotFilled += ShowAndUnsubscribeItemPopup;
+                Selected = true;
+                if (inventorySlot.isEmpty)
+                {
+                    ItemTitlePopupManager.instance.HidePopup();
+
+                }
+                else 
+                {
+                    ItemTitlePopupManager.instance.ShowPopup(inventorySlot.inventoryItemStack.Name);
+                    
+                }
+            }
+        }
+        else if(Selected)
+        {
+            Selected = false;
+            slotEmptied -= HideAndUnsubscribeItemPopup;
+            slotFilled -= ShowAndUnsubscribeItemPopup;
+        }
     }
 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        slotFilled += ShowAndUnsubscribeItemPopup;
+        if (inventorySlot.isEmpty) return;
+        ItemTitlePopupManager.instance.ShowPopup(inventorySlot.inventoryItemStack.Name);
+        slotEmptied += HideAndUnsubscribeItemPopup;
+    }
 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ItemTitlePopupManager.instance.HidePopup();
+        slotEmptied -= HideAndUnsubscribeItemPopup;
+        slotFilled -= ShowAndUnsubscribeItemPopup;
+    }
+
+    public void HideAndUnsubscribeItemPopup(InventoryItemStack inventoryItemStack)
+    {
+        ItemTitlePopupManager.instance.HidePopup();
+        //slotEmptied -= HideAndUnsubscribeItemPopup;
+    }
+
+    public void ShowAndUnsubscribeItemPopup()
+    {
+        ItemTitlePopupManager.instance.ShowPopup(inventorySlot.inventoryItemStack.Name);
+        //slotFilled -= ShowAndUnsubscribeItemPopup;
     }
 
     public void OnPointerClick(PointerEventData eventData)
