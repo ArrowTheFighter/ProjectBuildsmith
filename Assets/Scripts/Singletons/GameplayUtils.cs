@@ -22,6 +22,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] public InventoryManager inventoryManager;
     [SerializeField] GameObject PauseMenu;
     [SerializeField] GameObject[] UI_Canvases;
+    [SerializeField] GameObject BuildNumCanvas;
     [SerializeField] Slider Main_volume_slider;
     [SerializeField] public ItemPickupNotifcationScript itemPickupNotifcationScript;
     [SerializeField] public ItemPickupNotifcationScript centerScreenNotifcationScript;
@@ -30,6 +31,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] CanvasGroup CraftingTableUI;
     [SerializeField] GameObject ToolCraftingUI;
     [SerializeField] GameObject SawmillCraftingUI;
+    [SerializeField] GameObject AnvilCraftingUI;
     [Header("Inventory UI")]
     [SerializeField] GameObject PedistalUI;
     public event Action OnInventoryClosed;
@@ -56,6 +58,9 @@ public class GameplayUtils : MonoBehaviour
     [Header("MainMenuDefault")]
     public GameObject MainMenuDemoScreenButton;
 
+    [Header("Crafting Recipe Displays")]
+    public List<CraftingTableRecipeDisplay> craftingTableRecipeDisplays = new List<CraftingTableRecipeDisplay>();
+
     void Awake()
     {
         if (instance != this)
@@ -73,6 +78,8 @@ public class GameplayUtils : MonoBehaviour
 
         GameplayInput.instance.playerInput.actions["console"].performed += (context) => { ToggleConsole(); };
         GameplayInput.instance.playerInput.actions["consoleUI"].performed += (context) => { ToggleConsole(); };
+
+        GameplayInput.instance.playerInput.actions["hidebuild"].performed += (context) => { BuildNumCanvas.SetActive(!BuildNumCanvas.activeInHierarchy); };
     }
 
     void ToggleConsole()
@@ -107,7 +114,7 @@ public class GameplayUtils : MonoBehaviour
                 {
                     add_items_to_inventory(arguments[1], 1);
                 }
-                break;    
+                break;
         }
         // string id = callback.Args["-i"];
         // int amount = int.Parse(callback.Args["-a"]);
@@ -198,7 +205,7 @@ public class GameplayUtils : MonoBehaviour
         var urpAsset = (UniversalRenderPipelineAsset)GraphicsSettings.currentRenderPipeline;
         if (urpAsset != null)
         {
-            urpAsset.renderScale = Mathf.Clamp(value,0.1f,1f);
+            urpAsset.renderScale = Mathf.Clamp(value, 0.1f, 1f);
         }
     }
 
@@ -238,7 +245,7 @@ public class GameplayUtils : MonoBehaviour
                 PedistalUI.SetActive(true);
                 OpenMenu();
                 break;
-         }
+        }
     }
 
     public void SetSawmillProgressBar(float progress)
@@ -252,7 +259,7 @@ public class GameplayUtils : MonoBehaviour
         CraftingTableUI.alpha = 1;
         CraftingTableUI.blocksRaycasts = true;
         CraftingTableUI.interactable = true;
-     }
+    }
 
     void DisableCraftingTableUI()
     {
@@ -293,6 +300,12 @@ public class GameplayUtils : MonoBehaviour
                 ToolCraftingUI.SetActive(true);
                 OpenMenu();
                 break;
+            case CraftingStationTypes.Anvil:
+                inventoryManager.OpenInventory();
+                EnableCraftingTableUI();
+                AnvilCraftingUI.SetActive(true);
+                OpenMenu();
+                break;
             case CraftingStationTypes.Sawmill:
             case CraftingStationTypes.Furnace:
             case CraftingStationTypes.StoneCutter:
@@ -327,6 +340,7 @@ public class GameplayUtils : MonoBehaviour
         DisableCraftingTableUI();
         ToolCraftingUI.SetActive(false);
         SawmillCraftingUI.SetActive(false);
+        AnvilCraftingUI.SetActive(false);
         PedistalUI.SetActive(false);
     }
 
@@ -558,7 +572,7 @@ public class GameplayUtils : MonoBehaviour
             return ItemsCrafted[item_id];
         }
         return 0;
-     }
+    }
 
     public void AddItemCraftedAmount(string item_id, int amount)
     {
@@ -578,7 +592,7 @@ public class GameplayUtils : MonoBehaviour
         return inventoryManager.getAmountOfItemByID(item_id);
     }
 
-    public int add_items_to_inventory(string item_id, int amount, bool show_notif = true,bool playSound = false)
+    public int add_items_to_inventory(string item_id, int amount, bool show_notif = true, bool playSound = false)
     {
         //inventoryItems.AddToItemAmount(item_id, amount);
         ItemData itemData = GetItemDataByID(item_id);
@@ -617,10 +631,10 @@ public class GameplayUtils : MonoBehaviour
         itemPickupNotifcationScript.ShowCustomText(custom_text, duration);
     }
 
-    public void ShowCustomNotifCenter(string custom_text,float duration = 4)
+    public void ShowCustomNotifCenter(string custom_text, float duration = 4)
     {
         centerScreenNotifcationScript.ShowCustomText(custom_text, duration);
-     }
+    }
 
     public void PlayerDropItem(string item_id, int item_amount)
     {
@@ -678,6 +692,23 @@ public class GameplayUtils : MonoBehaviour
         Debug.DrawLine(localCorners[1], localCorners[5], color);
         Debug.DrawLine(localCorners[2], localCorners[6], color);
         Debug.DrawLine(localCorners[3], localCorners[7], color);
+    }
+
+    public void ShowCraftingTableRecipeGuide(string recipe_id)
+    {
+        foreach (CraftingRecipeData recipeData in RecipeDatabase.recipes)
+        {
+            if (recipeData.recipe_id == recipe_id)
+            {
+                foreach (CraftingTableRecipeDisplay display in craftingTableRecipeDisplays)
+                {
+                    if (recipeData.stationType == display.craftingStationType)
+                    {
+                        display.ShowRecipe(recipe_id);    
+                    }    
+                }
+            }
+        }
     }
 
 }

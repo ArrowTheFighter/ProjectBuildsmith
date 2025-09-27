@@ -279,7 +279,7 @@ public class CharacterMovement : MonoBehaviour
         {
             if (moveingPlatform != platform)
             {
-                print("adding platform move");
+                //print("adding platform move");
                 moveingPlatform = platform;
                 if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
                 {
@@ -296,7 +296,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (moveingPlatform != null)
         {
-            print("removing platform move");
+            //print("removing platform move");
             moveingPlatform.OnPlatformMove -= trackPlatformDelta;
             //platformDelta = Vector3.zero;
             if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
@@ -446,7 +446,7 @@ public class CharacterMovement : MonoBehaviour
         // on a steep slope
         else if (OnSteepSlope() && !exitingSlope)
         {
-            print("on steep slope");
+            //print("on steep slope");
             Vector3 wallNormal = new Vector3(groundHit.normal.x, 0, groundHit.normal.z);
 
             Vector3 moveInput = moveDirection.normalized;

@@ -193,6 +193,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "hidebuild",
+                    "type": "Button",
+                    "id": "c0937b6f-574b-49f4-bef9-407dbdbd0c8a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -820,6 +829,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "consoleUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb36e739-aa47-459f-80f5-4faa72629387",
+                    "path": "<Keyboard>/f3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "hidebuild",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

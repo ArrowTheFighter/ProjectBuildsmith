@@ -225,6 +225,12 @@ public class InventoryManager : MonoBehaviour
         PinQuestButton.SetActive(false);
         questInfoBox.ClearQuestInfo();
 
+        foreach (CraftingTableRecipeDisplay display in GameplayUtils.instance.craftingTableRecipeDisplays)
+        {
+            display.HideRecipe();
+            display.recipesBookManager.HideRecipeBook();
+        }
+
         openMenu = InventoryMenus.Inventory;
     }
 

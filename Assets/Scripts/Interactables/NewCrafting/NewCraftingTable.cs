@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NewCraftingTable : MonoBehaviour, IInteractable, IStorable
 {
@@ -17,12 +18,14 @@ public class NewCraftingTable : MonoBehaviour, IInteractable, IStorable
     public CraftingStationTypes craftingStationType;
 
     public event Action OnOpened;
+    public UnityEvent OnOpenedUnityEvent;
 
     public bool Interact(Interactor interactor)
     {
         if (!CanUse) return false;
         GameplayUtils.instance.OpenCraftingMenu(craftingStationType);
         OnOpened?.Invoke();
+        OnOpenedUnityEvent?.Invoke();
         return true;
     }
 
