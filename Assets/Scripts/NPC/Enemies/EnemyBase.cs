@@ -14,10 +14,17 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     public bool EnemyActive;
     [Header("Health")]
+    float startHealth;
     public float Health;
     public float extraBounceForce;
     public ParticleSystem onDamageParticles;
     public GameObject onDeathParticlesPrefab;
+    public float RespawnTime;
+
+    [Header("Loot")]
+    public LootTable[] Loot;
+    public float ItemDropForce = 10;
+    public Vector3 spawnOffset;
 
     [Header("Take Damage Audio")]
     public AudioClip takeDamageSoundFX;
@@ -32,6 +39,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     [SerializeField] public string flag_id;
     [SerializeField] public bool is_true;
 
+    void Awake()
+    {
+        startHealth = Health;
+    }
+
+    void OnEnable()
+    {
+        Health = startHealth;
+    }
+
     public IEnumerator CheckForPlayerRoutine(float checkDelay = 0.5f)
     {
         EnemyActive = true;
@@ -42,6 +59,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         }
     }
 
+
     public virtual void CheckForPlayer()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, PlayerSearchRadius, playerLayerMask);
@@ -51,7 +69,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             if (collider.transform.parent != null && collider.transform.parent.GetComponent<CharacterMovement>() != null)
             {
                 OnPlayerFound?.Invoke();
-                
+
                 foundPlayer = true;
                 PlayerTransform = collider.transform.parent;
             }
@@ -111,6 +129,34 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             FlagManager.Set_Flag(flag_id, is_true);
         }
 
-        Destroy(gameObject);
+        foreach (LootTable lootTable in Loot)
+        {
+            int amount = lootTable.GetRandomDropAmount();
+            ItemData itemData = GameplayUtils.instance.GetItemDataByID(lootTable.itemID);
+            for (int i = 0; i < amount; i++)
+            {
+                GameObject itemDropped = Instantiate(itemData.item_pickup_object, transform.position + Vector3.up + spawnOffset, Quaternion.identity);
+                ItemPickup itemPickup = itemDropped.GetComponent<ItemPickup>();
+
+                itemPickup.amount = 1;
+                itemPickup.respawn_time = -1;
+                Rigidbody rigidbody = itemDropped.GetComponent<Rigidbody>();
+                rigidbody.useGravity = true;
+                Vector3 horDir = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
+                rigidbody.AddForce((horDir + Vector3.up) * ItemDropForce * UnityEngine.Random.Range(1f, 1.25f), ForceMode.Impulse);
+            }
+
+        }
+
+        if (RespawnTime <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            ItemRespawnManager.instance.item_respawns.Add(gameObject, RespawnTime);
+            gameObject.SetActive(false);
+        }
+
     }
 }

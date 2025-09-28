@@ -69,7 +69,6 @@ public class BreakableProps : MonoBehaviour, IDamagable
                 Rigidbody rigidbody = itemDropped.GetComponent<Rigidbody>();
                 rigidbody.useGravity = true;
                 Vector3 horDir = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
-                print("horDir");
                 rigidbody.AddForce((horDir + Vector3.up) * ItemDropForce * UnityEngine.Random.Range(1f, 1.25f), ForceMode.Impulse);
             }
 

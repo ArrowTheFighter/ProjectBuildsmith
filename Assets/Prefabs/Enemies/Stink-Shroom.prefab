@@ -14796,7 +14796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0e733801e3c3feb45b3c5b34aa73060d, type: 3}
       propertyPath: m_Name
-      value: Mushnub
+      value: Stink-Shroom
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0e733801e3c3feb45b3c5b34aa73060d, type: 3}
       propertyPath: m_Layer
@@ -14878,10 +14878,20 @@ MonoBehaviour:
   extraBounceForce: 5
   onDamageParticles: {fileID: 7150818684010827213}
   onDeathParticlesPrefab: {fileID: 6614607439724785086, guid: 5eb14546eab8700449206c0e6f60b453, type: 3}
+  RespawnTime: 300
+  Loot:
+  - itemID: coin
+    itemDropLow: 1
+    ItemDropHigh: 5
+  ItemDropForce: 4
+  spawnOffset: {x: 0, y: 2.5, z: 0}
   takeDamageSoundFX: {fileID: 8300000, guid: 26c31d41b67123d44b0725ccdad1d9c6, type: 3}
   takeDamageSoundFXVolume: 0.15
   takeDamageSoundFXPitch: 1
   CanBeStompedByPlayer: 1
+  CanTakeDamage: 1
+  flag_id: 
+  is_true: 0
   searchRadius: 18
   attackRadius: 10
   gazeHeight: 0.75

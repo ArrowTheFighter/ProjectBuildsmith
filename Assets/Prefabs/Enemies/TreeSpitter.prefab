@@ -5052,6 +5052,13 @@ MonoBehaviour:
   extraBounceForce: 10
   onDamageParticles: {fileID: 1665302870031676979}
   onDeathParticlesPrefab: {fileID: 6614607439724785086, guid: 5eb14546eab8700449206c0e6f60b453, type: 3}
+  RespawnTime: 300
+  Loot:
+  - itemID: coin
+    itemDropLow: 1
+    ItemDropHigh: 5
+  ItemDropForce: 4
+  spawnOffset: {x: 0, y: 2.5, z: 0}
   takeDamageSoundFX: {fileID: 0}
   takeDamageSoundFXVolume: 1
   takeDamageSoundFXPitch: 1

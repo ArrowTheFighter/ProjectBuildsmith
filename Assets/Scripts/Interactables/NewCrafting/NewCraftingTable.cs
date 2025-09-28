@@ -23,6 +23,11 @@ public class NewCraftingTable : MonoBehaviour, IInteractable, IStorable
     public bool Interact(Interactor interactor)
     {
         if (!CanUse) return false;
+        if (GameplayUtils.instance.GetOpenMenu())
+        {
+            GameplayUtils.instance.CloseAllCraftingMenus();
+            return true;
+        }
         GameplayUtils.instance.OpenCraftingMenu(craftingStationType);
         OnOpened?.Invoke();
         OnOpenedUnityEvent?.Invoke();

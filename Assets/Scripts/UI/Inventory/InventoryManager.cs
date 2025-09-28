@@ -54,6 +54,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         GameplayInput.instance.playerInput.actions["Inventory"].performed += ToggleInventory;
+        GameplayInput.instance.playerInput.actions["Submit"].performed += (context) => { CloseInventory(); };
         GameplayInput.instance.playerInput.actions["Quests"].performed += ToggleQuests;
         GameplayInput.instance.playerInput.actions["CloseQuests"].performed += ToggleQuests;
         GameplayInput.instance.playerInput.actions["CloseInventory"].performed += ToggleInventory;
@@ -161,6 +162,7 @@ public class InventoryManager : MonoBehaviour
 
     public void CloseInventory()
     {
+        if (openMenu == InventoryMenus.none) return;
         if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
         {
             SwitchToInventoryMenu();
