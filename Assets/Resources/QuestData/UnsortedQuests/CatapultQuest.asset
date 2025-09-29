@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: CatapultQuest
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: CatapultQuest
+  QuestName: CATAPULT (tbd)
+  Description: BUILD CATAPULTS (inc.)
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 4434710397170483314
+  - rid: 4434710397170483315
+  - rid: 4434710397170483316
+  - rid: 4434710397170483317
+  - rid: 4434710397170483318
+  references:
+    version: 2
+    RefIds:
+    - rid: 4434710397170483314
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Get <style=Item>10 planks</style>
+        StopAtThisObjective: 0
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        Item_ID: plank
+        Item_Amount: 10
+    - rid: 4434710397170483315
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Get <style=Item>3 ropes</style>
+        StopAtThisObjective: 0
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        Item_ID: rope
+        Item_Amount: 3
+    - rid: 4434710397170483316
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Get <style=Item>2 cog wheels</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        Item_ID: cog_wheel
+        Item_Amount: 2
+    - rid: 4434710397170483317
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Rebuild the catapult next to Adolin
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        flag_id: AdolinCatapultRepaired
+    - rid: 4434710397170483318
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Adolin
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 1
+        flag_id: AdolinTalkedAfterCatapultRepair
