@@ -406,7 +406,8 @@ public class CharacterMovement : MonoBehaviour
     void UpdateTilt()
     {
         current_tilt = Mathf.Lerp(current_tilt, Mathf.Clamp(tilt_amount, -maxTiltAngle, maxTiltAngle), 0.1f);
-        orientation.eulerAngles = new Vector3(orientation.eulerAngles.x, orientation.eulerAngles.y, current_tilt);
+        //print("updating player tilt");
+        //orientation.eulerAngles = new Vector3(orientation.eulerAngles.x, orientation.eulerAngles.y, current_tilt);
     }
 
     public void ApplyGravity(float multipler = 1f)

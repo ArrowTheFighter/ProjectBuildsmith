@@ -42,12 +42,17 @@ public class BatEnemy : EnemyBase
     void Start()
     {
         startPos = transform.position;
-        StartCoroutine(CheckForPlayerRoutine());
+        
 
         OnPlayerFound += PlayerFound;
         OnPlayerLost += PlayerLost;
-        StartCoroutine(getNewTargetPos(0));
 
+    }
+
+    void OnEnable()
+    {
+        StartCoroutine(CheckForPlayerRoutine());
+        StartCoroutine(getNewTargetPos(0));
         enemyState = AttackingStates.Roaming;
     }
 

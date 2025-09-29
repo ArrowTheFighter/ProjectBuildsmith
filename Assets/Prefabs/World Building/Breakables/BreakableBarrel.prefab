@@ -207,6 +207,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  IsActive: 0
 --- !u!114 &3834089779578762379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,9 +228,15 @@ MonoBehaviour:
   DestoryedParticle: {fileID: 4662947785959668623, guid: b271e4203c6ed724996977c864729bfc, type: 3}
   DestroyedParticleOffset: {x: 0, y: 0.5, z: 0}
   Loot: []
+  TakeDamageSoundEffects:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 577d9377685bc284eafcc7f0b2767a8a, type: 3}
+    audioClipVolume: 0.1
+    audioClipPitch: 1
   destroyedSoundFX: {fileID: 0}
   destroyedSoundFXVolume: 0
   destroyedSoundFXPitch: 0
+  AttackTypes: 
 --- !u!54 &2996420252193206698
 Rigidbody:
   m_ObjectHideFlags: 0

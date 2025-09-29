@@ -30,6 +30,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         {
             inventorySlot.inventorySlotComponent = this;
         }
+        GameplayUtils.instance.inventoryManager.OnInventoryClosed += UnsubscribeFromItemPopups;
         SelectionWatcher.OnSelectionChanged += HandleSelectionChange;
     }
 
@@ -63,6 +64,40 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         }
     }
 
+    void UnsubscribeFromItemPopups()
+    {
+        if (slotEmptied != null)
+        {
+            var targetMethod = GetType()
+            .GetMethod(nameof(HideAndUnsubscribeItemPopup),
+                       System.Reflection.BindingFlags.NonPublic |
+                       System.Reflection.BindingFlags.Instance);
+
+            foreach (var sub in slotEmptied.GetInvocationList())
+            {
+                if (sub.Method == targetMethod)
+                {
+                    slotEmptied -= (Action<InventoryItemStack>)sub;
+                }
+            }   
+         }
+        if (slotFilled != null)
+        {
+
+            var targetMethod = GetType()
+           .GetMethod(nameof(ShowAndUnsubscribeItemPopup),
+                      System.Reflection.BindingFlags.NonPublic |
+                      System.Reflection.BindingFlags.Instance);
+
+            foreach (var sub in slotFilled.GetInvocationList())
+            {
+                if (sub.Method == targetMethod)
+                {
+                    slotEmptied -= (Action<InventoryItemStack>)sub;
+                }
+            }
+        }
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

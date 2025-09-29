@@ -33,10 +33,16 @@ public class MushroomEnemy : EnemyBase, IDamagable
     void Start()
     {
         startPos = transform.position;
-        StartCoroutine(CheckForPlayerRoutine());
+        
         animator = GetComponent<Animator>();
 
         OnPlayerFound += PlayerFound;
+    }
+
+    void OnEnable()
+    {
+        PlayerTransform = null;
+        StartCoroutine(CheckForPlayerRoutine());
     }
 
     // Update is called once per frame

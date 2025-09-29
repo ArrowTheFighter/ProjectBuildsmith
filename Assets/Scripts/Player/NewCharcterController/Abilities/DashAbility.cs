@@ -159,6 +159,8 @@ public class DashAbility : PlayerAbility
                     }
                     if (characterMovement.rb.linearVelocity.magnitude > 0.1f && !isBonking)
                     {
+                        print("turning playing for dive");
+                        print(characterMovement.rb.linearVelocity.normalized);
                         characterMovement.orientation.forward = Vector3.Lerp(characterMovement.orientation.forward, characterMovement.rb.linearVelocity.normalized, 0.2f);
                     }
                     Collider[] colliders = Physics.OverlapSphere(transform.position, 1);
