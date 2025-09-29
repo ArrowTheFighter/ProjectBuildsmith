@@ -189,8 +189,12 @@ public class PlayerHealth : MonoBehaviour, IDamagable
             damageFlashImage.DOFade(damageFlashFadeAlpha, damageFlashFadeTime).SetLoops(2, LoopType.Yoyo);
         }
 
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Hurt");
-        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Hurt1");
+        AudioCollection audioCollection2 = PlayerAudioManager.instance.GetAudioClipByID("Hurt2");
+
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, audioCollection, audioCollection2);
+
+        //SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
@@ -272,6 +276,10 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         StartCoroutine(RespawnDelay());
 
         DOTween.Kill("HeartShake");
+
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Die");
+
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, audioCollection);
     }
 
     IEnumerator MovePlayerToRespawnPointDelay()

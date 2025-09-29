@@ -45,7 +45,11 @@ public class ItemPickupNotifcationScript : MonoBehaviour
 
     public void PlayNotificationSound()
     {
-        SoundFXManager.instance.PlaySoundFXClip(pickupNotificationSoundFX, transform, pickupNotificationSoundFXVolume, pickupNotificationSoundFXPitch);
+        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Pickup");
+
+        SoundFXManager.instance.PlayRandomSoundCollection(GameplayUtils.instance.PlayerTransform, audioCollection);
+
+        //SoundFXManager.instance.PlaySoundFXClip(pickupNotificationSoundFX, transform, pickupNotificationSoundFXVolume, pickupNotificationSoundFXPitch);
     }
 
     public void ShowCustomText(string text, float duration = 4)

@@ -229,9 +229,17 @@ public class DashAbility : PlayerAbility
             lastTimeDashed = Time.time + 0.1f;
             StartCoroutine(EndDiveAfterDelay(slideJumpDuration));
 
-            AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
-            SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+            PlayDashSound();
+            // AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
+            // SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
         }
+    }
+
+    public void PlayDashSound()
+    {
+        AudioCollection audioCollectionDash1 = PlayerAudioManager.instance.GetAudioClipByID("Dash1");
+        AudioCollection audioCollectionDash2 = PlayerAudioManager.instance.GetAudioClipByID("Dash2");
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, audioCollectionDash1, audioCollectionDash2);
     }
 
     IEnumerator EndDiveAfterDelay(float duration)
@@ -383,8 +391,9 @@ public class DashAbility : PlayerAbility
             characterMovement.rb.AddForce(Vector3.up * dashUpForce, ForceMode.Impulse);
         }
 
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
-        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+        PlayDashSound();
+        // AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
+        // SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     void setCooldown()

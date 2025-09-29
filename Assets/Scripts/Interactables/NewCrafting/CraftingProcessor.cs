@@ -22,6 +22,11 @@ public class CraftingProcessor : CraftingTableBase
 
     bool CheckingForRecipe = true;
 
+    public AudioSource ProcessorRunningAudioSource;
+    public AudioCollection ProcessorRunningAudioCollection;
+
+    public AudioCollection[] ProcessorFinishedCrafting;
+
     //public event Action<float> SliderUpdated;
 
 
@@ -57,6 +62,9 @@ public class CraftingProcessor : CraftingTableBase
                 craftingRecipeData.Add(recipeData);
             }
         }
+        ProcessorRunningAudioSource.volume = ProcessorRunningAudioCollection.audioClipVolume;
+        ProcessorRunningAudioSource.pitch = ProcessorRunningAudioCollection.audioClipPitch;
+        ProcessorRunningAudioSource.clip = ProcessorRunningAudioCollection.audioClip;
     }
 
     public override void InventoryUpdated()
@@ -66,10 +74,18 @@ public class CraftingProcessor : CraftingTableBase
         {
             HasValidRecipe = true;
             currentRecipe = validRecipe;
+            if (!ProcessorRunningAudioSource.isPlaying)
+            {
+                ProcessorRunningAudioSource.Play();
+            }
             StartCoroutine(CraftingProcess());
         }
         else
         {
+            if (ProcessorRunningAudioSource.isPlaying)
+            {
+                ProcessorRunningAudioSource.Stop();
+            }
             HasValidRecipe = false;
             currentRecipe = null;
         }
@@ -100,6 +116,8 @@ public class CraftingProcessor : CraftingTableBase
         {
             processTime = 0;
             isCrafting = false;
+
+            ProcessorRunningAudioSource.Stop();
             yield break;
         }
         isCrafting = false;
@@ -140,6 +158,8 @@ public class CraftingProcessor : CraftingTableBase
         }
         inventoryDataSaver.SetContainerSlots();
         InventoryUpdated();
+
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, ProcessorFinishedCrafting);
         //inventoryDataSaver.UpdateSavedSlots();
     }
 

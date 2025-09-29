@@ -135,9 +135,16 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   PlateVisual: {fileID: 5323477390073583638}
-  pressurePlateDownSoundFX: {fileID: 8300000, guid: 6aed7e5fa91bc3d46b04feb47c150e91, type: 3}
-  pressurePlateDownSoundFXVolume: 1
-  pressurePlateDownSoundFXPitch: 1
+  preesurePlateDownAudioCollection:
+    AudioID: 
+    audioClip: {fileID: 8300000, guid: 613bb62f5e1659d49b38c1af2d84fa43, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  preesurePlateUpAudioCollection:
+    AudioID: 
+    audioClip: {fileID: 8300000, guid: 0e8c24daf782d404388871f6672a8378, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
 --- !u!65 &8808837571557533314
 BoxCollider:
   m_ObjectHideFlags: 0

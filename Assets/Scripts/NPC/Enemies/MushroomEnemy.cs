@@ -23,6 +23,10 @@ public class MushroomEnemy : EnemyBase, IDamagable
     [SerializeField] float attackSoundFXVolume = 1f;
     [SerializeField] float attackSoundFXPitch = 1f;
 
+    [SerializeField] AudioClip playerSpottedSoundFX;
+    [SerializeField] float playerSpottedSoundFXVolume = 1f;
+    [SerializeField] float playerSpottedSoundFXPitch = 1f;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -77,10 +81,11 @@ public class MushroomEnemy : EnemyBase, IDamagable
     {
         if (PlayerTransform == null)
         {
+            PlayPlayerSpottedAudio();
             SetAttackCooldown();
         }
     }
-    
+
 
     public void AttackDamage()
     {
@@ -88,20 +93,25 @@ public class MushroomEnemy : EnemyBase, IDamagable
         {
             if (Mathf.Abs(PlayerTransform.position.y - transform.position.y) < attackHeight && Vector3.Distance(PlayerTransform.position, transform.position) < attackRadius)
             {
-                playerHealth.TakeDamage(1,new AttackType[] {AttackType.Simple}, gameObject,1);
+                playerHealth.TakeDamage(1, new AttackType[] { AttackType.Simple }, gameObject, 1);
             }
         }
     }
 
     public void ShowAttackParticles()
     {
-        if(attackSoundFX != null)
+        if (attackSoundFX != null)
         {
             SoundFXManager.instance.PlaySoundFXClip(attackSoundFX, transform, attackSoundFXVolume, attackSoundFXPitch);
         }
 
         AttackParticles.Play();
-     }
+    }
+
+    public void PlayPlayerSpottedAudio()
+    {
+        SoundFXManager.instance.PlaySoundFXClip(playerSpottedSoundFX, transform, playerSpottedSoundFXVolume, playerSpottedSoundFXPitch);
+    }
 
 
     

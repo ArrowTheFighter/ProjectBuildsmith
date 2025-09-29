@@ -7,9 +7,7 @@ public class BouncyPlatform : MonoBehaviour,IDamagable
     public bool PlayerCanStomp { get => true; set => PlayerCanStomp = true; }
 
     [Header("Audio")]
-    [SerializeField] AudioClip bounceSoundFX;
-    [SerializeField] float bounceSoundFXVolume = 1f;
-    [SerializeField] float bounceSoundFXPitch = 1f;
+    public AudioCollection[] bounceAudioCollection;
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
@@ -20,10 +18,7 @@ public class BouncyPlatform : MonoBehaviour,IDamagable
     {
         ExtraForce = BounceHeight;
 
-        if (bounceSoundFX != null)
-        {
-            SoundFXManager.instance.PlaySoundFXClip(bounceSoundFX, transform, bounceSoundFXVolume, bounceSoundFXPitch);
-        }
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, bounceAudioCollection);
     }
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)

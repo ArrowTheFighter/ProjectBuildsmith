@@ -12,6 +12,8 @@ public class BreakableProps : MonoBehaviour, IDamagable
     public GameObject DestoryedParticle;
     public Vector3 DestroyedParticleOffset;
     public LootTable[] Loot;
+    [Header("Audio")]
+    public AudioCollection[] TakeDamageSoundEffects;
     public AudioClip destroyedSoundFX;
     public float destroyedSoundFXVolume;
     public float destroyedSoundFXPitch;
@@ -24,6 +26,7 @@ public class BreakableProps : MonoBehaviour, IDamagable
         if (!hasAttackType(attackTypes)) return;
         PlayParticle();
         Health -= amount;
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, TakeDamageSoundEffects);
         if (Health <= 0)
         {
             Die();

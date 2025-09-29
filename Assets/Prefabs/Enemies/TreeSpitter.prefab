@@ -5059,6 +5059,20 @@ MonoBehaviour:
     ItemDropHigh: 5
   ItemDropForce: 4
   spawnOffset: {x: 0, y: 2.5, z: 0}
+  takeDamageCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 9ddb87495c04129468c13fdcd874bb02, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 33b374c5071e34142a49cdf894236cdb, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  DeathAudioCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 48035091b05728f458b5ee9890e9cf7c, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
   takeDamageSoundFX: {fileID: 0}
   takeDamageSoundFXVolume: 1
   takeDamageSoundFXPitch: 1
@@ -5076,6 +5090,33 @@ MonoBehaviour:
   arcHeight: 12
   shootDelay: 2
   DanceDuration: 3
+  PlayerSpottedAudioCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 527b3af2a9da39448b823d50db04d19c, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 153116922b3207646bf5fd72aec1dfee, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  ShootProjectileAudioCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: b57f948088c57154586e4dd7ecf8b26e, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: a1fec029b56e27c408b5a1d7ce3faf01, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  HidingAudioCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 0665b2e40b3e3ab48bbf162e242dbb81, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 541020fcf5471254f9858cc0e433fb35, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
 --- !u!95 &6710130142486919333
 Animator:
   serializedVersion: 7

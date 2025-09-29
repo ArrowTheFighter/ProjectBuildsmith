@@ -12,7 +12,16 @@ public class TextFormater : MonoBehaviour
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
         rawStoredText = textMeshProUGUI.text;
         ReformatText();
+    }
+
+    void OnEnable()
+    {
         UIIconHandler.instance.InputDeviceChanged += ReformatText;
+    }
+
+    void OnDisable()
+    {
+        UIIconHandler.instance.InputDeviceChanged -= ReformatText;
     }
 
     public void SetText(string rawText)

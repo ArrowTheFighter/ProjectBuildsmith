@@ -17,6 +17,8 @@ public class SkyEssencePickup : MonoBehaviour
     [SerializeField] float essencePickupSoundFXVolume = 1f;
     [SerializeField] float essencePickupSoundFXPitch = 1f;
 
+    public AudioSource SkyEssenceAmbiantSource;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")

@@ -14,6 +14,21 @@ public class SoundFXManager : MonoBehaviour
         }
     }
 
+    public void PlayRandomSoundCollection(Transform _transform, params AudioCollection[] audioCollection)
+    {
+        AudioCollection randomCollection = audioCollection[Random.Range(0, audioCollection.Length)];
+        PlayAllSoundCollection(_transform, randomCollection);    
+    }
+
+    public void PlayAllSoundCollection(Transform _transform, params AudioCollection[] audioCollection)
+    {
+        foreach (var collection in audioCollection)
+        {
+            PlaySoundFXClip(collection.audioClip, _transform, collection.audioClipVolume,
+            UnityEngine.Random.Range(collection.audioClipPitch * 0.9f, collection.audioClipPitch * 1.1f));
+        }
+    }
+
     public void PlaySoundFXClip(AudioClip audioClip, Transform spawnTransform, float volume, float pitch)
     {
         //Spawn in gameobject

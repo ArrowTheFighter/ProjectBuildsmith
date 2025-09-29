@@ -194,6 +194,15 @@ MonoBehaviour:
   - itemID: wood
     itemDropLow: 1
     ItemDropHigh: 3
+  TakeDamageSoundEffects:
+  - AudioID: TreeTakeDamage1
+    audioClip: {fileID: 8300000, guid: 577d9377685bc284eafcc7f0b2767a8a, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: TreeTakeDamage2
+    audioClip: {fileID: 8300000, guid: 191af80472d3e324db6f8ddc5df62725, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
   destroyedSoundFX: {fileID: 8300000, guid: 63a6ca556be95d44a980a41209c54de3, type: 3}
   destroyedSoundFXVolume: 0.5
   destroyedSoundFXPitch: 1.1

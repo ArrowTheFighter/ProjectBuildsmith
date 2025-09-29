@@ -186,6 +186,7 @@ public class InventoryManager : MonoBehaviour
             GameplayUtils.instance.CloseAllCraftingMenus();
 
             openMenu = InventoryMenus.none;
+            ItemTitlePopupManager.instance.HidePopup();
         }
 
     }

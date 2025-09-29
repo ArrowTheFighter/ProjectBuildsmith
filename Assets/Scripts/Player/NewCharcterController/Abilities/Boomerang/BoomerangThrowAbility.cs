@@ -134,6 +134,8 @@ public class BoomerangThrowAbility : PlayerAbility
                             parent_component.TakeDamage(1, new AttackType[] { AttackType.Simple }, boomerang);
                         }
                     }
+                    AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("BoomerangHit");
+                    SoundFXManager.instance.PlayRandomSoundCollection(boomerang.transform, audioCollection);
                     Instantiate(PlayerParticlesManager.instance.GetParticlePredabByID("BoomerangHit"), boomerang.transform.position, Quaternion.identity);
                     movingAway = false;
                 }
@@ -163,18 +165,23 @@ public class BoomerangThrowAbility : PlayerAbility
         }
         IsThrowing = true;
         currentSpeed = speed;
-        
+
         Vector3 dir = Camera.main.transform.forward;
         //dir.y = 0;
         targetPos = transform.position + dir.normalized * maxDistance + Vector3.up * 2.5f;
         if (closestHit != null)
         {
             targetPos = closestHit.position;
-         }
+        }
 
         flyDir = targetPos - transform.position;
         boomerang = Instantiate(PlayerParticlesManager.instance.GetParticlePredabByID("Boomerang"), transform.position + dir.normalized, Quaternion.identity);
         movingAway = true;
+
+        AudioCollection boomerangThrowCollection1 = PlayerAudioManager.instance.GetAudioClipByID("BoomerangThrow1");
+        AudioCollection boomerangThrowCollection2 = PlayerAudioManager.instance.GetAudioClipByID("BoomerangThrow2");
+
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, boomerangThrowCollection1, boomerangThrowCollection2);
 
     }
 

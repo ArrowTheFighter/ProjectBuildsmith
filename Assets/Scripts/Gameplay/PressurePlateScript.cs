@@ -13,9 +13,9 @@ public class PressurePlateScript : MonoBehaviour
     public Transform PlateVisual;
 
     [Header("Audio")]
-    [SerializeField] AudioClip pressurePlateDownSoundFX;
-    [SerializeField] float pressurePlateDownSoundFXVolume = 1f;
-    [SerializeField] float pressurePlateDownSoundFXPitch = 1f;
+
+    public AudioCollection preesurePlateDownAudioCollection;
+    public AudioCollection preesurePlateUpAudioCollection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,10 +36,8 @@ public class PressurePlateScript : MonoBehaviour
             PlateTween = PlateVisual.DOLocalMoveY(-0.2f,0.5f).SetEase(Ease.OutQuad);
         }
 
-        if (pressurePlateDownSoundFX != null)
-        {
-            SoundFXManager.instance.PlaySoundFXClip(pressurePlateDownSoundFX, transform, pressurePlateDownSoundFXVolume, pressurePlateDownSoundFXPitch);
-        }
+
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, preesurePlateDownAudioCollection);
     }
 
     public void MovePlatUp()
@@ -52,6 +50,7 @@ public class PressurePlateScript : MonoBehaviour
             }
             PlateTween = PlateVisual.DOLocalMoveY(0, 0.5f).SetEase(Ease.OutQuad);
         }
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, preesurePlateUpAudioCollection);
     }
 
     void Activated()

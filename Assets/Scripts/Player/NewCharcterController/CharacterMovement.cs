@@ -575,8 +575,11 @@ public class CharacterMovement : MonoBehaviour
         // reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Jump");
-        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+        AudioCollection audioCollectionJumpGrunt = PlayerAudioManager.instance.GetAudioClipByID("Jump");
+        AudioCollection audioCollectionJumpSound = PlayerAudioManager.instance.GetAudioClipByID("JumpSound");
+        SoundFXManager.instance.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
+        // SoundFXManager.instance.PlaySoundFXClip(audioCollectionJumpGrunt.audioClip, transform, audioCollectionJumpGrunt.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpGrunt.audioClipPitch * 0.9f, audioCollectionJumpGrunt.audioClipPitch * 1.1f));
+        // SoundFXManager.instance.PlaySoundFXClip(audioCollectionJumpSound.audioClip, transform, audioCollectionJumpSound.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpSound.audioClipPitch * 0.9f, audioCollectionJumpSound.audioClipPitch * 1.1f));
         Invoke(nameof(ResetJump), jumpCooldown);
     }
     private void ResetJump()

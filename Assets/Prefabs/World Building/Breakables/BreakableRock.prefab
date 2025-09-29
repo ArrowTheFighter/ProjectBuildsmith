@@ -109,9 +109,18 @@ MonoBehaviour:
   - itemID: stone
     itemDropLow: 1
     ItemDropHigh: 3
-  destroyedSoundFX: {fileID: 0}
-  destroyedSoundFXVolume: 0
-  destroyedSoundFXPitch: 0
+  TakeDamageSoundEffects:
+  - AudioID: HitStone1
+    audioClip: {fileID: 8300000, guid: f8a2bdd35ae5a4f4e85f93381e820f1a, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: HitStone2
+    audioClip: {fileID: 8300000, guid: 84a40683da7f7d94cbcf070e1edc3a4b, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  destroyedSoundFX: {fileID: 8300000, guid: abf0e9a18e2e0c64d9ed62d5ca775fe0, type: 3}
+  destroyedSoundFXVolume: 0.4
+  destroyedSoundFXPitch: 1
   AttackTypes: 0300000004000000
 --- !u!1001 &3883759223467132364
 PrefabInstance:

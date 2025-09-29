@@ -32,6 +32,10 @@ public class BatEnemy : EnemyBase
     public float randomMoveVariance;
     public LayerMask groundIgnore;
 
+    [Header("Audio")]
+    public AudioCollection[] PlayerSpottedAudioCollection;
+    public AudioCollection[] BatChargeAudioCollection;
+
     [Header("Attacks")]
     public float chargeAttackCooldown = 1.5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -52,6 +56,7 @@ public class BatEnemy : EnemyBase
     {
         if (enemyState == AttackingStates.Roaming)
         {
+            SoundFXManager.instance.PlayRandomSoundCollection(transform, PlayerSpottedAudioCollection);
             enemyState = AttackingStates.Spotted;
             StartCoroutine(SpottedToChargeDelay(2));
          }
@@ -94,7 +99,7 @@ public class BatEnemy : EnemyBase
                 if (PlayerTransform != null)
                 {
                     Quaternion PlayerLook = Quaternion.LookRotation((PlayerTransform.position - transform.position).normalized, Vector3.up);
-                    VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, PlayerLook, rotationSpeed);
+                    VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, PlayerLook, rotationSpeed * Time.deltaTime);
                 }
 
                 break;
@@ -110,6 +115,7 @@ public class BatEnemy : EnemyBase
                     animator.Play("CharacterArmature|Fast_Flying");
                     canAttack = true;
                     ChargingParticles.Play();
+                    SoundFXManager.instance.PlayRandomSoundCollection(transform, BatChargeAudioCollection);
                 }
                 if (canAttack && Physics.Raycast(transform.position, TargetDir, out RaycastHit rayhit, 1.5f, playerLayerMask))
                 {
@@ -129,7 +135,7 @@ public class BatEnemy : EnemyBase
                 
                 
                 Quaternion ChargeLookRotation = Quaternion.LookRotation(TargetDir, Vector3.up);
-                VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, ChargeLookRotation, rotationSpeed);
+                VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, ChargeLookRotation, rotationSpeed * Time.deltaTime);
 
                 transform.position += TargetDir * speed * Time.fixedDeltaTime;
                 if (Vector3.Distance(transform.position, TargetPos) < 2f && !runningEnumerator)
@@ -145,7 +151,7 @@ public class BatEnemy : EnemyBase
             case AttackingStates.Cooldown:
                 transform.position += TargetDir * speed * Time.fixedDeltaTime;
                 Quaternion CooldownLookRotation = Quaternion.LookRotation(TargetDir, Vector3.up);
-                VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, CooldownLookRotation, rotationSpeed);
+                VisualsTransform.rotation = Quaternion.Slerp(VisualsTransform.rotation, CooldownLookRotation, rotationSpeed * Time.deltaTime);
                 if (Vector3.Distance(transform.position, TargetPos) < 2f && !runningEnumerator)
                 {
                     if (PlayerTransform != null)

@@ -27,6 +27,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     public Vector3 spawnOffset;
 
     [Header("Take Damage Audio")]
+    public AudioCollection[] takeDamageCollection;
+    public AudioCollection[] DeathAudioCollection;
     public AudioClip takeDamageSoundFX;
     public float takeDamageSoundFXVolume = 1f;
     public float takeDamageSoundFXPitch = 1f;
@@ -91,14 +93,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             onDamageParticles.Play();
         }
 
-        if (takeDamageSoundFX != null)
-        {
-            SoundFXManager.instance.PlaySoundFXClip(takeDamageSoundFX, transform, takeDamageSoundFXVolume, takeDamageSoundFXPitch);
-        }
+        
 
         if (Health <= 0)
         {
             Die();
+        }
+        else
+        {
+            SoundFXManager.instance.PlayRandomSoundCollection(transform, takeDamageCollection);
         }
     }
 
@@ -123,7 +126,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         }
         OnDeath?.Invoke();
 
-        if(flag_id != null)
+        if (flag_id != null)
         {
             is_true = true;
             FlagManager.Set_Flag(flag_id, is_true);
@@ -157,6 +160,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             ItemRespawnManager.instance.item_respawns.Add(gameObject, RespawnTime);
             gameObject.SetActive(false);
         }
+
+        SoundFXManager.instance.PlayRandomSoundCollection(transform, DeathAudioCollection);
 
     }
 }

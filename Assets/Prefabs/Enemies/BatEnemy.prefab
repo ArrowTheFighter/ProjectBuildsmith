@@ -140,8 +140,18 @@ MonoBehaviour:
     ItemDropHigh: 4
   ItemDropForce: 4
   spawnOffset: {x: 0, y: 1, z: 0}
-  takeDamageSoundFX: {fileID: 0}
-  takeDamageSoundFXVolume: 1
+  takeDamageCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: b302167672ebe0d438c1a1ea9580e57d, type: 3}
+    audioClipVolume: 0.6
+    audioClipPitch: 1
+  DeathAudioCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: b302167672ebe0d438c1a1ea9580e57d, type: 3}
+    audioClipVolume: 0.6
+    audioClipPitch: 1
+  takeDamageSoundFX: {fileID: 8300000, guid: b302167672ebe0d438c1a1ea9580e57d, type: 3}
+  takeDamageSoundFXVolume: 0.4
   takeDamageSoundFXPitch: 1
   CanBeStompedByPlayer: 1
   CanTakeDamage: 1
@@ -150,13 +160,27 @@ MonoBehaviour:
   animator: {fileID: 3865240802627499812}
   ChargingParticles: {fileID: 2946489480635704507}
   VisualsTransform: {fileID: 58188588520077123}
-  rotationSpeed: 0.1
+  rotationSpeed: 4
   MaxSpeed: 10
   randomMoveDistance: 8
   randomMoveVariance: 3
   groundIgnore:
     serializedVersion: 2
     m_Bits: 294
+  PlayerSpottedAudioCollection:
+  - AudioID: PlayerSpotted1
+    audioClip: {fileID: 8300000, guid: 8d69159ffa6f7e8418aeb8bcd8d99483, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: PlayerSpotted2
+    audioClip: {fileID: 8300000, guid: b0efdf25c9740524a885278cb0165ab1, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  BatChargeAudioCollection:
+  - AudioID: BatCharge
+    audioClip: {fileID: 8300000, guid: db229a454541ac548af0a5d1082d917f, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
   chargeAttackCooldown: 2.5
 --- !u!1 &5108313647834188227
 GameObject:

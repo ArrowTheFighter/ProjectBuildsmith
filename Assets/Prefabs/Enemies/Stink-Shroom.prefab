@@ -14885,6 +14885,24 @@ MonoBehaviour:
     ItemDropHigh: 5
   ItemDropForce: 4
   spawnOffset: {x: 0, y: 2.5, z: 0}
+  takeDamageCollection:
+  - AudioID: TakeDamage1
+    audioClip: {fileID: 8300000, guid: 6d57078854b8f8d459b213f0b72f5345, type: 3}
+    audioClipVolume: 0.5
+    audioClipPitch: 1
+  - AudioID: TakeDamage2
+    audioClip: {fileID: 8300000, guid: a6d0058ef0d7a8342a1d64c8555ade7e, type: 3}
+    audioClipVolume: 0.5
+    audioClipPitch: 1
+  DeathAudioCollection:
+  - AudioID: TakeDamage1
+    audioClip: {fileID: 8300000, guid: 6d57078854b8f8d459b213f0b72f5345, type: 3}
+    audioClipVolume: 0.5
+    audioClipPitch: 1
+  - AudioID: TakeDamage2
+    audioClip: {fileID: 8300000, guid: a6d0058ef0d7a8342a1d64c8555ade7e, type: 3}
+    audioClipVolume: 0.5
+    audioClipPitch: 1
   takeDamageSoundFX: {fileID: 8300000, guid: 26c31d41b67123d44b0725ccdad1d9c6, type: 3}
   takeDamageSoundFXVolume: 0.15
   takeDamageSoundFXPitch: 1
@@ -14900,9 +14918,12 @@ MonoBehaviour:
   AttackAnimationDelay: 0
   AttackRadiusParticles: {fileID: 8391387556729369424}
   AttackParticles: {fileID: 4713612044779692482}
-  attackSoundFX: {fileID: 8300000, guid: 218f432f7e81d1b4984f7bbcf51c371d, type: 3}
+  attackSoundFX: {fileID: 8300000, guid: 7e65fa36c0aa01b4c983eeafbf971ab5, type: 3}
   attackSoundFXVolume: 0.6
   attackSoundFXPitch: 1
+  playerSpottedSoundFX: {fileID: 8300000, guid: a9fb8e5375bd69e4ea0df171d85c5fc4, type: 3}
+  playerSpottedSoundFXVolume: 0.4
+  playerSpottedSoundFXPitch: 0.8
 --- !u!4 &3405320412676706808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0e733801e3c3feb45b3c5b34aa73060d, type: 3}

@@ -16,6 +16,9 @@ public class TreeChopBridge : MonoBehaviour, IDamagable
 
     public bool PlayerCanStomp { get; set; }
 
+    public AudioCollection[] TreeHitAudioCollection;
+    public AudioCollection[] TreeChoppedAudioCollection;
+
     int currentStage;
     float currentHealth;
     bool finished;
@@ -26,6 +29,7 @@ public class TreeChopBridge : MonoBehaviour, IDamagable
         if (attackTypes.Contains(AttackType.Chop))
         {
             currentHealth -= amount;
+            SoundFXManager.instance.PlayRandomSoundCollection(transform, TreeHitAudioCollection);
             if (currentHealth <= 0)
             {
                 if (currentStage < treeStages.Count - 1)
@@ -45,6 +49,8 @@ public class TreeChopBridge : MonoBehaviour, IDamagable
                     finishedEvent?.Invoke();
                     finished = true;
                     print("finished");
+
+                    SoundFXManager.instance.PlayRandomSoundCollection(transform, TreeChoppedAudioCollection);
                 }
             }
             
