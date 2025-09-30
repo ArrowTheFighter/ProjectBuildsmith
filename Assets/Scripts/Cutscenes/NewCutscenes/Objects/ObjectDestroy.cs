@@ -1,15 +1,23 @@
 using UnityEngine;
 
-public class ObjectDestroy : MonoBehaviour
+public class ObjectDestroy : MonoBehaviour, ISkippable
 {
     public GameObject objectToDestroy;
     public ParticleSystem destroyParticles;
     public void DestroyObject()
     {
-        if (destroyParticles != null)
+        // if (destroyParticles != null)
+        // {
+        //     destroyParticles.Play();
+        // }
+        if (objectToDestroy != null)
         {
-            destroyParticles.Play();
+            Destroy(objectToDestroy);
         }
-        Destroy(objectToDestroy);
+    }
+
+    public void Skip()
+    {
+        DestroyObject();
     }
 }

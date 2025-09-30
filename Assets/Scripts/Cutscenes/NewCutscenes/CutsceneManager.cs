@@ -23,8 +23,10 @@ public class CutsceneManager : MonoBehaviour
             Destroy(instance);
         }
         instance = this;
+
     }
 
+    
 
     public void StartCutscene(CutsceneData cutsceneData)
     {
@@ -41,11 +43,13 @@ public class CutsceneManager : MonoBehaviour
             characterMovement.rb.isKinematic = true;
         }
         GameplayUtils.instance.HideUI();
+        GameplayUtils.instance.SetCanPause(false);
         GoToNextPoint();
     }
 
     void GoToNextPoint()
     {
+        if (!cutsceneIsRunning) return;
         if (currentPoint > currentData.cameraPoints.Length - 1)
         {
             EndCutscene();
@@ -63,7 +67,7 @@ public class CutsceneManager : MonoBehaviour
     {
         yield return new WaitForSeconds(cutsceneEvent.DelayFromPoint);
         cutsceneEvent.pointEvent?.Invoke();
-     }
+    }
 
     void EndCutscene()
     {
@@ -76,8 +80,47 @@ public class CutsceneManager : MonoBehaviour
         }
         GameplayUtils.instance.ShowUI();
         cutsceneCam.gameObject.SetActive(false);
-     }
+        cutsceneIsRunning = false;
 
+        GameplayUtils.instance.SetCanPause(true);
+        
+    }
+
+
+    public void SkipCutscene()
+    {
+        if (!cutsceneIsRunning) return;
+
+        // Kill any active tweens
+        DOTween.Kill(CameraTransform);
+
+        // Stop any coroutines (delayed events, etc.)
+        StopAllCoroutines();
+
+        // Run all cutscene events instantly
+        foreach (var point in currentData.cameraPoints)
+        {
+            if (point.cutsceneEvent?.pointEvent != null)
+            {
+                int count = point.cutsceneEvent.pointEvent.GetPersistentEventCount();
+                for (int i = 0; i < count; i++)
+                {
+                    var target = point.cutsceneEvent.pointEvent.GetPersistentTarget(i) as ISkippable;
+                    if (target != null)
+                    {
+                        target.Skip();
+                    }
+                    else
+                    {
+                        // if not ISkippable, just invoke normally
+                        point.cutsceneEvent.pointEvent.Invoke();
+                    }
+                }
+            }
+        }
+
+        EndCutscene();
+    }
 
 
 }
@@ -104,4 +147,4 @@ public class CutsceneEvent
 {
     public UnityEvent pointEvent;
     public float DelayFromPoint;
- }
+}

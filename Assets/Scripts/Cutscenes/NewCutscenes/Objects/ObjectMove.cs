@@ -2,9 +2,10 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ObjectMove : MonoBehaviour
+public class ObjectMove : MonoBehaviour, ISkippable
 {
     public Vector3 endOffset;
+    Vector3 startPos;
     public Transform endTransform;
     public float duration;
     public Ease ease;
@@ -12,6 +13,41 @@ public class ObjectMove : MonoBehaviour
 
     public GameObject displayObj;
 
+    void OnEnable()
+    {
+        startPos = transform.position;
+    }
+
+    public void Skip()
+    {
+        DOTween.Kill(transform);
+        if (endTransform != null)
+        {
+            transform.position = endTransform.position;
+        }
+        else
+        {
+            transform.position = startPos + endOffset;
+        }
+
+        if (finishedEvent != null)
+        {
+            int count = finishedEvent.GetPersistentEventCount();
+            for (int i = 0; i < count; i++)
+            {
+                var target = finishedEvent.GetPersistentTarget(i) as ISkippable;
+                if (target != null)
+                {
+                    target.Skip();
+                }
+                else
+                {
+                    // if not ISkippable, just invoke normally
+                    finishedEvent.Invoke();
+                }
+            }
+        }
+    }
 
     public void StartMove()
     {

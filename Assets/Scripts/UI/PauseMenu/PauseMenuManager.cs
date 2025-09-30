@@ -12,12 +12,20 @@ public class PauseMenuManager : MonoBehaviour
 
     void PauseMenuToggle()
     {
+        print("trying to pause");
         // Fixes a bug that causes the first time opening the pause menu to close right away
         if (lastPressedTime > Time.realtimeSinceStartup)
         {
             return;
         }
-        lastPressedTime = Time.realtimeSinceStartup + 0.1f;
-        GameplayUtils.instance.Toggle_Pause_Menu();
+        lastPressedTime = Time.realtimeSinceStartup + 0.15f;
+        if (CutsceneManager.instance.cutsceneIsRunning)
+        {
+            CutsceneManager.instance.SkipCutscene();
+        }
+        else
+        {
+            GameplayUtils.instance.Toggle_Pause_Menu();
+        }
      }
 }
