@@ -13,6 +13,8 @@ public class DashAbility : PlayerAbility
     float lastTimeDashed;
     float dontDash;
     bool dashButtonPressed;
+    float lastSlopeForce;
+    Vector3 lastGroundNormal;
     [SerializeField] float dashForce = 20;
     [SerializeField] float dashUpForce = 25;
     [SerializeField] float slideJumpForce = 22;
@@ -25,7 +27,7 @@ public class DashAbility : PlayerAbility
     [SerializeField] float extraGravity = 40;
     [SerializeField] float slideDuration = 0.25f;
     [SerializeField] float slideJumpDuration = 0.35f;
-    [SerializeField] float slideTurnAmount = 90f;
+    [SerializeField] float slideTurnAmount = 180f;
     [SerializeField] float maxFallSpeed = 50;
 
     public override void Initialize(CharacterMovement player)
@@ -71,7 +73,7 @@ public class DashAbility : PlayerAbility
                 float maxSlopeDot = Mathf.Cos(characterMovement.maxSlopeAngle * Mathf.Deg2Rad);
                 if (Vector3.Dot(raycastHit.normal, Vector3.up) < maxSlopeDot)
                 {
-                    if (!isBonking && !characterMovement.grounded && !slideJumping)
+                    if (!isBonking && !slideJumping)
                     {
                         Bonk();
                     }
@@ -88,7 +90,7 @@ public class DashAbility : PlayerAbility
                     //StartCoroutine(SlideCooldown());
                     groundSliding = true;
 
-                    characterMovement.rb.linearDamping = 2;
+                    characterMovement.rb.linearDamping = 5;
                 }
                 if (groundSliding && !slideJumping)
                 {
@@ -109,44 +111,83 @@ public class DashAbility : PlayerAbility
                         NPCFollowTargetInput followTargetInput = (NPCFollowTargetInput)characterMovement.characterInput;
                         if (followTargetInput.ForceSliding)
                         {
-                            characterMovement.rb.linearDamping = 0;
+                            characterMovement.rb.linearDamping = 5;
                         }
                         else
                         {
                             characterMovement.rb.linearDamping = 5;
                         }
                     }
-                    else if (characterMovement.characterInput.GetMovementInput() != Vector3.zero)
+                    else if (characterMovement.characterInput.GetDashInput() && !isBonking)
                     {
+                        RaycastHit hit;
+                        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+                        {
+                            Vector3 groundNormal = hit.normal;
+                            Vector3 slopeDirection = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
+
+                            Vector3 MoveDirection = Vector3.ProjectOnPlane(characterMovement.orientation.forward, groundNormal).normalized;
+                            lastGroundNormal = MoveDirection;
+                            float alignment = Vector3.Dot(transform.forward, slopeDirection);
+
+                            float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
+
+                            float clampedAngle = Mathf.Clamp(slopeAngle, 5f,35f);
+
+                            float t = Mathf.InverseLerp(0f, 35f, clampedAngle);
+
+                            float forceMultiplier;
+
+
+                            if (alignment > 0)
+                            {
+                                forceMultiplier = Mathf.Lerp(0f, 50f, t);
+                                characterMovement.rb.AddForce(MoveDirection * 150);
+                            }
+                            else
+                            {
+                                forceMultiplier = Mathf.Lerp(0f, 25f, t);
+                            }
+
+                            lastSlopeForce = forceMultiplier;
+
+                            print(forceMultiplier);
+                            characterMovement.rb.AddForce(MoveDirection * forceMultiplier);
+                        }
+
+
+
+
                         Vector3 camForward = Camera.main.transform.forward;
                         camForward.y = 0;
 
-                        float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.forward);
-                        if (dot < -0.4f)
-                        {
-                            characterMovement.rb.linearVelocity = Vector3.Lerp(characterMovement.rb.linearVelocity, Vector3.zero, 0.1f);
-                        }
-                        if (characterMovement.characterInput.GetDashInput())
-                        // (dot > 0.4f)
-                        {
-                            characterMovement.rb.linearDamping = .4f;
-                        }
-                        else
-                        {
-                            characterMovement.rb.linearDamping = 3;
-                        }
+                        // float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.forward);
+                        // if (dot < -0.4f)
+                        // {
+                        //     characterMovement.rb.linearVelocity = Vector3.Lerp(characterMovement.rb.linearVelocity, Vector3.zero, 0.1f);
+                        // }
+                        // if (characterMovement.characterInput.GetDashInput())
+                        // // (dot > 0.4f)
+                        // {
+                        //     characterMovement.rb.linearDamping = 5f;
+                        // }
+                        // else
+                        // {
+                        //     characterMovement.rb.linearDamping = 5;
+                        // }
                         if (characterMovement.rb.linearVelocity.magnitude > 0.01)
                         {
-                            float turnAmount = 0;
+                            //float turnAmount = 0;
                             float dotRight = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.right);
-                            if (dotRight > 0.1f)
-                            {
-                                turnAmount = slideTurnAmount;
-                            }
-                            else if (dotRight < -0.1f)
-                            {
-                                turnAmount = -slideTurnAmount;
-                            }
+                            float turnAmount = slideTurnAmount * dotRight;
+                            // if (dotRight > 0.1f)
+                            // {
+                            //     turnAmount = slideTurnAmount;
+                            // }
+                            // else if (dotRight < -0.1f)
+                            // {
+                            //     turnAmount = -slideTurnAmount;
+                            // }
                             if (turnAmount != 0)
                             {
                                 Quaternion turn = Quaternion.AngleAxis(turnAmount * Time.fixedDeltaTime, Vector3.up);
@@ -186,6 +227,12 @@ public class DashAbility : PlayerAbility
             }
             else
             {
+                if (lastSlopeForce > 10f)
+                {
+                    print($"Last slope force = {lastSlopeForce}");
+                    characterMovement.rb.AddForce(lastGroundNormal * lastSlopeForce);
+                    lastSlopeForce -= 0.5f;
+                }
                 if (isBonking)
                 {
                     characterMovement.rb.linearDamping = 0;
@@ -365,6 +412,8 @@ public class DashAbility : PlayerAbility
     void Dash()
     {
         if (characterMovement.MovementControlledByAbility) return;
+        lastSlopeForce = 0;
+        lastGroundNormal = Vector3.zero;
         characterMovement.OnDash?.Invoke();
         lastTimeDashed = Time.time + 0.1f;
         dashDirection = Vector3.ProjectOnPlane(characterMovement.orientation.forward, characterMovement.GravityDir);
