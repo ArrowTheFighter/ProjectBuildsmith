@@ -4,7 +4,7 @@ using UnityEngine;
 public class DashAbility : PlayerAbility
 {
     bool canDash;
-    bool isDashing;
+    public bool isDashing;
     bool groundSliding;
     bool slideJumping;
     bool isBonking;
@@ -98,7 +98,7 @@ public class DashAbility : PlayerAbility
                     Vector3 HorVel = new Vector3(characterMovement.rb.linearVelocity.x, 0, characterMovement.rb.linearVelocity.z);
                     Vector3 platformVel = new Vector3(characterMovement.platformDelta.x, 0, characterMovement.platformDelta.z);
                     Vector3 adjustedVel = HorVel - platformVel;
-                    if (adjustedVel.magnitude < 5f && !slideJumping)
+                    if (adjustedVel.magnitude < 5f && !slideJumping && !characterMovement.characterInput.GetDashInput())
                     {
                         if (Time.time - lastTimeDashed > 0.75f)
                         {
@@ -128,7 +128,7 @@ public class DashAbility : PlayerAbility
 
                             Vector3 MoveDirection = Vector3.ProjectOnPlane(characterMovement.orientation.forward, groundNormal).normalized;
                             lastGroundNormal = MoveDirection;
-                            float alignment = Vector3.Dot(transform.forward, slopeDirection);
+                            float alignment = Vector3.Dot(characterMovement.orientation.forward, slopeDirection);
 
                             float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
 
@@ -178,7 +178,7 @@ public class DashAbility : PlayerAbility
                         if (characterMovement.rb.linearVelocity.magnitude > 0.01)
                         {
                             //float turnAmount = 0;
-                            float dotRight = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.right);
+                            float dotRight = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.orientation.right);
                             float turnAmount = slideTurnAmount * dotRight;
                             // if (dotRight > 0.1f)
                             // {

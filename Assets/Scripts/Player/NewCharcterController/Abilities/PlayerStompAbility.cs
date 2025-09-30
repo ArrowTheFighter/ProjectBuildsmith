@@ -41,6 +41,13 @@ public class PlayerStompAbility : PlayerAbility
                             //characterMovement.rb.linearVelocity = new Vector3(vel.x, 15 + extraForce, vel.z);
                             characterMovement.rb.AddForce(new Vector3(vel.x, 15 + extraForce, vel.z), ForceMode.Impulse);
                             playerStompCooldown = Time.time + 0.2f;
+                            foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+                            {
+                                if (playerAbility is DashAbility dashAbility)
+                                {
+                                    dashAbility.ResetAbility();
+                                }
+                            }
                         }
                     }
                 }else if (target.transform.parent != null && target.transform.parent.TryGetComponent(out damagable))
@@ -55,6 +62,13 @@ public class PlayerStompAbility : PlayerAbility
                             characterMovement.rb.AddForce(new Vector3(vel.x, 15 + extraForce, vel.z), ForceMode.Impulse);
                             //characterMovement.rb.linearVelocity = new Vector3(vel.x, 15 + extraForce, vel.z);
                             playerStompCooldown = Time.time + 0.2f;
+                            foreach (PlayerAbility playerAbility in characterMovement.playerAbilities)
+                            {
+                                if (playerAbility is DashAbility dashAbility)
+                                {
+                                    dashAbility.ResetAbility();   
+                                }    
+                            }
                         }
                     }
                 }
