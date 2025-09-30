@@ -11112,6 +11112,38 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.52569914, y: 1.1047677, z: 0.005704671}
     m_Extent: {x: 0.44555432, y: 0.1409804, z: 0.16328782}
   m_DirtyAABB: 0
+--- !u!1 &4213673193008805167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1652311634695228399}
+  m_Layer: 7
+  m_Name: Orientation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1652311634695228399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213673193008805167}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6633586483140337893}
+  m_Father: {fileID: 7761975376654643713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4522199543574446376
 GameObject:
   m_ObjectHideFlags: 0
@@ -11214,7 +11246,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6633586483140337893}
+  - {fileID: 1652311634695228399}
   - {fileID: 3369655108826384575}
   - {fileID: 7956660880481570790}
   - {fileID: 7187604548784361840}
@@ -11277,7 +11309,7 @@ MonoBehaviour:
     m_Bits: 822
   grounded: 0
   capsuleCollider: {fileID: 7922086010231133117}
-  orientation: {fileID: 6633586483140337893}
+  orientation: {fileID: 1652311634695228399}
   rb: {fileID: 0}
   playerAbilities: []
   playerAnimationController: {fileID: 0}
@@ -11312,6 +11344,7 @@ MonoBehaviour:
   wallCheckLayersIgnore:
     serializedVersion: 2
     m_Bits: 6070
+  forwardDir: {x: 0, y: 0, z: 0}
 --- !u!114 &2572887997987626870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11472,6 +11505,10 @@ MonoBehaviour:
   item_Requirements: []
   NPCCanInteract: 1
   MarkerParticle: {fileID: 4321131716949761933}
+  blendTime: 4
+  NPCCamera: {fileID: 0}
+  TurnTowardsPlayer: 0
+  TurnBackToOrigin: 0
 --- !u!136 &4494476586334733913
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -11515,6 +11552,9 @@ MonoBehaviour:
   WorldBottom: 0
   CanReset: 1
   alwaysUseCheckpoints: 0
+  onResetEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5155165759434603823
 GameObject:
   m_ObjectHideFlags: 0
@@ -11635,7 +11675,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5560720760774244626}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -11650,7 +11690,7 @@ Transform:
   - {fileID: 8149057301860939771}
   - {fileID: 117059898926094299}
   - {fileID: 1553553414916953022}
-  m_Father: {fileID: 7761975376654643713}
+  m_Father: {fileID: 1652311634695228399}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &748308474800136416
 Animator:

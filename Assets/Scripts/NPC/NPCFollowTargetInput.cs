@@ -39,7 +39,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 
     public bool GetDashInput()
     {
-        return false;
+        return ForceSliding;
     }
 
     public bool GetJumpInput()

@@ -106,19 +106,19 @@ public class DashAbility : PlayerAbility
                             EndDive();
                         }
                     }
-                    if (characterMovement.characterInput is NPCFollowTargetInput)
-                    {
-                        NPCFollowTargetInput followTargetInput = (NPCFollowTargetInput)characterMovement.characterInput;
-                        if (followTargetInput.ForceSliding)
-                        {
-                            characterMovement.rb.linearDamping = 5;
-                        }
-                        else
-                        {
-                            characterMovement.rb.linearDamping = 5;
-                        }
-                    }
-                    else if (characterMovement.characterInput.GetDashInput() && !isBonking)
+                    // if (characterMovement.characterInput is NPCFollowTargetInput)
+                    // {
+                    //     NPCFollowTargetInput followTargetInput = (NPCFollowTargetInput)characterMovement.characterInput;
+                    //     if (followTargetInput.ForceSliding)
+                    //     {
+                    //         characterMovement.rb.linearDamping = 5;
+                    //     }
+                    //     else
+                    //     {
+                    //         characterMovement.rb.linearDamping = 5;
+                    //     }
+                    // }
+                    if (characterMovement.characterInput.GetDashInput() && !isBonking)
                     {
                         RaycastHit hit;
                         if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
