@@ -109,12 +109,10 @@ public class DashAbility : PlayerAbility
                         NPCFollowTargetInput followTargetInput = (NPCFollowTargetInput)characterMovement.characterInput;
                         if (followTargetInput.ForceSliding)
                         {
-                            print("forceSliding");
                             characterMovement.rb.linearDamping = 0;
                         }
                         else
                         {
-                            print("not force sliding");
                             characterMovement.rb.linearDamping = 5;
                         }
                     }
@@ -159,8 +157,6 @@ public class DashAbility : PlayerAbility
                     }
                     if (characterMovement.rb.linearVelocity.magnitude > 0.1f && !isBonking)
                     {
-                        print("turning playing for dive");
-                        print(characterMovement.rb.linearVelocity.normalized);
                         characterMovement.orientation.forward = Vector3.Lerp(characterMovement.orientation.forward, characterMovement.rb.linearVelocity.normalized, 0.2f);
                     }
                     Collider[] colliders = Physics.OverlapSphere(transform.position, 1);

@@ -12,6 +12,7 @@ public class BatEnemy : EnemyBase
     float speed;
     bool waitingForNewPos;
     bool canAttack;
+    float startingHealth;
 
     enum AttackingStates { Roaming, Spotted, Charging, Cooldown }
     AttackingStates enemyState;
@@ -38,6 +39,12 @@ public class BatEnemy : EnemyBase
 
     [Header("Attacks")]
     public float chargeAttackCooldown = 1.5f;
+
+    void Awake()
+    {
+        startingHealth = Health;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,9 +58,11 @@ public class BatEnemy : EnemyBase
 
     void OnEnable()
     {
+        PlayerTransform = null;
+        Health = startingHealth;
+        enemyState = AttackingStates.Roaming;
         StartCoroutine(CheckForPlayerRoutine());
         StartCoroutine(getNewTargetPos(0));
-        enemyState = AttackingStates.Roaming;
     }
 
 
@@ -64,17 +73,30 @@ public class BatEnemy : EnemyBase
             SoundFXManager.instance.PlayRandomSoundCollection(transform, PlayerSpottedAudioCollection);
             enemyState = AttackingStates.Spotted;
             StartCoroutine(SpottedToChargeDelay(2));
-         }
+        }
     }
 
     void PlayerLost()
     {
+        if (enemyState == AttackingStates.Charging || enemyState == AttackingStates.Cooldown)
+        {
+            print("resseting bat stuff");
+            charging = false;
+            canAttack = false;
+
+            ChargingParticles.Stop();
+            animator.Play("CharacterArmature|Flying_Idle");
+        }
         enemyState = AttackingStates.Roaming;
-     }
+    }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (PlayerTransform == null && enemyState != AttackingStates.Roaming)
+        {
+            PlayerLost();
+        }
         switch (enemyState)
         {
             case AttackingStates.Roaming:
@@ -110,7 +132,7 @@ public class BatEnemy : EnemyBase
                 break;
 
             case AttackingStates.Charging:
-                if (PlayerTransform == null) return;
+                
                 if (!charging)
                 {
                     charging = true;

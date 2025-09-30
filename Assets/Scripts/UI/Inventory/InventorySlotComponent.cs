@@ -36,7 +36,6 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
     void HandleSelectionChange(GameObject _gameObject)
     {
-        print("selection changed");
         if (UIInputHandler.instance.currentScheme == "Gamepad" && gameObject == _gameObject)
         {
             if (!Selected)

@@ -75,7 +75,6 @@ public class MouseSlot : MonoBehaviour
         // -- Drop item if clicking off the ui with an item stack --
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            print("left clicked");
             if (!inventorySlotComponent.inventorySlot.isEmpty)
             {
                 print(IsPointerOverUI());

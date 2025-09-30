@@ -39,7 +39,6 @@ public class UIIconHandler : MonoBehaviour
             //Debug.Log($"Device changed: {context.control.device.name}");
             if (CurrentControlDevice != context.control.device.name)
             {
-                print("changing control devices");
                 CurrentControlDevice = context.control.device.name;
                 InputDeviceChanged?.Invoke();
             }
