@@ -203,6 +203,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
                             GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.MaxStackSize, true);
                         }
+                        return;
                     }
                     // -- If the clicked slot is not a full stack
                     if (slotStack.Amount < slotStack.MaxStackSize)
@@ -266,7 +267,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
             if (GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.isEmpty)
             {
                 // -- If the clicked slot has more then 1 item split it in half
-                if (inventorySlot.inventoryItemStack.Amount > 1)
+                if (inventorySlot.inventoryItemStack.Amount > 1 && PlayerCanPlace)
                 {
                     int splitAmount = inventorySlot.inventoryItemStack.Amount / 2;
                     int remainingAmount = inventorySlot.inventoryItemStack.Amount - splitAmount;
@@ -298,7 +299,25 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                 // -- Mouse Slot and Clicked Slot both have the same type of item;
                 if (mouseStack.ID == slotStack.ID)
                 {
-                    if (slotStack.Amount < slotStack.MaxStackSize)
+                    if (!PlayerCanPlace)
+                    {
+                        if (mouseStack.Amount < mouseStack.MaxStackSize)
+                        {
+                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount + 1, true);
+
+                            if (slotStack.Amount == 1)
+                            {
+                                RemoveItemFromSlot(false);
+                            }
+                            else
+                            {
+                                GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount - 1, true);
+                            }
+                        }
+                        return;
+                        
+                    }
+                    if (slotStack.Amount < slotStack.MaxStackSize && PlayerCanPlace)
                     {
                         GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount + 1, true);
                         // -- If the mouse slot only has one item remove it;
@@ -313,6 +332,30 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                         }
 
                     }
+                    else
+                    {
+
+                        if (mouseStack.Amount + slotStack.Amount <= mouseStack.MaxStackSize)
+                        {
+                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount + slotStack.Amount, true);
+
+                            if (slotStack.Amount == 1)
+                            {
+                                RemoveItemFromSlot(false);
+                            }
+                            else
+                            {
+                                GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount - 1, true);
+                            }
+                        }
+                        else
+                        {
+                            int remainingSpace = mouseStack.MaxStackSize - mouseStack.Amount;
+                            int remainingItems = slotStack.Amount - remainingSpace;
+                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.MaxStackSize, true);
+                            GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, remainingItems, true);
+                        }
+                    }
                 }
                 // -- Swaping items
                 else
@@ -325,6 +368,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         // -- The clicked slot was empty --
         else
         {
+            if (!PlayerCanPlace) return;
             // -- The mouse has an item
             if (!GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.isEmpty)
             {

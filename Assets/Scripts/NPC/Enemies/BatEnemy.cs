@@ -21,6 +21,7 @@ public class BatEnemy : EnemyBase
 
     [Header("Particles")]
     public ParticleSystem ChargingParticles;
+    public ParticleSystem DizzyParticles;
 
     [Header("Visuals")]
     public Transform VisualsTransform;
@@ -86,6 +87,7 @@ public class BatEnemy : EnemyBase
 
             ChargingParticles.Stop();
             animator.Play("CharacterArmature|Flying_Idle");
+            DizzyParticles.Stop(false,ParticleSystemStopBehavior.StopEmittingAndClear);
         }
         enemyState = AttackingStates.Roaming;
     }
@@ -169,6 +171,7 @@ public class BatEnemy : EnemyBase
                 {
                     canAttack = false;
                     animator.Play("CharacterArmature|Flying_Idle");
+                    DizzyParticles.Play();
                     StartCoroutine(ChargeToCooldownDelay(chargeAttackCooldown));
                     speed = 0;
                     ChargingParticles.Stop();
@@ -209,6 +212,8 @@ public class BatEnemy : EnemyBase
     {
         runningEnumerator = true;
         yield return new WaitForSeconds(delay);
+
+        DizzyParticles.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
         TargetPos = getRandomPositionNearStart();
         TargetDir = (TargetPos - transform.position).normalized;
         charging = false;
