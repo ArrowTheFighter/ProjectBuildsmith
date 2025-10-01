@@ -72,6 +72,7 @@ public class ItemTitlePopupManager : MonoBehaviour
 
     public void ShowPopup(string item_name)
     {
+        if (!GameplayUtils.instance.inventoryManager.inventoryIsOpen) return;
         rectTransform.DOScale(1, 0.1f).From(0f).SetEase(Ease.InOutQuad);
         Textbox.text = item_name;
         canvasGroup.alpha = 1;
