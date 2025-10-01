@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: RepairBlacksmithQuest
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: RepairBlacksmithQuest
+  QuestName: Repair Blacksmith
+  Description: Help Caladin Repair his blacksmith crafting stations.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 6043923087670902881
+  - rid: 6043923087670902882
+  - rid: 6043923087670902883
+  - rid: 6043923087670902884
+  - rid: 6043923087670902885
+  - rid: 6043923087670902886
+  - rid: 6043923087670902887
+  - rid: 6043923087670902888
+  - rid: 6043923087670902889
+  - rid: 6043923087670902890
+  - rid: 6043923087670902891
+  - rid: 6043923087670902892
+  - rid: 6043923087670902893
+  references:
+    version: 2
+    RefIds:
+    - rid: 6043923087670902881
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Ask Gormak in the cave for a pickaxe.
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        Item_ID: borrowed_pickaxe
+        Item_Amount: 1
+    - rid: 6043923087670902882
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect 15 Stone from the Cave Island
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        Item_ID: stone
+        Item_Amount: 15
+    - rid: 6043923087670902883
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft 15 Stone Bricks
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 0
+        Item_ID: stone_brick
+        Item_Amount: 15
+    - rid: 6043923087670902884
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Repair the furnace
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 0
+        flag_id: FurnaceBuildingRepaired
+    - rid: 6043923087670902885
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Caladin
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 1
+        flag_id: BlacksmithTalkedAboutGettingAnvil
+    - rid: 6043923087670902886
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Ask Gormak for an anvil
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 2
+        flag_id: GormakTalkedAboutGettingAnvil
+    - rid: 6043923087670902887
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect the anvil from Gormak's old workshop
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 2
+        Item_ID: spare_anvil
+        Item_Amount: 1
+    - rid: 6043923087670902888
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Place the Spare Anvil next to Caladin
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 2
+        flag_id: BlacksmithAnvilReturned
+    - rid: 6043923087670902889
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Caladin
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 3
+        flag_id: BlacksmithTalkedAboutGettingIronItems
+    - rid: 6043923087670902890
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Ask townsfolk for spare iron
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 4
+        Item_ID: spare_iron_item
+        Item_Amount: 3
+    - rid: 6043923087670902891
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Smelt the Spare Iron Parts in the furnace.
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 4
+        Item_ID: iron_bar
+        Item_Amount: 3
+    - rid: 6043923087670902892
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft a pickaxe head at the anvil
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 4
+        Item_ID: pickaxe_head
+        Item_Amount: 1
+    - rid: 6043923087670902893
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft a pickaxe at the crafting table
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 4
+        Item_ID: pickaxe
+        Item_Amount: 1

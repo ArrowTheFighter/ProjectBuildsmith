@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: DialogueName16
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: DialogueName16
+  <Text>k__BackingField: Did Gormak in the cave give you the anvil yet?
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Where is Gormak?
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 4146c6ebdb4830949a7a4c89ba5ceadf, type: 2}
+  - <Text>k__BackingField: Nope
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e74a72c04ab9d554a9b1f5aa10923290, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  CloseDialog: 0

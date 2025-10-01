@@ -36,7 +36,18 @@ public class QuestDataEditor : Editor
         questData.QuestName = EditorGUILayout.TextField("Name", questData.QuestName);
         //questData.Description = EditorGUILayout.TextField("Description", questData.Description);
         EditorGUILayout.LabelField("Description");
-        questData.Description = EditorGUILayout.TextArea(questData.Description, GUILayout.MinHeight(40));
+
+
+
+        //questData.Description = EditorGUILayout.TextArea(questData.Description, GUILayout.MinHeight(40));
+
+        GUIStyle textAreaStyle = EditorStyles.textArea;
+        float minHeight = textAreaStyle.CalcHeight(new GUIContent(questData.Description), EditorGUIUtility.currentViewWidth - 46f);
+        //EditorGUILayout.LabelField(ObjectNames.NicifyVariableName(field.Name));
+        questData.Description = EditorGUILayout.TextArea(questData.Description, textAreaStyle, GUILayout.MinHeight(minHeight));
+        //field.SetValue(obj, newValue);
+
+
         questData.AutoPinQuest = EditorGUILayout.Toggle("Auto Pin Quest", questData.AutoPinQuest);
 
         GUILayout.Space(10);

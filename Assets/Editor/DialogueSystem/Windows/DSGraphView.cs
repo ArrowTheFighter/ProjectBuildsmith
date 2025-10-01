@@ -101,7 +101,7 @@ namespace DS.Windows
 
         private void AddManipulators()
         {
-            SetupZoom(ContentZoomer.DefaultMinScale, 2);
+            SetupZoom(0.1f, 6);
 
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(new SelectionDragger());
