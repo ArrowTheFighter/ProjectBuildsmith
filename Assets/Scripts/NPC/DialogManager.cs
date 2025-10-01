@@ -14,6 +14,7 @@ public class DialogManager : MonoBehaviour
     public TextFormater DialogTextFormater;
     [SerializeField] public GameObject DialogUI;
     public bool TextIsAnimating;
+    public List<ScriptableObject> ActiveChoices = new List<ScriptableObject>();
     public string text_box_text
     {
         get
@@ -72,6 +73,7 @@ public class DialogManager : MonoBehaviour
     public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker, bool UseLocalization = true)
     {
         UIInputHandler.instance.ClosedMenu();
+        ActiveChoices = new List<ScriptableObject>();
         for (int i = 0; i < Choices_Parent_Transform.childCount; i++)
         {
             Choices_Parent_Transform.GetChild(i).gameObject.SetActive(false);
@@ -104,6 +106,7 @@ public class DialogManager : MonoBehaviour
             choiceButton.dialogueChoiceData = data[i];
             choiceButton.dialogWorker = dialogWorker;
             UIInputHandler.instance.OpenedMenu();
+            ActiveChoices.Add(data[i].NextDialogue);
         }
     }
 

@@ -19,6 +19,7 @@ public class CraftingTableRecipeDisplay : MonoBehaviour
             if (transform.GetChild(i).TryGetComponent(out InventorySlotComponent inventorySlotComponent))
             {
                 slots.Add(inventorySlotComponent);
+                inventorySlotComponent.slotFilled += recipesBookManager.HideRecipeBook;
             }
         }
         foreach (CraftingRecipeData recipeData in GameplayUtils.instance.RecipeDatabase.recipes)

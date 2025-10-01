@@ -5,6 +5,7 @@ using DS.Data;
 using EasyTextEffects;
 using UnityEngine.UI;
 using Unity.Cinemachine;
+using System.Collections.Generic;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {
@@ -172,32 +173,26 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void GetAndShowNextDialog(ScriptableObject providedDialog = null)
     {
         if (StarterNode == null) return;
-        print("start node was not null");
         if (interactCooldown > Time.time) return;
-        print("Interact cooldown was fine");
         if (hasMarker) EnableMarker(false);
         //List<TextEffectStatus> textEffectStatus = textEffect.QueryEffectStatusesByTag(TextEffectType.Global, TextEffectEntry.TriggerWhen.Manual, "scale_text_in");
         if (DialogManager.instance.TextIsAnimating)
         {
-            print("text is animating");
             textEffect.StopManualEffects();
             DialogManager.instance.SetTextIsAnimating(false);
             return;
         }
         if (!GameplayUtils.instance.OpenDialogMenu()) return;
-        print("Dialog menu safe to open");
         if(providedDialog != null)
             print(providedDialog.name);
         bool nextDialogResult = GetNextDialog(providedDialog);
         if (nextDialogResult)
         {
-            print("got next dialog");
             ShowDialog();
             ResetTMPSubMeshes(DialogManager.instance.text_box);
             DialogManager.instance.text_box.ForceMeshUpdate();
             //textEffect.StopAllEffects();
             textEffect.Refresh();
-            print("Starting manual effects");
             textEffect.StartManualEffects();
             DialogManager.instance.SetTextIsAnimating(true);
             interactCooldown = Time.time + 0.05f;
@@ -239,7 +234,13 @@ public class DialogWorker : MonoBehaviour, IInteractable
         if (currentDialogSO is DSDialogueSO)
         {
             DSDialogueSO dialogueSO = (DSDialogueSO)currentDialogSO;
-            if (dialogueSO.Choices.Count <= 1)
+
+            if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.MultipleChoice && DialogManager.instance.ActiveChoices.Count > 0)
+            {
+                tempDialogSO = DialogManager.instance.ActiveChoices[0];
+                DialogManager.instance.ActiveChoices = new List<ScriptableObject>();
+            }
+            else if (dialogueSO.Choices.Count <= 1)
             {
                 tempDialogSO = dialogueSO.Choices[0].NextDialogue;
             }
