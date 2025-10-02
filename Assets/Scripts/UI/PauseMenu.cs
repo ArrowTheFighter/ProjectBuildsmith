@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] GameObject SettingsScreen;
     [SerializeField] Button ResumeButton;
     [SerializeField] Button SettingsBackButton;
+    [SerializeField] GameObject DiscordButton;
 
     [SerializeField] GameObject[] settingsTabs;
 
@@ -15,6 +16,7 @@ public class PauseMenu : MonoBehaviour
     {
         SettingsScreen.SetActive(false);
         MainScreen.SetActive(true);
+        DiscordButton.SetActive(true);
         UIInputHandler.instance.ClosedMenu();
         UIInputHandler.instance.defaultButton = ResumeButton.gameObject;
         UIInputHandler.instance.OpenedMenu();
@@ -24,6 +26,7 @@ public class PauseMenu : MonoBehaviour
     {
         MainScreen.SetActive(false);
         SettingsScreen.SetActive(true);
+        DiscordButton.SetActive(false);
         GetComponent<SettingsMenuManager>().OpenControlsMenu();
         UIInputHandler.instance.defaultButton = SettingsBackButton.gameObject;
         UIInputHandler.instance.ClosedMenu();

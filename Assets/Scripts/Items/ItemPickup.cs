@@ -15,7 +15,7 @@ public class ItemPickup : MonoBehaviour
     float cantPickupTime;
     [SerializeField] public float respawn_time = -1;
     [SerializeField] public float despawn_time = -1;
-    float time_to_despawn;
+    float time_when_spawned;
     bool markedAsDestoryed;
     public LayerMask layersToIgnore;
     public UnityEvent onPickedUp;
@@ -23,6 +23,7 @@ public class ItemPickup : MonoBehaviour
     void Awake()
     {
         cantPickupTime = Time.time + cantPickupDelay;
+        time_when_spawned = Time.time + 0.15f;
         if (respawn_time == -1 && despawn_time != -1)
         {
             StartCoroutine(DespawnItem());
@@ -105,8 +106,13 @@ public class ItemPickup : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (((1 << collision.gameObject.layer) & layersToIgnore) == 0)
+        if (time_when_spawned > Time.time)
         {
+            return;
+        }
+        else if (((1 << collision.gameObject.layer) & layersToIgnore) == 0)
+        {
+            print(collision.gameObject.name);
             GetComponent<Rigidbody>().linearDamping = 5;
             GetComponent<Rigidbody>().useGravity = false;
         }
