@@ -1,5 +1,6 @@
 
 using DG.Tweening;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CatapultLaunch : PlayerAbility
@@ -19,6 +20,12 @@ public class CatapultLaunch : PlayerAbility
         }
         characterMovement.playerAnimationController.animator.CrossFade("CatapultRoll", 0.1f);
         PlayerParticlesManager.instance.PlayParticleByID("SpeedLines");
+
+        CinemachineCamera cam = characterMovement.GetComponent<CameraManager>().axisController.GetComponent<CinemachineCamera>();
+        DOVirtual.Float(cam.Lens.FieldOfView, 70, 0.5f, (context) =>
+        {
+            cam.Lens.FieldOfView = context;
+        });
         //initalVelocity = characterMovement.rb.linearVelocity;
     }
 
@@ -38,6 +45,12 @@ public class CatapultLaunch : PlayerAbility
 
 
             PlayerParticlesManager.instance.GetParticleByID("SpeedLines").Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            CinemachineCamera cam = characterMovement.GetComponent<CameraManager>().axisController.GetComponent<CinemachineCamera>();
+            DOVirtual.Float(cam.Lens.FieldOfView, 60, 0.5f, (context) =>
+            {
+                cam.Lens.FieldOfView = context;
+            });
 
             characterMovement.playerAnimationController.animator.CrossFade("WalkingBlend", 0.1f);
 

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class CameraManager : MonoBehaviour
 {
     PlayerInput playerInput;
-    [SerializeField] CinemachineInputAxisController axisController;
+    [SerializeField] public CinemachineInputAxisController axisController;
     [SerializeField] float base_speed_X = 200;
     [SerializeField] float base_speed_Y = -80;
     [SerializeField] float controller_percentage = 0.125f;
