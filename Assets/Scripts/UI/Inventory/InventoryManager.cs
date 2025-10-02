@@ -454,7 +454,11 @@ public class InventoryManager : MonoBehaviour
                     remainingAmount -= inventorySlots[i].inventoryItemStack.Amount;
                     inventorySlots[i].inventorySlotComponent.RemoveItemFromSlot(false);
                 }
-                if (remainingAmount <= 0) return true;
+                if (remainingAmount <= 0)
+                {
+                    OnInventoryUpdated?.Invoke();
+                    return true;
+                } 
             }
         }
         OnInventoryUpdated?.Invoke();

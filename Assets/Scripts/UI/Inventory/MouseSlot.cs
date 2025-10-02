@@ -81,6 +81,7 @@ public class MouseSlot : MonoBehaviour
                 if (!IsPointerOverUI())
                 {
                     inventorySlotComponent.RemoveItemFromSlot(true);
+                    GameplayUtils.instance.inventoryManager.OnInventoryUpdated?.Invoke();
                 }
             }
         }
@@ -96,11 +97,13 @@ public class MouseSlot : MonoBehaviour
                         ItemData itemData = GameplayUtils.instance.GetItemDataByID(inventorySlotComponent.inventorySlot.inventoryItemStack.ID);
                         GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(itemData, inventorySlotComponent.inventorySlot.inventoryItemStack.Amount - 1, true);
                         inventorySlotComponent.DropItem(1);
+                        GameplayUtils.instance.inventoryManager.OnInventoryUpdated?.Invoke();
                     }
                     // if there is only one item left drop it and remove from inventory
                     else
                     {
                         inventorySlotComponent.RemoveItemFromSlot(true);
+                        GameplayUtils.instance.inventoryManager.OnInventoryUpdated?.Invoke();
                     }
                 }
             }

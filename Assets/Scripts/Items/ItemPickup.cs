@@ -108,6 +108,7 @@ public class ItemPickup : MonoBehaviour
         if (((1 << collision.gameObject.layer) & layersToIgnore) == 0)
         {
             GetComponent<Rigidbody>().linearDamping = 5;
+            GetComponent<Rigidbody>().useGravity = false;
         }
         
     }

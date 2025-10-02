@@ -43,7 +43,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6255366591577745021}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 53156e02445e06c4a82b3f49c856a2e0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -103,6 +103,9 @@ MonoBehaviour:
   layersToIgnore:
     serializedVersion: 2
     m_Bits: 65536
+  onPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5068911953624632504
 MonoBehaviour:
   m_ObjectHideFlags: 0
