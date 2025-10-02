@@ -17,6 +17,7 @@ public class CatapultLaunch : PlayerAbility
             longFallReset.CanReset = false;
         }
         characterMovement.playerAnimationController.animator.CrossFade("CatapultRoll", 0.1f);
+        PlayerParticlesManager.instance.PlayParticleByID("SpeedLines");
         //initalVelocity = characterMovement.rb.linearVelocity;
     }
 
@@ -33,6 +34,9 @@ public class CatapultLaunch : PlayerAbility
             }
             characterMovement.MovementControlledByAbility = false;
             characterMovement.RemoveAbility<CatapultLaunch>();
+
+
+            PlayerParticlesManager.instance.GetParticleByID("SpeedLines").Stop(false,ParticleSystemStopBehavior.StopEmittingAndClear);
 
             characterMovement.playerAnimationController.animator.CrossFade("WalkingBlend", 0.1f);
         }
