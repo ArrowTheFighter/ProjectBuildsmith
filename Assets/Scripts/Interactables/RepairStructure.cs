@@ -19,7 +19,11 @@ public class RepairStructure : MonoBehaviour, IInteractable
 
     bool finished = false;
 
+    public float ScaleInDuration = 0.9f;
+    public Ease ScaleInEase = Ease.OutExpo;
     public Vector3 scaleInSize;
+    public float ScaleOutDuration = 0.3f;
+    public Ease ScaleOutEase = Ease.InOutExpo;
     public Vector3 scaleOutSize;
 
     public string flag_name;
@@ -62,7 +66,10 @@ public class RepairStructure : MonoBehaviour, IInteractable
         Destroy(HologramStructure);
         FinishedStructure.SetActive(true);
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(FinishedStructure.transform.DOScale(scaleInSize, 0.9f).SetEase(Ease.OutExpo)).Append(FinishedStructure.transform.DOScale(scaleOutSize, 0.3f).SetEase(Ease.InOutExpo));
+        sequence.Append(
+            FinishedStructure.transform.DOScale(scaleInSize, ScaleInDuration).SetEase(ScaleInEase))
+            .Append(
+                FinishedStructure.transform.DOScale(scaleOutSize, ScaleOutDuration).SetEase(ScaleOutEase));
         gameObject.SetActive(false);
     }
 
