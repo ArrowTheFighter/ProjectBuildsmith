@@ -1,4 +1,5 @@
 
+using DG.Tweening;
 using UnityEngine;
 
 public class CatapultLaunch : PlayerAbility
@@ -36,9 +37,15 @@ public class CatapultLaunch : PlayerAbility
             characterMovement.RemoveAbility<CatapultLaunch>();
 
 
-            PlayerParticlesManager.instance.GetParticleByID("SpeedLines").Stop(false,ParticleSystemStopBehavior.StopEmittingAndClear);
+            PlayerParticlesManager.instance.GetParticleByID("SpeedLines").Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
 
             characterMovement.playerAnimationController.animator.CrossFade("WalkingBlend", 0.1f);
+
+            float tweenDuration = 0.15f;
+            characterMovement.orientation.DOScale(new Vector3(1.25f, 0.75f, 1.25f), tweenDuration).SetLoops(2, LoopType.Yoyo)
+                .OnComplete(() => { characterMovement.orientation.localScale = Vector3.one; });
+            characterMovement.orientation.DOLocalMoveY(-0.125f, tweenDuration).SetLoops(2, LoopType.Yoyo)
+                .OnComplete(() => { characterMovement.orientation.transform.localPosition = Vector3.zero; });
         }
     }
 
