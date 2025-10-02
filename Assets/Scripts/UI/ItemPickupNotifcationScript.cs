@@ -11,8 +11,6 @@ public class ItemPickupNotifcationScript : MonoBehaviour
     Tween fadeoutTween;
 
     [SerializeField] AudioClip pickupNotificationSoundFX;
-    [SerializeField] float pickupNotificationSoundFXVolume = 0.4f;
-    [SerializeField] float pickupNotificationSoundFXPitch = 1f;
     
 
     void Start()

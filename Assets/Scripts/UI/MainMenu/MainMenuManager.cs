@@ -11,6 +11,7 @@ public class MainMenuManager : MonoBehaviour
     [Header("Main Panel")]
     public GameObject MainPanel;
     public GameObject PlayButton;
+    public GameObject DiscordButton;
 
     [Header("Settings Panel")]
     public GameObject SettingsPanel;
@@ -65,12 +66,14 @@ public class MainMenuManager : MonoBehaviour
         MainPanel.SetActive(false);
         SettingsPanel.SetActive(false);
         CreditsPanel.SetActive(false);
+        DiscordButton.SetActive(false);
     }
 
     public void OpenMainPanel()
     {
         CloseAllPanels();
         MainPanel.SetActive(true);
+        DiscordButton.SetActive(true);
         UIInputHandler.instance.ClosedMenu();
         UIInputHandler.instance.defaultButton = PlayButton;
         UIInputHandler.instance.OpenedMenu();
@@ -114,6 +117,9 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         AudioMenu.SetActive(true);
         OpenAudioButton.interactable = false;
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = OpenAccessibilityButton.gameObject;
+        UIInputHandler.instance.OpenedMenu();
     }
 
     public void OpenControlsMenu()
@@ -121,6 +127,9 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         ControlsMenu.SetActive(true);
         OpenControlsButton.interactable = false;
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = OpenGraphicsButton.gameObject;
+        UIInputHandler.instance.OpenedMenu();
     }
 
     public void OpenGraphicsMenu()
@@ -128,6 +137,9 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         GraphicsMenu.SetActive(true);
         OpenGraphicsButton.interactable = false;
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = OpenAudioButton.gameObject;
+        UIInputHandler.instance.OpenedMenu();
     }
 
     public void OpenAccessibilityMenu()
@@ -135,5 +147,8 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         AccessibilityMenu.SetActive(true);
         OpenAccessibilityButton.interactable = false;
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = OpenControlsButton.gameObject;
+        UIInputHandler.instance.OpenedMenu();
     }
 }
