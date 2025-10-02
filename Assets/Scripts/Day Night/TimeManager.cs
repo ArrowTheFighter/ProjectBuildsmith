@@ -79,7 +79,7 @@ public class TimeManager : MonoBehaviour
     void UpdateSkyBlend()
     {
         float dotProduct = Vector3.Dot(sun.transform.forward, Vector3.up);
-        float blend = Mathf.Lerp(0, 1, lightIntensityCurve.Evaluate(dotProduct));
+        float blend = Mathf.Lerp(0, 1.3f, lightIntensityCurve.Evaluate(dotProduct));
         skyboxMaterial.SetFloat("_Blend", blend);
     }
 
