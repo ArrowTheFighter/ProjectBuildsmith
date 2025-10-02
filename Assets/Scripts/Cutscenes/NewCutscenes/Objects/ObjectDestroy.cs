@@ -6,10 +6,10 @@ public class ObjectDestroy : MonoBehaviour, ISkippable
     public ParticleSystem destroyParticles;
     public void DestroyObject()
     {
-        // if (destroyParticles != null)
-        // {
-        //     destroyParticles.Play();
-        // }
+        if (destroyParticles != null)
+        {
+            destroyParticles.Play();
+        }
         if (objectToDestroy != null)
         {
             Destroy(objectToDestroy);
@@ -18,6 +18,9 @@ public class ObjectDestroy : MonoBehaviour, ISkippable
 
     public void Skip()
     {
-        DestroyObject();
+        if (objectToDestroy != null)
+        {
+            Destroy(objectToDestroy);
+        }
     }
 }

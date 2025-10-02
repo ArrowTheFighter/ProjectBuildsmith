@@ -113,7 +113,7 @@ public class CutsceneManager : MonoBehaviour
                     else
                     {
                         // if not ISkippable, just invoke normally
-                        point.cutsceneEvent.pointEvent.Invoke();
+                        //point.cutsceneEvent.pointEvent.Invoke();
                     }
                 }
             }

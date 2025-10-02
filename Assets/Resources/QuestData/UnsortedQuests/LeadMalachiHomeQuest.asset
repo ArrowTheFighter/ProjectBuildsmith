@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: LeadMalachiHomeQuest
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: LeadMalachiHomeQuest
+  QuestName: Lead Malachi Home
+  Description: Help lead Malachi across the bridhe to get back home
+  AutoPinQuest: 0
+  questObjectives:
+  - rid: 6043923110839976032
+  - rid: 6043923110839976034
+  references:
+    version: 2
+    RefIds:
+    - rid: 6043923110839976032
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Lead Malachi home.
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 0
+        flag_id: MalachiReturnedHome
+    - rid: 6043923110839976034
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Malachi
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 0
+        flag_id: MalachiReturnedHomeAnd TalkedWith
