@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BouncyPlatform : MonoBehaviour,IDamagable
 {
     public float BounceHeight;
+    public UnityEvent onBounce;
 
     public bool PlayerCanStomp { get => true; set => PlayerCanStomp = true; }
 
@@ -19,6 +21,7 @@ public class BouncyPlatform : MonoBehaviour,IDamagable
         ExtraForce = BounceHeight;
 
         SoundFXManager.instance.PlayRandomSoundCollection(transform, bounceAudioCollection);
+        onBounce?.Invoke();
     }
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
@@ -26,15 +29,4 @@ public class BouncyPlatform : MonoBehaviour,IDamagable
         return;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
