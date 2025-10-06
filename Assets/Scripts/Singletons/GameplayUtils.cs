@@ -71,6 +71,11 @@ public class GameplayUtils : MonoBehaviour
         Reset();
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
         StartCoroutine(InitalFade());
+
+        GameSettings.instance.OnVsyncChanged += SetVsync;
+        GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
+        GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
+
         PowerConsole.Initialise();
 
         PowerConsole.CommandEntered += CommandCheck;
@@ -137,9 +142,6 @@ public class GameplayUtils : MonoBehaviour
         FlagManager.wipe_flag_list();
         //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
         AudioListener.volume = Main_volume_slider.value;
-        GameSettings.instance.OnVsyncChanged += SetVsync;
-        GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
-        GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
 
         GameplayInput.instance.playerInput.actions["HideUI"].performed += (context) => { ToggleUI(); };
 

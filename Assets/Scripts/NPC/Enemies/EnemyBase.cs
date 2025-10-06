@@ -157,7 +157,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         }
         else
         {
-            ItemRespawnManager.instance.item_respawns.Add(gameObject, RespawnTime);
+            ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + RespawnTime);
             gameObject.SetActive(false);
         }
 

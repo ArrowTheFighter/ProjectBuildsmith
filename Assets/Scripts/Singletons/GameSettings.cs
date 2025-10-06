@@ -123,7 +123,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.ScreenFlash = value;
         OnScreenFlashChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -131,7 +131,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.ScreenShake = value;
         OnScreenShakeChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -139,7 +139,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.CameraSensitivity = value;
         OnCameraSensativityChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -147,7 +147,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.MasterVolume = value;
         OnMasterVolumeChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -155,7 +155,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.MusicVolume = value;
         OnMusicVolumeChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -163,7 +163,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.SoundEffectsVolume = value;
         OnSoundEffectsVolumeChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -171,7 +171,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.VSync = value;
         OnVsyncChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -179,7 +179,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.AntiAliasing = value;
         OnAntiAliasingChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -187,7 +187,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.RenderScale = value;
         OnRenderScaleChanged?.Invoke(value);
-        SaveSettingsToFile();
+        //SaveSettingsToFile();
         SetUIValues();
     }
 
@@ -259,7 +259,7 @@ public class GameSettings : MonoBehaviour
         //return PlayerPrefs.GetInt(screenShakeKey, 0) == 1;
     }
 
-    void SaveSettingsToFile()
+    public void SaveSettingsToFile()
     {
         string json = JsonUtility.ToJson(settingsContainer, true); // true = pretty print
         File.WriteAllText(FilePath, json);

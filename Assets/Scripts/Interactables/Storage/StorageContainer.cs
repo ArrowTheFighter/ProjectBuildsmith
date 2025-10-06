@@ -10,6 +10,8 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
     public string INTERACTION_PROMPT => PROMPT;
 
     public bool IsLocked;
+    public bool StayUnlocked;
+    public bool ConsumeKey;
     public item_requirement[] required_keys;
     public item_requirement[] required_items => required_keys;
 
@@ -40,8 +42,17 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
                     GameplayUtils.instance.ShowCustomNotifCenter("Incorrect Key");
                     return false;
                 }
+                if (ConsumeKey)
+                {
+                    GameplayUtils.instance.remove_items_from_inventory(item.item_id, item.item_amount);
+                }
+            }
+            if (StayUnlocked)
+            {
+                IsLocked = false;    
             }
         }
+
         GameplayUtils.instance.OpenInventoryUI(inventroyType);
         OnOpened?.Invoke();
         return true;
