@@ -120,6 +120,12 @@ public class GameplayUtils : MonoBehaviour
                     add_items_to_inventory(arguments[1], 1);
                 }
                 break;
+            case "settime":
+                if (arguments.Length > 1)
+                {
+                    TimeManager.instance.SetTime(float.Parse(arguments[1]));
+                }
+                break;
         }
         // string id = callback.Args["-i"];
         // int amount = int.Parse(callback.Args["-a"]);
