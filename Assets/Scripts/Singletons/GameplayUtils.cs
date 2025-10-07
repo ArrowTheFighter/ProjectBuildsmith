@@ -44,6 +44,7 @@ public class GameplayUtils : MonoBehaviour
     float pauseMenuCooldown;
     bool open_menu;
     public bool CanPause;
+    public bool CanCheat;
     bool UI_Is_Hidden;
     public RecipeDatabase RecipeDatabase;
     public Dictionary<string, int> ItemsCrafted = new Dictionary<string, int>();
@@ -124,6 +125,17 @@ public class GameplayUtils : MonoBehaviour
                 if (arguments.Length > 1)
                 {
                     TimeManager.instance.SetTime(float.Parse(arguments[1]));
+                }
+                break;
+            case "enablecheats":
+                CanCheat = !CanCheat;
+                if (CanCheat)
+                {
+                    PowerConsole.Log(LogLevel.Information, "Cheating enabled");
+                }
+                else
+                {
+                    PowerConsole.Log(LogLevel.Information, "Cheating disabled");
                 }
                 break;
         }
