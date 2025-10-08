@@ -15,7 +15,9 @@ public class ScareNPCTargetSetter : MonoBehaviour
 
     void Start()
     {
+
         wonderPos = transform.position;
+        wonderTarget = wonderPos;
         timeAloneCooldown = Time.time + Random.Range(wonderCooldown - wonderCooldown * 0.2f, wonderCooldown + wonderCooldown * 0.2f);
         if (TryGetComponent(out CharacterMovement characterMovement))
         {

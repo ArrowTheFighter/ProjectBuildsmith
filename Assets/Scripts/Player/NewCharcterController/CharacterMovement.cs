@@ -263,6 +263,12 @@ public class CharacterMovement : MonoBehaviour
         platformDelta = delta / Time.fixedDeltaTime;
     }
 
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius);
+        Gizmos.DrawLine(transform.position + Vector3.down * playerHeight * 0.25f + Vector3.down * playerRadius, transform.position + Vector3.down * playerHeight * 0.25f + Vector3.down * playerRadius + Vector3.down * groundCheckDistance);
+    }
+
 
     void GroundCheck()
     {

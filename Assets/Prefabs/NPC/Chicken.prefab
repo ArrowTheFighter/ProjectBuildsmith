@@ -165,9 +165,9 @@ MonoBehaviour:
   sprintSpeed: 0
   maxSlopeAngle: 55
   playerInput: {fileID: 0}
-  playerHeight: 2
+  playerHeight: -2.5
   playerRadius: 0.49
-  groundCheckDistance: 0.1
+  groundCheckDistance: 0.25
   secondaryGroundCheckDistance: 0.6
   groundSnapRayDistance: 0.1
   IgnoreGroundLayerMask:
@@ -233,6 +233,7 @@ MonoBehaviour:
   wallCheckLayersIgnore:
     serializedVersion: 2
     m_Bits: 0
+  forwardDir: {x: 0, y: 0, z: 0}
 --- !u!114 &1479278155133495139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +302,9 @@ MonoBehaviour:
   WorldBottom: 0
   CanReset: 1
   alwaysUseCheckpoints: 1
+  onResetEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5617393049266265604
 MonoBehaviour:
   m_ObjectHideFlags: 0
