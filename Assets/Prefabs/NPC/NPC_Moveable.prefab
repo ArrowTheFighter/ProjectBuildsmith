@@ -11727,9 +11727,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterMovement: {fileID: 2852194241156246853}
-  footstepsSoundFX: {fileID: 0}
-  footstepsSoundFXVolume: 0
-  footstepsSoundFXPitch: 0
+  footstepsSoundFX: {fileID: 8300000, guid: 32c24f195b86cce40baca3a65ab39ecf, type: 3}
+  footstepsSoundFXVolume: 0.2
+  footstepsSoundFXPitch: 1
+  walkingParticle: {fileID: 4820154612529675539}
 --- !u!1 &5799911754061485639
 GameObject:
   m_ObjectHideFlags: 0
@@ -11981,6 +11982,7 @@ Transform:
   m_Children:
   - {fileID: 4661381189253319049}
   - {fileID: 3050180342588291851}
+  - {fileID: 282355853769082775}
   m_Father: {fileID: 7761975376654643713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7267388368971858975
@@ -12732,4 +12734,71 @@ Transform:
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4091757652553464610, guid: c8384cddede2a3c438765b544e3ed01b, type: 3}
   m_PrefabInstance: {fileID: 234021708738700463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1830987876810606147
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7187604548784361840}
+    m_Modifications:
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.924
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7642500057028487569, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+      propertyPath: m_Name
+      value: WalkingParticles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+--- !u!4 &282355853769082775 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1910609135557099988, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+  m_PrefabInstance: {fileID: 1830987876810606147}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4820154612529675539 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6596745209183042384, guid: e1ec805b1d21d804d9b7ffaa353ac7c8, type: 3}
+  m_PrefabInstance: {fileID: 1830987876810606147}
   m_PrefabAsset: {fileID: 0}

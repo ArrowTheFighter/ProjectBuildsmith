@@ -11,6 +11,8 @@ public class AnimationEvents : MonoBehaviour
     public float footstepsSoundFXVolume;
     public float footstepsSoundFXPitch;
 
+    public ParticleSystem walkingParticle;
+
     public void FootstepSound(AnimationEvent evt)
     {
         if (IsHeaviestAnimClip(evt.animatorClipInfo.clip))
@@ -18,6 +20,11 @@ public class AnimationEvents : MonoBehaviour
             if (footstepsSoundFX != null)
             {
                 SoundFXManager.instance.PlaySoundFXClip(footstepsSoundFX, transform, footstepsSoundFXVolume, footstepsSoundFXPitch);
+                
+            }
+            if (walkingParticle != null)
+            {
+                walkingParticle.Play();
             }
         }
     }
