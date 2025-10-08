@@ -22,20 +22,31 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   ID: HattieSaveChickensQuest
-  QuestName: Save the chickens
-  Description: Help Hattie save her chickens that escaped when her fence broke.
-  AutoPinQuest: 0
+  QuestName: Chicken Run
+  Description: Hattie's chickens escaped after the fence broke. She wants my help
+    rounding them back into the pen, and then fixing the fence to keep them from
+    escaping again.
+  AutoPinQuest: 1
   questObjectives:
   - rid: 6043923110839976051
   - rid: 6043923110839976052
   - rid: 6043923110839976053
+  - rid: 2207732637389291625
   references:
     version: 2
     RefIds:
+    - rid: 2207732637389291625
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Hattie
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 1
+        flag_id: ReceivedBoomerang
     - rid: 6043923110839976051
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Corral all 4 the chickens back into the fenced in area
+        Description: Corral the 4 chickens back into the pen
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
@@ -43,16 +54,16 @@ MonoBehaviour:
     - rid: 6043923110839976052
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Repair the fence
-        StopAtThisObjective: 1
-        StayCompleted: 0
-        ObjectiveIDCollection: 0
-        flag_id: HattieFenceRepaired
-    - rid: 6043923110839976053
-      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
-      data:
         Description: Talk to Hattie
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
-        flag_id: ReceivedBoomerang
+        flag_id: TalkedAboutRepairingFence
+    - rid: 6043923110839976053
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Repair the fence
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 1
+        flag_id: HattieFenceRepaired
