@@ -235,7 +235,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
         {
             DSDialogueSO dialogueSO = (DSDialogueSO)currentDialogSO;
 
-            if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.MultipleChoice && DialogManager.instance.ActiveChoices.Count > 0)
+            if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.MultipleChoice && DialogManager.instance.ActiveChoices.Count > 0 && UIInputHandler.instance.currentScheme == "Keyboard&Mouse")
             {
                 tempDialogSO = DialogManager.instance.ActiveChoices[0];
                 DialogManager.instance.ActiveChoices = new List<ScriptableObject>();

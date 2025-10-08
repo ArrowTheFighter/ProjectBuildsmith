@@ -44,6 +44,7 @@ public class GameplayUtils : MonoBehaviour
     float pauseMenuCooldown;
     bool open_menu;
     public bool CanPause;
+    public bool CanCheat;
     bool UI_Is_Hidden;
     public RecipeDatabase RecipeDatabase;
     public Dictionary<string, int> ItemsCrafted = new Dictionary<string, int>();
@@ -71,6 +72,11 @@ public class GameplayUtils : MonoBehaviour
         Reset();
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
         StartCoroutine(InitalFade());
+
+        GameSettings.instance.OnVsyncChanged += SetVsync;
+        GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
+        GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
+
         PowerConsole.Initialise();
 
         PowerConsole.CommandEntered += CommandCheck;
@@ -115,6 +121,23 @@ public class GameplayUtils : MonoBehaviour
                     add_items_to_inventory(arguments[1], 1);
                 }
                 break;
+            case "settime":
+                if (arguments.Length > 1)
+                {
+                    TimeManager.instance.SetTime(float.Parse(arguments[1]));
+                }
+                break;
+            case "enablecheats":
+                CanCheat = !CanCheat;
+                if (CanCheat)
+                {
+                    PowerConsole.Log(LogLevel.Information, "Cheating enabled");
+                }
+                else
+                {
+                    PowerConsole.Log(LogLevel.Information, "Cheating disabled");
+                }
+                break;
         }
         // string id = callback.Args["-i"];
         // int amount = int.Parse(callback.Args["-a"]);
@@ -137,9 +160,6 @@ public class GameplayUtils : MonoBehaviour
         FlagManager.wipe_flag_list();
         //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
         AudioListener.volume = Main_volume_slider.value;
-        GameSettings.instance.OnVsyncChanged += SetVsync;
-        GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
-        GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
 
         GameplayInput.instance.playerInput.actions["HideUI"].performed += (context) => { ToggleUI(); };
 

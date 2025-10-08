@@ -6,6 +6,7 @@ public class MoveObjectTrigger : MonoBehaviour
     public bool OnlyForNPC;
     public bool OnlyForPlayer;
     public bool OnlyOnce;
+    public bool AlsoRotate;
     bool activated;
 
     public Transform ObjectToMove;
@@ -43,6 +44,10 @@ public class MoveObjectTrigger : MonoBehaviour
             print("moving target");
             ObjectToMove.position = NewPos.position;
             activated = true;
+            if (AlsoRotate)
+            {
+                ObjectToMove.transform.forward = NewPos.forward;
+            }
         }
         ActivateEvent?.Invoke();
      }

@@ -19,6 +19,7 @@ public class NoClip : PlayerAbility
 
     public override void UpdateAbility()
     {
+        if (!GameplayUtils.instance.CanCheat) return;
         if (GameplayInput.instance.playerInput.actions["NoClip"].ReadValue<float>() > 0)
         {
             if (!NoClipButtonPressed)
@@ -31,8 +32,8 @@ public class NoClip : PlayerAbility
                     foreach (PlayerAbility ability in characterMovement.playerAbilities)
                     {
                         ability.ResetAbility();
-                     }
-                 }
+                    }
+                }
             }
         }
         else
