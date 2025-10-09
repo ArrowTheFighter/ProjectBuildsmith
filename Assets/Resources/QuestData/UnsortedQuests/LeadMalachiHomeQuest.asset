@@ -22,9 +22,11 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   ID: LeadMalachiHomeQuest
-  QuestName: Lead Malachi Home
-  Description: Help lead Malachi across the bridhe to get back home
-  AutoPinQuest: 0
+  QuestName: A Careful Crossing
+  Description: Malachi's eyesight isn't the best, so he needs my help getting across
+    the walkway back to his house. I'll have to carefully guide him across so he
+    doesn't fall.
+  AutoPinQuest: 1
   questObjectives:
   - rid: 6043923110839976032
   - rid: 6043923110839976034
@@ -34,7 +36,7 @@ MonoBehaviour:
     - rid: 6043923110839976032
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Lead Malachi home.
+        Description: Lead Malachi across the walkway
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
@@ -46,4 +48,4 @@ MonoBehaviour:
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 0
-        flag_id: MalachiReturnedHomeAnd TalkedWith
+        flag_id: MalachiReturnedHomeAndTalkedWith

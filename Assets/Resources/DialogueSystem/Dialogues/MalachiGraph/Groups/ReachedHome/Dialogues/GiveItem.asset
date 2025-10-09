@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43133e9c8d6bd4d41817f984ee308b06, type: 3}
-  m_Name: RunEvent2
+  m_Script: {fileID: 11500000, guid: 031c767504c2a1149ae3decbe21bb3f9, type: 3}
+  m_Name: GiveItem
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: RunEvent2
+  <DialogueName>k__BackingField: GiveItem
   <Text>k__BackingField: Dialogue text.
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Output
+  - <Text>k__BackingField: Has items
     LocalizeKey: 
-    OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: f24772be06c2546488643947b526d693, type: 2}
-  <DialogueType>k__BackingField: 7
+    OutputID: Output
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: a7ffb0c4078872c49ab3d172ac6b10ff, type: 2}
+  <DialogueType>k__BackingField: 2
   <IsStartingDialogue>k__BackingField: 0
-  <EventID>k__BackingField: StartMoving
+  <ItemID>k__BackingField: plank
+  <ItemAmount>k__BackingField: 10
