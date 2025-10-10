@@ -13,13 +13,19 @@ MonoBehaviour:
   m_Name: DialogueName5
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: DialogueName5
-  <Text>k__BackingField: What on earth do you need a pickaxe for?
+  <Text>k__BackingField: What? Does it look like I'm made of <style=item>pickaxes</style>?
+    Do you think <style=item>pickaxes</style> grow on trees? What do ya need a <style=item>pickaxe</style>
+    for?
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: The Furnace
+  - <Text>k__BackingField: Caladin's furnace is broken.
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: b701f7d5a121c3b4fa85df24252ec864, type: 2}
+  - <Text>k__BackingField: Nothing
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 3215eb7c53506d646b60932620205a67, type: 2}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0

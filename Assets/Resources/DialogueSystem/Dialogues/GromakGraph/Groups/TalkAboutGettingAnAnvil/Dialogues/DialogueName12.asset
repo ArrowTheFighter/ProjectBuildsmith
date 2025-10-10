@@ -13,13 +13,23 @@ MonoBehaviour:
   m_Name: DialogueName12
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: DialogueName12
-  <Text>k__BackingField: I do have an old anvil just collecting dust tho.
+  <Text>k__BackingField: I do have a <style=item>spare anvil</style> in storage,
+    but I can't be giving it away for free! <style=coin>50 coins</style> and you
+    can have it.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: '[Pay 50 coins]'
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 4d9947c129d577a4eb45b6da8e43e609, type: 2}
-  <DialogueType>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 94bd1fbc398ed0740a7acdd4435c423d, type: 2}
+  - <Text>k__BackingField: I can't afford that.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: d11b827ce744794498c6bbe4c3f751c4, type: 2}
+  - <Text>k__BackingField: I'll think about it.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 84952dcda21203b4ea0bf3a42c271728, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0

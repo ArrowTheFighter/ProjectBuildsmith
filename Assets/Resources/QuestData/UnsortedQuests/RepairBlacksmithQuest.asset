@@ -22,54 +22,70 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   ID: RepairBlacksmithQuest
-  QuestName: Repair Blacksmith
-  Description: Help Caladin Repair his blacksmith crafting stations.
+  QuestName: Blacksmith Repairs
+  Description: Caladin's blacksmithing stations have been destroyed by a falling
+    island and needs my help rebuilding them.
   AutoPinQuest: 1
   questObjectives:
-  - rid: 6043923087670902881
-  - rid: 6043923087670902882
-  - rid: 6043923087670902883
-  - rid: 6043923087670902884
-  - rid: 6043923087670902885
-  - rid: 6043923087670902886
-  - rid: 6043923087670902887
-  - rid: 6043923087670902888
-  - rid: 6043923087670902889
-  - rid: 6043923087670902890
-  - rid: 6043923087670902891
-  - rid: 6043923087670902892
-  - rid: 6043923087670902893
+  - rid: 2207732728327045220
+  - rid: 2207732728327045221
+  - rid: 2207732728327045222
+  - rid: 2207732728327045223
+  - rid: 2207732728327045224
+  - rid: 2207732728327045225
+  - rid: 2207732728327045226
+  - rid: 2207732728327045227
+  - rid: 2207732728327045228
+  - rid: 2207732728327045229
+  - rid: 2207732728327045230
+  - rid: 2207732728327045235
+  - rid: 2207732728327045236
+  - rid: 2207732728327045238
+  - rid: 2207732728327045239
+  - rid: 2207732728327045240
+  - rid: 2207732728327045241
+  - rid: 2207732728327045242
   references:
     version: 2
     RefIds:
-    - rid: 6043923087670902881
+    - rid: 2207732728327045220
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Caladin at the town center
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 0
+        flag_id: TalkedToCaladinAfterRoseStartsBlacksmithQuest
+    - rid: 2207732728327045221
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Ask Gormak in the cave for a pickaxe.
+        Description: Borrow a <style=item>pickaxe</style> from Gormak in the town
+          caves
         StopAtThisObjective: 1
         StayCompleted: 1
         ObjectiveIDCollection: 0
         Item_ID: borrowed_pickaxe
         Item_Amount: 1
-    - rid: 6043923087670902882
+    - rid: 2207732728327045222
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Collect 15 Stone from the Cave Island
+        Description: Collect <style=item>15 stone</style> from <style=location>Ironhollow
+          Mine</style>
         StopAtThisObjective: 1
         StayCompleted: 1
         ObjectiveIDCollection: 0
         Item_ID: stone
         Item_Amount: 15
-    - rid: 6043923087670902883
+    - rid: 2207732728327045223
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Craft 15 Stone Bricks
+        Description: Craft <style=item>15 stone bricks</style>
         StopAtThisObjective: 1
         StayCompleted: 1
         ObjectiveIDCollection: 0
         Item_ID: stone_brick
         Item_Amount: 15
-    - rid: 6043923087670902884
+    - rid: 2207732728327045224
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Repair the furnace
@@ -77,7 +93,7 @@ MonoBehaviour:
         StayCompleted: 0
         ObjectiveIDCollection: 0
         flag_id: FurnaceBuildingRepaired
-    - rid: 6043923087670902885
+    - rid: 2207732728327045225
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Caladin
@@ -85,32 +101,33 @@ MonoBehaviour:
         StayCompleted: 0
         ObjectiveIDCollection: 1
         flag_id: BlacksmithTalkedAboutGettingAnvil
-    - rid: 6043923087670902886
+    - rid: 2207732728327045226
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Ask Gormak for an anvil
+        Description: Ask Gormak for a <style=item>spare anvil</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 2
         flag_id: GormakTalkedAboutGettingAnvil
-    - rid: 6043923087670902887
+    - rid: 2207732728327045227
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Collect the anvil from Gormak's old workshop
+        Description: Collect the <style=item>spare anvil</style> from Gormak's storage
+          yard
         StopAtThisObjective: 1
         StayCompleted: 1
         ObjectiveIDCollection: 2
         Item_ID: spare_anvil
         Item_Amount: 1
-    - rid: 6043923087670902888
+    - rid: 2207732728327045228
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Place the Spare Anvil next to Caladin
+        Description: Place the <style=item>spare anvil</style> next to Caladin
         StopAtThisObjective: 1
         StayCompleted: 0
         ObjectiveIDCollection: 2
         flag_id: BlacksmithAnvilReturned
-    - rid: 6043923087670902889
+    - rid: 2207732728327045229
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Caladin
@@ -118,39 +135,71 @@ MonoBehaviour:
         StayCompleted: 0
         ObjectiveIDCollection: 3
         flag_id: BlacksmithTalkedAboutGettingIronItems
-    - rid: 6043923087670902890
+    - rid: 2207732728327045230
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Ask townsfolk for spare iron
-        StopAtThisObjective: 1
+        Description: Ask townsfolk for <style=item>spare iron items</style>
+        StopAtThisObjective: 0
         StayCompleted: 1
         ObjectiveIDCollection: 4
         Item_ID: spare_iron_item
         Item_Amount: 3
-    - rid: 6043923087670902891
+    - rid: 2207732728327045235
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Callum
+        StopAtThisObjective: 0
+        StayCompleted: 0
+        ObjectiveIDCollection: 4
+        flag_id: CallumGaveSpareIronItem
+    - rid: 2207732728327045236
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Henry
+        StopAtThisObjective: 0
+        StayCompleted: 0
+        ObjectiveIDCollection: 4
+        flag_id: HenryGaveSpareIronItem
+    - rid: 2207732728327045238
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Sullivan
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 4
+        flag_id: SullivanGaveSpareIronItem
+    - rid: 2207732728327045239
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Smelt the Spare Iron Parts in the furnace.
+        Description: Smelt the <style=item>spare iron parts</style> in the furnace
         StopAtThisObjective: 1
         StayCompleted: 1
-        ObjectiveIDCollection: 4
+        ObjectiveIDCollection: 5
         Item_ID: iron_bar
         Item_Amount: 3
-    - rid: 6043923087670902892
+    - rid: 2207732728327045240
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Craft a pickaxe head at the anvil
+        Description: Craft a <style=item>pickaxe head</style> at the anvil
         StopAtThisObjective: 1
         StayCompleted: 1
-        ObjectiveIDCollection: 4
+        ObjectiveIDCollection: 5
         Item_ID: pickaxe_head
         Item_Amount: 1
-    - rid: 6043923087670902893
+    - rid: 2207732728327045241
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Craft a pickaxe at the crafting table
+        Description: Craft a <style=item>pickaxe</style> at the crafting table
         StopAtThisObjective: 1
         StayCompleted: 1
-        ObjectiveIDCollection: 4
+        ObjectiveIDCollection: 5
         Item_ID: pickaxe
         Item_Amount: 1
+    - rid: 2207732728327045242
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Caladin
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 5
+        flag_id: BlacksmithFinishedCraftPickaxeQuest

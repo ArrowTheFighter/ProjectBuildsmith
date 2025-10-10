@@ -13,14 +13,23 @@ MonoBehaviour:
   m_Name: DialogueName4
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: DialogueName4
-  <Text>k__BackingField: It's a shame you don't need carrots, but I've got this old
-    item you can have!
+  <Text>k__BackingField: Yeah, I've got some old stuff here you could 'ave, but I'll
+    want a couple of <style=item>carrots</style>. One for now, and one for later!
+    </>Hahaha!</i>
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: '[Give 2 carrots]'
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 2dbc3c9fb23134341bd9becb930858e6, type: 2}
-  <DialogueType>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: f6c822c750f7d094d9f4e03e97bcb2be, type: 2}
+  - <Text>k__BackingField: I don't have enough carrots.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 9b9106e6cba928e4590cf165917e5f4e, type: 2}
+  - <Text>k__BackingField: I'll think about it.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e47fd3fccdc1d3a4b96c1db4325f2431, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0

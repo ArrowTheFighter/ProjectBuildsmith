@@ -28,9 +28,18 @@ MonoBehaviour:
   AutoPinQuest: 1
   questObjectives:
   - rid: 4434710103579951192
+  - rid: 2207732728327045218
   references:
     version: 2
     RefIds:
+    - rid: 2207732728327045218
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Rose
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        ObjectiveIDCollection: 0
+        flag_id: TalkedToRoseAtTownEntrance
     - rid: 4434710103579951192
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
