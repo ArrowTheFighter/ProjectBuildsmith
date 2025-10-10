@@ -17,6 +17,7 @@ public class TextFormater : MonoBehaviour
     void OnEnable()
     {
         UIIconHandler.instance.InputDeviceChanged += ReformatText;
+        ReformatText();
     }
 
     void OnDisable()

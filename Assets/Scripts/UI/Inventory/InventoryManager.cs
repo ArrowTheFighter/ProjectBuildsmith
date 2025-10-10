@@ -16,6 +16,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject InventorySlotsParent;
     public GameObject InventoryHotbarSlotsParent;
     public GameObject InventorySlotPrefab;
+    public GameObject InventoryMenuDefaultButton;
 
     enum InventoryMenus { none, Inventory, Quests }
     InventoryMenus openMenu = InventoryMenus.none;
@@ -38,6 +39,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject QuestMenuObject;
     public QuestInfoBox questInfoBox;
     public GameObject QuestItemsParent;
+    public GameObject QuestMenuDefaultButton;
     [SerializeField] GameObject QuestButton;
     [SerializeField] GameObject PinQuestButton;
     [SerializeField] TextMeshProUGUI PinQuestText;
@@ -210,6 +212,10 @@ public class InventoryManager : MonoBehaviour
         questsCanvasGroup.interactable = true;
 
         openMenu = InventoryMenus.Quests;
+
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = QuestMenuDefaultButton;
+        UIInputHandler.instance.OpenedMenu();
     }
 
     public void SwitchToInventoryMenu()
@@ -238,6 +244,9 @@ public class InventoryManager : MonoBehaviour
         }
 
         openMenu = InventoryMenus.Inventory;
+        UIInputHandler.instance.ClosedMenu();
+        UIInputHandler.instance.defaultButton = InventoryMenuDefaultButton;
+        UIInputHandler.instance.OpenedMenu();
     }
 
     /* #region Inventory */
@@ -430,10 +439,24 @@ public class InventoryManager : MonoBehaviour
         OnInventoryUpdated?.Invoke();
 
     } 
+    
+    public void RemoveSpecialItem(string item_id, int amount)
+    {
+        if (specialItems.ContainsKey(item_id))
+        {
+            specialItems[item_id] = Mathf.Max(specialItems[item_id] - amount,0);
+        }
+        OnInventoryUpdated?.Invoke();
+    } 
 
     public bool removeItemsByID(string item_id, int amount = 1)
     {
         int remainingAmount = amount;
+        if (GetSpecialItemAmount(item_id) != -1)
+        {
+            RemoveSpecialItem(item_id, amount);
+            return true;
+        }
         for (int i = 0; i < inventorySlots.Count; i++)
         {
             if (!inventorySlots[i].isEmpty && inventorySlots[i].inventoryItemStack.ID == item_id)
@@ -461,7 +484,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     OnInventoryUpdated?.Invoke();
                     return true;
-                } 
+                }
             }
         }
         OnInventoryUpdated?.Invoke();

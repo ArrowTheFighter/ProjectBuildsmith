@@ -293,9 +293,9 @@ public class SettingsContainer
     public float CameraSensitivity = 0.2f;
 
     //Sound
-    public float MasterVolume = 0.2f;
-    public float MusicVolume = 0.2f;
-    public float SoundEffectsVolume = 0.2f;
+    public float MasterVolume = 1f;
+    public float MusicVolume = 0.35f;
+    public float SoundEffectsVolume = 0.35f;
 
     //Graphics
     public bool VSync = true;
