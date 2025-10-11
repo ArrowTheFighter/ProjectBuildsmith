@@ -37,14 +37,14 @@ MonoBehaviour:
   - rid: 2207732728327045227
   - rid: 2207732728327045228
   - rid: 2207732728327045229
-  - rid: 2207732728327045230
   - rid: 2207732728327045235
   - rid: 2207732728327045236
   - rid: 2207732728327045238
-  - rid: 2207732728327045239
-  - rid: 2207732728327045240
-  - rid: 2207732728327045241
-  - rid: 2207732728327045242
+  - rid: 2207732736445120512
+  - rid: 2207732736445120513
+  - rid: 2207732736445120514
+  - rid: 2207732736445120515
+  - rid: 2207732736445120516
   references:
     version: 2
     RefIds:
@@ -135,15 +135,6 @@ MonoBehaviour:
         StayCompleted: 0
         ObjectiveIDCollection: 3
         flag_id: BlacksmithTalkedAboutGettingIronItems
-    - rid: 2207732728327045230
-      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
-      data:
-        Description: Ask townsfolk for <style=item>spare iron items</style>
-        StopAtThisObjective: 0
-        StayCompleted: 1
-        ObjectiveIDCollection: 4
-        Item_ID: spare_iron_item
-        Item_Amount: 3
     - rid: 2207732728327045235
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
@@ -164,11 +155,20 @@ MonoBehaviour:
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Sullivan
-        StopAtThisObjective: 1
+        StopAtThisObjective: 0
         StayCompleted: 0
         ObjectiveIDCollection: 4
         flag_id: SullivanGaveSpareIronItem
-    - rid: 2207732728327045239
+    - rid: 2207732736445120512
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Ask townsfolk for <style=item>spare iron items</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        ObjectiveIDCollection: 4
+        Item_ID: spare_iron_item
+        Item_Amount: 3
+    - rid: 2207732736445120513
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
         Description: Smelt the <style=item>spare iron parts</style> in the furnace
@@ -177,7 +177,7 @@ MonoBehaviour:
         ObjectiveIDCollection: 5
         Item_ID: iron_bar
         Item_Amount: 3
-    - rid: 2207732728327045240
+    - rid: 2207732736445120514
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
         Description: Craft a <style=item>pickaxe head</style> at the anvil
@@ -186,7 +186,7 @@ MonoBehaviour:
         ObjectiveIDCollection: 5
         Item_ID: pickaxe_head
         Item_Amount: 1
-    - rid: 2207732728327045241
+    - rid: 2207732736445120515
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
         Description: Craft a <style=item>pickaxe</style> at the crafting table
@@ -195,7 +195,7 @@ MonoBehaviour:
         ObjectiveIDCollection: 5
         Item_ID: pickaxe
         Item_Amount: 1
-    - rid: 2207732728327045242
+    - rid: 2207732736445120516
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Caladin
