@@ -80,9 +80,17 @@ public class InventoryManager : MonoBehaviour
     
     void SaveLoaded(SaveFileStruct saveFileStruct)
     {
-        foreach(KeyValuePair<string,int> item in saveFileStruct.special_items)
+        //Load special items
+        foreach (KeyValuePair<string, int> item in saveFileStruct.special_items)
         {
             AddSpecialItem(item.Key, item.Value);
+        }
+        //Load inventory items
+        foreach(SaveableInventroySlot slot in saveFileStruct.inventory_slots)
+        {
+            if (slot.isEmpty) continue;
+            ItemData itemData = GameplayUtils.instance.GetItemDataByID(slot.inventoryItemStack.ID);
+            AddItemToSlotByID(slot.slot_id, itemData, slot.inventoryItemStack.Amount, true, false);
         }
     }
 
@@ -263,6 +271,7 @@ public class InventoryManager : MonoBehaviour
     void AddInventorySlot(int slotID)
     {
         InventorySlot inventorySlot = new InventorySlot();
+        inventorySlot.slot_id = slotID;
         //inventorySlot.inventoryItemStack = new InventoryItemStack();
 
         inventorySlots.Add(inventorySlot);
@@ -276,6 +285,7 @@ public class InventoryManager : MonoBehaviour
     void AddHotbarSlots(int slotID)
     {
         InventorySlot inventorySlot = new InventorySlot();
+        inventorySlot.slot_id = slotID;
         //inventorySlot.inventoryItemStack = new InventoryItemStack();
 
         inventorySlots.Add(inventorySlot);
@@ -298,7 +308,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItemToSlot(InventorySlot inventorySlot, ItemData itemData, int amount = 1, bool force = false,bool broadcastEvent = true)
+    public void AddItemToSlot(InventorySlot inventorySlot, ItemData itemData, int amount = 1, bool force = false, bool broadcastEvent = true)
     {
         if (force || inventorySlot.isEmpty)
         {
@@ -307,10 +317,20 @@ public class InventoryManager : MonoBehaviour
             inventorySlot.inventoryItemStack = newItemStack;
             if (inventorySlot.inventorySlotComponent != null)
             {
-                inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image,broadcastEvent);
+                inventorySlot.inventorySlotComponent.SetSlotFilled(itemData.item_name, amount, itemData.item_ui_image, broadcastEvent);
             }
             OnInventoryUpdated?.Invoke();
         }
+    }
+
+    public void AddItemToSlotByID(int slotID, ItemData itemData, int amount, bool force = false, bool broadcastEvent = true)
+    {
+        if(slotID <= inventorySlots.Count)
+        {
+            InventorySlot inventorySlot = inventorySlots[slotID];
+            AddItemToSlot(inventorySlot, itemData, amount, force, broadcastEvent);
+        }
+        
     }
 
     public int AddItemToInventory(ItemData itemData, int amount = 1)
@@ -682,7 +702,35 @@ public class InventorySlot
         inventoryItemStack = new InventoryItemStack(0);
     }
 
- }
+}
+
+[Serializable]
+public class SaveableInventroySlot
+{
+    public bool isEmpty = true;
+    public int slot_id;
+    public InventoryItemStack inventoryItemStack;
+
+    public SaveableInventroySlot()
+    {
+        inventoryItemStack = new InventoryItemStack();
+    }
+
+    public SaveableInventroySlot(bool _isEmpty, int _slot_id)
+    {
+        isEmpty = _isEmpty;
+        slot_id = _slot_id;
+        inventoryItemStack = new InventoryItemStack(0);
+    }
+
+    public SaveableInventroySlot(bool _isEmpty, int _slot_id,InventoryItemStack _inventoryItemStack)
+    {
+        isEmpty = _isEmpty;
+        slot_id = _slot_id;
+        inventoryItemStack = _inventoryItemStack;
+    }
+
+}
 
 [Serializable]
 public class InventoryItemStack

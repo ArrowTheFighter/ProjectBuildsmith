@@ -117,6 +117,12 @@ public class SaveLoadManager : MonoBehaviour
         saveFile.special_items_collected = special_items_collected.ToArray();
         //Inventory saving
         saveFile.special_items = GameplayUtils.instance.inventoryManager.specialItems;
+        saveFile.inventory_slots = new List<SaveableInventroySlot>();
+        foreach(InventorySlot slot in GameplayUtils.instance.inventoryManager.inventorySlots)
+        {
+            saveFile.inventory_slots.Add(new SaveableInventroySlot(slot.isEmpty, slot.slot_id, slot.inventoryItemStack));
+        }
+
         string json = JsonConvert.SerializeObject(saveFile, Formatting.Indented); // true = pretty print
         File.WriteAllText(SaveFile, json);
         Debug.Log("Saved settings to " + SaveFile);
@@ -139,5 +145,6 @@ public class SaveFileStruct
 
     //Inventory
     public Dictionary<string, int> special_items;
+    public List<SaveableInventroySlot> inventory_slots;
 
 }
