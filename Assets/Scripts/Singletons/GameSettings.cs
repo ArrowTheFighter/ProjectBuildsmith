@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using System.Xml.Serialization;
 
 public class GameSettings : MonoBehaviour
 {

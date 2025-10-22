@@ -69,11 +69,21 @@ public class InventoryManager : MonoBehaviour
             {
                 AddHotbarSlots(i);
                 continue;
-             }
+            }
             AddInventorySlot(i);
         }
         OnInventoryUpdated += QuestsObjectiveCheck;
         FlagManager.OnFlagSet += QuestsObjectiveCheck;
+
+        SaveLoadManager.instance.OnSaveLoaded += SaveLoaded;
+    }
+    
+    void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        foreach(KeyValuePair<string,int> item in saveFileStruct.special_items)
+        {
+            AddSpecialItem(item.Key, item.Value);
+        }
     }
 
     void ToggleInventory(InputAction.CallbackContext context)

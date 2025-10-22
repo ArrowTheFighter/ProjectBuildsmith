@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2460835248776641422}
   - component: {fileID: 1618908505151564309}
   - component: {fileID: 8885431362800946472}
-  - component: {fileID: 3159508783457466171}
   - component: {fileID: 5068911953624632504}
   - component: {fileID: 309935234275959978}
+  - component: {fileID: 3575879216446127844}
   m_Layer: 9
   m_Name: Gem_Pickup
   m_TagString: Untagged
@@ -79,30 +79,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: -0.75, z: 0}
---- !u!114 &3159508783457466171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6255366591577745021}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93337e962e051d149aaf4c9e98d10e41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player_layer:
-    serializedVersion: 2
-    m_Bits: 256
-  item_id: gem
-  amount: 1
-  show_notification: 0
-  isSpecialItem: 1
-  cantPickupDelay: 0.5
-  respawn_time: -1
-  layersToIgnore:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &5068911953624632504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +125,35 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &3575879216446127844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6255366591577745021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43296bd8c990b75428b3f83e1ba9ce4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_layer:
+    serializedVersion: 2
+    m_Bits: 256
+  item_id: gem
+  amount: 1
+  show_notification: 0
+  isSpecialItem: 1
+  cantPickupDelay: 0.5
+  respawn_time: -1
+  despawn_time: -1
+  layersToIgnore:
+    serializedVersion: 2
+    m_Bits: 65798
+  onPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+  pickup_id: 0
 --- !u!1001 &6101855431661203998
 PrefabInstance:
   m_ObjectHideFlags: 0

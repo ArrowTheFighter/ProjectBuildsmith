@@ -86,6 +86,10 @@ public class GameplayUtils : MonoBehaviour
         GameplayInput.instance.playerInput.actions["consoleUI"].performed += (context) => { ToggleConsole(); };
 
         GameplayInput.instance.playerInput.actions["hidebuild"].performed += (context) => { BuildNumCanvas.SetActive(!BuildNumCanvas.activeInHierarchy); };
+
+        #if UNITY_EDITOR
+            CanCheat = true;
+        #endif
     }
 
     void ToggleConsole()

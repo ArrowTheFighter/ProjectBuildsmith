@@ -134,16 +134,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coin_Pickup
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3159508783457466171, guid: 0666ec0b1a4d3e549841a56371fb1869, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2460835248776641422, guid: 0666ec0b1a4d3e549841a56371fb1869, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3040246921670839652}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6255366591577745021, guid: 0666ec0b1a4d3e549841a56371fb1869, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 2658005218790375158}
   m_SourcePrefab: {fileID: 100100000, guid: 0666ec0b1a4d3e549841a56371fb1869, type: 3}
 --- !u!4 &2102882269352725651 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2460835248776641422, guid: 0666ec0b1a4d3e549841a56371fb1869, type: 3}
   m_PrefabInstance: {fileID: 4541973505174664989}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7622291875105182048 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6255366591577745021, guid: 0666ec0b1a4d3e549841a56371fb1869, type: 3}
+  m_PrefabInstance: {fileID: 4541973505174664989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2658005218790375158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7622291875105182048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43296bd8c990b75428b3f83e1ba9ce4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_layer:
+    serializedVersion: 2
+    m_Bits: 256
+  item_id: coin
+  amount: 1
+  show_notification: 0
+  isSpecialItem: 1
+  cantPickupDelay: 0.5
+  respawn_time: -1
+  despawn_time: -1
+  layersToIgnore:
+    serializedVersion: 2
+    m_Bits: 2
+  onPickedUp:
+    m_PersistentCalls:
+      m_Calls: []
+  pickup_id: 0

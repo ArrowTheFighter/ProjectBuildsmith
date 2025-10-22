@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 
 public class UIIconHandler : MonoBehaviour
 {
@@ -70,6 +71,7 @@ public class UIIconHandler : MonoBehaviour
 
     public string FormatText(string rawText)
     {
+        if (string.IsNullOrEmpty(rawText)) return rawText;
         switch (currentControlScheme)
         {
             case "Keyboard&Mouse":

@@ -55,12 +55,12 @@ public class ItemPickup : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    public virtual void OnEnable()
     {
         markedAsDestoryed = false;
     }
 
-    public void Pickup()
+    public virtual void Pickup()
     {
         if (markedAsDestoryed)
         {
