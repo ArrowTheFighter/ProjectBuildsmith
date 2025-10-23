@@ -9,5 +9,11 @@ public class NPCTriggers : MonoBehaviour
     public bool Activated;
     public bool TurnAroundOnNPC;
     public bool EnableQuestMarker;
-    
+    public int unique_id;
+
+    void Start()
+    {
+        SaveLoadManager.instance.NPCTriggers.Add(this);
+    }
+
 }

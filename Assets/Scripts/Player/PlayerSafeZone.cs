@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerSafeZone : MonoBehaviour
 {
-    CharacterMovement characterMovement;
+    public CharacterMovement characterMovement;
     public LayerMask safeLayers;
     public Vector3 safePos;
     public Vector3 checkOffset;

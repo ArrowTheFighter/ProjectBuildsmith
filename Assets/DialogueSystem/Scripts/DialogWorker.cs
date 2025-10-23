@@ -48,6 +48,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public bool TurnTowardsPlayer;
     public bool TurnBackToOrigin;
 
+    public int unique_id;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
