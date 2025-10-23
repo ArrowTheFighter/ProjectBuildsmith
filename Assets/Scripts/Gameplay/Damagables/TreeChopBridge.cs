@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Linq;
 
-public class TreeChopBridge : MonoBehaviour, IDamagable
+public class TreeChopBridge : MonoBehaviour, IDamagable,ISaveable
 {
     public List<GameObject> treeStages = new List<GameObject>();
     public int segmentHealth;
@@ -15,6 +15,12 @@ public class TreeChopBridge : MonoBehaviour, IDamagable
     public ParticleSystem chopParticle;
 
     public bool PlayerCanStomp { get; set; }
+
+    public int unique_id;
+
+    public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+
+    public bool Get_Should_Save => finished;
 
     public AudioCollection[] TreeHitAudioCollection;
     public AudioCollection[] TreeChoppedAudioCollection;
@@ -84,5 +90,62 @@ public class TreeChopBridge : MonoBehaviour, IDamagable
     void Update()
     {
         
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        foreach (var stage in treeStages)
+        {
+            stage.gameObject.SetActive(false);
+        }
+        foreach (GameObject obj in finalStage)
+        {
+            obj.SetActive(true);
+        }
+        finished = true;
+        if (finishedEvent != null)
+        {
+            int count = finishedEvent.GetPersistentEventCount();
+            for (int i = 0; i < count; i++)
+            {
+                var target = finishedEvent.GetPersistentTarget(i) as ISkippable;
+                if (target != null)
+                {
+                    target.Skip();
+                }
+            }
+        }
+        InvokeNonSkippableListeners(finishedEvent);
+    }
+
+    void InvokeNonSkippableListeners(UnityEvent evt)
+    {
+        if (evt == null) return;
+
+        int count = evt.GetPersistentEventCount();
+        for (int i = 0; i < count; i++)
+        {
+            var target = evt.GetPersistentTarget(i);
+            var methodName = evt.GetPersistentMethodName(i);
+
+            // Skip ISkippable objects
+            if (target is ISkippable)
+                continue;
+
+            // Invoke this specific listener
+            if (target != null && !string.IsNullOrEmpty(methodName))
+            {
+                var method = target.GetType().GetMethod(methodName,
+                    System.Reflection.BindingFlags.Public |
+                    System.Reflection.BindingFlags.NonPublic |
+                    System.Reflection.BindingFlags.Instance);
+
+                if (method != null)
+                {
+                    // For base UnityEvent, all methods should be parameterless
+                    method.Invoke(target, null);
+                }
+            }
+        }
     }
 }
