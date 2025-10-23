@@ -11,12 +11,7 @@ public class NewCutsceneBuilder : MonoBehaviour, ISaveable
 
     public bool Get_Should_Save => has_played;
 
-    void Start()
-    {
-        if(save_played)
-            (this as ISaveable).AddToManager();
-        //if(save_played) SaveLoadManager.instance.savedCustsceneBuilders.Add(this);
-    }
+    
 
     public void PlayCutscene()
     {

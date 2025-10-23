@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -43,7 +42,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] GameObject QuestButton;
     [SerializeField] GameObject PinQuestButton;
     [SerializeField] TextMeshProUGUI PinQuestText;
-    List<QuestInfo> activeQuests = new List<QuestInfo>();
+    public List<QuestInfo> activeQuests = new List<QuestInfo>();
 
     [Header("Pinned Quests")]
     public Transform PinnedQuestsParent;
@@ -578,6 +577,45 @@ public class InventoryManager : MonoBehaviour
             }
         }
         //return null;
+    }
+
+    public void LoadSavedQuest(SaveableQuestInfo quest)
+    {
+        QuestData[] allQuests = Resources.LoadAll<QuestData>("QuestData");
+        foreach (var data in allQuests)
+        {
+            if (data.ID == quest.quest_id)
+            {
+                foreach (QuestInfo info in activeQuests)
+                {
+                    if (info.QuestData == data) return;
+                }
+                GameObject questButton = Instantiate(QuestButton, QuestItemsParent.transform);
+
+                QuestInfoButton questInfoButton = questButton.GetComponent<QuestInfoButton>();
+                questInfoButton.QuestID = quest.quest_id;
+                questInfoButton.questData = data;
+                questInfoButton.buttonName.text = $"{data.QuestName}";
+
+                QuestInfo questInfo = new QuestInfo(data);
+
+                for (int i = 0; i < data.questObjectives.Count; i++)
+                {
+                    questInfo.QuestData.questObjectives[i].isComplete = quest.completed_objectives[i];
+                }
+
+                questInfo.IsComplete = quest.is_complete;
+
+                activeQuests.Add(questInfo);
+
+                if (quest.is_pinned)
+                {
+                    AddNewPinnedQuest(data);
+                }
+
+                //GameplayUtils.instance.ShowCustomNotif($"Quest Added {data.QuestName}", 6);
+            }
+        }
     }
 
     public void QuestsObjectiveCheck()

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class BreakableProps : MonoBehaviour, IDamagable
+public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
 {
     public float Health;
     public float ItemDropForce = 10;
@@ -19,7 +19,21 @@ public class BreakableProps : MonoBehaviour, IDamagable
     public float destroyedSoundFXPitch;
     public AttackType[] AttackTypes;
 
+
     public bool PlayerCanStomp { get; set; }
+
+    bool broken;
+    public int unique_id;
+
+    public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+
+    public bool Get_Should_Save => broken;
+
+    void OnEnable()
+    {
+        broken = false;
+    }
+
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
@@ -85,10 +99,12 @@ public class BreakableProps : MonoBehaviour, IDamagable
 
         if (RespawnTime <= 0)
         {
-            Destroy(gameObject);
+            broken = true;
+            gameObject.SetActive(false);
         }
         else
         {
+            broken = true;
             ItemRespawnManager.instance.item_respawns.Add(gameObject, RespawnTime);
             gameObject.SetActive(false);
         }
@@ -105,6 +121,16 @@ public class BreakableProps : MonoBehaviour, IDamagable
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         //Does't need to do anything
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        if (RespawnTime > 0)
+        {
+            ItemRespawnManager.instance.item_respawns.Add(gameObject, RespawnTime);
+        }
+        broken = true;
+        gameObject.SetActive(false);
     }
 }
 

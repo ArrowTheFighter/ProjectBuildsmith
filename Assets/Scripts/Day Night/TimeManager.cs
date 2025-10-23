@@ -120,6 +120,12 @@ public class TimeManager : MonoBehaviour
 
     public void SetTime(float time)
     {
-        service.SetTime(time);    
+        service.SetTime(time);
+    }
+    
+    public float GetTime()
+    {
+        DateTime now = service.CurrentTime;
+        return (float)(now.Hour + now.Minute / 60f + now.Second / 3600f);
     }
 }

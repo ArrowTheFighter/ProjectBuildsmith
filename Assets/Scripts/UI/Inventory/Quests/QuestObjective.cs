@@ -7,7 +7,7 @@ public abstract class QuestObjective
     public string Description;
     public bool StopAtThisObjective;
     public bool StayCompleted;
-    [NonSerialized] public bool isComplete;
+    public bool isComplete;
     public int ObjectiveIDCollection;
     
     public bool ObjectiveComplete()

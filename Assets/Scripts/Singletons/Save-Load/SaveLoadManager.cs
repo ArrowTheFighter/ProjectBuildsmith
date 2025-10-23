@@ -61,6 +61,13 @@ public class SaveLoadManager : MonoBehaviour
         instance = this;
     }
 
+    void Start()
+    {
+        saveables = FindObjectsByType<MonoBehaviour>( FindObjectsInactive.Include,FindObjectsSortMode.None)
+        .OfType<ISaveable>()
+        .ToList();
+    }
+
 
     public void AddSpecialItemCollected(int id)
     {
@@ -117,13 +124,16 @@ public class SaveLoadManager : MonoBehaviour
         }
         string json = File.ReadAllText(SaveFile);
         saveFileStruct = JsonConvert.DeserializeObject<SaveFileStruct>(json);
+
+        TimeManager.instance.SetTime(saveFileStruct.saved_time);
+
         special_items_collected = saveFileStruct.special_items_collected.ToList();
 
-        //Load SaveEnabledStates
-        // foreach (var state in saveEnabledStates)
-        // {
-        //     state.gameObject.SetActive(!saveFileStruct.save_enabled_state_ids.Contains(state.unique_id));
-        // }
+        //Quests
+        foreach(var quest in saveFileStruct.saved_quests)
+        {
+            GameplayUtils.instance.inventoryManager.LoadSavedQuest(quest);
+        } 
 
         //Flags
         foreach (var flag in saveFileStruct.Flags)
@@ -131,21 +141,13 @@ public class SaveLoadManager : MonoBehaviour
             if (flag.Value) FlagManager.Set_Flag(flag.Key);
         }
 
-        //NPC Triggers
-        // foreach (var trigger in NPCTriggers)
-        // {
-        //     if (saveFileStruct.activated_trigers.Contains(trigger.unique_id))
-        //         trigger.Activated = true;
-
-        // }
-
         //Player Position
         playerSafeZone.transform.position = saveFileStruct.player_position.ToVector3();
+        playerSafeZone.transform.eulerAngles = saveFileStruct.player_rotation.ToVector3();
 
         //Player Camera
         OrbitalFollow.HorizontalAxis.Value = saveFileStruct.camera_x;
         OrbitalFollow.VerticalAxis.Value = saveFileStruct.camera_y;
-
 
 
         //Load Save_Object_Positions and Rotations
@@ -167,17 +169,6 @@ public class SaveLoadManager : MonoBehaviour
         }
 
 
-
-        //load Saved Cutscenes
-        // foreach (var cutscene in savedCustsceneBuilders)
-        // {
-        //     if (saveFileStruct.saved_cutscene_ids.Contains(cutscene.unique_id))
-        //     {
-        //         cutscene.PlayCutscene();
-        //         CutsceneManager.instance.SkipCutscene();
-        //     }
-        // }
-
         //load ISavables
         foreach(var saveable in saveables)
         {
@@ -187,7 +178,6 @@ public class SaveLoadManager : MonoBehaviour
 
         OnSaveLoaded?.Invoke(saveFileStruct);
         print("Loaded save file");
-        print(saveFileStruct.special_items_collected.Length);
 
     }
 
@@ -203,9 +193,14 @@ public class SaveLoadManager : MonoBehaviour
         InsureFilePathExists();
         string SaveFile = Path.Combine(FilePath, save_name + ".txt");
         SaveFileStruct saveFile = new SaveFileStruct();
+
         saveFile.file_name = save_name;
-        saveFile.special_items_collected = special_items_collected.ToArray();
+
+        saveFile.saved_time = TimeManager.instance.GetTime();
+
         //Inventory saving
+        saveFile.special_items_collected = special_items_collected.ToArray();
+
         saveFile.special_items = GameplayUtils.instance.inventoryManager.specialItems;
         saveFile.inventory_slots = new List<SaveableInventroySlot>();
         foreach (InventorySlot slot in GameplayUtils.instance.inventoryManager.inventorySlots)
@@ -213,8 +208,28 @@ public class SaveLoadManager : MonoBehaviour
             saveFile.inventory_slots.Add(new SaveableInventroySlot(slot.isEmpty, slot.slot_id, slot.inventoryItemStack));
         }
 
+        //Quests
+        foreach(var quest in GameplayUtils.instance.inventoryManager.activeQuests)
+        {
+
+            bool quest_is_pinned = GameplayUtils.instance.inventoryManager.activedPinnedQuests
+                .Any(item => item.storedQuestData.ID == quest.QuestData.ID);
+
+            SaveableQuestInfo saveableQuestInfo = new SaveableQuestInfo(quest, quest_is_pinned);
+
+            foreach (QuestObjective questObjective in quest.QuestData.questObjectives)
+            {
+                saveableQuestInfo.completed_objectives.Add(questObjective.isComplete);
+            }
+
+            saveFile.saved_quests.Add(saveableQuestInfo);
+            
+            
+        }
+
         //Player position
         saveFile.player_position = new SerializableVector3(playerSafeZone.safePos);
+        saveFile.player_rotation = new SerializableVector3(playerSafeZone.transform.eulerAngles);
 
         //Player camera
         saveFile.camera_x = OrbitalFollow.HorizontalAxis.Value;
@@ -227,39 +242,16 @@ public class SaveLoadManager : MonoBehaviour
             saveFile.SaveObjectRotations.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(saveObjectPosition.transform.eulerAngles));
         }
 
-        //NPC Triggers
-        // foreach (var trigger in NPCTriggers)
-        // {
-        //     if (trigger.Activated) saveFile.activated_trigers.Add(trigger.unique_id);
-        // }
-
         //Flags
         saveFile.Flags = FlagManager.Get_Flag_Dictionary();
 
         //Dialog Workers
         saveFile = SaveDialogIDs(saveFile);
 
-        //SaveEnableStates
-        // foreach (var enableState in saveEnabledStates)
-        // {
-        //     if (!enableState.gameObject.activeInHierarchy)
-        //     {
-        //         saveFile.save_enabled_state_ids.Add(enableState.unique_id);
-        //     }
-        // }
-
-        //Save Played Cutscenes
-        // foreach (var cutscene in savedCustsceneBuilders)
-        // {
-        //     if (cutscene.save_played && cutscene.has_played)
-        //     {
-        //         saveFile.saved_cutscene_ids.Add(cutscene.unique_id);
-        //     }
-        // }
-        //Save ISavables
-        foreach(var saveable in saveables)
+        //ISaveables
+        foreach (var saveable in saveables)
         {
-            if(saveable.Get_Should_Save)
+            if (saveable.Get_Should_Save)
             {
                 saveFile.saveable_ids.Add(saveable.Get_Unique_ID);
             }
@@ -310,23 +302,28 @@ public class SaveFileStruct
     {
         SaveObjectPositions = new Dictionary<int, SerializableVector3>();
         SaveObjectRotations = new Dictionary<int, SerializableVector3>();
-        //activated_trigers = new List<int>();
         Flags = new Dictionary<string, bool>();
         dialog_worker_current_dialogs = new Dictionary<int, int>();
         dialog_worker_has_marker = new List<int>();
-        //save_enabled_state_ids = new List<int>();
         saveable_ids = new List<int>();
+        saved_quests = new List<SaveableQuestInfo>();
     }
 
     public string file_name;
     public int[] special_items_collected;
 
+    public float saved_time;
+
     //Inventory
     public Dictionary<string, int> special_items;
     public List<SaveableInventroySlot> inventory_slots;
 
+    //Quests
+    public List<SaveableQuestInfo> saved_quests;
+
     //Player position
     public SerializableVector3 player_position;
+    public SerializableVector3 player_rotation;
 
     //Player Camera
     public float camera_x;
@@ -336,9 +333,6 @@ public class SaveFileStruct
     public Dictionary<int, SerializableVector3> SaveObjectPositions;
     public Dictionary<int, SerializableVector3> SaveObjectRotations;
 
-    //NPC Triggers
-    //public List<int> activated_trigers;
-
     //Flags
     public Dictionary<string, bool> Flags;
 
@@ -346,11 +340,6 @@ public class SaveFileStruct
     public Dictionary<int, int> dialog_worker_current_dialogs;
     public List<int> dialog_worker_has_marker;
 
-    //Disabled_Objs
-    //public List<int> save_enabled_state_ids;
-
-    //Saved Cutscene ID's
-    //public List<int> saved_cutscene_ids;
 
     //SavableIDS
     public List<int> saveable_ids;
@@ -370,4 +359,21 @@ public struct SerializableVector3
     }
 
     public Vector3 ToVector3() => new Vector3(x, y, z);
+}
+
+[Serializable]
+public struct SaveableQuestInfo
+{
+    public string quest_id;
+    public bool is_pinned;
+    public bool is_complete;
+    public List<bool> completed_objectives;
+
+    public SaveableQuestInfo(QuestInfo questInfo,bool isComplete = false)
+    {
+        quest_id = questInfo.QuestData.ID;
+        is_complete = questInfo.IsComplete;
+        is_pinned = isComplete;
+        completed_objectives = new List<bool>();
+    }
 }

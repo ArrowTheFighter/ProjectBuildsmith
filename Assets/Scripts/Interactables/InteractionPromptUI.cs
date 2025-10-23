@@ -31,6 +31,7 @@ public class InteractionPromptUI : MonoBehaviour
 
     public void SetUp(string promptText)
     {
+        Close();
         promptTextUI.text = fontWeight + promptText;
         uiPanel.SetActive(true);
         IsDisplayed = true;
@@ -51,6 +52,10 @@ public class InteractionPromptUI : MonoBehaviour
 
     void setup_item_requirements(item_requirement[] required_items)
     {
+        if (item_requirement_parent == null || required_items == null)
+            return;
+
+
         if (item_requirement_parent != null)
         {
             for (int i = 0; i < item_requirement_parent.childCount; i++)
@@ -60,8 +65,8 @@ public class InteractionPromptUI : MonoBehaviour
                 {
 
                     item_requirement_ui_object.SetActive(true);
-                    item_requirement_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = "<font-weight=500>x" + item_Requirements[i].item_amount;
-                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(item_Requirements[i].item_id);
+                    item_requirement_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = "<font-weight=500>x" + required_items[i].item_amount;
+                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(required_items[i].item_id);
                     Image iconImage = null;
                     for (int o = 0; o < item_requirement_ui_object.transform.childCount; o++)
                     {

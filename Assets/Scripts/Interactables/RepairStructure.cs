@@ -36,10 +36,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     public bool Get_Should_Save { get => is_repaired; }
 
-    void Start()
-    {
-        (this as ISaveable).AddToManager();
-    }
+    
 
     public bool Interact(Interactor interactor)
     {
@@ -87,6 +84,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     void LoadStructure()
     {
+        is_repaired = true;
         HologramStructure.SetActive(false);
         FinishedStructure.SetActive(true);
         FinishedStructure.transform.localScale = scaleOutSize;

@@ -15,11 +15,7 @@ public class NPCTriggers : MonoBehaviour, ISaveable
 
     public bool Get_Should_Save => Activated;
 
-    void Start()
-    {
-        (this as ISaveable).AddToManager();
-        //SaveLoadManager.instance.NPCTriggers.Add(this);
-    }
+   
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {

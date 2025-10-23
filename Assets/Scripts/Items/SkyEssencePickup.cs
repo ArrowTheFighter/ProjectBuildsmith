@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SkyEssencePickup : MonoBehaviour
+public class SkyEssencePickup : MonoBehaviour, ISaveable
 {
     public SkyEngineScript SkyEngine;
     public ParticleSystem touchedVFX;
@@ -19,6 +19,13 @@ public class SkyEssencePickup : MonoBehaviour
 
     public AudioSource SkyEssenceAmbiantSource;
 
+    public int unique_id;
+    bool collected;
+
+    public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+
+    public bool Get_Should_Save => collected;
+
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -32,6 +39,7 @@ public class SkyEssencePickup : MonoBehaviour
             }
 
             FlyTowardsEngine = true;
+            collected = true;
             if (GetComponent<FloatingItem>() != null)
             {
                 GetComponent<FloatingItem>().StopAnimating();
@@ -50,8 +58,15 @@ public class SkyEssencePickup : MonoBehaviour
             if (Vector3.Distance(transform.position, SkyEngine.transform.position + SkyEngineOffset) < 2.5f)
             {
                 SkyEngine.CollectEssence();
-                Destroy(gameObject);
-             }
+                gameObject.SetActive(false);
+            }
          }
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        collected = true;
+        SkyEngine.LoadCollectedEssence();
+        gameObject.SetActive(false);
     }
 }
