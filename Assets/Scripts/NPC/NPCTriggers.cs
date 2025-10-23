@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NPCTriggers : MonoBehaviour
+public class NPCTriggers : MonoBehaviour, ISaveable
 {
     public enum NPCTriggerTypes { Jump, Dive, Stop, DontJump, ForceSlide, EnableTriggers }
     public NPCTriggerTypes TriggerType;
@@ -11,9 +11,18 @@ public class NPCTriggers : MonoBehaviour
     public bool EnableQuestMarker;
     public int unique_id;
 
+    public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+
+    public bool Get_Should_Save => Activated;
+
     void Start()
     {
-        SaveLoadManager.instance.NPCTriggers.Add(this);
+        (this as ISaveable).AddToManager();
+        //SaveLoadManager.instance.NPCTriggers.Add(this);
     }
 
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        Activated = true;
+    }
 }

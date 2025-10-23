@@ -7,7 +7,7 @@ using System.Linq;
 using System.Collections;
 using Newtonsoft.Json;
 using Unity.Cinemachine;
-using System.Reflection;
+using DS.ScriptableObjects;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class SaveLoadManager : MonoBehaviour
     private static string FilePath => Path.Combine(Application.persistentDataPath + "/saves/");
 
     //Info to save
+    [HideInInspector]
     public List<int> special_items_collected;
     [Header("Player Safe Zone")]
     public PlayerSafeZone playerSafeZone;
@@ -22,10 +23,27 @@ public class SaveLoadManager : MonoBehaviour
     [SerializeField] public CinemachineOrbitalFollow OrbitalFollow;
 
     //SaveObjectPosition List
+    [HideInInspector]
     public List<SaveObjectPosition> saveObjectPositions = new List<SaveObjectPosition>();
 
     //NPC Triggers
-    public List<NPCTriggers> NPCTriggers = new List<NPCTriggers>();
+    // [HideInInspector]
+    // public List<NPCTriggers> NPCTriggers = new List<NPCTriggers>();
+
+    //Dialog Workers
+    [HideInInspector]
+    public List<DialogWorker> DialogWorkers = new List<DialogWorker>();
+
+    //SaveEnabledStates
+    // [HideInInspector]
+    // public List<SaveEnabledState> saveEnabledStates = new List<SaveEnabledState>();
+
+    //Saved Cutscenes
+    [HideInInspector]
+    public List<NewCutsceneBuilder> savedCustsceneBuilders = new List<NewCutsceneBuilder>();
+
+    //ISavables
+    public List<ISaveable> saveables = new List<ISaveable>();
 
     Queue<GameObject> ObjectsToDestroy = new Queue<GameObject>();
     bool isDeleting;
@@ -101,20 +119,25 @@ public class SaveLoadManager : MonoBehaviour
         saveFileStruct = JsonConvert.DeserializeObject<SaveFileStruct>(json);
         special_items_collected = saveFileStruct.special_items_collected.ToList();
 
+        //Load SaveEnabledStates
+        // foreach (var state in saveEnabledStates)
+        // {
+        //     state.gameObject.SetActive(!saveFileStruct.save_enabled_state_ids.Contains(state.unique_id));
+        // }
 
         //Flags
-        foreach(var flag in saveFileStruct.Flags)
+        foreach (var flag in saveFileStruct.Flags)
         {
             if (flag.Value) FlagManager.Set_Flag(flag.Key);
         }
 
         //NPC Triggers
-        foreach (var trigger in NPCTriggers)
-        {
-            if (saveFileStruct.activated_trigers.Contains(trigger.unique_id))
-                trigger.Activated = true;
+        // foreach (var trigger in NPCTriggers)
+        // {
+        //     if (saveFileStruct.activated_trigers.Contains(trigger.unique_id))
+        //         trigger.Activated = true;
 
-        }
+        // }
 
         //Player Position
         playerSafeZone.transform.position = saveFileStruct.player_position.ToVector3();
@@ -125,7 +148,7 @@ public class SaveLoadManager : MonoBehaviour
 
 
 
-        //Save Object Positions and Rotations
+        //Load Save_Object_Positions and Rotations
         foreach (var saveObject in saveObjectPositions)
         {
             if (saveFileStruct.SaveObjectPositions.TryGetValue(saveObject.SaveObjectID, out var pos))
@@ -134,12 +157,37 @@ public class SaveLoadManager : MonoBehaviour
                 saveObject.transform.eulerAngles = rotation.ToVector3();
         }
 
-        
+        //Load Dialog Workers
+        foreach (var worker in DialogWorkers)
+        {
+            if (saveFileStruct.dialog_worker_current_dialogs.TryGetValue(worker.unique_id, out var dialog_id))
+                worker.SetCurrentDialogByID(dialog_id);
+            if (saveFileStruct.dialog_worker_has_marker.Contains(worker.unique_id))
+                worker.EnableMarker(true);
+        }
+
+
+
+        //load Saved Cutscenes
+        // foreach (var cutscene in savedCustsceneBuilders)
+        // {
+        //     if (saveFileStruct.saved_cutscene_ids.Contains(cutscene.unique_id))
+        //     {
+        //         cutscene.PlayCutscene();
+        //         CutsceneManager.instance.SkipCutscene();
+        //     }
+        // }
+
+        //load ISavables
+        foreach(var saveable in saveables)
+        {
+            if (saveFileStruct.saveable_ids.Contains(saveable.Get_Unique_ID))
+                saveable.SaveLoaded(saveFileStruct);
+        }
 
         OnSaveLoaded?.Invoke(saveFileStruct);
         print("Loaded save file");
         print(saveFileStruct.special_items_collected.Length);
-
 
     }
 
@@ -180,17 +228,69 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         //NPC Triggers
-        foreach (var trigger in NPCTriggers)
-        {
-            if (trigger.Activated) saveFile.activated_trigers.Add(trigger.unique_id);
-        }
+        // foreach (var trigger in NPCTriggers)
+        // {
+        //     if (trigger.Activated) saveFile.activated_trigers.Add(trigger.unique_id);
+        // }
 
         //Flags
         saveFile.Flags = FlagManager.Get_Flag_Dictionary();
 
+        //Dialog Workers
+        saveFile = SaveDialogIDs(saveFile);
+
+        //SaveEnableStates
+        // foreach (var enableState in saveEnabledStates)
+        // {
+        //     if (!enableState.gameObject.activeInHierarchy)
+        //     {
+        //         saveFile.save_enabled_state_ids.Add(enableState.unique_id);
+        //     }
+        // }
+
+        //Save Played Cutscenes
+        // foreach (var cutscene in savedCustsceneBuilders)
+        // {
+        //     if (cutscene.save_played && cutscene.has_played)
+        //     {
+        //         saveFile.saved_cutscene_ids.Add(cutscene.unique_id);
+        //     }
+        // }
+        //Save ISavables
+        foreach(var saveable in saveables)
+        {
+            if(saveable.Get_Should_Save)
+            {
+                saveFile.saveable_ids.Add(saveable.Get_Unique_ID);
+            }
+        }
+
         string json = JsonConvert.SerializeObject(saveFile, Formatting.Indented); // true = pretty print
         File.WriteAllText(SaveFile, json);
         Debug.Log("Saved settings to " + SaveFile);
+    }
+    
+    SaveFileStruct SaveDialogIDs(SaveFileStruct saveFileStruct)
+    {
+        foreach (var worker in DialogWorkers)
+        {
+            if (worker.hasMarker) saveFileStruct.dialog_worker_has_marker.Add(worker.unique_id);
+            int dialog_id = -1;
+            switch (worker.currentDialogSO)
+            {
+                case DSDialogueSO dSDialogueSO:
+                    dialog_id = dSDialogueSO.unique_id;
+                    break;
+                case DSCloseDialogSO dSCloseDialogSO:
+                    dialog_id = dSCloseDialogSO.unique_id;
+                    break;
+            }
+            if (dialog_id != -1)
+            {
+                saveFileStruct.dialog_worker_current_dialogs.Add(worker.unique_id, dialog_id);
+            }
+        }
+        return saveFileStruct;
     }
 
     void InsureFilePathExists()
@@ -210,8 +310,12 @@ public class SaveFileStruct
     {
         SaveObjectPositions = new Dictionary<int, SerializableVector3>();
         SaveObjectRotations = new Dictionary<int, SerializableVector3>();
-        activated_trigers = new List<int>();
+        //activated_trigers = new List<int>();
         Flags = new Dictionary<string, bool>();
+        dialog_worker_current_dialogs = new Dictionary<int, int>();
+        dialog_worker_has_marker = new List<int>();
+        //save_enabled_state_ids = new List<int>();
+        saveable_ids = new List<int>();
     }
 
     public string file_name;
@@ -233,10 +337,23 @@ public class SaveFileStruct
     public Dictionary<int, SerializableVector3> SaveObjectRotations;
 
     //NPC Triggers
-    public List<int> activated_trigers;
+    //public List<int> activated_trigers;
 
     //Flags
     public Dictionary<string, bool> Flags;
+
+    //Dialog Workers
+    public Dictionary<int, int> dialog_worker_current_dialogs;
+    public List<int> dialog_worker_has_marker;
+
+    //Disabled_Objs
+    //public List<int> save_enabled_state_ids;
+
+    //Saved Cutscene ID's
+    //public List<int> saved_cutscene_ids;
+
+    //SavableIDS
+    public List<int> saveable_ids;
 
 }
 

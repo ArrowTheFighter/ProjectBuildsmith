@@ -1,8 +1,9 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Events;
+using UnityEditor.Build.Pipeline;
 
-public class RepairStructure : MonoBehaviour, IInteractable
+public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 {
 
     public string PROMPT;
@@ -17,7 +18,8 @@ public class RepairStructure : MonoBehaviour, IInteractable
     public bool CInteract;
     public bool CanInteract { get => CInteract; set { CInteract = value; } }
 
-    bool finished = false;
+
+    public bool is_repaired = false;
 
     public float ScaleInDuration = 0.9f;
     public Ease ScaleInEase = Ease.OutExpo;
@@ -28,6 +30,16 @@ public class RepairStructure : MonoBehaviour, IInteractable
 
     public string flag_name;
     [SerializeField] UnityEvent RepairEvent;
+
+    public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+    public int unique_id;
+
+    public bool Get_Should_Save { get => is_repaired; }
+
+    void Start()
+    {
+        (this as ISaveable).AddToManager();
+    }
 
     public bool Interact(Interactor interactor)
     {
@@ -42,8 +54,8 @@ public class RepairStructure : MonoBehaviour, IInteractable
             }
         }
 
-        if (finished) return false;
-        finished = true;
+        if (is_repaired) return false;
+        is_repaired = true;
 
         foreach (item_requirement item in itemsRequired)
         {
@@ -63,7 +75,7 @@ public class RepairStructure : MonoBehaviour, IInteractable
     public void ScaleInStructure()
     {
         RepairEvent?.Invoke();
-        Destroy(HologramStructure);
+        HologramStructure.SetActive(false);
         FinishedStructure.SetActive(true);
         Sequence sequence = DOTween.Sequence();
         sequence.Append(
@@ -73,4 +85,16 @@ public class RepairStructure : MonoBehaviour, IInteractable
         gameObject.SetActive(false);
     }
 
+    void LoadStructure()
+    {
+        HologramStructure.SetActive(false);
+        FinishedStructure.SetActive(true);
+        FinishedStructure.transform.localScale = scaleOutSize;
+        gameObject.SetActive(false);
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        LoadStructure();
+    }
 }

@@ -22,7 +22,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     [Header("Localization")]
     [SerializeField] bool UseLocalization;
 
-    ScriptableObject currentDialogSO;
+    public ScriptableObject currentDialogSO;
     DSDialogueSO StarterNode;
 
     public string PROMPT;
@@ -38,7 +38,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     float interactCooldown;
 
-    bool hasMarker;
+    public bool hasMarker;
     [SerializeField] ParticleSystem MarkerParticle;
 
     [Header("Cameras")]
@@ -53,12 +53,22 @@ public class DialogWorker : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SaveLoadManager.instance.DialogWorkers.Add(this);
         StarterNode = (DSDialogueSO)DialogRetriever.GetStarterNode(StartDialogGraphName);
         //currentDialogSO = DialogRetriever.GetDialogDataByName(StartDialogGraphName, startDialogName);
         //currentDialogSO = DialogRetriever.GetNextDialogSO(StartDialogGraphName,StarterNode);
         //ShowDialog();
         GameplayInput.instance.playerInput.actions["Submit"].performed += context => { ActiveAndInteract(); };
         textEffect = DialogManager.instance.text_box.GetComponent<TextEffect>();
+    }
+
+    public void SetCurrentDialogByID(int id)
+    {
+        ScriptableObject dialog = DialogRetriever.GetDialogByID(id);
+        if(dialog != null)
+        {
+            currentDialogSO = dialog;
+        }
     }
 
     public bool Interact(Interactor interactor)

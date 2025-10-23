@@ -370,6 +370,27 @@ public class DialogRetriever : MonoBehaviour
         return "";
     }
 
+    public static ScriptableObject GetDialogByID(int id)
+    {
+        foreach (ScriptableObject scriptableObject in cached_data)
+        {
+            switch (scriptableObject)
+            {
+                case DSDialogueSO dSDialogueSO:
+                    if (dSDialogueSO.unique_id == id)
+                        return dSDialogueSO;
+                    break;
+                case DSCloseDialogSO dSCloseDialogSO:
+                    if (dSCloseDialogSO.unique_id == id)
+                        return dSCloseDialogSO;
+                    break;
+
+            }
+
+        }
+        return null;
+    }
+
     
 
 }

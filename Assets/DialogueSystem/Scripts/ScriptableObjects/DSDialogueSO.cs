@@ -15,6 +15,7 @@ namespace DS.ScriptableObjects
         [field: SerializeField] public DSDialogueType DialogueType { get; set; }
         [field: SerializeField] public bool IsStartingDialogue { get; set; }
         [field: SerializeField] public bool CloseDialog;
+        [field: SerializeField] public int unique_id { get; set; }
 
         public void Initialize(string dialogueName, string text,string locaizedKey, List<DSDialogueChoiceData> choices, DSDialogueType dialogueType, bool isStartingDialogue, bool closeDialog)
         {

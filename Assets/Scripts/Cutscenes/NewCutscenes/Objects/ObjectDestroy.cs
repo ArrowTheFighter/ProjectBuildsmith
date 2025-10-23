@@ -12,7 +12,7 @@ public class ObjectDestroy : MonoBehaviour, ISkippable
         }
         if (objectToDestroy != null)
         {
-            Destroy(objectToDestroy);
+            objectToDestroy.SetActive(false);
         }
     }
 
@@ -20,7 +20,7 @@ public class ObjectDestroy : MonoBehaviour, ISkippable
     {
         if (objectToDestroy != null)
         {
-            Destroy(objectToDestroy);
+            objectToDestroy.SetActive(false);
         }
     }
 }
