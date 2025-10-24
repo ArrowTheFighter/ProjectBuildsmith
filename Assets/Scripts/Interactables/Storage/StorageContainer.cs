@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class StorageContainer : MonoBehaviour, IInteractable, IStorable
+public class StorageContainer : MonoBehaviour, IInteractable, IStorable,ISaveable
 {
 
     public string PROMPT;
     public string INTERACTION_PROMPT => PROMPT;
 
+    bool started_locked;
     public bool IsLocked;
     public bool StayUnlocked;
     public bool ConsumeKey;
@@ -17,6 +18,7 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
 
     public bool CanUse = true;
     public bool CanInteract { get => CanUse; set { CanUse = value; } }
+
 
     public event Action OnOpened;
 
@@ -27,7 +29,16 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
 
     public bool ContainerIsEmpty = true;
 
+    public int unique_id;
 
+    public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+
+    public bool Get_Should_Save => IsLocked != started_locked;
+
+    void Awake()
+    {
+        started_locked = IsLocked;
+    }
 
     public bool Interact(Interactor interactor)
     {
@@ -49,7 +60,7 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
             }
             if (StayUnlocked)
             {
-                IsLocked = false;    
+                IsLocked = false;
             }
         }
 
@@ -75,5 +86,10 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable
             storageFilled?.Invoke();
         }
         ContainerIsEmpty = updateIsEmpty;
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        IsLocked = false;
     }
 }

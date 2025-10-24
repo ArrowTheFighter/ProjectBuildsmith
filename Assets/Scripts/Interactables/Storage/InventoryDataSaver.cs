@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Linq;
 
-public class InventoryDataSaver : MonoBehaviour
+public class InventoryDataSaver : MonoBehaviour,ISaveable
 {
     public List<InventorySlotComponent> inventorySlots = new List<InventorySlotComponent>();
     public List<InventorySlot> savedSlots = new List<InventorySlot>();
@@ -12,9 +13,17 @@ public class InventoryDataSaver : MonoBehaviour
     public event Action slotsUpdated;
 
     public event Action OnFinshedInitalizing;
+
+    public int unique_id;
+
+    public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+
+    public bool Get_Should_Save => true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SaveLoadManager.instance.inventoryDataSavers.Add(this);
         foreach (InventorySlotComponent slot in inventorySlots)
         {
             slot.slotFilled += UpdateSavedSlots;
@@ -118,6 +127,20 @@ public class InventoryDataSaver : MonoBehaviour
 
             }
 
+        }
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        var saved_inventory = saveFileStruct.saved_inventory_savers.FirstOrDefault(item => item.inventory_id == unique_id);
+
+        if (saved_inventory != null)
+        {
+            savedSlots = new List<InventorySlot>();
+            foreach (var saved_slot in saved_inventory.saved_inventory_slots)
+            {
+                savedSlots.Add(new InventorySlot(saved_slot));
+            }
         }
     }
 }

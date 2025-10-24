@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -740,6 +741,13 @@ public class InventorySlot
         inventoryItemStack = new InventoryItemStack(0);
     }
 
+    public InventorySlot(SaveableInventroySlot saveableInventroySlot)
+    {
+        isEmpty = saveableInventroySlot.isEmpty;
+        slot_id = saveableInventroySlot.slot_id;
+        inventoryItemStack = saveableInventroySlot.inventoryItemStack;
+    }
+
 }
 
 [Serializable]
@@ -761,11 +769,18 @@ public class SaveableInventroySlot
         inventoryItemStack = new InventoryItemStack(0);
     }
 
-    public SaveableInventroySlot(bool _isEmpty, int _slot_id,InventoryItemStack _inventoryItemStack)
+    public SaveableInventroySlot(bool _isEmpty, int _slot_id, InventoryItemStack _inventoryItemStack)
     {
         isEmpty = _isEmpty;
         slot_id = _slot_id;
         inventoryItemStack = _inventoryItemStack;
+    }
+    
+    public SaveableInventroySlot(InventorySlot slot)
+    {
+        isEmpty = slot.isEmpty;
+        slot_id = slot.slot_id;
+        inventoryItemStack = slot.inventoryItemStack;
     }
 
 }

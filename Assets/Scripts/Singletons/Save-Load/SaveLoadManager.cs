@@ -26,17 +26,13 @@ public class SaveLoadManager : MonoBehaviour
     [HideInInspector]
     public List<SaveObjectPosition> saveObjectPositions = new List<SaveObjectPosition>();
 
-    //NPC Triggers
-    // [HideInInspector]
-    // public List<NPCTriggers> NPCTriggers = new List<NPCTriggers>();
 
     //Dialog Workers
     [HideInInspector]
     public List<DialogWorker> DialogWorkers = new List<DialogWorker>();
 
-    //SaveEnabledStates
-    // [HideInInspector]
-    // public List<SaveEnabledState> saveEnabledStates = new List<SaveEnabledState>();
+    //Inventory Data Savers
+    public List<InventoryDataSaver> inventoryDataSavers = new List<InventoryDataSaver>();
 
     //Saved Cutscenes
     [HideInInspector]
@@ -168,6 +164,21 @@ public class SaveLoadManager : MonoBehaviour
                 worker.EnableMarker(true);
         }
 
+        //Load Inventory Data Savers
+        // foreach(var inventory in inventoryDataSavers)
+        // {
+        //     var saved_inventory = saveFileStruct.saved_inventory_savers.FirstOrDefault(item => item.inventory_id == inventory.unique_id);
+
+        //     if(saved_inventory != null)
+        //     {
+        //         inventory.savedSlots = new List<InventorySlot>();
+        //         foreach(var saved_slot in saved_inventory.saved_inventory_slots)
+        //         {
+        //             inventory.savedSlots.Add(new InventorySlot(saved_slot));
+        //         }
+        //     }
+        // }
+
 
         //load ISavables
         foreach(var saveable in saveables)
@@ -257,6 +268,12 @@ public class SaveLoadManager : MonoBehaviour
             }
         }
 
+        //Inventory Data Savers
+        foreach(var inventory in inventoryDataSavers)
+        {
+            saveFile.saved_inventory_savers.Add(new SerializableInventory(inventory.unique_id, inventory.savedSlots));
+        }
+
         string json = JsonConvert.SerializeObject(saveFile, Formatting.Indented); // true = pretty print
         File.WriteAllText(SaveFile, json);
         Debug.Log("Saved settings to " + SaveFile);
@@ -307,6 +324,7 @@ public class SaveFileStruct
         dialog_worker_has_marker = new List<int>();
         saveable_ids = new List<int>();
         saved_quests = new List<SaveableQuestInfo>();
+        saved_inventory_savers = new List<SerializableInventory>();
     }
 
     public string file_name;
@@ -344,6 +362,10 @@ public class SaveFileStruct
     //SavableIDS
     public List<int> saveable_ids;
 
+    //Inventory Data Savers
+    public List<SerializableInventory> saved_inventory_savers;
+
+
 }
 
 [Serializable]
@@ -369,11 +391,31 @@ public struct SaveableQuestInfo
     public bool is_complete;
     public List<bool> completed_objectives;
 
-    public SaveableQuestInfo(QuestInfo questInfo,bool isComplete = false)
+    public SaveableQuestInfo(QuestInfo questInfo, bool isComplete = false)
     {
         quest_id = questInfo.QuestData.ID;
         is_complete = questInfo.IsComplete;
         is_pinned = isComplete;
         completed_objectives = new List<bool>();
     }
+}
+
+[Serializable]
+public class SerializableInventory
+{
+    public int inventory_id;
+    public List<SaveableInventroySlot> saved_inventory_slots;
+
+    public SerializableInventory() {}
+
+    public SerializableInventory(int id, List<InventorySlot> slots)
+    {
+        inventory_id = id;
+        saved_inventory_slots = new List<SaveableInventroySlot>();
+        foreach (var slot in slots)
+        {
+            saved_inventory_slots.Add(new SaveableInventroySlot(slot));
+        }
+    }
+
 }
