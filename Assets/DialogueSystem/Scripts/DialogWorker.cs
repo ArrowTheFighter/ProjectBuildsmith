@@ -6,6 +6,8 @@ using EasyTextEffects;
 using UnityEngine.UI;
 using Unity.Cinemachine;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class DialogWorker : MonoBehaviour, IInteractable
 {
@@ -50,6 +52,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     public int unique_id;
 
+    void Awake()
+    {
+        ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
+    }
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -58,9 +66,15 @@ public class DialogWorker : MonoBehaviour, IInteractable
         //currentDialogSO = DialogRetriever.GetDialogDataByName(StartDialogGraphName, startDialogName);
         //currentDialogSO = DialogRetriever.GetNextDialogSO(StartDialogGraphName,StarterNode);
         //ShowDialog();
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += context => { ActiveAndInteract(); };
+        //ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += context => { ActiveAndInteract(); };
         textEffect = ScriptRefrenceSingleton.instance.dialogManager.text_box.GetComponent<TextEffect>();
     }
+
+    void BindInputs()
+    {
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += ActiveAndInteractContext;
+    }
+
 
     public void SetCurrentDialogByID(int id)
     {
@@ -158,8 +172,13 @@ public class DialogWorker : MonoBehaviour, IInteractable
             cinemachineBrainEvents.BlendCreatedEvent.RemoveListener(setCameraBlend);
             cinemachineBrainEvents.BlendCreatedEvent.AddListener(setCameraBlend);
             frozenCam.SetActive(false);
-            
+
         }
+    }
+    
+    void ActiveAndInteractContext(InputAction.CallbackContext callback)
+    {
+        ActiveAndInteract();
     }
 
     public void ActiveAndInteract()

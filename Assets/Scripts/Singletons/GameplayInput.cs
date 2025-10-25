@@ -14,7 +14,11 @@ public class GameplayInput : MonoBehaviour
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+
     }
+
+
+
 
     void Start()
     {
@@ -26,9 +30,11 @@ public class GameplayInput : MonoBehaviour
                 actionUsed[key] = false;
 
                 action.performed += ctx => MarkActionUsed(map.name, action.name);
-             }
-         }
+            }
+        }
     }
+
+   
 
     void MarkActionUsed(string mapName, string actionName)
     {

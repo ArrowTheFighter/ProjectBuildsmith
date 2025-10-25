@@ -95,6 +95,8 @@ public class CharacterMovement : MonoBehaviour
     [Header("Debug")]
     public bool printStrings;
 
+    
+
     private void Start()
     {
         playerAnimationController = GetComponent<PlayerAnimationController>();

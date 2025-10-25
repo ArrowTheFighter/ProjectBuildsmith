@@ -3,6 +3,7 @@ using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
@@ -23,15 +24,50 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         // Button button = GetComponent<Button>();
         // button.onClick.AddListener(slotClicked);
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += context => { ControllerMainPress(); };
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Cancel"].performed += context => { ControllerSecondaryPress(); };
+        // ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += context => { ControllerMainPress(); };
+        // ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Cancel"].performed += context => { ControllerSecondaryPress(); };
 
         if (inventorySlot.inventorySlotComponent == null)
         {
             inventorySlot.inventorySlotComponent = this;
         }
-        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryClosed += UnsubscribeFromItemPopups;
+        //ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryClosed += UnsubscribeFromItemPopups;
         SelectionWatcher.OnSelectionChanged += HandleSelectionChange;
+    }
+
+    void OnEnable()
+    {
+        Invoke(nameof(BindInputs), 0f); // Schedules after this frame
+    }
+
+    void BindInputs()
+    {
+        var gameplayInput = ScriptRefrenceSingleton.instance.gameplayInput;
+        gameplayInput.playerInput.actions["Submit"].performed += ControllerMainPress;
+        gameplayInput.playerInput.actions["Cancel"].performed += ControllerSecondaryPress;
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryClosed += UnsubscribeFromItemPopups;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += OnDisable;
+    }
+
+    void OnDisable()
+    {
+        // Singleton might already be gone during scene unload
+        var instance = ScriptRefrenceSingleton.instance;
+        if (instance == null)
+            return;
+
+        var gameplayInput = instance.gameplayInput;
+        if (gameplayInput == null)
+            return;
+
+        var playerInput = gameplayInput.playerInput;
+        if (playerInput == null || playerInput.Equals(null))
+            return;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed -= ControllerMainPress;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Cancel"].performed -= ControllerSecondaryPress;
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryClosed -= UnsubscribeFromItemPopups;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu -= OnDisable;
     }
 
     void HandleSelectionChange(GameObject _gameObject)
@@ -139,16 +175,20 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         }
     }
 
-    void ControllerMainPress()
+    void ControllerMainPress(InputAction.CallbackContext context)
     {
+        if (gameObject == null || this == null) return;
+        if (!gameObject.activeInHierarchy) return;
         if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject == gameObject)
         {
             SlotMainPress();
         }
      }
 
-    void ControllerSecondaryPress()
+    void ControllerSecondaryPress(InputAction.CallbackContext context)
     {
+        if (gameObject == null || this == null) return;
+        if (!gameObject.activeInHierarchy) return;
         if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject == gameObject)
         {
             SlotSecondaryPress();

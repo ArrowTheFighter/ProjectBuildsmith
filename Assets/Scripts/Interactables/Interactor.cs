@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,11 +15,24 @@ public class Interactor : MonoBehaviour
 
     private IInteractable interactable;
 
+    void Awake()
+    {
+        StartCoroutine(wait_till_script_refrence_is_ready());
+    }
+
+    IEnumerator wait_till_script_refrence_is_ready()
+    {
+        yield return StartCoroutine(ScriptRefrenceSingleton.Wait_Until_Script_is_Ready());
+        playerInput.actions["Interact"].performed += Interact;
+    }
+
     private void Start()
     {
         playerInput = ScriptRefrenceSingleton.instance.gameplayInput.playerInput;
         playerInput.actions["Interact"].performed += Interact;
+       // ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += OnDisable;
     }
+
 
     private void Update()
     {

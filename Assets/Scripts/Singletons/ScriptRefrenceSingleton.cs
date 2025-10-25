@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -41,14 +43,20 @@ public class ScriptRefrenceSingleton : MonoBehaviour
 
     static bool notFirstTimeStarted;
 
+    public static bool is_ready;
+
     [Header("Hide Demo Start Screen")]
     public UnityEvent OnNotFirstTimeStartingEvent;
 
+    public static event Action OnScriptLoaded;
+
     void Awake()
     {
-        if (instance != this)
+        if (instance != null && instance != this)
         {
-            Destroy(instance);
+            print("destorying old instance");
+            instance.Cleanup();
+            Destroy(instance.gameObject);
         }
         instance = this;
     }
@@ -61,11 +69,25 @@ public class ScriptRefrenceSingleton : MonoBehaviour
             OnNotFirstTimeStartingEvent?.Invoke();
         }
         notFirstTimeStarted = true;
+
+        is_ready = true;
+        OnScriptLoaded?.Invoke();
+
+    }
+
+    public void Cleanup()
+    {
+        OnScriptLoaded = null;
     }
 
     [Button]
     public void ResetScene()
     {
         SceneManager.LoadScene(gameObject.scene.name);
+    }
+
+    public static IEnumerator Wait_Until_Script_is_Ready()
+    {
+        yield return new WaitUntil(() => is_ready);
     }
 }

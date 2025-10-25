@@ -61,8 +61,12 @@ public class GameplayUtils : MonoBehaviour
     [Header("Crafting Recipe Displays")]
     public List<CraftingTableRecipeDisplay> craftingTableRecipeDisplays = new List<CraftingTableRecipeDisplay>();
 
+    public event Action OnStartMoveToMainMenu;
+
     void Awake()
     {
+        ScriptRefrenceSingleton.OnScriptLoaded += SetupBinds;
+        OnStartMoveToMainMenu += OnSceneReload;
         Reset();
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
         StartCoroutine(InitalFade());
@@ -77,17 +81,41 @@ public class GameplayUtils : MonoBehaviour
         //PowerConsole.OpenCloseHotkeys = new List<KeyCode> { KeyCode.LeftControl,KeyCode.BackQuote};
 
         print(ScriptRefrenceSingleton.instance != null);
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["console"].performed += (context) => { ToggleConsole(); };
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["consoleUI"].performed += (context) => { ToggleConsole(); };
+        
 
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["hidebuild"].performed += (context) => { BuildNumCanvas.SetActive(!BuildNumCanvas.activeInHierarchy); };
-
-        #if UNITY_EDITOR
-            CanCheat = true;
-        #endif
+#if UNITY_EDITOR
+        CanCheat = true;
+#endif
     }
 
-    void ToggleConsole()
+    void SetupBinds()
+    {
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["console"].performed += ToggleConsole;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["consoleUI"].performed += ToggleConsole;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["hidebuild"].performed += ToggleBuildNum;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HideUI"].performed += ToggleUIInputAction;
+        ScriptRefrenceSingleton.OnScriptLoaded -= SetupBinds;
+
+    }
+
+    void OnSceneReload()
+    {
+        print("gameplay utils unsubscribing input");
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["console"].performed -= ToggleConsole;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["consoleUI"].performed -= ToggleConsole;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["hidebuild"].performed -= ToggleBuildNum;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HideUI"].performed -= ToggleUIInputAction;
+    }
+
+    void ToggleBuildNum(InputAction.CallbackContext context)
+    {
+        BuildNumCanvas.SetActive(!BuildNumCanvas.activeInHierarchy);
+    }
+
+    void ToggleConsole(InputAction.CallbackContext context)
     {
         print("toggling console");
         if (!PowerConsole.IsVisible)
@@ -160,8 +188,7 @@ public class GameplayUtils : MonoBehaviour
         //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
         AudioListener.volume = Main_volume_slider.value;
 
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HideUI"].performed += (context) => { ToggleUI(); };
-
+       
         inventoryManager.OnInventoryUpdated += gemScreenCheck;
         if (MainMenuDemoScreenButton != null)
         {
@@ -194,6 +221,11 @@ public class GameplayUtils : MonoBehaviour
     public void SetVsync(bool value)
     {
         QualitySettings.vSyncCount = value ? 1 : 0;
+    }
+
+    void ToggleUIInputAction(InputAction.CallbackContext context)
+    {
+        ToggleUI();
     }
 
     public void ToggleUI()
@@ -523,6 +555,8 @@ public class GameplayUtils : MonoBehaviour
 
     public void MoveToMainMenu()
     {
+        ScriptRefrenceSingleton.is_ready = false;
+        OnStartMoveToMainMenu?.Invoke();
         CanPause = true;
         PauseMenuIsOpen = false;
         CloseMenu();

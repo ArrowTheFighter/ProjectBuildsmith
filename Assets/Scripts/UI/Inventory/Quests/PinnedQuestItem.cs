@@ -61,8 +61,15 @@ public class PinnedQuestItem : MonoBehaviour
             QuestObjectivesTextBox.GetComponent<TextFormater>().SetText(QuestText);
         }
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
-        StartCoroutine(ForceRebuildNextFrame());
+        if (this != null && gameObject != null)
+        {
+            var rect = transform as RectTransform;
+            if (rect != null)
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+
+            if (isActiveAndEnabled)
+                StartCoroutine(ForceRebuildNextFrame());
+        }
     }
 
     IEnumerator ForceRebuildNextFrame()

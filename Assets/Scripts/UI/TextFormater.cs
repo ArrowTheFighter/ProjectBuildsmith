@@ -33,8 +33,9 @@ public class TextFormater : MonoBehaviour
 
     public void ReformatText()
     {
-        if(textMeshProUGUI == null) textMeshProUGUI = GetComponent<TextMeshProUGUI>();
-        string formatedText = ScriptRefrenceSingleton.instance.uIIconHandler.FormatText(rawStoredText);
+        if (textMeshProUGUI == null) textMeshProUGUI = GetComponent<TextMeshProUGUI>();
+        if (string.IsNullOrEmpty(rawStoredText)) rawStoredText = textMeshProUGUI.text;
+            string formatedText = ScriptRefrenceSingleton.instance.uIIconHandler.FormatText(rawStoredText);
         textMeshProUGUI.text = formatedText;
     }
 }
