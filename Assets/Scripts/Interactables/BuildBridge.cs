@@ -31,7 +31,7 @@ public class BuildBridge : MonoBehaviour, IInteractable
     {
         foreach (item_requirement item in itemsRequired)
         {
-            int current_item_amount = GameplayUtils.instance.get_item_holding_amount(item.item_id);
+            int current_item_amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(item.item_id);
             if (current_item_amount < item.item_amount)
             {
                 return false;
@@ -43,7 +43,7 @@ public class BuildBridge : MonoBehaviour, IInteractable
 
         foreach (item_requirement item in itemsRequired)
         {
-            GameplayUtils.instance.remove_items_from_inventory(item.item_id, item.item_amount);
+            ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(item.item_id, item.item_amount);
         }
 
         if (flag_name != "" && flag_name != null)

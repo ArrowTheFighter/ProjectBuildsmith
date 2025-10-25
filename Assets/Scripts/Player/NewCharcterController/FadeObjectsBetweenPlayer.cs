@@ -13,7 +13,7 @@ public class FadeObjectsBetweenPlayer : MonoBehaviour
 
     void Start()
     {
-        PlayerTransform = GameplayUtils.instance.PlayerTransform;
+        PlayerTransform = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform;
     }
 
     void Update()

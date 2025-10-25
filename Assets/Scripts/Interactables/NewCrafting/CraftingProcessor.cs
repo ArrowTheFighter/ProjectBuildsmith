@@ -55,7 +55,7 @@ public class CraftingProcessor : CraftingTableBase
             }
         }
 
-        foreach (CraftingRecipeData recipeData in GameplayUtils.instance.RecipeDatabase.recipes)
+        foreach (CraftingRecipeData recipeData in ScriptRefrenceSingleton.instance.gameplayUtils.RecipeDatabase.recipes)
         {
             if (recipeData.stationType == craftingStationType)
             {
@@ -95,7 +95,7 @@ public class CraftingProcessor : CraftingTableBase
     {
         if (inventoryDataSaver.ActiveContainer)
         {
-            GameplayUtils.instance.SetSawmillProgressBar(processTime / CraftTime);
+            ScriptRefrenceSingleton.instance.gameplayUtils.SetSawmillProgressBar(processTime / CraftTime);
         }
     }
 
@@ -130,7 +130,7 @@ public class CraftingProcessor : CraftingTableBase
     {
         if (currentRecipe != null)
         {
-            ItemData itemData = GameplayUtils.instance.GetItemDataByID(currentRecipe.recipe_output_id);
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(currentRecipe.recipe_output_id);
             if (processorOutputSlot.inventoryItemStack.Amount < processorOutputSlot.inventoryItemStack.MaxStackSize)
             {
                 processorOutputSlot.inventoryItemStack.Amount += 1;
@@ -138,7 +138,7 @@ public class CraftingProcessor : CraftingTableBase
             }
             else if (processorOutputSlot.isEmpty)
             {
-                GameplayUtils.instance.inventoryManager.AddItemToSlot(processorOutputSlot, itemData);
+                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(processorOutputSlot, itemData);
             }
             foreach (InventorySlot slot in processorSlots)
             {
@@ -159,7 +159,7 @@ public class CraftingProcessor : CraftingTableBase
         inventoryDataSaver.SetContainerSlots();
         InventoryUpdated();
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, ProcessorFinishedCrafting);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, ProcessorFinishedCrafting);
         //inventoryDataSaver.UpdateSavedSlots();
     }
 

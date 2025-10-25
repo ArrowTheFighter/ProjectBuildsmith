@@ -11,7 +11,7 @@ public class Sawmill : MonoBehaviour, IInteractable
             bool has_items = true;
             foreach (item_requirement item in required_items)
             {
-                if (GameplayUtils.instance.get_item_holding_amount(item.item_id) < item.item_amount) has_items = false;
+                if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(item.item_id) < item.item_amount) has_items = false;
             }
             if (!has_items)
             {
@@ -62,13 +62,13 @@ public class Sawmill : MonoBehaviour, IInteractable
     {
         foreach (item_requirement item in required_items)
         {
-            if (GameplayUtils.instance.get_item_holding_amount(item.item_id) < item.item_amount) return false;
+            if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(item.item_id) < item.item_amount) return false;
          }
         if (!sawmillRunning)
         {
              foreach (item_requirement item in required_items)
             {
-                GameplayUtils.instance.remove_items_from_inventory(item.item_id,item.item_amount);
+                ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(item.item_id,item.item_amount);
             }
             sawmillRunning = true;
             log.gameObject.SetActive(true);

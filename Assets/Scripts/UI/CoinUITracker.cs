@@ -10,14 +10,14 @@ public class CoinUITracker : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameplayUtils.instance.inventoryManager.OnInventoryUpdated += UpdateText;
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated += UpdateText;
     }
 
     // Update is called once per frame
     void UpdateText()
     {
-        string coin_text = "<font-weight=500>" + GameplayUtils.instance.get_item_holding_amount(ItemID).ToString("000");
-        if (GameplayUtils.instance.get_item_holding_amount(ItemID) == 0)
+        string coin_text = "<font-weight=500>" + ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID).ToString("000");
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID) == 0)
             coin_text = "<font-weight=500>000";
             if (coinsAmountText.text != coin_text)
             {

@@ -55,9 +55,9 @@ public class FloatingItem : MonoBehaviour
         {
             delayTimer = Time.time + checkDelay;
 
-            if (objectToAnimate == null || GameplayUtils.instance == null) return;
+            if (objectToAnimate == null || ScriptRefrenceSingleton.instance.gameplayUtils == null) return;
 
-            float dist = Vector3.Distance(GameplayUtils.instance.PlayerTransform.position, transform.position);
+            float dist = Vector3.Distance(ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position, transform.position);
             isActive = dist < triggerDistance;
 
             if (isActive && !wasActive)

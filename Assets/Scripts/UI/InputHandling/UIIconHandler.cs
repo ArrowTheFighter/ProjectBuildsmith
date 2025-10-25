@@ -3,12 +3,9 @@ using TMPro;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 
 public class UIIconHandler : MonoBehaviour
 {
-    public static UIIconHandler instance;
     public IconDatabase iconDatabase;
     public TextMeshProUGUI[] TextBoxes;
     public TMP_SpriteAsset KeyboardIcons;
@@ -18,19 +15,14 @@ public class UIIconHandler : MonoBehaviour
     public string CurrentControlDevice = "Keyboard";
     string currentControlScheme = "Keyboard&Mouse";
 
-    void Awake()
-    {
-        if (instance != this)
-            Destroy(instance);
-        instance = this;
-    }
+   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        UIInputHandler.instance.OnSchemeChange += UpdateTextBoxesIcons;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OnSchemeChange += UpdateTextBoxesIcons;
         //InputSystem.onEvent += DeviceChanged;
-        GameplayInput.instance.playerInput.onActionTriggered += DeviceChanged;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.onActionTriggered += DeviceChanged;
     }
 
     void DeviceChanged(InputAction.CallbackContext context)

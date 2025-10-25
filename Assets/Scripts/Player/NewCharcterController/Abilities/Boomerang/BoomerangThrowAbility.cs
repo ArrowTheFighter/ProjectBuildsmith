@@ -51,7 +51,7 @@ public class BoomerangThrowAbility : PlayerAbility
             if (TargetEffect == null && closestHit != null)
             {
                 print("spawning target particle");
-                TargetEffect = Instantiate(PlayerParticlesManager.instance.GetTargetParticlePrefab(), closestHit.position, Quaternion.identity);
+                TargetEffect = Instantiate(ScriptRefrenceSingleton.instance.playerParticlesManager.GetTargetParticlePrefab(), closestHit.position, Quaternion.identity);
             }
             else if (TargetEffect != null && closestHit == null)
             {
@@ -73,7 +73,7 @@ public class BoomerangThrowAbility : PlayerAbility
             
         }
 
-        if (GameplayInput.instance.playerInput.actions["BasicAttack"].ReadValue<float>() > 0)
+        if (ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["BasicAttack"].ReadValue<float>() > 0)
         {
             if (!IsThrowing)
             {
@@ -134,9 +134,9 @@ public class BoomerangThrowAbility : PlayerAbility
                             parent_component.TakeDamage(1, new AttackType[] { AttackType.Simple }, boomerang);
                         }
                     }
-                    AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("BoomerangHit");
-                    SoundFXManager.instance.PlayRandomSoundCollection(boomerang.transform, audioCollection);
-                    Instantiate(PlayerParticlesManager.instance.GetParticlePredabByID("BoomerangHit"), boomerang.transform.position, Quaternion.identity);
+                    AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("BoomerangHit");
+                    ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(boomerang.transform, audioCollection);
+                    Instantiate(ScriptRefrenceSingleton.instance.playerParticlesManager.GetParticlePredabByID("BoomerangHit"), boomerang.transform.position, Quaternion.identity);
                     movingAway = false;
                 }
             }
@@ -148,7 +148,7 @@ public class BoomerangThrowAbility : PlayerAbility
                 {
                     Destroy(boomerang);
                     IsThrowing = false;
-                    HotbarManager.instance.ShowActiveItem();
+                    ScriptRefrenceSingleton.instance.hotbarManager.ShowActiveItem();
                 }
             }
 
@@ -158,7 +158,7 @@ public class BoomerangThrowAbility : PlayerAbility
 
     public void Throw()
     {
-        HotbarManager.instance.HideActiveItem();
+        ScriptRefrenceSingleton.instance.hotbarManager.HideActiveItem();
         if (TargetEffect != null)
         {
             Destroy(TargetEffect);
@@ -175,13 +175,13 @@ public class BoomerangThrowAbility : PlayerAbility
         }
 
         flyDir = targetPos - transform.position;
-        boomerang = Instantiate(PlayerParticlesManager.instance.GetParticlePredabByID("Boomerang"), transform.position + dir.normalized, Quaternion.identity);
+        boomerang = Instantiate(ScriptRefrenceSingleton.instance.playerParticlesManager.GetParticlePredabByID("Boomerang"), transform.position + dir.normalized, Quaternion.identity);
         movingAway = true;
 
-        AudioCollection boomerangThrowCollection1 = PlayerAudioManager.instance.GetAudioClipByID("BoomerangThrow1");
-        AudioCollection boomerangThrowCollection2 = PlayerAudioManager.instance.GetAudioClipByID("BoomerangThrow2");
+        AudioCollection boomerangThrowCollection1 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("BoomerangThrow1");
+        AudioCollection boomerangThrowCollection2 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("BoomerangThrow2");
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, boomerangThrowCollection1, boomerangThrowCollection2);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, boomerangThrowCollection1, boomerangThrowCollection2);
 
     }
 

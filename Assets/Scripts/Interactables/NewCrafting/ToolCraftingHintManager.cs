@@ -3,20 +3,12 @@ using UnityEngine;
 
 public class ToolCraftingHintManager : MonoBehaviour
 {
-    public static ToolCraftingHintManager instance;
 
     public Image FirstSlot;
     public Image SecondSlot;
     public Image ThirdSlot;
 
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
+    
     public void SetHints(Sprite firstImage, Sprite secondImage, Sprite thirdImage)
     {
         FirstSlot.sprite = firstImage;

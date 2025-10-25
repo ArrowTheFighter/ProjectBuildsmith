@@ -27,7 +27,7 @@ public class ItemPickupNotifcationScript : MonoBehaviour
         }
         item_name = itemData.item_name;
         cur_amount += amount;
-        int inventory_amount = GameplayUtils.instance.get_item_holding_amount(itemData.item_id);
+        int inventory_amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(itemData.item_id);
         string inventory_amount_text = inventory_amount.ToString();
         inventory_amount_text = (inventory_amount <= 0) ? "" : $" ({inventory_amount})";
         notification_text.text = item_name + " +" + cur_amount.ToString() + inventory_amount_text;
@@ -43,11 +43,11 @@ public class ItemPickupNotifcationScript : MonoBehaviour
 
     public void PlayNotificationSound()
     {
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Pickup");
+        AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Pickup");
 
-        SoundFXManager.instance.PlayRandomSoundCollection(GameplayUtils.instance.PlayerTransform, audioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform, audioCollection);
 
-        //SoundFXManager.instance.PlaySoundFXClip(pickupNotificationSoundFX, transform, pickupNotificationSoundFXVolume, pickupNotificationSoundFXPitch);
+        //ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(pickupNotificationSoundFX, transform, pickupNotificationSoundFXVolume, pickupNotificationSoundFXPitch);
     }
 
     public void ShowCustomText(string text, float duration = 4)

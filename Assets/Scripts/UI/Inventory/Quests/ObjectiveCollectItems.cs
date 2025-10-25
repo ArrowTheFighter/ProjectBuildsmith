@@ -10,7 +10,7 @@ public class ObjectiveCollectItems : QuestObjective
 
     protected override bool CheckObjectiveComplete()
     {
-        if (GameplayUtils.instance.get_item_holding_amount(Item_ID) >= Item_Amount) return true;
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(Item_ID) >= Item_Amount) return true;
         return false;
     }
 

@@ -33,7 +33,7 @@ public class ChopSlamAbility : PlayerAbility
 
     public override void UpdateAbility()
     {
-        float AbilityKeyValue = GameplayInput.instance.playerInput.actions["BasicAttack"].ReadValue<float>();
+        float AbilityKeyValue = ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["BasicAttack"].ReadValue<float>();
         if (!AbilityKeyHeld)
         {
             if (AbilityKeyValue > 0)
@@ -86,7 +86,7 @@ public class ChopSlamAbility : PlayerAbility
                         characterMovement.rb.linearVelocity = velocity;
                         characterMovement.rb.AddForce(Vector3.up * (bounceForce + ExtraForce), ForceMode.Impulse);
                         StopFall();
-                        PlayerParticlesManager.instance.PlayChopSlamParticles();
+                        ScriptRefrenceSingleton.instance.playerParticlesManager.PlayChopSlamParticles();
                         return;
                     }
                 }
@@ -105,9 +105,9 @@ public class ChopSlamAbility : PlayerAbility
                     }
                  }
 
-                AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("AxeSlamGroundImpact");
-                SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
-                PlayerParticlesManager.instance.PlayChopSlamParticles();
+                AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("AxeSlamGroundImpact");
+                ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
+                ScriptRefrenceSingleton.instance.playerParticlesManager.PlayChopSlamParticles();
                 groundLand = true;
                 characterMovement.playerAnimationController.animator.SetBool("ChopFall", false);
                 characterMovement.playerAnimationController.animator.SetBool("ChopLandGround", true);
@@ -159,7 +159,7 @@ public class ChopSlamAbility : PlayerAbility
 
     private void PlayWooshSoundDelayed()
     {
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("AxeSlamWoosh");
-        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
+        AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("AxeSlamWoosh");
+        ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
     }
 }

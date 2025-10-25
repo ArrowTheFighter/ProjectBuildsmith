@@ -149,7 +149,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     public void TakeDamage(float amount,AttackType[] attackTypes, GameObject source)
     {
         if (dying) return;
-        if (source == GameplayUtils.instance.PlayerTransform.gameObject) return;
+        if (source == ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.gameObject) return;
 
         if (heartImagesOnScreen)
         {
@@ -176,25 +176,25 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         }
 
         OnTakeDamage?.Invoke(Health);
-        PlayerParticlesManager.instance.PlayPlayerTakeHitParticles();
+        ScriptRefrenceSingleton.instance.playerParticlesManager.PlayPlayerTakeHitParticles();
 
-        if (!GameSettings.instance.IsScreenShakeDisabled())
+        if (!ScriptRefrenceSingleton.instance.gameSettings.IsScreenShakeDisabled())
         {
             //Debug.Log("Shake");
             impulseSource.GenerateImpulse();
         }         
 
-        if (!GameSettings.instance.IsScreenFlashDisabled())
+        if (!ScriptRefrenceSingleton.instance.gameSettings.IsScreenFlashDisabled())
         {
             damageFlashImage.DOFade(damageFlashFadeAlpha, damageFlashFadeTime).SetLoops(2, LoopType.Yoyo);
         }
 
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Hurt1");
-        AudioCollection audioCollection2 = PlayerAudioManager.instance.GetAudioClipByID("Hurt2");
+        AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Hurt1");
+        AudioCollection audioCollection2 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Hurt2");
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, audioCollection, audioCollection2);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, audioCollection, audioCollection2);
 
-        //SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+        //ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
@@ -224,7 +224,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
                     heartImages[i].transform.DOKill(); // <--- prevent conflicts
                     heartImages[i].transform.localScale = Vector3.one * 0.6f;
                     heartImages[i].transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
-                    SoundFXManager.instance.PlaySoundFXClip(heartRefillPopSoundFX, transform, heartRefillPopSoundFXVolume, heartRefillPopSoundFXPitch);
+                    ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(heartRefillPopSoundFX, transform, heartRefillPopSoundFXVolume, heartRefillPopSoundFXPitch);
                 }
                 else
                 {
@@ -277,9 +277,9 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
         DOTween.Kill("HeartShake");
 
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Die");
+        AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Die");
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, audioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, audioCollection);
     }
 
     IEnumerator MovePlayerToRespawnPointDelay()

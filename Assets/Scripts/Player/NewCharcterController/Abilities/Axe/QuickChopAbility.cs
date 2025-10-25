@@ -16,7 +16,7 @@ public class QuickChopAbility : PlayerAbility
 
     public override void UpdateAbility()
     {
-        if (GameplayInput.instance.playerInput.actions["BasicAttack"].ReadValue<float>() > 0)
+        if (ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["BasicAttack"].ReadValue<float>() > 0)
         {
             if (!IsChopping)
             {
@@ -42,12 +42,12 @@ public class QuickChopAbility : PlayerAbility
         characterMovement.OnBasicAttack?.Invoke();
         characterMovement.tilt_amount = 0;
         finishChopDelay = Time.time + 0.35f;
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("AxeSwingWoosh");
-        AudioCollection audioCollection2 = PlayerAudioManager.instance.GetAudioClipByID("AxeSwingWoosh2");
+        AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("AxeSwingWoosh");
+        AudioCollection audioCollection2 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("AxeSwingWoosh2");
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, audioCollection, audioCollection2);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, audioCollection, audioCollection2);
 
-        //SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
+        //ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
         //StartCoroutine(finishedChopDelay());
     }
 
@@ -63,8 +63,8 @@ public class QuickChopAbility : PlayerAbility
                 if (colliderHit.TryGetComponent(out IDamagable damagable))
                 {
                     damagable.TakeDamage(damageStrength, attackTypes, characterMovement.gameObject);
-                    // AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("AxeChop");
-                    // SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
+                    // AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("AxeChop");
+                    // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, audioCollection.audioClipPitch);
                 }
                 if (colliderHit.TryGetComponent(out ItemPickup itemPickup))
                 {

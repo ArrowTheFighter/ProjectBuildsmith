@@ -55,14 +55,14 @@ public class InventoryManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameplayInput.instance.playerInput.actions["Inventory"].performed += ToggleInventory;
-        GameplayInput.instance.playerInput.actions["Submit"].performed += (context) =>
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Inventory"].performed += ToggleInventory;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += (context) =>
         {
-            if (UIInputHandler.instance.currentScheme == "Keyboard&Mouse") CloseInventory();
+            if (ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Keyboard&Mouse") CloseInventory();
         };
-        GameplayInput.instance.playerInput.actions["Quests"].performed += ToggleQuests;
-        GameplayInput.instance.playerInput.actions["CloseQuests"].performed += ToggleQuests;
-        GameplayInput.instance.playerInput.actions["CloseInventory"].performed += ToggleInventory;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Quests"].performed += ToggleQuests;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseQuests"].performed += ToggleQuests;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseInventory"].performed += ToggleInventory;
         for (int i = 0; i < TotalInventorySlots + TotalHotbarSlots; i++)
         {
             if (i < TotalHotbarSlots)
@@ -75,7 +75,7 @@ public class InventoryManager : MonoBehaviour
         OnInventoryUpdated += QuestsObjectiveCheck;
         FlagManager.OnFlagSet += QuestsObjectiveCheck;
 
-        SaveLoadManager.instance.OnSaveLoaded += SaveLoaded;
+        ScriptRefrenceSingleton.instance.saveLoadManager.OnSaveLoaded += SaveLoaded;
     }
     
     void SaveLoaded(SaveFileStruct saveFileStruct)
@@ -89,7 +89,7 @@ public class InventoryManager : MonoBehaviour
         foreach(SaveableInventroySlot slot in saveFileStruct.inventory_slots)
         {
             if (slot.isEmpty) continue;
-            ItemData itemData = GameplayUtils.instance.GetItemDataByID(slot.inventoryItemStack.ID);
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(slot.inventoryItemStack.ID);
             AddItemToSlotByID(slot.slot_id, itemData, slot.inventoryItemStack.Amount, true, false);
         }
     }
@@ -164,11 +164,11 @@ public class InventoryManager : MonoBehaviour
         if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
         {
             InventoryObject.SetActive(true);
-            if (GameplayUtils.instance.GetOpenMenu()) return;
+            if (ScriptRefrenceSingleton.instance.gameplayUtils.GetOpenMenu()) return;
             //print("opening inventory");
-            UIInputHandler.instance.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
-            GameplayUtils.instance.CloseAllCraftingMenus();
-            GameplayUtils.instance.OpenMenu();
+            ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
+            ScriptRefrenceSingleton.instance.gameplayUtils.CloseAllCraftingMenus();
+            ScriptRefrenceSingleton.instance.gameplayUtils.OpenMenu();
 
 
             inventoryIsOpen = true;
@@ -191,9 +191,9 @@ public class InventoryManager : MonoBehaviour
             SwitchToInventoryMenu();
             InventoryObject.SetActive(false);
             //print("closing inventory");
-            GameplayUtils.instance.CloseMenu();
+            ScriptRefrenceSingleton.instance.gameplayUtils.CloseMenu();
             OnInventoryClosed?.Invoke();
-            UIInputHandler.instance.defaultButton = null;
+            ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = null;
             if (QuestMenuObject.TryGetComponent(out CanvasGroup QuestCanvasGroup))
             {
                 QuestCanvasGroup.alpha = 0;
@@ -206,10 +206,10 @@ public class InventoryManager : MonoBehaviour
             canvasGroup.alpha = 0;
             canvasGroup.blocksRaycasts = false;
             canvasGroup.interactable = false;
-            GameplayUtils.instance.CloseAllCraftingMenus();
+            ScriptRefrenceSingleton.instance.gameplayUtils.CloseAllCraftingMenus();
 
             openMenu = InventoryMenus.none;
-            ItemTitlePopupManager.instance.HidePopup();
+            ScriptRefrenceSingleton.instance.itemTitlePopupManager.HidePopup();
         }
 
     }
@@ -231,9 +231,9 @@ public class InventoryManager : MonoBehaviour
 
         openMenu = InventoryMenus.Quests;
 
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = QuestMenuDefaultButton;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = QuestMenuDefaultButton;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void SwitchToInventoryMenu()
@@ -255,16 +255,16 @@ public class InventoryManager : MonoBehaviour
         PinQuestButton.SetActive(false);
         questInfoBox.ClearQuestInfo();
 
-        foreach (CraftingTableRecipeDisplay display in GameplayUtils.instance.craftingTableRecipeDisplays)
+        foreach (CraftingTableRecipeDisplay display in ScriptRefrenceSingleton.instance.gameplayUtils.craftingTableRecipeDisplays)
         {
             display.HideRecipe();
             display.recipesBookManager.HideRecipeBook();
         }
 
         openMenu = InventoryMenus.Inventory;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = InventoryMenuDefaultButton;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = InventoryMenuDefaultButton;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     /* #region Inventory */
@@ -494,7 +494,7 @@ public class InventoryManager : MonoBehaviour
                 // -- Stack has more then we need to remove --
                 if (inventorySlots[i].inventoryItemStack.Amount > remainingAmount)
                 {
-                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(inventorySlots[i].inventoryItemStack.ID);
+                    ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlots[i].inventoryItemStack.ID);
                     AddItemToSlot(inventorySlots[i], itemData, inventorySlots[i].inventoryItemStack.Amount - remainingAmount, true);
                     remainingAmount = 0;
                 }
@@ -574,7 +574,7 @@ public class InventoryManager : MonoBehaviour
                     AddNewPinnedQuest(data);
                 }
 
-                GameplayUtils.instance.ShowCustomNotif($"Quest Added {data.QuestName}", 6);
+                ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotif($"Quest Added {data.QuestName}", 6);
             }
         }
         //return null;
@@ -614,7 +614,7 @@ public class InventoryManager : MonoBehaviour
                     AddNewPinnedQuest(data);
                 }
 
-                //GameplayUtils.instance.ShowCustomNotif($"Quest Added {data.QuestName}", 6);
+                //ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotif($"Quest Added {data.QuestName}", 6);
             }
         }
     }
@@ -636,7 +636,7 @@ public class InventoryManager : MonoBehaviour
                 // switch (info.QuestData.questObjectives[i])
                 // {
                 //     case ObjectiveCollectItems objectiveCollect:
-                //         if (GameplayUtils.instance.get_item_holding_amount(objectiveCollect.Item_ID) >= objectiveCollect.Item_Amount)
+                //         if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(objectiveCollect.Item_ID) >= objectiveCollect.Item_Amount)
                 //         {
                 //             continue;
                 //         }
@@ -657,7 +657,7 @@ public class InventoryManager : MonoBehaviour
             {
                 print("quest competed!");
                 info.IsComplete = true;
-                GameplayUtils.instance.ShowCustomNotif("Quest Complete!", 8);
+                ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotif("Quest Complete!", 8);
                 RemovePinnedQuest(info.QuestData);
                 for (int i = 0; i < QuestItemsParent.transform.childCount; i++)
                 {

@@ -6,8 +6,6 @@ using System;
 
 public class UIInputHandler : MonoBehaviour
 {
-    public static UIInputHandler instance;
-
     public GameObject defaultButton;
 
     public string currentScheme;
@@ -15,18 +13,9 @@ public class UIInputHandler : MonoBehaviour
 
     public Action<string> OnSchemeChange;
 
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
-
     void Start()
     {
-        playerInput = GameplayInput.instance.playerInput;
+        playerInput = ScriptRefrenceSingleton.instance.gameplayInput.playerInput;
         playerInput.onControlsChanged += ControlsChanged;
         currentScheme = "Keyboard&Mouse";
     }

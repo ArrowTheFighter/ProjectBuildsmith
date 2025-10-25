@@ -5,11 +5,9 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using DS.Data;
-using EasyTextEffects;
 
 public class DialogManager : MonoBehaviour
 {
-    public static DialogManager instance;
     public TextMeshProUGUI text_box;
     public TextFormater DialogTextFormater;
     [SerializeField] public GameObject DialogUI;
@@ -55,14 +53,7 @@ public class DialogManager : MonoBehaviour
     
     static string Dialog_dir = "/Dialogue_Files";
 
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
+    
 
     public void SetTextIsAnimating(bool isAnimating)
     {
@@ -72,7 +63,7 @@ public class DialogManager : MonoBehaviour
 
     public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker, bool UseLocalization = true)
     {
-        UIInputHandler.instance.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
         ActiveChoices = new List<ScriptableObject>();
         for (int i = 0; i < Choices_Parent_Transform.childCount; i++)
         {
@@ -95,7 +86,7 @@ public class DialogManager : MonoBehaviour
             if (!button_is_selected)
             {
                 //choice.GetComponent<Button>().Select();
-                UIInputHandler.instance.defaultButton = choice.gameObject;
+                ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = choice.gameObject;
                 button_is_selected = true;
             }
             choice.gameObject.SetActive(true);
@@ -105,7 +96,7 @@ public class DialogManager : MonoBehaviour
             ChoiceButton choiceButton = choice.GetComponentInChildren<ChoiceButton>();
             choiceButton.dialogueChoiceData = data[i];
             choiceButton.dialogWorker = dialogWorker;
-            UIInputHandler.instance.OpenedMenu();
+            ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
             ActiveChoices.Add(data[i].NextDialogue);
         }
     }
@@ -143,7 +134,7 @@ public class DialogManager : MonoBehaviour
             }
             if (choices[i].item_requirement != null && choices[i].item_requirement != "")
             {
-                int current_item_amount = GameplayUtils.instance.get_item_holding_amount(choices[i].item_requirement);
+                int current_item_amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(choices[i].item_requirement);
                 if (current_item_amount < choices[i].item_amount)
                 {
                     continue;
@@ -183,13 +174,13 @@ public class DialogManager : MonoBehaviour
     public void Clear_choices()
     {
         Choices_Parent_Transform.gameObject.SetActive(false);
-        UIInputHandler.instance.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
     }
 
     public void Close_Dialog()
     {
         DialogUI.SetActive(false);
-        GameplayUtils.instance.CloseMenu();
+        ScriptRefrenceSingleton.instance.gameplayUtils.CloseMenu();
     }
 
     public void Show_Dialog()

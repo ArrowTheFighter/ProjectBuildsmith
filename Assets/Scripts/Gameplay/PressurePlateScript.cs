@@ -37,7 +37,7 @@ public class PressurePlateScript : MonoBehaviour
         }
 
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, preesurePlateDownAudioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, preesurePlateDownAudioCollection);
     }
 
     public void MovePlatUp()
@@ -50,7 +50,7 @@ public class PressurePlateScript : MonoBehaviour
             }
             PlateTween = PlateVisual.DOLocalMoveY(0, 0.5f).SetEase(Ease.OutQuad);
         }
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, preesurePlateUpAudioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, preesurePlateUpAudioCollection);
     }
 
     void Activated()

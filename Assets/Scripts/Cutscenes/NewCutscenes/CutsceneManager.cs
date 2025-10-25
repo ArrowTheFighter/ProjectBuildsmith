@@ -6,7 +6,6 @@ using UnityEngine.Events;
 
 public class CutsceneManager : MonoBehaviour
 {
-    public static CutsceneManager instance;
 
     public Transform CameraTransform;
     public Camera cutsceneCam;
@@ -16,17 +15,6 @@ public class CutsceneManager : MonoBehaviour
     public bool cutsceneIsRunning;
     int currentPoint;
 
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-
-    }
-
-    
 
     public void StartCutscene(CutsceneData cutsceneData)
     {
@@ -37,13 +25,13 @@ public class CutsceneManager : MonoBehaviour
         CameraTransform.forward = cutsceneData.startPos.forward;
         cutsceneIsRunning = true;
         currentPoint = 0;
-        if (GameplayUtils.instance.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
         {
             characterMovement.MovementControlledByAbility = true;
             characterMovement.rb.isKinematic = true;
         }
-        GameplayUtils.instance.HideUI();
-        GameplayUtils.instance.SetCanPause(false);
+        ScriptRefrenceSingleton.instance.gameplayUtils.HideUI();
+        ScriptRefrenceSingleton.instance.gameplayUtils.SetCanPause(false);
         GoToNextPoint();
     }
 
@@ -73,16 +61,16 @@ public class CutsceneManager : MonoBehaviour
     {
         print("ending cutscene");
 
-        if (GameplayUtils.instance.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
         {
             characterMovement.MovementControlledByAbility = false;
             characterMovement.rb.isKinematic = false;
         }
-        GameplayUtils.instance.ShowUI();
+        ScriptRefrenceSingleton.instance.gameplayUtils.ShowUI();
         cutsceneCam.gameObject.SetActive(false);
         cutsceneIsRunning = false;
 
-        GameplayUtils.instance.SetCanPause(true);
+        ScriptRefrenceSingleton.instance.gameplayUtils.SetCanPause(true);
         
     }
 

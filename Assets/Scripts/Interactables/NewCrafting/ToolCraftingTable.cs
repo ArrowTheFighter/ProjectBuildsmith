@@ -16,7 +16,7 @@ public class ToolCraftingTable : CraftingTableBase
             slotComponent.slotFilled += InventoryUpdated;
         }
         outputSlot.slotEmptied += itemCrafted;
-        foreach (CraftingRecipeData recipeData in GameplayUtils.instance.RecipeDatabase.recipes)
+        foreach (CraftingRecipeData recipeData in ScriptRefrenceSingleton.instance.gameplayUtils.RecipeDatabase.recipes)
         {
             if (recipeData.stationType == craftingStationType)
             {
@@ -31,8 +31,8 @@ public class ToolCraftingTable : CraftingTableBase
         print("inventory was updated");
         if (IsValidRecipe(out CraftingRecipeData validRecipe))
         {
-            ItemData OutputItem = GameplayUtils.instance.GetItemDataByID(validRecipe.recipe_output_id);
-            GameplayUtils.instance.inventoryManager.AddItemToSlot(outputSlot.inventorySlot, OutputItem, 1);
+            ItemData OutputItem = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(validRecipe.recipe_output_id);
+            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(outputSlot.inventorySlot, OutputItem, 1);
             print("found valid recipe!");
         }
         else
@@ -82,7 +82,7 @@ public class ToolCraftingTable : CraftingTableBase
             }
         }
         CheckingForRecipe = true;
-        GameplayUtils.instance.AddItemCraftedAmount(inventoryItemStack.ID, inventoryItemStack.Amount);
+        ScriptRefrenceSingleton.instance.gameplayUtils.AddItemCraftedAmount(inventoryItemStack.ID, inventoryItemStack.Amount);
         InventoryUpdated();
         OnItemCraftedEvent?.Invoke();
         print("item was crafted");

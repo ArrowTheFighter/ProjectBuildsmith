@@ -253,8 +253,8 @@ public class DashAbility : PlayerAbility
         lastTimeDashed = Time.time + 0.1f;
         characterMovement.playerAnimationController.animator.SetBool("Bonking", true);
 
-        AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Bonk");
-        SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+        AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Bonk");
+        ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     void SlideJump()
@@ -275,16 +275,16 @@ public class DashAbility : PlayerAbility
             StartCoroutine(EndDiveAfterDelay(slideJumpDuration));
 
             PlayDashSound();
-            // AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
-            // SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+            // AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash");
+            // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
         }
     }
 
     public void PlayDashSound()
     {
-        AudioCollection audioCollectionDash1 = PlayerAudioManager.instance.GetAudioClipByID("Dash1");
-        AudioCollection audioCollectionDash2 = PlayerAudioManager.instance.GetAudioClipByID("Dash2");
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, audioCollectionDash1, audioCollectionDash2);
+        AudioCollection audioCollectionDash1 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash1");
+        AudioCollection audioCollectionDash2 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash2");
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, audioCollectionDash1, audioCollectionDash2);
     }
 
     IEnumerator EndDiveAfterDelay(float duration)
@@ -439,8 +439,8 @@ public class DashAbility : PlayerAbility
         }
 
         PlayDashSound();
-        // AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Dash");
-        // SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+        // AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash");
+        // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
     }
 
     void setCooldown()

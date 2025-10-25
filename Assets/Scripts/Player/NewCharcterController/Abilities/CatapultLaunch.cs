@@ -19,7 +19,7 @@ public class CatapultLaunch : PlayerAbility
             longFallReset.CanReset = false;
         }
         characterMovement.playerAnimationController.animator.CrossFade("CatapultRoll", 0.1f);
-        PlayerParticlesManager.instance.PlayParticleByID("SpeedLines");
+        ScriptRefrenceSingleton.instance.playerParticlesManager.PlayParticleByID("SpeedLines");
 
         CinemachineCamera cam = characterMovement.GetComponent<CameraManager>().axisController.GetComponent<CinemachineCamera>();
         DOVirtual.Float(cam.Lens.FieldOfView, 70, 0.5f, (context) =>
@@ -44,7 +44,7 @@ public class CatapultLaunch : PlayerAbility
             characterMovement.RemoveAbility<CatapultLaunch>();
 
 
-            PlayerParticlesManager.instance.GetParticleByID("SpeedLines").Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
+            ScriptRefrenceSingleton.instance.playerParticlesManager.GetParticleByID("SpeedLines").Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
 
             CinemachineCamera cam = characterMovement.GetComponent<CameraManager>().axisController.GetComponent<CinemachineCamera>();
             DOVirtual.Float(cam.Lens.FieldOfView, 60, 0.5f, (context) =>

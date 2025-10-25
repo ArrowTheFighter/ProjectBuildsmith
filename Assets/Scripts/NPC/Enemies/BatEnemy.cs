@@ -71,7 +71,7 @@ public class BatEnemy : EnemyBase
     {
         if (enemyState == AttackingStates.Roaming)
         {
-            SoundFXManager.instance.PlayRandomSoundCollection(transform, PlayerSpottedAudioCollection);
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, PlayerSpottedAudioCollection);
             enemyState = AttackingStates.Spotted;
             StartCoroutine(SpottedToChargeDelay(2));
         }
@@ -144,7 +144,7 @@ public class BatEnemy : EnemyBase
                     animator.Play("CharacterArmature|Fast_Flying");
                     canAttack = true;
                     ChargingParticles.Play();
-                    SoundFXManager.instance.PlayRandomSoundCollection(transform, BatChargeAudioCollection);
+                    ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, BatChargeAudioCollection);
                 }
                 if (canAttack && Physics.Raycast(transform.position, TargetDir, out RaycastHit rayhit, 1.5f, playerLayerMask))
                 {

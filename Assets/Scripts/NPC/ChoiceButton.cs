@@ -37,8 +37,8 @@ public class ChoiceButton : MonoBehaviour
                 if(button_dialog_struct.no_flag_reply != null && button_dialog_struct.no_flag_reply != "")
                 {
                     string localized_string = LocalizationManager.GetLocalizedString("NPC",button_dialog_struct.no_flag_reply);
-                    DialogManager.instance.text_box_text = localized_string;
-                    DialogManager.instance.Clear_choices();
+                    ScriptRefrenceSingleton.instance.dialogManager.text_box_text = localized_string;
+                    ScriptRefrenceSingleton.instance.dialogManager.Clear_choices();
                     npc_Script.close_on_next_interact = true;
                     return;
                 }
@@ -46,21 +46,21 @@ public class ChoiceButton : MonoBehaviour
         }
         if(button_dialog_struct.item_requirement != null && button_dialog_struct.item_requirement != "")
         {
-            int current_item_amount = GameplayUtils.instance.get_item_holding_amount(button_dialog_struct.item_requirement);
+            int current_item_amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(button_dialog_struct.item_requirement);
             if(current_item_amount < button_dialog_struct.item_amount)
             {
                 if(button_dialog_struct.not_enough_reply != null && button_dialog_struct.not_enough_reply != "")
                 {
                     string localized_string = LocalizationManager.GetLocalizedString("NPC",button_dialog_struct.not_enough_reply);
-                    DialogManager.instance.text_box_text = localized_string;
-                    DialogManager.instance.Clear_choices();
+                    ScriptRefrenceSingleton.instance.dialogManager.text_box_text = localized_string;
+                    ScriptRefrenceSingleton.instance.dialogManager.Clear_choices();
                     npc_Script.close_on_next_interact = true;
                     return;
                 }
             }
             else if(button_dialog_struct.remove_item)
             {
-                GameplayUtils.instance.remove_items_from_inventory(button_dialog_struct.item_requirement,button_dialog_struct.item_amount);
+                ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(button_dialog_struct.item_requirement,button_dialog_struct.item_amount);
             }
         }
          if(button_dialog_struct.set_flag != null && button_dialog_struct.set_flag != "")

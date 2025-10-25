@@ -23,7 +23,7 @@ public class InventoryDataSaver : MonoBehaviour,ISaveable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SaveLoadManager.instance.inventoryDataSavers.Add(this);
+        ScriptRefrenceSingleton.instance.saveLoadManager.inventoryDataSavers.Add(this);
         foreach (InventorySlotComponent slot in inventorySlots)
         {
             slot.slotFilled += UpdateSavedSlots;
@@ -81,13 +81,13 @@ public class InventoryDataSaver : MonoBehaviour,ISaveable
     {
         ActiveContainer = true;
         SetContainerSlots();
-        GameplayUtils.instance.OnInventoryClosed += ContainerClosed;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnInventoryClosed += ContainerClosed;
     }
 
     void ContainerClosed()
     {
         ActiveContainer = false;
-        GameplayUtils.instance.OnInventoryClosed -= ContainerClosed;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnInventoryClosed -= ContainerClosed;
         ClearSlots();
     }
 
@@ -113,14 +113,14 @@ public class InventoryDataSaver : MonoBehaviour,ISaveable
                         slot.RemoveItemFromSlot(false, false);
                         break;
                     }
-                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+                    ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
                     if (itemData == null)
                     {
                         slot.RemoveItemFromSlot(false, false);
                     }
                     else
                     {
-                        GameplayUtils.instance.inventoryManager.AddItemToSlot(slot.inventorySlot, itemData, inventorySlot.inventoryItemStack.Amount, true, false);
+                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(slot.inventorySlot, itemData, inventorySlot.inventoryItemStack.Amount, true, false);
                     }
 
                 }

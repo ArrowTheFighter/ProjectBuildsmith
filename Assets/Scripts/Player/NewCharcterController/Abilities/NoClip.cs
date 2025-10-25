@@ -19,8 +19,8 @@ public class NoClip : PlayerAbility
 
     public override void UpdateAbility()
     {
-        if (!GameplayUtils.instance.CanCheat) return;
-        if (GameplayInput.instance.playerInput.actions["NoClip"].ReadValue<float>() > 0)
+        if (!ScriptRefrenceSingleton.instance.gameplayUtils.CanCheat) return;
+        if (ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["NoClip"].ReadValue<float>() > 0)
         {
             if (!NoClipButtonPressed)
             {
@@ -45,7 +45,7 @@ public class NoClip : PlayerAbility
         {
             characterMovement.rb.linearVelocity = Vector3.zero;
             
-            PlayerInput playerInput = GameplayInput.instance.playerInput;
+            PlayerInput playerInput = ScriptRefrenceSingleton.instance.gameplayInput.playerInput;
             Vector2 playerMoveInput = playerInput.actions["Move"].ReadValue<Vector2>();
             Vector3 cam_f = Camera.main.transform.forward.normalized * playerMoveInput.y;
             Vector3 cam_r = Camera.main.transform.right.normalized * playerMoveInput.x;

@@ -28,8 +28,8 @@ public class ActivatorCrystal : MonoBehaviour, IDamagable
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, SwitchAudio);
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, SwitchOnHitAudio);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, SwitchAudio);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, SwitchOnHitAudio);
         StartCoroutine(CooldownProcess());
     }
 
@@ -56,7 +56,7 @@ public class ActivatorCrystal : MonoBehaviour, IDamagable
         runningTime = -0f;
         DisplayTime = -0f;
         isActive = false;
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, SwitchAudio);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, SwitchAudio);
         OnDeactivated?.Invoke();
 
     }

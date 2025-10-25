@@ -4,18 +4,7 @@ using UnityEngine;
 
 public class PlayerAudioManager : MonoBehaviour
 {
-    public static PlayerAudioManager instance;
-
     public List<AudioCollection> audioSystems = new List<AudioCollection>();
-
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
 
     public AudioCollection GetAudioClipByID(string audioClip)
     {

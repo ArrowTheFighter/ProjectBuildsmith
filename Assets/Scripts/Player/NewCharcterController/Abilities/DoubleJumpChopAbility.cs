@@ -22,7 +22,7 @@ public class DoubleJumpChopAbility : PlayerAbility
 
     public override void UpdateAbility()
     {
-        float AbilityKeyValue = GameplayInput.instance.playerInput.actions["BasicAttack"].ReadValue<float>();
+        float AbilityKeyValue = ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["BasicAttack"].ReadValue<float>();
         if (!AbilityKeyHeld)
         {
             if (AbilityKeyValue > 0)

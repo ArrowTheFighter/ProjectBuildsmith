@@ -36,7 +36,7 @@ public class MainMenuManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //GameplayUtils.instance.OpenMenu();
+        //ScriptRefrenceSingleton.instance.gameplayUtils.OpenMenu();
         StartCoroutine(freezePlayer());
         //OpenMainPanel();
     }
@@ -44,13 +44,13 @@ public class MainMenuManager : MonoBehaviour
     IEnumerator freezePlayer()
     {
         yield return null;
-        GameplayUtils.instance.OpenMenu();
+        ScriptRefrenceSingleton.instance.gameplayUtils.OpenMenu();
     }
 
     public void SetGameToPlaying()
     {
-        GameplayUtils.instance.CloseMenu();
-        GameplayUtils.instance.SetCanPause(true);
+        ScriptRefrenceSingleton.instance.gameplayUtils.CloseMenu();
+        ScriptRefrenceSingleton.instance.gameplayUtils.SetCanPause(true);
         MainMenuCam.SetActive(false);
         MainMenuContents.GetComponent<CanvasGroup>().alpha = 0;
 
@@ -74,9 +74,9 @@ public class MainMenuManager : MonoBehaviour
         CloseAllPanels();
         MainPanel.SetActive(true);
         DiscordButton.SetActive(true);
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = PlayButton;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = PlayButton;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenSettingsPanel()
@@ -85,18 +85,18 @@ public class MainMenuManager : MonoBehaviour
         SettingsPanel.SetActive(true);
         CloseAllSettingsMenus();
         OpenControlsMenu();
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = settingsBackButton;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = settingsBackButton;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenCreditsPanel()
     {
         CloseAllPanels();
         CreditsPanel.SetActive(true);
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = creditsBackButton;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = creditsBackButton;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void CloseAllSettingsMenus()
@@ -117,9 +117,9 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         AudioMenu.SetActive(true);
         OpenAudioButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenAccessibilityButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenAccessibilityButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenControlsMenu()
@@ -127,9 +127,9 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         ControlsMenu.SetActive(true);
         OpenControlsButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenGraphicsButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenGraphicsButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenGraphicsMenu()
@@ -137,9 +137,9 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         GraphicsMenu.SetActive(true);
         OpenGraphicsButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenAudioButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenAudioButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenAccessibilityMenu()
@@ -147,8 +147,8 @@ public class MainMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         AccessibilityMenu.SetActive(true);
         OpenAccessibilityButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenControlsButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenControlsButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 }

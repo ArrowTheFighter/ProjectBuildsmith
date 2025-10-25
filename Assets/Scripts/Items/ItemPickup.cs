@@ -69,14 +69,14 @@ public class ItemPickup : MonoBehaviour
         if (cantPickupTime > Time.time) return;
         if (isSpecialItem)
         {
-            GameplayUtils.instance.inventoryManager.AddSpecialItem(item_id, amount);
-            GameplayUtils.instance.itemPickupNotifcationScript.PlayNotificationSound();
+            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddSpecialItem(item_id, amount);
+            ScriptRefrenceSingleton.instance.gameplayUtils.itemPickupNotifcationScript.PlayNotificationSound();
             PickupComplete();
             return;
         }
-        int loosePieces = GameplayUtils.instance.add_items_to_inventory(item_id, amount, show_notification,true);
+        int loosePieces = ScriptRefrenceSingleton.instance.gameplayUtils.add_items_to_inventory(item_id, amount, show_notification,true);
         if (loosePieces == -1) return;
-        //GameplayUtils.instance.Play_Audio_On_Player(2, 0.5f);
+        //ScriptRefrenceSingleton.instance.gameplayUtils.Play_Audio_On_Player(2, 0.5f);
         if (loosePieces > 0)
         {
             amount = loosePieces;
@@ -98,7 +98,7 @@ public class ItemPickup : MonoBehaviour
         else
         {
             markedAsDestoryed = true;
-            ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + respawn_time);
+            ScriptRefrenceSingleton.instance.itemRespawnManager.item_respawns.Add(gameObject, Time.time + respawn_time);
             gameObject.SetActive(false);
         }
     }

@@ -5,19 +5,9 @@ using UnityEngine;
 
 public class PlayerParticlesManager : MonoBehaviour
 {
-    public static PlayerParticlesManager instance;
-
     public List<ParticleSystemsCollection> particleSystems = new List<ParticleSystemsCollection>();
     public List<ParticlePrefabCollection> particlePrefabs = new List<ParticlePrefabCollection>();
 
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
     public void PlayChopSlamParticles()
     {
         foreach (ParticleSystemsCollection collection in particleSystems)

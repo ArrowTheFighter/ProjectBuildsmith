@@ -20,7 +20,7 @@ public class BouncyPlatform : MonoBehaviour,IDamagable
     {
         ExtraForce = BounceHeight;
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, bounceAudioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, bounceAudioCollection);
         onBounce?.Invoke();
     }
 

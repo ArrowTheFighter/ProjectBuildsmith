@@ -35,7 +35,7 @@ public class SkyEssencePickup : MonoBehaviour, ISaveable
 
             if (essencePickupSoundFX != null)
             {
-                SoundFXManager.instance.PlaySoundFXClip(essencePickupSoundFX, transform, essencePickupSoundFXVolume, essencePickupSoundFXPitch);
+                ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(essencePickupSoundFX, transform, essencePickupSoundFXVolume, essencePickupSoundFXPitch);
             }
 
             FlyTowardsEngine = true;

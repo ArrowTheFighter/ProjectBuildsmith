@@ -11,15 +11,15 @@ public class GemUITracker : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameplayUtils.instance.inventoryManager.OnInventoryUpdated += UpdateText;
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated += UpdateText;
         UpdateText();
     }
 
     // Update is called once per frame
     void UpdateText()
     {
-        string coin_text = "<font-weight=500>" + GameplayUtils.instance.get_item_holding_amount(ItemID).ToString("00") + Suffix;
-        if (GameplayUtils.instance.get_item_holding_amount(ItemID) == 0)
+        string coin_text = "<font-weight=500>" + ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID).ToString("00") + Suffix;
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID) == 0)
             coin_text = "<font-weight=500>00 / 20";
             if (coinsAmountText.text != coin_text)
             {

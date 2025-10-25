@@ -7,7 +7,6 @@ using System.Reflection;
 
 public class HotbarManager : MonoBehaviour
 {
-    public static HotbarManager instance;
     [Header("Hotbar")]
     public RectTransform centerImage;
 
@@ -29,21 +28,12 @@ public class HotbarManager : MonoBehaviour
     [Header("HoldingItem")]
     public Transform RightHandObj;
 
-
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         PlaceIconsInCircle();
-        GameplayInput.instance.playerInput.actions["HotbarNext"].performed += context => { RotateHotbar(true); };
-        GameplayInput.instance.playerInput.actions["HotbarPrevious"].performed += context => { RotateHotbar(false); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarNext"].performed += context => { RotateHotbar(true); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarPrevious"].performed += context => { RotateHotbar(false); };
         Slots[SelectedSlot].rectTransform.localScale = Vector3.one * 1.5f;
         Slots[SelectedSlot].rectTransform.position = new Vector3(Slots[SelectedSlot].rectTransform.position.x, Slots[SelectedSlot].rectTransform.position.y, -1);
     }
@@ -131,7 +121,7 @@ public class HotbarManager : MonoBehaviour
 
     void RotateHotbar(bool clockwise)
     {
-        if (GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>().MovementControlledByAbility) return;
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.GetComponent<CharacterMovement>().MovementControlledByAbility) return;
         Slots[SelectedSlot].rectTransform.DOScale(Vector3.one, 0.25f);
         Slots[SelectedSlot].rectTransform.position = new Vector3(Slots[SelectedSlot].rectTransform.position.x, Slots[SelectedSlot].rectTransform.position.y, 0);
         float angleStep = 2 * Mathf.PI / totalSlots;
@@ -173,7 +163,7 @@ public class HotbarManager : MonoBehaviour
             for (int i = 0; i < activeItem.abilityConfigs.Count; i++)
             {
                 Type type = activeItem.abilityConfigs[i].GetAbilityType();
-                Component component = GameplayUtils.instance.PlayerTransform.GetComponent(type);
+                Component component = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.GetComponent(type);
 
                 if (component != null)
                 {
@@ -184,7 +174,7 @@ public class HotbarManager : MonoBehaviour
                      }
                     DestroyImmediate(component);
                 }
-                CharacterMovement characterMovement = GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>();
+                CharacterMovement characterMovement = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.GetComponent<CharacterMovement>();
                 characterMovement.playerAbilities.RemoveAll(ability => ability.GetType() == type);
             }
         }
@@ -199,9 +189,9 @@ public class HotbarManager : MonoBehaviour
     {
         int tempSlot = SelectedSlot;
         if (SelectedSlot > 4) tempSlot -= 5;
-        InventorySlot inventorySlot = GameplayUtils.instance.inventoryManager.inventorySlots[tempSlot];
+        InventorySlot inventorySlot = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.inventorySlots[tempSlot];
         if (inventorySlot.isEmpty) return;
-        ItemData itemData = GameplayUtils.instance.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+        ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
         activeItem = itemData;
         if (itemData.holdingItem != null)
         {
@@ -213,7 +203,7 @@ public class HotbarManager : MonoBehaviour
 
             for (int i = 0; i < itemData.abilityConfigs.Count; i++)
             {
-                CharacterMovement characterMovement = GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>();
+                CharacterMovement characterMovement = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.GetComponent<CharacterMovement>();
                 Type abilityType = itemData.abilityConfigs[i].GetAbilityType();
                 MethodInfo methodInfo = typeof(CharacterMovement).GetMethod("AddAbility");
                 MethodInfo genericMethod = methodInfo.MakeGenericMethod(abilityType);
@@ -264,7 +254,7 @@ public class HotbarManager : MonoBehaviour
             }
             // foreach (string abilityName in itemData.playerAbilities)
             // {
-            //     CharacterMovement characterMovement = GameplayUtils.instance.PlayerTransform.GetComponent<CharacterMovement>();
+            //     CharacterMovement characterMovement = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.GetComponent<CharacterMovement>();
             //     Type abilityType = Type.GetType(abilityName);
             //     MethodInfo methodInfo = typeof(CharacterMovement).GetMethod("AddAbility");
             //     MethodInfo genericMethod = methodInfo.MakeGenericMethod(abilityType);

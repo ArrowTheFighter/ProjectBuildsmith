@@ -7,7 +7,7 @@ public class AxeTrailHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        animationEvents = GameplayUtils.instance.animationEvents;
+        animationEvents = ScriptRefrenceSingleton.instance.gameplayUtils.animationEvents;
         trailRenderer = GetComponent<TrailRenderer>();
         animationEvents.OnAxeSwingStart += ShowTrail;
         animationEvents.OnAxeSwingEnd += HideTrail;

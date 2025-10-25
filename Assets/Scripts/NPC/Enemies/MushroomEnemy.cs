@@ -108,7 +108,7 @@ public class MushroomEnemy : EnemyBase, IDamagable
     {
         if (attackSoundFX != null)
         {
-            SoundFXManager.instance.PlaySoundFXClip(attackSoundFX, transform, attackSoundFXVolume, attackSoundFXPitch);
+            ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(attackSoundFX, transform, attackSoundFXVolume, attackSoundFXPitch);
         }
 
         AttackParticles.Play();
@@ -116,7 +116,7 @@ public class MushroomEnemy : EnemyBase, IDamagable
 
     public void PlayPlayerSpottedAudio()
     {
-        SoundFXManager.instance.PlaySoundFXClip(playerSpottedSoundFX, transform, playerSpottedSoundFXVolume, playerSpottedSoundFXPitch);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(playerSpottedSoundFX, transform, playerSpottedSoundFXVolume, playerSpottedSoundFXPitch);
     }
 
 

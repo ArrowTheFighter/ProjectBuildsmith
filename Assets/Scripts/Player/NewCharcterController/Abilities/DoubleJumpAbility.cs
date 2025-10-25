@@ -53,12 +53,12 @@ public class DoubleJumpAbility : PlayerAbility
 
             characterMovement.rb.AddForce(Vector3.up * (characterMovement.jumpForce - 3), ForceMode.Impulse);
 
-            AudioCollection audioCollectionJumpGrunt = PlayerAudioManager.instance.GetAudioClipByID("Jump");
-            AudioCollection audioCollectionJumpSound = PlayerAudioManager.instance.GetAudioClipByID("JumpSound");
-            SoundFXManager.instance.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
+            AudioCollection audioCollectionJumpGrunt = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Jump");
+            AudioCollection audioCollectionJumpSound = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("JumpSound");
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
 
-            // AudioCollection audioCollection = PlayerAudioManager.instance.GetAudioClipByID("Jump");
-            // SoundFXManager.instance.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
+            // AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Jump");
+            // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollection.audioClip, transform, audioCollection.audioClipVolume, UnityEngine.Random.Range(audioCollection.audioClipPitch * 0.9f, audioCollection.audioClipPitch * 1.1f));
         }
     }
 

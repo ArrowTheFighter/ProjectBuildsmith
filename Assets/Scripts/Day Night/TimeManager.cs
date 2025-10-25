@@ -7,8 +7,6 @@ using Sirenix.OdinInspector;
 
 public class TimeManager : MonoBehaviour
 {
-    public static TimeManager instance;
-
     [SerializeField] TextMeshProUGUI timeText;
 
     [SerializeField] Light sun;
@@ -49,12 +47,6 @@ public class TimeManager : MonoBehaviour
 
     TimeService service;
 
-    void Awake()
-    {
-        if (instance != this)
-            Destroy(instance);
-        instance = this;
-    }
 
     void Start()
     {

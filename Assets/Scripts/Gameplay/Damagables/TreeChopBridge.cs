@@ -35,7 +35,7 @@ public class TreeChopBridge : MonoBehaviour, IDamagable,ISaveable
         if (attackTypes.Contains(AttackType.Chop))
         {
             currentHealth -= amount;
-            SoundFXManager.instance.PlayRandomSoundCollection(transform, TreeHitAudioCollection);
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, TreeHitAudioCollection);
             if (currentHealth <= 0)
             {
                 if (currentStage < treeStages.Count - 1)
@@ -56,7 +56,7 @@ public class TreeChopBridge : MonoBehaviour, IDamagable,ISaveable
                     finished = true;
                     print("finished");
 
-                    SoundFXManager.instance.PlayRandomSoundCollection(transform, TreeChoppedAudioCollection);
+                    ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, TreeChoppedAudioCollection);
                 }
             }
             

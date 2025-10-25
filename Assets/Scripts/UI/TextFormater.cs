@@ -16,13 +16,13 @@ public class TextFormater : MonoBehaviour
 
     void OnEnable()
     {
-        UIIconHandler.instance.InputDeviceChanged += ReformatText;
+        ScriptRefrenceSingleton.instance.uIIconHandler.InputDeviceChanged += ReformatText;
         ReformatText();
     }
 
     void OnDisable()
     {
-        UIIconHandler.instance.InputDeviceChanged -= ReformatText;
+        ScriptRefrenceSingleton.instance.uIIconHandler.InputDeviceChanged -= ReformatText;
     }
 
     public void SetText(string rawText)
@@ -34,7 +34,7 @@ public class TextFormater : MonoBehaviour
     public void ReformatText()
     {
         if(textMeshProUGUI == null) textMeshProUGUI = GetComponent<TextMeshProUGUI>();
-        string formatedText = UIIconHandler.instance.FormatText(rawStoredText);
+        string formatedText = ScriptRefrenceSingleton.instance.uIIconHandler.FormatText(rawStoredText);
         textMeshProUGUI.text = formatedText;
     }
 }

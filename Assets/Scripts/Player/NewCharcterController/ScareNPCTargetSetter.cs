@@ -27,7 +27,7 @@ public class ScareNPCTargetSetter : MonoBehaviour
 
     void FixedUpdate()
     {
-        float distanceToPlayer = Vector3.Distance(GameplayUtils.instance.PlayerTransform.position, transform.position);
+        float distanceToPlayer = Vector3.Distance(ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position, transform.position);
         if (distanceToPlayer < MaxDistanceToPlayer)
         {
             float playerDistanceLerpValue = Mathf.InverseLerp(MaxDistanceToPlayer, 1.5f, distanceToPlayer);
@@ -37,7 +37,7 @@ public class ScareNPCTargetSetter : MonoBehaviour
             }
 
 
-            Vector3 dirToMove = transform.position - GameplayUtils.instance.PlayerTransform.position;
+            Vector3 dirToMove = transform.position - ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position;
             dirToMove.y = 0;
             targetTransform.position = transform.position + dirToMove.normalized * 2;
             timeAloneCooldown = Time.time + Random.Range(wonderCooldown - wonderCooldown * 0.2f, wonderCooldown + wonderCooldown * 0.2f);

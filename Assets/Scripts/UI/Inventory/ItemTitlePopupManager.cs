@@ -6,20 +6,12 @@ using DG.Tweening;
 
 public class ItemTitlePopupManager : MonoBehaviour
 {
-    public static ItemTitlePopupManager instance;
 
     RectTransform rectTransform;
     public TextMeshProUGUI Textbox;
     CanvasGroup canvasGroup;
     Canvas canvas;
 
-
-    void Awake()
-    {
-        if (instance != this)
-            Destroy(instance);
-        instance = this;
-    }
 
     void Start()
     {
@@ -31,7 +23,7 @@ public class ItemTitlePopupManager : MonoBehaviour
     void Update()
     {
         if (canvasGroup.alpha != 1) return;
-        if (UIInputHandler.instance.currentScheme == "Keyboard&Mouse")
+        if (ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Keyboard&Mouse")
         {
             Vector2 mousePosition = Mouse.current.position.ReadValue();
 
@@ -50,7 +42,7 @@ public class ItemTitlePopupManager : MonoBehaviour
             }
 
         }
-        else if (UIInputHandler.instance.currentScheme == "Gamepad")
+        else if (ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Gamepad")
         {
             if (EventSystem.current.currentSelectedGameObject != null)
             {
@@ -72,7 +64,7 @@ public class ItemTitlePopupManager : MonoBehaviour
 
     public void ShowPopup(string item_name)
     {
-        if (!GameplayUtils.instance.inventoryManager.inventoryIsOpen) return;
+        if (!ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.inventoryIsOpen) return;
         rectTransform.DOScale(1, 0.1f).From(0f).SetEase(Ease.InOutQuad);
         Textbox.text = item_name;
         canvasGroup.alpha = 1;

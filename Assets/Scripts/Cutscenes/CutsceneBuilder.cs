@@ -24,16 +24,16 @@ public class CutsceneBuilder : MonoBehaviour
         cutscene_camera.depth = 5;
         if (hide_ui)
         {
-            GameplayUtils.instance.HideUI();
+            ScriptRefrenceSingleton.instance.gameplayUtils.HideUI();
         }
         if (hide_dialog)
         {
-            GameplayUtils.instance.set_can_use_dialog(false);
-            DialogManager.instance.Hide_Dialog();
+            ScriptRefrenceSingleton.instance.gameplayUtils.set_can_use_dialog(false);
+            ScriptRefrenceSingleton.instance.dialogManager.Hide_Dialog();
         }
         else
         {
-            GameplayUtils.instance.Freeze_Player();
+            ScriptRefrenceSingleton.instance.gameplayUtils.Freeze_Player();
         }
     }
 
@@ -44,16 +44,16 @@ public class CutsceneBuilder : MonoBehaviour
 
         if (hide_ui)
         {
-            GameplayUtils.instance.ShowUI();
+            ScriptRefrenceSingleton.instance.gameplayUtils.ShowUI();
         }
         if (hide_dialog)
         {
-            GameplayUtils.instance.set_can_use_dialog(true);
-            DialogManager.instance.Show_Dialog();
+            ScriptRefrenceSingleton.instance.gameplayUtils.set_can_use_dialog(true);
+            ScriptRefrenceSingleton.instance.dialogManager.Show_Dialog();
         }
         else
         {
-            GameplayUtils.instance.Unfreeze_Player();
+            ScriptRefrenceSingleton.instance.gameplayUtils.Unfreeze_Player();
         }
         endCutsceneEvent.Invoke();
 

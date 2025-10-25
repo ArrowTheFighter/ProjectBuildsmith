@@ -19,7 +19,7 @@ public class AnimationEvents : MonoBehaviour
         {
             if (footstepsSoundFX != null)
             {
-                SoundFXManager.instance.PlaySoundFXClip(footstepsSoundFX, transform, footstepsSoundFXVolume, footstepsSoundFXPitch);
+                ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(footstepsSoundFX, transform, footstepsSoundFXVolume, footstepsSoundFXPitch);
                 
             }
             if (walkingParticle != null)

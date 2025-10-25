@@ -248,7 +248,7 @@ public class DialogRetriever : MonoBehaviour
 
                 case DSItemRequirementSO itemRequirementSO:
                     string item_output_check = "IsFalse";
-                    if (GameplayUtils.instance.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
+                    if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
                     {
                         item_output_check = "IsTrue";
                     }

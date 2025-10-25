@@ -53,13 +53,13 @@ public class DialogWorker : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SaveLoadManager.instance.DialogWorkers.Add(this);
+        ScriptRefrenceSingleton.instance.saveLoadManager.DialogWorkers.Add(this);
         StarterNode = (DSDialogueSO)DialogRetriever.GetStarterNode(StartDialogGraphName);
         //currentDialogSO = DialogRetriever.GetDialogDataByName(StartDialogGraphName, startDialogName);
         //currentDialogSO = DialogRetriever.GetNextDialogSO(StartDialogGraphName,StarterNode);
         //ShowDialog();
-        GameplayInput.instance.playerInput.actions["Submit"].performed += context => { ActiveAndInteract(); };
-        textEffect = DialogManager.instance.text_box.GetComponent<TextEffect>();
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += context => { ActiveAndInteract(); };
+        textEffect = ScriptRefrenceSingleton.instance.dialogManager.text_box.GetComponent<TextEffect>();
     }
 
     public void SetCurrentDialogByID(int id)
@@ -90,7 +90,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
         {
             if (NPCCamera != null)
             {
-                if (GameplayUtils.instance.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
+                if (ScriptRefrenceSingleton.instance.gameplayUtils.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
                 {
                     cinemachineBrainEvents.BlendCreatedEvent.AddListener(setCameraBlend);
                 }
@@ -101,7 +101,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
             {
                 if (TryGetComponent(out CharacterMovement characterMovement))
                 {
-                    Vector3 playerPos = GameplayUtils.instance.PlayerTransform.position;
+                    Vector3 playerPos = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position;
                     playerPos.y = transform.position.y;
                     Vector3 dirToPlayer = playerPos - transform.position;
                     characterMovement.ManualTurn(dirToPlayer.normalized, 0.25f);
@@ -119,7 +119,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 frozenCam.transform.rotation = NPCCamera.transform.rotation;
                 NPCCamera.SetActive(false);
 
-                if (GameplayUtils.instance.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
+                if (ScriptRefrenceSingleton.instance.gameplayUtils.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
                 {
                     cinemachineBrainEvents.BlendCreatedEvent.AddListener(setCameraBlendInstant);
                 }
@@ -144,7 +144,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void setCameraBlend(CinemachineCore.BlendEventParams value)
     {
         value.Blend.Duration = blendTime;
-        if (GameplayUtils.instance.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
         {
             cinemachineBrainEvents.BlendCreatedEvent.RemoveListener(setCameraBlend);
         }
@@ -153,7 +153,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void setCameraBlendInstant(CinemachineCore.BlendEventParams value)
     {
         value.Blend.Duration = 0;
-        if (GameplayUtils.instance.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.cinemachineBrain.TryGetComponent(out CinemachineBrainEvents cinemachineBrainEvents))
         {
             cinemachineBrainEvents.BlendCreatedEvent.RemoveListener(setCameraBlend);
             cinemachineBrainEvents.BlendCreatedEvent.AddListener(setCameraBlend);
@@ -187,25 +187,25 @@ public class DialogWorker : MonoBehaviour, IInteractable
         if (interactCooldown > Time.time) return;
         if (hasMarker) EnableMarker(false);
         //List<TextEffectStatus> textEffectStatus = textEffect.QueryEffectStatusesByTag(TextEffectType.Global, TextEffectEntry.TriggerWhen.Manual, "scale_text_in");
-        if (DialogManager.instance.TextIsAnimating)
+        if (ScriptRefrenceSingleton.instance.dialogManager.TextIsAnimating)
         {
             textEffect.StopManualEffects();
-            DialogManager.instance.SetTextIsAnimating(false);
+            ScriptRefrenceSingleton.instance.dialogManager.SetTextIsAnimating(false);
             return;
         }
-        if (!GameplayUtils.instance.OpenDialogMenu()) return;
+        if (!ScriptRefrenceSingleton.instance.gameplayUtils.OpenDialogMenu()) return;
         if(providedDialog != null)
             print(providedDialog.name);
         bool nextDialogResult = GetNextDialog(providedDialog);
         if (nextDialogResult)
         {
             ShowDialog();
-            ResetTMPSubMeshes(DialogManager.instance.text_box);
-            DialogManager.instance.text_box.ForceMeshUpdate();
+            ResetTMPSubMeshes(ScriptRefrenceSingleton.instance.dialogManager.text_box);
+            ScriptRefrenceSingleton.instance.dialogManager.text_box.ForceMeshUpdate();
             //textEffect.StopAllEffects();
             textEffect.Refresh();
             textEffect.StartManualEffects();
-            DialogManager.instance.SetTextIsAnimating(true);
+            ScriptRefrenceSingleton.instance.dialogManager.SetTextIsAnimating(true);
             interactCooldown = Time.time + 0.05f;
         }
 
@@ -246,10 +246,10 @@ public class DialogWorker : MonoBehaviour, IInteractable
         {
             DSDialogueSO dialogueSO = (DSDialogueSO)currentDialogSO;
 
-            if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.MultipleChoice && DialogManager.instance.ActiveChoices.Count > 0 && UIInputHandler.instance.currentScheme == "Keyboard&Mouse")
+            if (dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.MultipleChoice && ScriptRefrenceSingleton.instance.dialogManager.ActiveChoices.Count > 0 && ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Keyboard&Mouse")
             {
-                tempDialogSO = DialogManager.instance.ActiveChoices[0];
-                DialogManager.instance.ActiveChoices = new List<ScriptableObject>();
+                tempDialogSO = ScriptRefrenceSingleton.instance.dialogManager.ActiveChoices[0];
+                ScriptRefrenceSingleton.instance.dialogManager.ActiveChoices = new List<ScriptableObject>();
             }
             else if (dialogueSO.Choices.Count <= 1)
             {
@@ -296,15 +296,15 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         }
                         if (dialogueSO.Choices.Count > 0)
                         {
-                            DialogManager.instance.Setup_Choices(dialogueSO.Choices, this, UseLocalization);
+                            ScriptRefrenceSingleton.instance.dialogManager.Setup_Choices(dialogueSO.Choices, this, UseLocalization);
                         }
                         currentDialogSO = dialogueSO;
                         breakLoop = true;
                         break;
                     case DS.Enumerations.DSDialogueType.SingleChoice:
-                        if (DialogManager.instance.get_active_choices() > 0)
+                        if (ScriptRefrenceSingleton.instance.dialogManager.get_active_choices() > 0)
                         {
-                            DialogManager.instance.Clear_choices();
+                            ScriptRefrenceSingleton.instance.dialogManager.Clear_choices();
                         }
                         currentDialogSO = dialogueSO;
                         breakLoop = true;
@@ -362,12 +362,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     break;
                 case DSItemRequirementSO itemRequirementSO:
                     string item_output_check = "IsFalse";
-                    if (GameplayUtils.instance.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
+                    if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(itemRequirementSO.ItemID) >= int.Parse(itemRequirementSO.ItemAmount))
                     {
                         item_output_check = "IsTrue";
                         if (itemRequirementSO.RemoveItems)
                         {
-                            GameplayUtils.instance.remove_items_from_inventory(itemRequirementSO.ItemID, int.Parse(itemRequirementSO.ItemAmount));
+                            ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(itemRequirementSO.ItemID, int.Parse(itemRequirementSO.ItemAmount));
                         }
                     }
                     foreach (DSDialogueChoiceData choice in itemRequirementSO.Choices)
@@ -380,9 +380,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     }
                     break;
                 case DSGiveItemSO giveItemSO:
-                    ItemData item = GameplayUtils.instance.GetItemDataByID(giveItemSO.ItemID);
-                    //GameplayUtils.instance.inventoryManager.AddItemToInventory(item, int.Parse(giveItemSO.ItemAmount));
-                    GameplayUtils.instance.add_items_to_inventory(giveItemSO.ItemID, int.Parse(giveItemSO.ItemAmount), true);
+                    ItemData item = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(giveItemSO.ItemID);
+                    //ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToInventory(item, int.Parse(giveItemSO.ItemAmount));
+                    ScriptRefrenceSingleton.instance.gameplayUtils.add_items_to_inventory(giveItemSO.ItemID, int.Parse(giveItemSO.ItemAmount), true);
                     foreach (DSDialogueChoiceData choice in giveItemSO.Choices)
                     {
                         tempDialogSO = choice.NextDialogue;
@@ -411,7 +411,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     }
                     break;
                 case DSAssignQuestSO assignQuestSO:
-                    GameplayUtils.instance.inventoryManager.AssignQuest(assignQuestSO.QuestID);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AssignQuest(assignQuestSO.QuestID);
 
                     if (assignQuestSO.Choices.Count > 0)
                     {
@@ -437,9 +437,9 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void CloseDialog()
     {
         SetIsActive(false);
-        DialogManager.instance.Clear_choices();
-        DialogManager.instance.DialogUI.SetActive(false);
-        GameplayUtils.instance.CloseDialogMenu();
+        ScriptRefrenceSingleton.instance.dialogManager.Clear_choices();
+        ScriptRefrenceSingleton.instance.dialogManager.DialogUI.SetActive(false);
+        ScriptRefrenceSingleton.instance.gameplayUtils.CloseDialogMenu();
     }
 
     void ShowDialog()
@@ -447,21 +447,21 @@ public class DialogWorker : MonoBehaviour, IInteractable
         if (currentDialogSO is DSDialogueSO)
         {
             string fontWeight = "<font-weight=400>";
-            DialogManager.instance.name_text.text = fontWeight + NPC_Name;
-            DialogManager.instance.DialogUI.SetActive(true);
+            ScriptRefrenceSingleton.instance.dialogManager.name_text.text = fontWeight + NPC_Name;
+            ScriptRefrenceSingleton.instance.dialogManager.DialogUI.SetActive(true);
             DSDialogueSO dialogSO = (DSDialogueSO)currentDialogSO;
             if (UseLocalization)
             {
                 string localizedText = LocalizationManager.GetLocalizedString(Localized_Table, dialogSO.LocalizedKey);
-                //string formatedText = UIIconHandler.instance.FormatText(localizedText);
-                DialogManager.instance.DialogTextFormater.SetText(localizedText);
-                //DialogManager.instance.text_box.text = formatedText;
+                //string formatedText = ScriptRefrenceSingleton.instance.uIIconHandler.FormatText(localizedText);
+                ScriptRefrenceSingleton.instance.dialogManager.DialogTextFormater.SetText(localizedText);
+                //ScriptRefrenceSingleton.instance.dialogManager.text_box.text = formatedText;
             }
             else
             {
-                //string formatedText = UIIconHandler.instance.FormatText(dialogSO.Text);
-                DialogManager.instance.DialogTextFormater.SetText(dialogSO.Text);
-                //DialogManager.instance.text_box.text = formatedText;
+                //string formatedText = ScriptRefrenceSingleton.instance.uIIconHandler.FormatText(dialogSO.Text);
+                ScriptRefrenceSingleton.instance.dialogManager.DialogTextFormater.SetText(dialogSO.Text);
+                //ScriptRefrenceSingleton.instance.dialogManager.text_box.text = formatedText;
             }
         }
     }

@@ -16,12 +16,12 @@ public class NewCutsceneBuilder : MonoBehaviour, ISaveable
     public void PlayCutscene()
     {
         if (save_played) has_played = true;
-        CutsceneManager.instance.StartCutscene(cutsceneData);
+        ScriptRefrenceSingleton.instance.cutsceneManager.StartCutscene(cutsceneData);
     }
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
         PlayCutscene();
-        CutsceneManager.instance.SkipCutscene();
+        ScriptRefrenceSingleton.instance.cutsceneManager.SkipCutscene();
     }
 }

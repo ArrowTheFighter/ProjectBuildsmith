@@ -16,7 +16,7 @@ public class Interactor : MonoBehaviour
 
     private void Start()
     {
-        playerInput = GameplayInput.instance.playerInput;
+        playerInput = ScriptRefrenceSingleton.instance.gameplayInput.playerInput;
         playerInput.actions["Interact"].performed += Interact;
     }
 

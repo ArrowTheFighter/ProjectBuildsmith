@@ -7,7 +7,7 @@ public class SpecialItemPickup : ItemPickup
 
     void Start()
     {
-        SaveLoadManager.instance.OnSaveLoaded += SaveFileLoaded;
+        ScriptRefrenceSingleton.instance.saveLoadManager.OnSaveLoaded += SaveFileLoaded;
     }
     
     void SaveFileLoaded(SaveFileStruct saveFileStruct)
@@ -20,7 +20,7 @@ public class SpecialItemPickup : ItemPickup
 
     public override void Pickup()
     {
-        SaveLoadManager.instance.AddSpecialItemCollected(pickup_id);
+        ScriptRefrenceSingleton.instance.saveLoadManager.AddSpecialItemCollected(pickup_id);
         base.Pickup();
 
     }

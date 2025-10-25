@@ -9,8 +9,6 @@ public class GameSettings : MonoBehaviour
     private static string FilePath =>
         Path.Combine(Application.persistentDataPath, "settings.json");
 
-    public static GameSettings instance;
-
     public SettingsContainer settingsContainer = new SettingsContainer();
 
     [Header("Accessibility Settings")]
@@ -55,9 +53,6 @@ public class GameSettings : MonoBehaviour
 
     void Awake()
     {
-        if (instance != this)
-            Destroy(instance);
-        instance = this;
         LoadSettingsFromFile();
     }
 

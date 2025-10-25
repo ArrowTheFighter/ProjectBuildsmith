@@ -6,7 +6,7 @@ public class StuckRespawnPosition : MonoBehaviour
     public void Enable_Respawn_Position()
     {
         if (is_enabled) return;
-        GameplayUtils.instance.add_respawn_point(transform);
+        ScriptRefrenceSingleton.instance.gameplayUtils.add_respawn_point(transform);
         is_enabled = true;
     }
 }

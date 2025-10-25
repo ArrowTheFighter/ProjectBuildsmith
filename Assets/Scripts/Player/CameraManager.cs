@@ -19,10 +19,10 @@ public class CameraManager : MonoBehaviour
 
     void Start()
     {
-        playerInput = GameplayInput.instance.playerInput;
+        playerInput = ScriptRefrenceSingleton.instance.gameplayInput.playerInput;
         playerInput.onControlsChanged += OnControlsChanged;
 
-        GameSettings.instance.OnCameraSensativityChanged += set_camera_sensitivity;
+        ScriptRefrenceSingleton.instance.gameSettings.OnCameraSensativityChanged += set_camera_sensitivity;
         //This gets set in GameSettings instead to save/load the value
         //set_camera_sensitivity(0.25f);
     }
@@ -77,6 +77,6 @@ public class CameraManager : MonoBehaviour
         //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensitivity);
         X_speed_adjustment = adjustedValue;
         Y_speed_adjustment = adjustedValue;
-        OnControlsChanged(GameplayInput.instance.playerInput);
+        OnControlsChanged(ScriptRefrenceSingleton.instance.gameplayInput.playerInput);
     }
 }

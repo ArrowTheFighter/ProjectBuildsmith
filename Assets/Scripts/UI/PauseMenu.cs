@@ -17,9 +17,9 @@ public class PauseMenu : MonoBehaviour
         SettingsScreen.SetActive(false);
         MainScreen.SetActive(true);
         DiscordButton.SetActive(true);
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = ResumeButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = ResumeButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenSettingsScreen()
@@ -28,9 +28,9 @@ public class PauseMenu : MonoBehaviour
         SettingsScreen.SetActive(true);
         DiscordButton.SetActive(false);
         GetComponent<SettingsMenuManager>().OpenControlsMenu();
-        UIInputHandler.instance.defaultButton = SettingsBackButton.gameObject;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = SettingsBackButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
         //SettingsBackButton.Select();
     }
 

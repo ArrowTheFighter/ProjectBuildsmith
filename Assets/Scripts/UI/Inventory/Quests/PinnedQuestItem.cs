@@ -56,8 +56,10 @@ public class PinnedQuestItem : MonoBehaviour
                 break;
             }
         }
-
-        QuestObjectivesTextBox.GetComponent<TextFormater>().SetText(QuestText);
+        if(QuestObjectivesTextBox != null)
+        {
+            QuestObjectivesTextBox.GetComponent<TextFormater>().SetText(QuestText);
+        }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(transform.GetComponent<RectTransform>());
         StartCoroutine(ForceRebuildNextFrame());

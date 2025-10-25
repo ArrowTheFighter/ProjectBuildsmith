@@ -10,7 +10,7 @@ public class ObjectiveCraftItem : QuestObjective
 
     protected override bool CheckObjectiveComplete()
     {
-        if (GameplayUtils.instance.GetItemCraftedAmount(Item_ID) >= Item_Amount) return true;
+        if (ScriptRefrenceSingleton.instance.gameplayUtils.GetItemCraftedAmount(Item_ID) >= Item_Amount) return true;
         return false;
     }
 

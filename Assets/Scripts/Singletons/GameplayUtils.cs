@@ -12,7 +12,6 @@ using CI.PowerConsole;
 
 public class GameplayUtils : MonoBehaviour
 {
-    public static GameplayUtils instance;
 
     [SerializeField] public Transform PlayerTransform;
     [SerializeField] MouseLock mouseLock_script;
@@ -64,28 +63,24 @@ public class GameplayUtils : MonoBehaviour
 
     void Awake()
     {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
         Reset();
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
         StartCoroutine(InitalFade());
 
-        GameSettings.instance.OnVsyncChanged += SetVsync;
-        GameSettings.instance.OnAntiAliasingChanged += SetAntiAliasing;
-        GameSettings.instance.OnRenderScaleChanged += SetRenderScale;
+        ScriptRefrenceSingleton.instance.gameSettings.OnVsyncChanged += SetVsync;
+        ScriptRefrenceSingleton.instance.gameSettings.OnAntiAliasingChanged += SetAntiAliasing;
+        ScriptRefrenceSingleton.instance.gameSettings.OnRenderScaleChanged += SetRenderScale;
 
         PowerConsole.Initialise();
 
         PowerConsole.CommandEntered += CommandCheck;
         //PowerConsole.OpenCloseHotkeys = new List<KeyCode> { KeyCode.LeftControl,KeyCode.BackQuote};
 
-        GameplayInput.instance.playerInput.actions["console"].performed += (context) => { ToggleConsole(); };
-        GameplayInput.instance.playerInput.actions["consoleUI"].performed += (context) => { ToggleConsole(); };
+        print(ScriptRefrenceSingleton.instance != null);
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["console"].performed += (context) => { ToggleConsole(); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["consoleUI"].performed += (context) => { ToggleConsole(); };
 
-        GameplayInput.instance.playerInput.actions["hidebuild"].performed += (context) => { BuildNumCanvas.SetActive(!BuildNumCanvas.activeInHierarchy); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["hidebuild"].performed += (context) => { BuildNumCanvas.SetActive(!BuildNumCanvas.activeInHierarchy); };
 
         #if UNITY_EDITOR
             CanCheat = true;
@@ -128,7 +123,7 @@ public class GameplayUtils : MonoBehaviour
             case "settime":
                 if (arguments.Length > 1)
                 {
-                    TimeManager.instance.SetTime(float.Parse(arguments[1]));
+                    ScriptRefrenceSingleton.instance.timeManager.SetTime(float.Parse(arguments[1]));
                 }
                 break;
             case "enablecheats":
@@ -165,14 +160,14 @@ public class GameplayUtils : MonoBehaviour
         //cameraInputComponent = playerMovement_script.transform.GetComponentInChildren<CinemachineInputAxisController>();
         AudioListener.volume = Main_volume_slider.value;
 
-        GameplayInput.instance.playerInput.actions["HideUI"].performed += (context) => { ToggleUI(); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HideUI"].performed += (context) => { ToggleUI(); };
 
         inventoryManager.OnInventoryUpdated += gemScreenCheck;
         if (MainMenuDemoScreenButton != null)
         {
-            UIInputHandler.instance.ClosedMenu();
-            UIInputHandler.instance.defaultButton = MainMenuDemoScreenButton;
-            UIInputHandler.instance.OpenedMenu();
+            ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+            ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = MainMenuDemoScreenButton;
+            ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
         }
     }
     IEnumerator InitalFade()
@@ -190,9 +185,9 @@ public class GameplayUtils : MonoBehaviour
         {
             CollectAllGemsScreenUI.SetActive(true);
             OpenMenu();
-            UIInputHandler.instance.ClosedMenu();
-            UIInputHandler.instance.defaultButton = CollectAllGemsScreenButton;
-            UIInputHandler.instance.OpenedMenu();
+            ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+            ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = CollectAllGemsScreenButton;
+            ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
         }
     }
 
@@ -373,21 +368,21 @@ public class GameplayUtils : MonoBehaviour
     {
         mouseLock_script.Release_Mouse();
         cameraInputComponent.enabled = false;
-        GameplayInput.instance.SwitchToUI();
+        ScriptRefrenceSingleton.instance.gameplayInput.SwitchToUI();
         //playerMovement_script.can_control_player = false;
         open_menu = true;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void CloseMenu()
     {
         if (!open_menu) return;
         mouseLock_script.Capture_Mouse();
-        GameplayInput.instance.SwitchToGameplay();
+        ScriptRefrenceSingleton.instance.gameplayInput.SwitchToGameplay();
         cameraInputComponent.enabled = true;
         //playerMovement_script.can_control_player = true;
         open_menu = false;
-        UIInputHandler.instance.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
     }
 
     public void Freeze_Player(bool release_mouse = false)
@@ -446,9 +441,9 @@ public class GameplayUtils : MonoBehaviour
         PauseMenuIsOpen = true;
         DemoEndScreenUI.SetActive(true);
         OpenMenu();
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = DemoEndScreenDefaultButton;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = DemoEndScreenDefaultButton;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
 
         Invoke("OpenDemoEndScreenDelay", 0.1f);
     }
@@ -465,7 +460,7 @@ public class GameplayUtils : MonoBehaviour
         CloseMenu();
         DemoEndScreenUI.SetActive(false);
         Time.timeScale = 1;
-        UIInputHandler.instance.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
     }
 
     public bool OpenPauseMenu()
@@ -633,7 +628,7 @@ public class GameplayUtils : MonoBehaviour
         // TODO FIX THIS
         if (item_id == "gold_coin")
         {
-            SpinningCoin.instance.SpeedUp();
+            ScriptRefrenceSingleton.instance.spinningCoin.SpeedUp();
         }
         return loosePiece;
     }

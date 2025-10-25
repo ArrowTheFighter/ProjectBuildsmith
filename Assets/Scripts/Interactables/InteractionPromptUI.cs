@@ -66,7 +66,7 @@ public class InteractionPromptUI : MonoBehaviour
 
                     item_requirement_ui_object.SetActive(true);
                     item_requirement_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = "<font-weight=500>x" + required_items[i].item_amount;
-                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(required_items[i].item_id);
+                    ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(required_items[i].item_id);
                     Image iconImage = null;
                     for (int o = 0; o < item_requirement_ui_object.transform.childCount; o++)
                     {

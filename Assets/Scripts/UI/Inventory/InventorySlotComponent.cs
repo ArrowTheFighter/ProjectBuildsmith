@@ -23,20 +23,20 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         // Button button = GetComponent<Button>();
         // button.onClick.AddListener(slotClicked);
-        GameplayInput.instance.playerInput.actions["Submit"].performed += context => { ControllerMainPress(); };
-        GameplayInput.instance.playerInput.actions["Cancel"].performed += context => { ControllerSecondaryPress(); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += context => { ControllerMainPress(); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Cancel"].performed += context => { ControllerSecondaryPress(); };
 
         if (inventorySlot.inventorySlotComponent == null)
         {
             inventorySlot.inventorySlotComponent = this;
         }
-        GameplayUtils.instance.inventoryManager.OnInventoryClosed += UnsubscribeFromItemPopups;
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryClosed += UnsubscribeFromItemPopups;
         SelectionWatcher.OnSelectionChanged += HandleSelectionChange;
     }
 
     void HandleSelectionChange(GameObject _gameObject)
     {
-        if (UIInputHandler.instance.currentScheme == "Gamepad" && gameObject == _gameObject)
+        if (ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Gamepad" && gameObject == _gameObject)
         {
             if (!Selected)
             {
@@ -45,12 +45,12 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                 Selected = true;
                 if (inventorySlot.isEmpty)
                 {
-                    ItemTitlePopupManager.instance.HidePopup();
+                    ScriptRefrenceSingleton.instance.itemTitlePopupManager.HidePopup();
 
                 }
                 else 
                 {
-                    ItemTitlePopupManager.instance.ShowPopup(inventorySlot.inventoryItemStack.Name);
+                    ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name);
                     
                 }
             }
@@ -102,26 +102,26 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         slotFilled += ShowAndUnsubscribeItemPopup;
         if (inventorySlot.isEmpty) return;
-        ItemTitlePopupManager.instance.ShowPopup(inventorySlot.inventoryItemStack.Name);
+        ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name);
         slotEmptied += HideAndUnsubscribeItemPopup;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ItemTitlePopupManager.instance.HidePopup();
+        ScriptRefrenceSingleton.instance.itemTitlePopupManager.HidePopup();
         slotEmptied -= HideAndUnsubscribeItemPopup;
         slotFilled -= ShowAndUnsubscribeItemPopup;
     }
 
     public void HideAndUnsubscribeItemPopup(InventoryItemStack inventoryItemStack)
     {
-        ItemTitlePopupManager.instance.HidePopup();
+        ScriptRefrenceSingleton.instance.itemTitlePopupManager.HidePopup();
         //slotEmptied -= HideAndUnsubscribeItemPopup;
     }
 
     public void ShowAndUnsubscribeItemPopup()
     {
-        ItemTitlePopupManager.instance.ShowPopup(inventorySlot.inventoryItemStack.Name);
+        ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name);
         //slotFilled -= ShowAndUnsubscribeItemPopup;
     }
 
@@ -158,26 +158,26 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     void SlotMainPress()
     {
         // --- Mouse has an item stack ---
-        if (!GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.isEmpty)
+        if (!ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.isEmpty)
         {
             // -- Mouse has an item but the click slot is empty --
             if (inventorySlot.isEmpty)
             {
                 if (!PlayerCanPlace) return;
-                InventoryItemStack itemStack = GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
-                ItemData itemData = GameplayUtils.instance.GetItemDataByID(itemStack.ID);
-                GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, itemData, itemStack.Amount);
-                GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.inventorySlotComponent.RemoveItemFromSlot(false);
+                InventoryItemStack itemStack = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
+                ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(itemStack.ID);
+                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, itemData, itemStack.Amount);
+                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.inventorySlotComponent.RemoveItemFromSlot(false);
                 return;
             }
             // -- Mouse has an item and the slot has an item --
             else
             {
-                InventoryItemStack mouseStack = GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
-                ItemData mouseItemData = GameplayUtils.instance.GetItemDataByID(mouseStack.ID);
+                InventoryItemStack mouseStack = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
+                ItemData mouseItemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(mouseStack.ID);
 
                 InventoryItemStack slotStack = inventorySlot.inventoryItemStack;
-                ItemData slotItemData = GameplayUtils.instance.GetItemDataByID(slotStack.ID);
+                ItemData slotItemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(slotStack.ID);
 
                 // -- Both stacks have the same ID
                 if (mouseStack.ID == slotStack.ID)
@@ -190,18 +190,18 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                         if (slotStack.Amount <= amountToMax)
                         {
                             /// -- Move mouse stack fully into the clicked slot
-                            //GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, newAmount, true);
-                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(slotItemData, newAmount, true);
+                            //ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, newAmount, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(slotItemData, newAmount, true);
                             RemoveItemFromSlot(false);
-                            //GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+                            //ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
                         }
                         else
                         {
                             int leftOver = newAmount - mouseStack.MaxStackSize;
 
-                            GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, leftOver, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, leftOver, true);
 
-                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.MaxStackSize, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.MaxStackSize, true);
                         }
                         return;
                     }
@@ -215,26 +215,26 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                         if (mouseStack.Amount <= amountToMax)
                         {
                             /// -- Move mouse stack fully into the clicked slot
-                            GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, newAmount, true);
-                            GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, newAmount, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
                         }
                         else
                         {
                             int leftOver = newAmount - slotStack.MaxStackSize;
 
-                            GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.MaxStackSize, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.MaxStackSize, true);
 
-                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, leftOver, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(mouseItemData, leftOver, true);
                         }
                     }
                     else
                     {
                         if (!PlayerCanPlace) return;
                         RemoveItemFromSlot(false);
-                        GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
 
-                        GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, mouseStack.Amount);
-                        GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(slotItemData, slotStack.Amount);
+                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, mouseStack.Amount);
+                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(slotItemData, slotStack.Amount);
                     }
 
                     return;
@@ -243,16 +243,16 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                 if (!PlayerCanPlace) return;
                 // -- Swaping Items --
                 RemoveItemFromSlot(false);
-                GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
 
-                GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, mouseStack.Amount);
-                GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(slotItemData, slotStack.Amount);
+                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, mouseStack.Amount);
+                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(slotItemData, slotStack.Amount);
             }
         }
         else if (!inventorySlot.isEmpty)
         {
-            ItemData itemData = GameplayUtils.instance.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
-            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(itemData, inventorySlot.inventoryItemStack.Amount);
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(itemData, inventorySlot.inventoryItemStack.Amount);
             RemoveItemFromSlot(false);
             return;
         }
@@ -264,7 +264,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         if (!inventorySlot.isEmpty)
         {
             // --- Mouse doesn't have an item stack ---
-            if (GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.isEmpty)
+            if (ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.isEmpty)
             {
                 // -- If the clicked slot has more then 1 item split it in half
                 if (inventorySlot.inventoryItemStack.Amount > 1 && PlayerCanPlace)
@@ -273,16 +273,16 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                     int remainingAmount = inventorySlot.inventoryItemStack.Amount - splitAmount;
 
 
-                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+                    ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
 
-                    GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(itemData, splitAmount);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(itemData, splitAmount);
                     RemoveItemFromSlot(false);
-                    GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, itemData, remainingAmount);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, itemData, remainingAmount);
                 }
                 else
                 {
-                    ItemData itemData = GameplayUtils.instance.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
-                    GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(itemData, inventorySlot.inventoryItemStack.Amount);
+                    ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(itemData, inventorySlot.inventoryItemStack.Amount);
                     RemoveItemFromSlot(false);
                 }
 
@@ -290,11 +290,11 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
             // --- The Mouse does have an item ---
             else
             {
-                InventoryItemStack mouseStack = GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
-                ItemData mouseItemData = GameplayUtils.instance.GetItemDataByID(mouseStack.ID);
+                InventoryItemStack mouseStack = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
+                ItemData mouseItemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(mouseStack.ID);
 
                 InventoryItemStack slotStack = inventorySlot.inventoryItemStack;
-                ItemData slotItemData = GameplayUtils.instance.GetItemDataByID(slotStack.ID);
+                ItemData slotItemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(slotStack.ID);
 
                 // -- Mouse Slot and Clicked Slot both have the same type of item;
                 if (mouseStack.ID == slotStack.ID)
@@ -303,7 +303,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                     {
                         if (mouseStack.Amount < mouseStack.MaxStackSize)
                         {
-                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount + 1, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount + 1, true);
 
                             if (slotStack.Amount == 1)
                             {
@@ -311,7 +311,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                             }
                             else
                             {
-                                GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount - 1, true);
+                                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount - 1, true);
                             }
                         }
                         return;
@@ -319,16 +319,16 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                     }
                     if (slotStack.Amount < slotStack.MaxStackSize && PlayerCanPlace)
                     {
-                        GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount + 1, true);
+                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount + 1, true);
                         // -- If the mouse slot only has one item remove it;
                         if (mouseStack.Amount - 1 <= 0)
                         {
-                            GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
                         }
                         // -- If the mouse slot has more then one item remove one item from it
                         else
                         {
-                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount - 1, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount - 1, true);
                         }
 
                     }
@@ -337,7 +337,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
                         if (mouseStack.Amount + slotStack.Amount <= mouseStack.MaxStackSize)
                         {
-                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount + slotStack.Amount, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount + slotStack.Amount, true);
 
                             if (slotStack.Amount == 1)
                             {
@@ -345,23 +345,23 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                             }
                             else
                             {
-                                GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount - 1, true);
+                                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, slotStack.Amount - 1, true);
                             }
                         }
                         else
                         {
                             int remainingSpace = mouseStack.MaxStackSize - mouseStack.Amount;
                             int remainingItems = slotStack.Amount - remainingSpace;
-                            GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.MaxStackSize, true);
-                            GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, remainingItems, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.MaxStackSize, true);
+                            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, slotItemData, remainingItems, true);
                         }
                     }
                 }
                 // -- Swaping items
                 else
                 {
-                    GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, mouseStack.Amount, true);
-                    GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(slotItemData, slotStack.Amount, true);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, mouseStack.Amount, true);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(slotItemData, slotStack.Amount, true);
                 }
             }
         }
@@ -370,19 +370,19 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         {
             if (!PlayerCanPlace) return;
             // -- The mouse has an item
-            if (!GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.isEmpty)
+            if (!ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.isEmpty)
             {
-                InventoryItemStack mouseStack = GameplayUtils.instance.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
-                ItemData mouseItemData = GameplayUtils.instance.GetItemDataByID(mouseStack.ID);
+                InventoryItemStack mouseStack = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.inventorySlot.inventoryItemStack;
+                ItemData mouseItemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(mouseStack.ID);
 
-                GameplayUtils.instance.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, 1);
+                ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToSlot(inventorySlot, mouseItemData, 1);
                 if (mouseStack.Amount - 1 <= 0)
                 {
-                    GameplayUtils.instance.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.MouseSlot.RemoveItemFromSlot(false);
                 }
                 else
                 {
-                    GameplayUtils.instance.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount - 1, true);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(mouseItemData, mouseStack.Amount - 1, true);
                 }
             }
         }
@@ -409,7 +409,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
         if (IsHotbar)
         {
-            HotbarManager.instance.ClearSlotVisuals(SlotID);
+            ScriptRefrenceSingleton.instance.hotbarManager.ClearSlotVisuals(SlotID);
         }
         if (shouldBroadcast) slotEmptied?.Invoke(oldStack);
     }
@@ -417,7 +417,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     public void DropItem(int amount = -1)
     {
         if (amount == -1) amount = inventorySlot.inventoryItemStack.Amount;
-        GameplayUtils.instance.PlayerDropItem(inventorySlot.inventoryItemStack.ID, amount);
+        ScriptRefrenceSingleton.instance.gameplayUtils.PlayerDropItem(inventorySlot.inventoryItemStack.ID, amount);
     }
 
     public void SetSlotFilled(string _name, int _amount, Sprite sprite,bool broadcastEvent = true)
@@ -429,7 +429,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         if(broadcastEvent) slotFilled?.Invoke();
         if (IsHotbar)
         {
-            HotbarManager.instance.SetSlotVisuals(SlotID,this);
+            ScriptRefrenceSingleton.instance.hotbarManager.SetSlotVisuals(SlotID,this);
          }
     }
 
@@ -439,7 +439,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         slotFilled?.Invoke();
         if (IsHotbar)
         {
-            HotbarManager.instance.SetSlotVisuals(SlotID, this);
+            ScriptRefrenceSingleton.instance.hotbarManager.SetSlotVisuals(SlotID, this);
         }
     }
 

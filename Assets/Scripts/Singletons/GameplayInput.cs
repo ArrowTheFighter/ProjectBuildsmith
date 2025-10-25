@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class GameplayInput : MonoBehaviour
 {
-    public static GameplayInput instance;
 
     public InputActionAsset inputAsset;
 
@@ -14,11 +13,6 @@ public class GameplayInput : MonoBehaviour
 
     void Awake()
     {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
         playerInput = GetComponent<PlayerInput>();
     }
 

@@ -20,7 +20,7 @@ public class CraftingTable : MonoBehaviour, IInteractable
         if (!craftingTablePanel.activeInHierarchy)
         {
             craftingTablePanel.SetActive(true);
-            GameplayUtils.instance.OpenMenu();
+            ScriptRefrenceSingleton.instance.gameplayUtils.OpenMenu();
             Button[] buttons = GetComponentsInChildren<Button>();
             if (buttons.Length > 1)
             {
@@ -34,7 +34,7 @@ public class CraftingTable : MonoBehaviour, IInteractable
         else
         {
             craftingTablePanel.SetActive(false);
-            GameplayUtils.instance.CloseMenu();
+            ScriptRefrenceSingleton.instance.gameplayUtils.CloseMenu();
         }
         return true;
     }
@@ -42,18 +42,18 @@ public class CraftingTable : MonoBehaviour, IInteractable
     public void CloseCraftingTable()
     {
         craftingTablePanel.SetActive(false);
-        GameplayUtils.instance.CloseMenu();
+        ScriptRefrenceSingleton.instance.gameplayUtils.CloseMenu();
     }
 
     private void Update()
     {
         if (craftingTablePanel.activeInHierarchy == true)
         {
-            if (GameplayInput.instance.playerInput.actions["Pause"].ReadValue<float>() > 0)
+            if (ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Pause"].ReadValue<float>() > 0)
             {
                 CloseCraftingTable();
             }
-            if(GameplayInput.instance.playerInput.actions["Inventory"].ReadValue<float>() > 0)
+            if(ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Inventory"].ReadValue<float>() > 0)
             {
                 CloseCraftingTable();
             }

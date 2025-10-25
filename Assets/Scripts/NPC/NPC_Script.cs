@@ -27,7 +27,7 @@ public class NPC_Script : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //GameplayUtils.instance.playerMovement_script.GetComponent<PlayerInput>().actions["Pause"].performed += EscapePressed;
+        //ScriptRefrenceSingleton.instance.gameplayUtils.playerMovement_script.GetComponent<PlayerInput>().actions["Pause"].performed += EscapePressed;
         current_dialog_struct = DialogManager.GetDialogByID(Dialog_File_ID, initial_dialog_id);
     }
 
@@ -40,8 +40,8 @@ public class NPC_Script : MonoBehaviour, IInteractable
 
     void Set_Text_Box(string text)
     {
-        DialogManager.instance.text_box_text = text;
-        DialogManager.instance.Dialog_Name = NPC_Name;
+        ScriptRefrenceSingleton.instance.dialogManager.text_box_text = text;
+        ScriptRefrenceSingleton.instance.dialogManager.Dialog_Name = NPC_Name;
     }
 
     void Set_Text_Box_Localized(string localized_key)
@@ -55,7 +55,7 @@ public class NPC_Script : MonoBehaviour, IInteractable
         //if the dialog is the same and we try to interact then close the dialog
         // if(current_dialog_struct.dialog_id == open_dialog.dialog_id)
         // {
-        //     DialogManager.instance.Close_Dialog();
+        //     ScriptRefrenceSingleton.instance.dialogManager.Close_Dialog();
         //     open_dialog = new dialog_struct();
         //     return;
         // }
@@ -73,7 +73,7 @@ public class NPC_Script : MonoBehaviour, IInteractable
                 if (open_dialog.no_flag_reply != null && open_dialog.no_flag_reply != "")
                 {
                     Set_Text_Box_Localized(open_dialog.no_flag_reply);
-                    DialogManager.instance.Clear_choices();
+                    ScriptRefrenceSingleton.instance.dialogManager.Clear_choices();
                     close_on_next_interact = true;
                     current_dialog_struct = open_dialog;
                     return;
@@ -81,7 +81,7 @@ public class NPC_Script : MonoBehaviour, IInteractable
                 else
                 {
                     open_dialog = new dialog_struct();
-                    DialogManager.instance.Close_Dialog();
+                    ScriptRefrenceSingleton.instance.dialogManager.Close_Dialog();
                     close_on_next_interact = false;
                     return;
                 }
@@ -89,13 +89,13 @@ public class NPC_Script : MonoBehaviour, IInteractable
         }
         if (current_dialog_struct.item_requirement != null && current_dialog_struct.item_requirement != "")
         {
-            int current_item_amount = GameplayUtils.instance.get_item_holding_amount(current_dialog_struct.item_requirement);
+            int current_item_amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(current_dialog_struct.item_requirement);
             if (current_item_amount < current_dialog_struct.item_amount)
             {
                 if (current_dialog_struct.not_enough_reply != null && current_dialog_struct.not_enough_reply != "")
                 {
                     Set_Text_Box_Localized(open_dialog.not_enough_reply);
-                    DialogManager.instance.Clear_choices();
+                    ScriptRefrenceSingleton.instance.dialogManager.Clear_choices();
                     close_on_next_interact = true;
                     current_dialog_struct = open_dialog;
                     return;
@@ -110,7 +110,7 @@ public class NPC_Script : MonoBehaviour, IInteractable
                 if (current_dialog_struct.remove_item)
                 {
                     print("removing items");
-                    GameplayUtils.instance.remove_items_from_inventory(current_dialog_struct.item_requirement, current_dialog_struct.item_amount);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(current_dialog_struct.item_requirement, current_dialog_struct.item_amount);
                 }
             }
         }
@@ -121,11 +121,11 @@ public class NPC_Script : MonoBehaviour, IInteractable
         Set_Text_Box_Localized(current_dialog_struct.dialog_content);
         if (current_dialog_struct.choices != null)
         {
-            DialogManager.instance.Set_Choices(current_dialog_struct.choices, this);
+            ScriptRefrenceSingleton.instance.dialogManager.Set_Choices(current_dialog_struct.choices, this);
         }
         else
         {
-            DialogManager.instance.Clear_choices();
+            ScriptRefrenceSingleton.instance.dialogManager.Clear_choices();
         }
         open_dialog = current_dialog_struct;
 
@@ -145,7 +145,7 @@ public class NPC_Script : MonoBehaviour, IInteractable
     public void CloseDialog()
     {
         open_dialog = new dialog_struct();
-        DialogManager.instance.Close_Dialog();
+        ScriptRefrenceSingleton.instance.dialogManager.Close_Dialog();
         close_on_next_interact = false;
         return;
     }
@@ -161,30 +161,30 @@ public class NPC_Script : MonoBehaviour, IInteractable
 
     public bool Interact(Interactor interactor)
     {
-        if (!GameplayUtils.instance.can_use_dialog) return false;
+        if (!ScriptRefrenceSingleton.instance.gameplayUtils.can_use_dialog) return false;
         if (close_on_next_interact)
         {
             open_dialog = new dialog_struct();
-            DialogManager.instance.Close_Dialog();
+            ScriptRefrenceSingleton.instance.dialogManager.Close_Dialog();
             close_on_next_interact = false;
             return true;
         }
         if (open_dialog.close_dialog)
         {
             open_dialog = new dialog_struct();
-            DialogManager.instance.Close_Dialog();
+            ScriptRefrenceSingleton.instance.dialogManager.Close_Dialog();
             return true;
         }
         if (open_dialog.dialog_content != "" && open_dialog.dialog_content != null && open_dialog.next_dialog_id == null)
         {
-            print(DialogManager.instance.get_active_choices());
-            if (DialogManager.instance.get_active_choices() <= 0)
+            print(ScriptRefrenceSingleton.instance.dialogManager.get_active_choices());
+            if (ScriptRefrenceSingleton.instance.dialogManager.get_active_choices() <= 0)
             {
                 CloseDialog();
                 return true;
             }
         }
-        GameplayUtils.instance.OpenMenu();
+        ScriptRefrenceSingleton.instance.gameplayUtils.OpenMenu();
         ShowCurrentDialog();
         return true;
     }

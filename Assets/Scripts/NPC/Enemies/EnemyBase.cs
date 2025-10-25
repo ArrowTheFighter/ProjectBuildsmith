@@ -101,7 +101,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         }
         else
         {
-            SoundFXManager.instance.PlayRandomSoundCollection(transform, takeDamageCollection);
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, takeDamageCollection);
         }
     }
 
@@ -135,7 +135,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         foreach (LootTable lootTable in Loot)
         {
             int amount = lootTable.GetRandomDropAmount();
-            ItemData itemData = GameplayUtils.instance.GetItemDataByID(lootTable.itemID);
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(lootTable.itemID);
             for (int i = 0; i < amount; i++)
             {
                 GameObject itemDropped = Instantiate(itemData.item_pickup_object, transform.position + Vector3.up + spawnOffset, Quaternion.identity);
@@ -157,11 +157,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         }
         else
         {
-            ItemRespawnManager.instance.item_respawns.Add(gameObject, Time.time + RespawnTime);
+            ScriptRefrenceSingleton.instance.itemRespawnManager.item_respawns.Add(gameObject, Time.time + RespawnTime);
             gameObject.SetActive(false);
         }
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, DeathAudioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, DeathAudioCollection);
 
     }
 }

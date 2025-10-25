@@ -17,14 +17,14 @@ public class RecipesBookManager : MonoBehaviour
 
     void Setup()
     {
-        foreach (CraftingRecipeData _recipeData in GameplayUtils.instance.RecipeDatabase.recipes)
+        foreach (CraftingRecipeData _recipeData in ScriptRefrenceSingleton.instance.gameplayUtils.RecipeDatabase.recipes)
         {
             if (_recipeData.stationType == craftingStationType)
             {
                 GameObject recipeOptionObj = Instantiate(recipeOptionPrefab, recipeOptionsParent);
                 RecipeOption recipeOption = recipeOptionObj.GetComponent<RecipeOption>();
                 recipeOption.craftingRecipeData = _recipeData;
-                ItemData itemData = GameplayUtils.instance.GetItemDataByID(_recipeData.recipe_output_id);
+                ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(_recipeData.recipe_output_id);
                 recipeOption.ItemNameTextBox.text = itemData.item_name;
                 recipeOption.IconImage.sprite = itemData.item_ui_image;
                 recipeOptionObj.GetComponent<Button>().onClick.AddListener(() => { craftingTableRecipeDisplay.ShowRecipe(_recipeData.recipe_id); });

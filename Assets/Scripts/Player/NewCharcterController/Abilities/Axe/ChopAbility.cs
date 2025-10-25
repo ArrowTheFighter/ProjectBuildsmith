@@ -17,7 +17,7 @@ public class ChopAbility : PlayerAbility
 
     public override void UpdateAbility()
     {
-        if (GameplayInput.instance.playerInput.actions["BasicAttack"].ReadValue<float>() > 0)
+        if (ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["BasicAttack"].ReadValue<float>() > 0)
         {
             if (IsChopping) return;
             if (!BasicAttackPressed)

@@ -8,6 +8,6 @@ public class LoadTestFileButton : Button
     public void InitializeElement()
     {
         text = "Load Test File";
-        clicked += () => { SaveLoadManager.instance.LoadTest(); };
+        clicked += () => { ScriptRefrenceSingleton.instance.saveLoadManager.LoadTest(); };
     }
 }

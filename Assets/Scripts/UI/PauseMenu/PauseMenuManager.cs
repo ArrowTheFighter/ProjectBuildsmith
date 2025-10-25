@@ -6,8 +6,8 @@ public class PauseMenuManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameplayInput.instance.playerInput.actions["Pause"].performed += context => { PauseMenuToggle(); };
-        GameplayInput.instance.playerInput.actions["ClosePause"].performed += context => { PauseMenuToggle(); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Pause"].performed += context => { PauseMenuToggle(); };
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["ClosePause"].performed += context => { PauseMenuToggle(); };
     }
 
     void PauseMenuToggle()
@@ -19,13 +19,13 @@ public class PauseMenuManager : MonoBehaviour
             return;
         }
         lastPressedTime = Time.realtimeSinceStartup + 0.15f;
-        if (CutsceneManager.instance.cutsceneIsRunning)
+        if (ScriptRefrenceSingleton.instance.cutsceneManager.cutsceneIsRunning)
         {
-            CutsceneManager.instance.SkipCutscene();
+            ScriptRefrenceSingleton.instance.cutsceneManager.SkipCutscene();
         }
         else
         {
-            GameplayUtils.instance.Toggle_Pause_Menu();
+            ScriptRefrenceSingleton.instance.gameplayUtils.Toggle_Pause_Menu();
         }
      }
 }

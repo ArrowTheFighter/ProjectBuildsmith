@@ -45,17 +45,17 @@ public class CraftingItemRecipeScript : MonoBehaviour
         //Check if we have the reuired items;
         foreach(item_requirement required_item in required_items)
         {
-            if(required_item.item_amount > GameplayUtils.instance.get_item_holding_amount(required_item.item_id))
+            if(required_item.item_amount > ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(required_item.item_id))
             {
-                GameplayUtils.instance.ShowCustomNotif("Not enough resources");
+                ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotif("Not enough resources");
                 print("Not enough items to craft " + item.item_name);
                 return;
             }
         }
-        GameplayUtils.instance.add_items_to_inventory(item_id,item_amount);
+        ScriptRefrenceSingleton.instance.gameplayUtils.add_items_to_inventory(item_id,item_amount);
         foreach(item_requirement required_item in required_items)
         {
-            GameplayUtils.instance.remove_items_from_inventory(required_item.item_id,required_item.item_amount);
+            ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(required_item.item_id,required_item.item_amount);
         }
 
 

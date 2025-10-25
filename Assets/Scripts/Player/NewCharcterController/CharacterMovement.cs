@@ -243,7 +243,7 @@ public class CharacterMovement : MonoBehaviour
 
         
         Type type = typeof(T);
-        Component component = GameplayUtils.instance.PlayerTransform.GetComponent(type);
+        Component component = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.GetComponent(type);
 
         if (component != null)
         {
@@ -582,11 +582,11 @@ public class CharacterMovement : MonoBehaviour
         // reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        AudioCollection audioCollectionJumpGrunt = PlayerAudioManager.instance.GetAudioClipByID("Jump");
-        AudioCollection audioCollectionJumpSound = PlayerAudioManager.instance.GetAudioClipByID("JumpSound");
-        SoundFXManager.instance.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
-        // SoundFXManager.instance.PlaySoundFXClip(audioCollectionJumpGrunt.audioClip, transform, audioCollectionJumpGrunt.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpGrunt.audioClipPitch * 0.9f, audioCollectionJumpGrunt.audioClipPitch * 1.1f));
-        // SoundFXManager.instance.PlaySoundFXClip(audioCollectionJumpSound.audioClip, transform, audioCollectionJumpSound.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpSound.audioClipPitch * 0.9f, audioCollectionJumpSound.audioClipPitch * 1.1f));
+        AudioCollection audioCollectionJumpGrunt = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Jump");
+        AudioCollection audioCollectionJumpSound = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("JumpSound");
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
+        // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollectionJumpGrunt.audioClip, transform, audioCollectionJumpGrunt.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpGrunt.audioClipPitch * 0.9f, audioCollectionJumpGrunt.audioClipPitch * 1.1f));
+        // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollectionJumpSound.audioClip, transform, audioCollectionJumpSound.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpSound.audioClipPitch * 0.9f, audioCollectionJumpSound.audioClipPitch * 1.1f));
         Invoke(nameof(ResetJump), jumpCooldown);
     }
     private void ResetJump()

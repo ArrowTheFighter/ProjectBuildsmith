@@ -14,7 +14,7 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
 
     void Start()
     {
-        gameplayInput = GameplayInput.instance;
+        gameplayInput = ScriptRefrenceSingleton.instance.gameplayInput;
         playerInput = gameplayInput.playerInput;
         mainCamera = Camera.main;
        

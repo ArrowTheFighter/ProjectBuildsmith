@@ -4,18 +4,9 @@ using UnityEngine;
 
 public class ItemRespawnManager : MonoBehaviour
 {
-    public static ItemRespawnManager instance;
     [SerializeField] float respawn_check_delay = 10;
     public Dictionary<GameObject, float> item_respawns = new Dictionary<GameObject, float>();
 
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

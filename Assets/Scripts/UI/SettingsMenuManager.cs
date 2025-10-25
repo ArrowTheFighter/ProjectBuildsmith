@@ -36,9 +36,9 @@ public class SettingsMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         AudioMenu.SetActive(true);
         OpenAudioButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenAccessibilityButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenAccessibilityButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenControlsMenu()
@@ -46,9 +46,9 @@ public class SettingsMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         ControlsMenu.SetActive(true);
         OpenControlsButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenGraphicsButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenGraphicsButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenGraphicsMenu()
@@ -56,9 +56,9 @@ public class SettingsMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         GraphicsMenu.SetActive(true);
         OpenGraphicsButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenAudioButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenAudioButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
     public void OpenAccessibilityMenu()
@@ -66,8 +66,8 @@ public class SettingsMenuManager : MonoBehaviour
         CloseAllSettingsMenus();
         AccessibilityMenu.SetActive(true);
         OpenAccessibilityButton.interactable = false;
-        UIInputHandler.instance.ClosedMenu();
-        UIInputHandler.instance.defaultButton = OpenControlsButton.gameObject;
-        UIInputHandler.instance.OpenedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = OpenControlsButton.gameObject;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 }

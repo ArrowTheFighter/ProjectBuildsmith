@@ -18,7 +18,7 @@ public class QuestInfoButton : MonoBehaviour
 
     void ShowInfo()
     {
-        GameplayUtils.instance.inventoryManager.ShowQuestInfo(questData);
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.ShowQuestInfo(questData);
         if (!HasViewed)
         {
             buttonName.text = questData.QuestName;

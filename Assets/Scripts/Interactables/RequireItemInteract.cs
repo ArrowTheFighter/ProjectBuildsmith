@@ -25,7 +25,7 @@ public class RequireItemInteract : MonoBehaviour, IInteractable
         if (!can_interact) return false;
         foreach (item_requirement item in items_required)
         {
-            if (GameplayUtils.instance.get_item_holding_amount(item.item_id) < item.item_amount)
+            if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(item.item_id) < item.item_amount)
             {
                 return false;
             }
@@ -34,7 +34,7 @@ public class RequireItemInteract : MonoBehaviour, IInteractable
         {
             foreach (item_requirement item in items_required)
             {
-                GameplayUtils.instance.remove_items_from_inventory(item.item_id, item.item_amount);
+                ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(item.item_id, item.item_amount);
             }
         }
         activateEvent?.Invoke();

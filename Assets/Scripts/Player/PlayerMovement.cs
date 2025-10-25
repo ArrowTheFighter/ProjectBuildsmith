@@ -321,8 +321,8 @@ public class PlayerMovement : MonoBehaviour
         CanvasGroup inventory_canvasGroup = Inventroy_Gameobject.GetComponent<CanvasGroup>();
         if(inventory_canvasGroup.alpha <= 0)
         {
-            if (GameplayUtils.instance.GetOpenMenu()) return;
-            GameplayUtils.instance.OpenMenu();
+            if (ScriptRefrenceSingleton.instance.gameplayUtils.GetOpenMenu()) return;
+            ScriptRefrenceSingleton.instance.gameplayUtils.OpenMenu();
             inventory_canvasGroup.alpha = 1;
             inventory_canvasGroup.blocksRaycasts = true;
             inventory_canvasGroup.interactable = true;
@@ -332,13 +332,13 @@ public class PlayerMovement : MonoBehaviour
             inventory_canvasGroup.alpha = 0;
             inventory_canvasGroup.blocksRaycasts = false;
             inventory_canvasGroup.interactable = false;
-            GameplayUtils.instance.CloseMenu();
+            ScriptRefrenceSingleton.instance.gameplayUtils.CloseMenu();
         }
     }
 
     void Toggle_PauseMenu(InputAction.CallbackContext context)
     {
-        GameplayUtils.instance.Toggle_Pause_Menu();
+        ScriptRefrenceSingleton.instance.gameplayUtils.Toggle_Pause_Menu();
     }
 
     void Dive(InputAction.CallbackContext action)

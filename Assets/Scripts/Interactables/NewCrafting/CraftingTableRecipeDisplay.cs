@@ -13,7 +13,7 @@ public class CraftingTableRecipeDisplay : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameplayUtils.instance.craftingTableRecipeDisplays.Add(this);
+        ScriptRefrenceSingleton.instance.gameplayUtils.craftingTableRecipeDisplays.Add(this);
         for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).TryGetComponent(out InventorySlotComponent inventorySlotComponent))
@@ -22,7 +22,7 @@ public class CraftingTableRecipeDisplay : MonoBehaviour
                 inventorySlotComponent.slotFilled += recipesBookManager.HideRecipeBook;
             }
         }
-        foreach (CraftingRecipeData recipeData in GameplayUtils.instance.RecipeDatabase.recipes)
+        foreach (CraftingRecipeData recipeData in ScriptRefrenceSingleton.instance.gameplayUtils.RecipeDatabase.recipes)
         {
             if (recipeData.stationType == craftingStationType)
             {
@@ -45,7 +45,7 @@ public class CraftingTableRecipeDisplay : MonoBehaviour
         for (int i = 0; i < recipeData.recipe_items.Count; i++)
         {
             if (recipeData.recipe_items[i] == "") continue;
-            ItemData itemData = GameplayUtils.instance.GetItemDataByID(recipeData.recipe_items[i]);
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(recipeData.recipe_items[i]);
             GameObject imageObj = slots[i].transform.GetChild(1).GetComponentInChildren<Image>().gameObject;
             GameObject spawnedObj = Instantiate(imageObj, imageObj.transform.parent);
             spawnedObj.GetComponent<Image>().sprite = itemData.item_ui_image;

@@ -11,7 +11,6 @@ using DS.ScriptableObjects;
 
 public class SaveLoadManager : MonoBehaviour
 {
-    public static SaveLoadManager instance;
     private static string FilePath => Path.Combine(Application.persistentDataPath + "/saves/");
 
     //Info to save
@@ -47,15 +46,6 @@ public class SaveLoadManager : MonoBehaviour
     SaveFileStruct saveFileStruct;
 
     public event Action<SaveFileStruct> OnSaveLoaded;
-
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
 
     void Start()
     {
@@ -121,14 +111,14 @@ public class SaveLoadManager : MonoBehaviour
         string json = File.ReadAllText(SaveFile);
         saveFileStruct = JsonConvert.DeserializeObject<SaveFileStruct>(json);
 
-        TimeManager.instance.SetTime(saveFileStruct.saved_time);
+        ScriptRefrenceSingleton.instance.timeManager.SetTime(saveFileStruct.saved_time);
 
         special_items_collected = saveFileStruct.special_items_collected.ToList();
 
         //Quests
         foreach(var quest in saveFileStruct.saved_quests)
         {
-            GameplayUtils.instance.inventoryManager.LoadSavedQuest(quest);
+            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.LoadSavedQuest(quest);
         } 
 
         //Flags
@@ -164,21 +154,6 @@ public class SaveLoadManager : MonoBehaviour
                 worker.EnableMarker(true);
         }
 
-        //Load Inventory Data Savers
-        // foreach(var inventory in inventoryDataSavers)
-        // {
-        //     var saved_inventory = saveFileStruct.saved_inventory_savers.FirstOrDefault(item => item.inventory_id == inventory.unique_id);
-
-        //     if(saved_inventory != null)
-        //     {
-        //         inventory.savedSlots = new List<InventorySlot>();
-        //         foreach(var saved_slot in saved_inventory.saved_inventory_slots)
-        //         {
-        //             inventory.savedSlots.Add(new InventorySlot(saved_slot));
-        //         }
-        //     }
-        // }
-
 
         //load ISavables
         foreach(var saveable in saveables)
@@ -207,23 +182,23 @@ public class SaveLoadManager : MonoBehaviour
 
         saveFile.file_name = save_name;
 
-        saveFile.saved_time = TimeManager.instance.GetTime();
+        saveFile.saved_time = ScriptRefrenceSingleton.instance.timeManager.GetTime();
 
         //Inventory saving
         saveFile.special_items_collected = special_items_collected.ToArray();
 
-        saveFile.special_items = GameplayUtils.instance.inventoryManager.specialItems;
+        saveFile.special_items = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.specialItems;
         saveFile.inventory_slots = new List<SaveableInventroySlot>();
-        foreach (InventorySlot slot in GameplayUtils.instance.inventoryManager.inventorySlots)
+        foreach (InventorySlot slot in ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.inventorySlots)
         {
             saveFile.inventory_slots.Add(new SaveableInventroySlot(slot.isEmpty, slot.slot_id, slot.inventoryItemStack));
         }
 
         //Quests
-        foreach(var quest in GameplayUtils.instance.inventoryManager.activeQuests)
+        foreach(var quest in ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.activeQuests)
         {
 
-            bool quest_is_pinned = GameplayUtils.instance.inventoryManager.activedPinnedQuests
+            bool quest_is_pinned = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.activedPinnedQuests
                 .Any(item => item.storedQuestData.ID == quest.QuestData.ID);
 
             SaveableQuestInfo saveableQuestInfo = new SaveableQuestInfo(quest, quest_is_pinned);

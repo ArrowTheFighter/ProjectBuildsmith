@@ -47,15 +47,15 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable,ISaveabl
         {
             foreach (item_requirement item in required_keys)
             {
-                int current_item_amount = GameplayUtils.instance.get_item_holding_amount(item.item_id);
+                int current_item_amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(item.item_id);
                 if (current_item_amount < item.item_amount)
                 {
-                    GameplayUtils.instance.ShowCustomNotifCenter("Incorrect Key");
+                    ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotifCenter("Incorrect Key");
                     return false;
                 }
                 if (ConsumeKey)
                 {
-                    GameplayUtils.instance.remove_items_from_inventory(item.item_id, item.item_amount);
+                    ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(item.item_id, item.item_amount);
                 }
             }
             if (StayUnlocked)
@@ -64,7 +64,7 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable,ISaveabl
             }
         }
 
-        GameplayUtils.instance.OpenInventoryUI(inventroyType);
+        ScriptRefrenceSingleton.instance.gameplayUtils.OpenInventoryUI(inventroyType);
         OnOpened?.Invoke();
         return true;
     }

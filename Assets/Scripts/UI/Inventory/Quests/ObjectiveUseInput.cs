@@ -9,7 +9,7 @@ public class ObjectiveUseInput : QuestObjective
 
     public override bool ObjectiveComplete()
     {
-        return GameplayInput.instance.HasUsedInput(mapName, InputName);
+        return ScriptRefrenceSingleton.instance.gameplayInput.HasUsedInput(mapName, InputName);
     }
 
 

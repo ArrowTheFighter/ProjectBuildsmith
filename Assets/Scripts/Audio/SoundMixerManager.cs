@@ -20,13 +20,13 @@ public class SoundMixerManager : MonoBehaviour
         // float soundFXVolume = PlayerPrefs.GetFloat("soundFXVolume", 0.5f);
         // soundFXVolumeSlider.value = soundFXVolume;
 
-        // SetMasterVolume(GameSettings.instance.settingsContainer.MasterVolume);
-        // SetMusicVolume(GameSettings.instance.settingsContainer.MusicVolume);
-        // SetSoundFXVolume(GameSettings.instance.settingsContainer.SoundEffectsVolume);
+        // SetMasterVolume(ScriptRefrenceSingleton.instance.gameSettings.settingsContainer.MasterVolume);
+        // SetMusicVolume(ScriptRefrenceSingleton.instance.gameSettings.settingsContainer.MusicVolume);
+        // SetSoundFXVolume(ScriptRefrenceSingleton.instance.gameSettings.settingsContainer.SoundEffectsVolume);
 
-        GameSettings.instance.OnMasterVolumeChanged += SetMasterVolume;
-        GameSettings.instance.OnMusicVolumeChanged += SetMusicVolume;
-        GameSettings.instance.OnSoundEffectsVolumeChanged += SetSoundFXVolume;
+        ScriptRefrenceSingleton.instance.gameSettings.OnMasterVolumeChanged += SetMasterVolume;
+        ScriptRefrenceSingleton.instance.gameSettings.OnMusicVolumeChanged += SetMusicVolume;
+        ScriptRefrenceSingleton.instance.gameSettings.OnSoundEffectsVolumeChanged += SetSoundFXVolume;
     }
 
     public void SetMasterVolume(float level)

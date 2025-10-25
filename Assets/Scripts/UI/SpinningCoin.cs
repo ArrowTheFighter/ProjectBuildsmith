@@ -3,7 +3,6 @@ using DG.Tweening;
 
 public class SpinningCoin : MonoBehaviour
 {
-    public static SpinningCoin instance;
     [SerializeField] float spinSpeed = 3;
     [SerializeField] float fastSpinSpeed = 8;
     [SerializeField] float speed_up_duration = 0.5f;
@@ -12,14 +11,6 @@ public class SpinningCoin : MonoBehaviour
     float current_speed;
     float spin_lerp_value = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
-    {
-        if (instance != this)
-        {
-            Destroy(instance);
-        }
-        instance = this;
-    }
 
     void Start()
     {

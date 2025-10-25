@@ -6,6 +6,6 @@ public class SaveObjectPosition : MonoBehaviour
 
     void Start()
     {
-        SaveLoadManager.instance.saveObjectPositions.Add(this);
+        ScriptRefrenceSingleton.instance.saveLoadManager.saveObjectPositions.Add(this);
     }
 }

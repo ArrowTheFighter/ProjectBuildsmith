@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
 
         if(Time.time > delay)
         {
-            if (Vector3.Distance(GameplayUtils.instance.PlayerTransform.position, gameObject.transform.position) < distanceToCheck)
+            if (Vector3.Distance(ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position, gameObject.transform.position) < distanceToCheck)
             {
                 isActive = true;
             }

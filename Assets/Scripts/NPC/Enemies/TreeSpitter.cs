@@ -73,7 +73,7 @@ public class TreeSpitter : EnemyBase
     {
         if (enemyState == treeSpitterStates.idle)
         {
-            SoundFXManager.instance.PlayRandomSoundCollection(transform, PlayerSpottedAudioCollection);
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, PlayerSpottedAudioCollection);
             animator.Play("Jump");
             enemyState = treeSpitterStates.PlayerFound;
             StartCoroutine(PlayerSpottedDelay());
@@ -107,7 +107,7 @@ public class TreeSpitter : EnemyBase
 
     public void SpawnProjectile()
     {
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, ShootProjectileAudioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, ShootProjectileAudioCollection);
         print("player transform = " + PlayerTransform);
         if (PlayerTransform != null)
         {
@@ -213,12 +213,12 @@ public class TreeSpitter : EnemyBase
         transform.DOMove(transform.position + Vector3.up * 2.5f, 0.35f).SetEase(Ease.InOutQuad);
         CanTakeDamage = true;
 
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, HidingAudioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, HidingAudioCollection);
     }
 
     void Hide()
     {
-        SoundFXManager.instance.PlayRandomSoundCollection(transform, HidingAudioCollection);
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, HidingAudioCollection);
         transform.DOMove(transform.position + Vector3.down * 2.5f, 0.35f).SetEase(Ease.InOutQuad).OnComplete(() => { CanTakeDamage = false; });
     }
 
