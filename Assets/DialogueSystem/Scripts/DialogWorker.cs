@@ -73,6 +73,16 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void BindInputs()
     {
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += ActiveAndInteractContext;
+
+        ScriptRefrenceSingleton.OnScriptLoaded -= BindInputs;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnbindInputs;
+    }
+
+    void UnbindInputs()
+    {
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed -= ActiveAndInteractContext;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu -= UnbindInputs;
+
     }
 
 

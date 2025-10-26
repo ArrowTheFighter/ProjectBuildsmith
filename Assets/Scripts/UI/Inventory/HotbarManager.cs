@@ -3,6 +3,7 @@ using UnityEngine;
 using DG.Tweening;
 using System;
 using System.Reflection;
+using UnityEngine.InputSystem;
 
 
 public class HotbarManager : MonoBehaviour
@@ -28,12 +29,35 @@ public class HotbarManager : MonoBehaviour
     [Header("HoldingItem")]
     public Transform RightHandObj;
 
+    void Awake()
+    {
+        ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
+    }
+
+    void BindInputs()
+    {
+
+        ScriptRefrenceSingleton.OnScriptLoaded -= BindInputs;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarNext"].performed += RotateHotbarClockwiseInput;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarPrevious"].performed += RotateHotbarCounterClockwiseInput;
+
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnBindInputs;
+    }
+    
+    void UnBindInputs()
+    {
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu -= UnBindInputs;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarNext"].performed -= RotateHotbarClockwiseInput;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarPrevious"].performed -= RotateHotbarCounterClockwiseInput;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         PlaceIconsInCircle();
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarNext"].performed += context => { RotateHotbar(true); };
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HotbarPrevious"].performed += context => { RotateHotbar(false); };
+        
         Slots[SelectedSlot].rectTransform.localScale = Vector3.one * 1.5f;
         Slots[SelectedSlot].rectTransform.position = new Vector3(Slots[SelectedSlot].rectTransform.position.x, Slots[SelectedSlot].rectTransform.position.y, -1);
     }
@@ -117,6 +141,16 @@ public class HotbarManager : MonoBehaviour
 
 
 
+    }
+
+    void RotateHotbarClockwiseInput(InputAction.CallbackContext context)
+    {
+        RotateHotbar(true);
+    }
+
+    void RotateHotbarCounterClockwiseInput(InputAction.CallbackContext context)
+    {
+        RotateHotbar(false);
     }
 
     void RotateHotbar(bool clockwise)

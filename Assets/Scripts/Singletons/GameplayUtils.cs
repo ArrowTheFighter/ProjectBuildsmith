@@ -90,14 +90,14 @@ public class GameplayUtils : MonoBehaviour
 
     void SetupBinds()
     {
+        ScriptRefrenceSingleton.OnScriptLoaded -= SetupBinds;
+
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["console"].performed += ToggleConsole;
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["consoleUI"].performed += ToggleConsole;
 
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["hidebuild"].performed += ToggleBuildNum;
 
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HideUI"].performed += ToggleUIInputAction;
-        ScriptRefrenceSingleton.OnScriptLoaded -= SetupBinds;
-
     }
 
     void OnSceneReload()

@@ -14,11 +14,7 @@ public class GameplayInput : MonoBehaviour
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-
     }
-
-
-
 
     void Start()
     {

@@ -51,18 +51,44 @@ public class InventoryManager : MonoBehaviour
     public List<PinnedQuestItem> activedPinnedQuests = new List<PinnedQuestItem>();
     public QuestData selectedQuest;
 
+    void Awake()
+    {
+        ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
+    }
+
+    void BindInputs()
+    {
+        ScriptRefrenceSingleton.OnScriptLoaded -= BindInputs;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Inventory"].performed += ToggleInventory;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += CloseInventoryFromInteract;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Quests"].performed += ToggleQuests;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseQuests"].performed += ToggleQuests;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseInventory"].performed += ToggleInventory;
+
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnBindInputs;
+    }
+    
+    void UnBindInputs()
+    {
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu -= UnBindInputs;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Inventory"].performed -= ToggleInventory;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed -= CloseInventoryFromInteract;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Quests"].performed -= ToggleQuests;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseQuests"].performed -= ToggleQuests;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseInventory"].performed -= ToggleInventory;
+
+        FlagManager.OnFlagSet -= QuestsObjectiveCheck;
+        ScriptRefrenceSingleton.instance.saveLoadManager.OnSaveLoaded -= SaveLoaded;
+        OnInventoryUpdated -= QuestsObjectiveCheck;
+
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Inventory"].performed += ToggleInventory;
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += (context) =>
-        {
-            if (ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Keyboard&Mouse") CloseInventory();
-        };
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Quests"].performed += ToggleQuests;
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseQuests"].performed += ToggleQuests;
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["CloseInventory"].performed += ToggleInventory;
+        
         for (int i = 0; i < TotalInventorySlots + TotalHotbarSlots; i++)
         {
             if (i < TotalHotbarSlots)
@@ -181,6 +207,11 @@ public class InventoryManager : MonoBehaviour
             openMenu = InventoryMenus.Inventory;
 
         }
+    }
+
+    void CloseInventoryFromInteract(InputAction.CallbackContext context)
+    {
+        if (ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Keyboard&Mouse") CloseInventory();
     }
 
     public void CloseInventory()

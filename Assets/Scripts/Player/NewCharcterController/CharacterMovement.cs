@@ -109,19 +109,13 @@ public class CharacterMovement : MonoBehaviour
 
         readyToJump = true;
         Cursor.lockState = CursorLockMode.Locked;
-        //playerInput = GetComponent<PlayerInput>();
-        //playerInput.actions["Jump"].performed += Jump;
         AddAbility<DoubleJumpAbility>();
         AddAbility<DashAbility>();
         AddAbility<PlayerStompAbility>();
-        //AddAbility<QuickChopAbility>();
-        //AddAbility<ChopSlamAbility>();
         if (characterInput is PlayerInputClass)
         {
             AddAbility<NoClip>();
         }
-        //AddAbility<DoubleJumpChopAbility>();
-        //AddAbility<ChopAbility>();
     }
 
     private void Update()

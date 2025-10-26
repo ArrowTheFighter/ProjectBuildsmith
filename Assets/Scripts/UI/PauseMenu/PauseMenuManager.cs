@@ -1,18 +1,36 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseMenuManager : MonoBehaviour
 {
     float lastPressedTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    void Awake()
     {
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Pause"].performed += context => { PauseMenuToggle(); };
-        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["ClosePause"].performed += context => { PauseMenuToggle(); };
+        ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
     }
 
-    void PauseMenuToggle()
+    void BindInputs()
     {
-        print("trying to pause");
+        ScriptRefrenceSingleton.OnScriptLoaded -= BindInputs;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Pause"].performed += PauseMenuToggle;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["ClosePause"].performed += PauseMenuToggle;
+
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnBindInputs;
+    }
+
+    void UnBindInputs()
+    {
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu -= UnBindInputs;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Pause"].performed -= PauseMenuToggle;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["ClosePause"].performed -= PauseMenuToggle;
+    }
+
+    void PauseMenuToggle(InputAction.CallbackContext context)
+    {
         // Fixes a bug that causes the first time opening the pause menu to close right away
         if (lastPressedTime > Time.realtimeSinceStartup)
         {

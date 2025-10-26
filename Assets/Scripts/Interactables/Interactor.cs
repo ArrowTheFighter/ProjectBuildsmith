@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,6 @@ public class Interactor : MonoBehaviour
     public float interactionRadius = 0.5f;
     public LayerMask interactableMask;
     public InteractionPromptUI interactionPromptUI;
-    PlayerInput playerInput;
 
     private readonly Collider[] colliders = new Collider[3];
     public int numberFound;
@@ -17,21 +17,25 @@ public class Interactor : MonoBehaviour
 
     void Awake()
     {
-        StartCoroutine(wait_till_script_refrence_is_ready());
+        ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
     }
 
-    IEnumerator wait_till_script_refrence_is_ready()
+
+    void BindInputs()
     {
-        yield return StartCoroutine(ScriptRefrenceSingleton.Wait_Until_Script_is_Ready());
-        playerInput.actions["Interact"].performed += Interact;
+        ScriptRefrenceSingleton.OnScriptLoaded -= BindInputs;
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Interact"].performed += Interact;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnBindInputs;
+    }
+    
+    void UnBindInputs()
+    {
+
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Interact"].performed -= Interact;
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu -= UnBindInputs;
     }
 
-    private void Start()
-    {
-        playerInput = ScriptRefrenceSingleton.instance.gameplayInput.playerInput;
-        playerInput.actions["Interact"].performed += Interact;
-       // ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += OnDisable;
-    }
 
 
     private void Update()

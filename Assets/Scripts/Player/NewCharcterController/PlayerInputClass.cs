@@ -19,12 +19,13 @@ public class PlayerInputClass : MonoBehaviour, ICharacterInput
 
     void SetupBinds()
     {
+        ScriptRefrenceSingleton.OnScriptLoaded -= SetupBinds;
+
         gameplayInput = ScriptRefrenceSingleton.instance.gameplayInput;
         playerInput = gameplayInput.playerInput;
 
         playerInput.actions["Jump"].performed += Jump;
         playerInput.actions["Sprint"].performed += Dive;
-        ScriptRefrenceSingleton.OnScriptLoaded -= SetupBinds;
         ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += OnSceneReload;
     }
 
