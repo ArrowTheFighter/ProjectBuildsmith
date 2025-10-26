@@ -12,6 +12,8 @@ public class SplineRail : MonoBehaviour, IMoveingPlatform
     public bool Running;
 
     public event Action<Vector3> OnPlatformMove;
+    public event Action OnBeforePlatformMove;
+    public event Action OnAfterPlatformMove;
 
     void Start()
     {
@@ -47,5 +49,10 @@ public class SplineRail : MonoBehaviour, IMoveingPlatform
     public void SetRunning(bool is_running)
     {
         Running = is_running;
+    }
+
+    public Transform getInterfaceTransform()
+    {
+        throw new NotImplementedException();
     }
 }

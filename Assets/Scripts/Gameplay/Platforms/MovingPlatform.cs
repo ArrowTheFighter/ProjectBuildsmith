@@ -14,7 +14,9 @@ public class MovingPlatform : MonoBehaviour, IMoveingPlatform
     Vector3 old_pos;
 
     public event Action<Vector3> OnPlatformMove;
-    
+    public event Action OnBeforePlatformMove;
+    public event Action OnAfterPlatformMove;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,17 +29,26 @@ public class MovingPlatform : MonoBehaviour, IMoveingPlatform
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Move_Platform(Vector3.Lerp(start_pos, end_pos, lerp_value));
     }
 
     void Move_Platform(Vector3 new_pos)
     {
+        OnBeforePlatformMove?.Invoke();
+
         old_pos = transform.position;
         transform.position = new_pos;
 
         Vector3 delta_pos = transform.position - old_pos;
         OnPlatformMove?.Invoke(delta_pos);
+
+        OnAfterPlatformMove?.Invoke();
+    }
+
+    public Transform getInterfaceTransform()
+    {
+        return transform;
     }
 }

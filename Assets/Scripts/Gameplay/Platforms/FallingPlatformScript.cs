@@ -6,6 +6,9 @@ using DG.Tweening;
 public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
 {
     public event Action<Vector3> OnPlatformMove;
+    public event Action OnBeforePlatformMove;
+    public event Action OnAfterPlatformMove;
+
     Collider platformCollider;
     Vector3 startPos;
     Vector3 startingScale;
@@ -38,11 +41,14 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         isFalling = true;
         for (float i = 0; i < fallTime; i += Time.fixedDeltaTime)
         {
+            OnBeforePlatformMove?.Invoke();
             float t = Mathf.InverseLerp(0, fallTime, i);
             float distance = Mathf.Lerp(0, fallDistance, fallCurve.Evaluate(t));
 
             rb.MovePosition(startPos + Vector3.down * distance);
             //transform.position = startPos + Vector3.down * distance;
+
+            OnAfterPlatformMove?.Invoke();
             yield return new WaitForFixedUpdate();
         }
         yield return new WaitForSeconds(1);
@@ -75,5 +81,10 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
             print("Player landed on us");
             StartCoroutine(Falling());
         }
+    }
+
+    public Transform getInterfaceTransform()
+    {
+        return transform;
     }
 }

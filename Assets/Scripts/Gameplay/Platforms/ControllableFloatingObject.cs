@@ -14,6 +14,8 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
     Tween moveTween;
 
     public event Action<Vector3> OnPlatformMove;
+    public event Action OnBeforePlatformMove;
+    public event Action OnAfterPlatformMove;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,6 +64,7 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
 
     private void FixedUpdate()
     {
+        OnBeforePlatformMove?.Invoke();
         Vector3 newPos = Vector3.Lerp(startPos, endPos, Mathf.Clamp01(positionBetweenPoints));
         if (transform.position != newPos)
         {
@@ -74,6 +77,8 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
         OnPlatformMove?.Invoke(delta);
 
         lastPosition = rb.position;
+
+        OnAfterPlatformMove?.Invoke();
     }
 
     public void SetPositionAsStart()
@@ -94,5 +99,10 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
                 Gizmos.DrawWireMesh(meshFilter.sharedMesh, transform.position + MoveTo, transform.rotation, transform.localScale);
             }
         }
+    }
+
+    public Transform getInterfaceTransform()
+    {
+        return transform;
     }
 }

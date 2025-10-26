@@ -4,6 +4,7 @@ using System;
 public class FloatingObject : MonoBehaviour, IMoveingPlatform
 {
     [SerializeField] Vector3 MoveTo;
+    [SerializeField] Vector3 rotationAmount;
     [SerializeField] float duration;
     [SerializeField] AnimationCurve easing = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public bool IsActive;
@@ -16,17 +17,21 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     Rigidbody rb;
 
     public event Action<Vector3> OnPlatformMove;
+    public event Action OnBeforePlatformMove;
+    public event Action OnAfterPlatformMove;
+
+    public Transform obj_transform;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
-        rb = GetComponent<Rigidbody>();
-        startPos = transform.position;
+        if (obj_transform == null) obj_transform = transform;
+        rb = obj_transform.GetComponent<Rigidbody>();
+        startPos = obj_transform.position;
         endPos = startPos + MoveTo;
 
-        lastPosition = transform.position;
+        lastPosition = obj_transform.position;
         //transform.DOMove(transform.position + MoveTo, duration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
         // if (rb != null)
         // {
@@ -35,25 +40,27 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
         // }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     void FixedUpdate()
     {
+
+
         if (!IsActive) return;
         if (rb == null) return;
         if (elapsed < duration)
         {
+            OnBeforePlatformMove?.Invoke();
             elapsed += Time.fixedDeltaTime;
 
 
             float t = Mathf.Clamp01(elapsed / duration);
             float easedT = easing.Evaluate(t);
             Vector3 newPos = Vector3.Lerp(reverse ? startPos : endPos, reverse ? endPos : startPos, easedT);
-            rb.MovePosition(newPos);
+            obj_transform.position = newPos;
+            transform.Rotate(rotationAmount);
+            //rb.MovePosition(newPos);
+
+            OnAfterPlatformMove?.Invoke();
 
         }
         else
@@ -98,14 +105,19 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + MoveTo);
-        Gizmos.DrawSphere(transform.position + MoveTo, 0.2f);
+        Gizmos.DrawLine(obj_transform.position, obj_transform.position + MoveTo);
+        Gizmos.DrawSphere(obj_transform.position + MoveTo, 0.2f);
         if (TryGetComponent(out MeshFilter meshFilter))
         {
             if (meshFilter.sharedMesh != null)
             {
-                Gizmos.DrawWireMesh(meshFilter.sharedMesh, transform.position + MoveTo,transform.rotation,transform.localScale);
+                Gizmos.DrawWireMesh(meshFilter.sharedMesh, obj_transform.position + MoveTo, obj_transform.rotation, obj_transform.localScale);
              }
          }
+    }
+
+    public Transform getInterfaceTransform()
+    {
+        return obj_transform;
     }
 }

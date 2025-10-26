@@ -92,6 +92,12 @@ public class CharacterMovement : MonoBehaviour
     IMoveingPlatform moveingPlatform;
     public Vector3 platformDelta;
 
+    Vector3 lastPlatformLocalPos;
+    Vector3 lastPlatformGlobalPos;
+    Vector3 platformCurrentFrameDelta;
+    Vector3 lastPlatformFrameDelta;
+    Vector3 lastPlatformTransformPosition;
+
     [Header("Debug")]
     public bool printStrings;
 
@@ -174,6 +180,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        ApplyPlatformDelta();
         if (!MovementControlledByAbility)
         {
             MovePlayer();
@@ -198,6 +205,28 @@ public class CharacterMovement : MonoBehaviour
         {
             ability.FixedUpdateAbility();
         }
+    }
+
+    void ApplyPlatformDelta()
+    {
+        if (moveingPlatform == null) return;
+        if (lastPlatformGlobalPos == Vector3.zero) return;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitinfo, 1.25f))
+        {
+            Vector3 currentGlobalPos = moveingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPos);
+            lastPlatformFrameDelta = platformCurrentFrameDelta;
+            platformCurrentFrameDelta = (currentGlobalPos - lastPlatformGlobalPos);
+
+        }
+        lastPlatformGlobalPos = Vector3.zero;
+        lastPlatformLocalPos = Vector3.zero;
+
+        if (platformCurrentFrameDelta != Vector3.zero)
+            transform.position += platformCurrentFrameDelta;
+           
+        if(grounded)
+            platformDelta = platformCurrentFrameDelta / Time.fixedDeltaTime;
+        platformCurrentFrameDelta = Vector3.zero;
     }
 
     public void TurnAround(float duration = 0.5f)
@@ -256,7 +285,24 @@ public class CharacterMovement : MonoBehaviour
 
     void trackPlatformDelta(Vector3 delta)
     {
-        platformDelta = delta / Time.fixedDeltaTime;
+        //platformDelta = delta / Time.fixedDeltaTime;
+    }
+
+    void BeforePlatformMove()
+    {
+        if (moveingPlatform == null) return;
+        if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitinfo, 1.25f))
+        {
+            lastPlatformLocalPos = moveingPlatform.getInterfaceTransform().InverseTransformPoint(hitinfo.point);
+            lastPlatformGlobalPos = hitinfo.point;
+            lastPlatformTransformPosition = moveingPlatform.getInterfaceTransform().position;
+        }
+
+    }
+    
+    void AfterPlatformMove()
+    {
+        
     }
 
     void OnDrawGizmosSelected()
@@ -285,14 +331,17 @@ public class CharacterMovement : MonoBehaviour
                 moveingPlatform = platform;
                 if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
                 {
-                    Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
-                    if (collider != null && collider.sharedMaterial != null)
-                    {
-                        collider.sharedMaterial.dynamicFriction = 5;
-                        collider.sharedMaterial.staticFriction = 5;
-                    }
+                    // Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
+                    // if (collider != null && collider.sharedMaterial != null)
+                    // {
+                    //     collider.sharedMaterial.dynamicFriction = 5;
+                    //     collider.sharedMaterial.staticFriction = 5;
+                    // }
                 }
                 platform.OnPlatformMove += trackPlatformDelta;
+
+                platform.OnBeforePlatformMove += BeforePlatformMove;
+                platform.OnAfterPlatformMove += AfterPlatformMove;
             }
 
         }
@@ -300,15 +349,17 @@ public class CharacterMovement : MonoBehaviour
         {
             //print("removing platform move");
             moveingPlatform.OnPlatformMove -= trackPlatformDelta;
+            moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
+            moveingPlatform.OnAfterPlatformMove -= AfterPlatformMove;
             //platformDelta = Vector3.zero;
             if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
             {
-                Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
-                if (collider != null && collider.sharedMaterial != null)
-                {
-                    collider.sharedMaterial.dynamicFriction = 0;
-                    collider.sharedMaterial.staticFriction = 0;
-                }
+                // Collider collider = ((Component)moveingPlatform).gameObject.GetComponent<Collider>();
+                // if (collider != null && collider.sharedMaterial != null)
+                // {
+                //     collider.sharedMaterial.dynamicFriction = 0;
+                //     collider.sharedMaterial.staticFriction = 0;
+                // }
             }
 
 
@@ -317,6 +368,8 @@ public class CharacterMovement : MonoBehaviour
         if (moveingPlatform == null && grounded)
         {
             platformDelta = Vector3.zero;
+            lastPlatformLocalPos = Vector3.zero;
+            lastPlatformGlobalPos = Vector3.zero;
         }
 
         if (grounded && OnSteepSlope())
@@ -475,16 +528,24 @@ public class CharacterMovement : MonoBehaviour
 
         if (OnSlope() && !exitingSlope)
         {
+            if(printStrings)
+                print("on slope speed control");
             if (rb.linearVelocity.magnitude > currentMaxSpeed)
             {
                 rb.linearVelocity = rb.linearVelocity.normalized * currentMaxSpeed;
             }
+
+           
         }
         else
         {
+            if (printStrings)
+                print("running normal speed control");
 
-            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            Vector3 platformFlatVel = new Vector3(platformDelta.x, 0, platformDelta.z);
+            
+            //platformDelta = platformCurrentFrameDelta / Time.fixedDeltaTime;
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).normalized;
+            Vector3 platformFlatVel = new Vector3(platformDelta.x, 0, platformDelta.z).normalized;
 
             float movingWithPlatformDot = Vector3.Dot(flatVel.normalized, platformFlatVel.normalized);
 
@@ -495,24 +556,40 @@ public class CharacterMovement : MonoBehaviour
                 adjustedMaxSpeed = currentMaxSpeed;
             }
 
-            if (moveingPlatform != null)
-            {
-                float lerpTime = Mathf.InverseLerp(9, 30, platformDelta.magnitude);
-                moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
-                if (platformDelta.y > 1)
-                {
-                    lerpTime = Mathf.InverseLerp(0, 5, platformDelta.y);
-                    moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
-                }
-            }
-            else
-            {
-                moveSpeed = walkSpeed;
-            }
+            if (flatVel.magnitude > currentMaxSpeed)
+            // {
+            //     flatVel = flatVel.normalized * currentMaxSpeed;
+            //     rb.linearVelocity = new Vector3(flatVel.x, rb.linearVelocity.y, flatVel.z);
+            // }
+            // if (moveingPlatform != null)
+            // {
+            //     float lerpTime = Mathf.InverseLerp(9, 30, platformDelta.magnitude);
+            //     moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
+            //     if (platformDelta.y > 1)
+            //     {
+            //         lerpTime = Mathf.InverseLerp(0, 5, platformDelta.y);
+            //         moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
+            //     }
+            // }
+            // else
+            // {
+            //     moveSpeed = walkSpeed;
+            // }
 
 
-            if (flatVel.magnitude > adjustedMaxSpeed)
+            if (moveingPlatform != null && flatVel.magnitude > currentMaxSpeed)
             {
+                if (printStrings)
+                    print("using default movement speed");
+                Vector3 limitedVel = rb.linearVelocity.normalized * currentMaxSpeed;
+                //Vector3 newFlatVel = limitedRelativeVel + platformFlatVel;
+                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+
+            }
+            else if (flatVel.magnitude > currentMaxSpeed)
+            {
+                if (printStrings)
+                    print("using adjsuted movement speed");
                 Vector3 limitedVel = rb.linearVelocity.normalized * adjustedMaxSpeed;
                 //Vector3 newFlatVel = limitedRelativeVel + platformFlatVel;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
