@@ -151,7 +151,6 @@ public class DashAbility : PlayerAbility
 
                             lastSlopeForce = forceMultiplier;
 
-                            print(forceMultiplier);
                             characterMovement.rb.AddForce(MoveDirection * forceMultiplier);
                         }
 
