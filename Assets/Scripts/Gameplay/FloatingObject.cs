@@ -104,14 +104,16 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
 
     void OnDrawGizmosSelected()
     {
+        Transform checkTransform = obj_transform;
+        if (checkTransform == null) checkTransform = transform;
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(obj_transform.position, obj_transform.position + MoveTo);
-        Gizmos.DrawSphere(obj_transform.position + MoveTo, 0.2f);
+        Gizmos.DrawLine(checkTransform.position, checkTransform.position + MoveTo);
+        Gizmos.DrawSphere(checkTransform.position + MoveTo, 0.2f);
         if (TryGetComponent(out MeshFilter meshFilter))
         {
             if (meshFilter.sharedMesh != null)
             {
-                Gizmos.DrawWireMesh(meshFilter.sharedMesh, obj_transform.position + MoveTo, obj_transform.rotation, obj_transform.localScale);
+                Gizmos.DrawWireMesh(meshFilter.sharedMesh, checkTransform.position + MoveTo, checkTransform.rotation, checkTransform.localScale);
              }
          }
     }

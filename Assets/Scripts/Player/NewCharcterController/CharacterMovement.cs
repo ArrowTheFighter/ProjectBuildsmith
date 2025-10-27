@@ -95,8 +95,12 @@ public class CharacterMovement : MonoBehaviour
     Vector3 lastPlatformLocalPos;
     Vector3 lastPlatformGlobalPos;
     Vector3 platformCurrentFrameDelta;
-    Vector3 lastPlatformFrameDelta;
-    Vector3 lastPlatformTransformPosition;
+
+    //Checking last platform
+    IMoveingPlatform lastMovingPlatform;
+
+    Vector3 lastPlatformLocalPosCheck;
+    Vector3 lastPlatformGlobalPosCheck;
 
     [Header("Debug")]
     public bool printStrings;
@@ -139,7 +143,7 @@ public class CharacterMovement : MonoBehaviour
         GroundCheck();
         if (printStrings)
         {
-            print(grounded);
+            //print(grounded);
         }
         // Handle Input
         MyInput();
@@ -209,18 +213,35 @@ public class CharacterMovement : MonoBehaviour
 
     void ApplyPlatformDelta()
     {
-        if (moveingPlatform == null) return;
-        if (lastPlatformGlobalPos == Vector3.zero) return;
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitinfo, 1.25f))
+        Vector3 currentGlobalPos = Vector3.zero;
+        if (moveingPlatform == null)
         {
-            Vector3 currentGlobalPos = moveingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPos);
-            lastPlatformFrameDelta = platformCurrentFrameDelta;
-            platformCurrentFrameDelta = (currentGlobalPos - lastPlatformGlobalPos);
+            if(lastMovingPlatform != null)
+            {
+                // print("doing last platform check");
+                // Vector3 currentGlobalPos = lastMovingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPosCheck);
+                // Vector3 checkDelta = currentGlobalPos - lastPlatformGlobalPosCheck;
 
+                // float distance = groundCheckDistance;
+                // if (rb.linearVelocity.y < -4) distance += 0.3f;
+                // Physics.SphereCast(transform.position + checkDelta + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out RaycastHit hitInfo, distance, ~IgnoreGroundLayerMask);
+
+                // if(hitInfo.collider.transform == lastMovingPlatform.getInterfaceTransform())
+                // {
+                //     transform.position += checkDelta;
+                // }
+                currentGlobalPos = lastMovingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPos);
+            }
+        }else
+        {
+            currentGlobalPos = moveingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPos);
         }
+        if (lastPlatformGlobalPos == Vector3.zero) return;
+            //currentGlobalPos = moveingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPos);
+        platformCurrentFrameDelta = currentGlobalPos - lastPlatformGlobalPos;
+
         lastPlatformGlobalPos = Vector3.zero;
         lastPlatformLocalPos = Vector3.zero;
-
         if (platformCurrentFrameDelta != Vector3.zero)
             transform.position += platformCurrentFrameDelta;
            
@@ -295,14 +316,18 @@ public class CharacterMovement : MonoBehaviour
         {
             lastPlatformLocalPos = moveingPlatform.getInterfaceTransform().InverseTransformPoint(hitinfo.point);
             lastPlatformGlobalPos = hitinfo.point;
-            lastPlatformTransformPosition = moveingPlatform.getInterfaceTransform().position;
         }
 
     }
     
-    void AfterPlatformMove()
+    void BeforeLastPlatformMove()
     {
-        
+        if (lastMovingPlatform == null) return;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitinfo, 1.25f))
+        {
+            lastPlatformLocalPosCheck = lastMovingPlatform.getInterfaceTransform().InverseTransformPoint(hitinfo.point);
+            lastPlatformGlobalPosCheck = hitinfo.point;
+        }
     }
 
     void OnDrawGizmosSelected()
@@ -314,6 +339,12 @@ public class CharacterMovement : MonoBehaviour
 
     void GroundCheck()
     {
+        if (moveingPlatform == null && lastMovingPlatform != null)
+        {
+            lastMovingPlatform.OnBeforePlatformMove -= BeforeLastPlatformMove;
+        }
+        lastMovingPlatform = moveingPlatform;
+
         bool wasGrounded = grounded;
         float distance = groundCheckDistance;
         if (rb.linearVelocity.y < -4) distance += 0.3f;
@@ -322,12 +353,13 @@ public class CharacterMovement : MonoBehaviour
         {
             grounded = false;
         }
-        
+
         if (grounded && groundHit.collider.TryGetComponent(out IMoveingPlatform platform))
         {
             if (moveingPlatform != platform)
             {
                 //print("adding platform move");
+                
                 moveingPlatform = platform;
                 if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
                 {
@@ -341,16 +373,15 @@ public class CharacterMovement : MonoBehaviour
                 platform.OnPlatformMove += trackPlatformDelta;
 
                 platform.OnBeforePlatformMove += BeforePlatformMove;
-                platform.OnAfterPlatformMove += AfterPlatformMove;
+
+                BeforePlatformMove();
             }
 
         }
         else if (moveingPlatform != null)
         {
-            //print("removing platform move");
             moveingPlatform.OnPlatformMove -= trackPlatformDelta;
             moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
-            moveingPlatform.OnAfterPlatformMove -= AfterPlatformMove;
             //platformDelta = Vector3.zero;
             if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
             {
@@ -364,6 +395,10 @@ public class CharacterMovement : MonoBehaviour
 
 
             moveingPlatform = null;
+            if(lastMovingPlatform != null)
+            {
+                lastMovingPlatform.OnBeforePlatformMove += BeforeLastPlatformMove;
+            }
         }
         if (moveingPlatform == null && grounded)
         {
@@ -413,12 +448,25 @@ public class CharacterMovement : MonoBehaviour
         else
         {
             GravityDir = Vector3.down;
+            if(moveingPlatform != null)
+            {
+                moveingPlatform.OnPlatformMove -= trackPlatformDelta;
+                moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
+                moveingPlatform = null;
+
+                if (lastMovingPlatform != null)
+                {
+                    lastMovingPlatform.OnBeforePlatformMove += BeforeLastPlatformMove;
+                }
+            }
         }
         if (wasGrounded && !grounded && readyToJump)
         {
             coyoteCheck = coyoteTime;    
         }
         jumpOveride = false;
+
+        
     }
 
     Vector3 GetSurfaceNormal(Vector3 origin, Vector3 direction, float radius, float distance, LayerMask layerMask)
@@ -528,8 +576,6 @@ public class CharacterMovement : MonoBehaviour
 
         if (OnSlope() && !exitingSlope)
         {
-            if(printStrings)
-                print("on slope speed control");
             if (rb.linearVelocity.magnitude > currentMaxSpeed)
             {
                 rb.linearVelocity = rb.linearVelocity.normalized * currentMaxSpeed;
@@ -539,13 +585,11 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
-            if (printStrings)
-                print("running normal speed control");
 
             
             //platformDelta = platformCurrentFrameDelta / Time.fixedDeltaTime;
-            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z).normalized;
-            Vector3 platformFlatVel = new Vector3(platformDelta.x, 0, platformDelta.z).normalized;
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            Vector3 platformFlatVel = new Vector3(platformDelta.x, 0, platformDelta.z);
 
             float movingWithPlatformDot = Vector3.Dot(flatVel.normalized, platformFlatVel.normalized);
 
@@ -556,42 +600,15 @@ public class CharacterMovement : MonoBehaviour
                 adjustedMaxSpeed = currentMaxSpeed;
             }
 
-            if (flatVel.magnitude > currentMaxSpeed)
-            // {
-            //     flatVel = flatVel.normalized * currentMaxSpeed;
-            //     rb.linearVelocity = new Vector3(flatVel.x, rb.linearVelocity.y, flatVel.z);
-            // }
-            // if (moveingPlatform != null)
-            // {
-            //     float lerpTime = Mathf.InverseLerp(9, 30, platformDelta.magnitude);
-            //     moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
-            //     if (platformDelta.y > 1)
-            //     {
-            //         lerpTime = Mathf.InverseLerp(0, 5, platformDelta.y);
-            //         moveSpeed = Mathf.Lerp(walkSpeed * 2, walkSpeed * 3, lerpTime);
-            //     }
-            // }
-            // else
-            // {
-            //     moveSpeed = walkSpeed;
-            // }
-
-
             if (moveingPlatform != null && flatVel.magnitude > currentMaxSpeed)
             {
-                if (printStrings)
-                    print("using default movement speed");
                 Vector3 limitedVel = rb.linearVelocity.normalized * currentMaxSpeed;
-                //Vector3 newFlatVel = limitedRelativeVel + platformFlatVel;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
 
             }
             else if (flatVel.magnitude > currentMaxSpeed)
             {
-                if (printStrings)
-                    print("using adjsuted movement speed");
                 Vector3 limitedVel = rb.linearVelocity.normalized * adjustedMaxSpeed;
-                //Vector3 newFlatVel = limitedRelativeVel + platformFlatVel;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
             // Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -658,8 +675,11 @@ public class CharacterMovement : MonoBehaviour
         AudioCollection audioCollectionJumpGrunt = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Jump");
         AudioCollection audioCollectionJumpSound = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("JumpSound");
         ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
-        // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollectionJumpGrunt.audioClip, transform, audioCollectionJumpGrunt.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpGrunt.audioClipPitch * 0.9f, audioCollectionJumpGrunt.audioClipPitch * 1.1f));
-        // ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(audioCollectionJumpSound.audioClip, transform, audioCollectionJumpSound.audioClipVolume, UnityEngine.Random.Range(audioCollectionJumpSound.audioClipPitch * 0.9f, audioCollectionJumpSound.audioClipPitch * 1.1f));
+        
+        if(moveingPlatform != null)
+        {
+            rb.AddForce(platformCurrentFrameDelta / Time.fixedDeltaTime, ForceMode.VelocityChange);
+        }
         Invoke(nameof(ResetJump), jumpCooldown);
     }
     private void ResetJump()
