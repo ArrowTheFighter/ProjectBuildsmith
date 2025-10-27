@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -33,6 +32,9 @@ public class InventoryManager : MonoBehaviour
     [Header("InventorySlots")]
     public List<InventorySlot> inventorySlots = new List<InventorySlot>();
     public Dictionary<string, int> specialItems = new Dictionary<string, int>();
+
+    [Header("Unlocked Recipes")]
+    public List<string> UnlockedRecipes = new List<string>();
 
     [Space(20)]
     [Header("QuestMenu")]
@@ -132,6 +134,7 @@ public class InventoryManager : MonoBehaviour
                 if (!inventoryIsOpen)
                 {
                     OpenInventory();
+                    ScriptRefrenceSingleton.instance.gameplayUtils.OpenCraftingMenu(CraftingStationTypes.Tool);
 
                 }
                 else
@@ -508,7 +511,7 @@ public class InventoryManager : MonoBehaviour
             specialItems[item_id] = Mathf.Max(specialItems[item_id] - amount,0);
         }
         OnInventoryUpdated?.Invoke();
-    } 
+    }
 
     public bool removeItemsByID(string item_id, int amount = 1)
     {
@@ -550,6 +553,13 @@ public class InventoryManager : MonoBehaviour
         }
         OnInventoryUpdated?.Invoke();
         return false;
+    }
+    
+    public bool AddUnlockedRecipe(string recipe_id)
+    {
+        if (UnlockedRecipes.Contains(recipe_id)) return false;
+        UnlockedRecipes.Add(recipe_id);
+        return true;
     }
     /* #endregion */
 

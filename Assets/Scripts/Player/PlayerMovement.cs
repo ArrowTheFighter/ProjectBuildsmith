@@ -217,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
             if (OnMovingPlatformScript == null)
             {
                 OnMovingPlatformScript = GroundCheckHitInfo.collider.GetComponent<IMoveingPlatform>();
-                OnMovingPlatformScript.OnPlatformMove += Moving_Platform_Update;
+                //OnMovingPlatformScript.OnPlatformMove += Moving_Platform_Update;
             }
             
         }
@@ -225,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (OnMovingPlatformScript != null)
             {
-                OnMovingPlatformScript.OnPlatformMove -= Moving_Platform_Update;
+                //OnMovingPlatformScript.OnPlatformMove -= Moving_Platform_Update;
                 OnMovingPlatformScript = null;
             }
         }

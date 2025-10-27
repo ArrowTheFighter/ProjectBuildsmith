@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
 {
-    public event Action<Vector3> OnPlatformMove;
     public event Action OnBeforePlatformMove;
-    public event Action OnAfterPlatformMove;
 
     public Transform ParentTransform;
 
@@ -29,7 +27,6 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
             if (componenet is IMoveingPlatform moveingPlatform)
             {
                 moveingPlatform.OnBeforePlatformMove += SendBeforeMoveEvent;
-                moveingPlatform.OnAfterPlatformMove += SendAfterMoveEvent;
             }
         }
         ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnsubscribeFromPlatformEvents;
@@ -44,7 +41,6 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
             {
                 
                 moveingPlatform.OnBeforePlatformMove -= SendBeforeMoveEvent;
-                moveingPlatform.OnAfterPlatformMove -= SendAfterMoveEvent;
             }
         }
         
@@ -53,11 +49,6 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
     void SendBeforeMoveEvent()
     {
         OnBeforePlatformMove?.Invoke();
-    }
-    
-    void SendAfterMoveEvent()
-    {
-        OnAfterPlatformMove?.Invoke();
     }
 
 }

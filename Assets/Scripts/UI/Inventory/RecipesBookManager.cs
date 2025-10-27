@@ -8,10 +8,11 @@ public class RecipesBookManager : MonoBehaviour
     public CraftingTableRecipeDisplay craftingTableRecipeDisplay;
     public Transform recipeOptionsParent;
     public GameObject recipeOptionPrefab;
+    List<string> addedRecipes = new List<string>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Setup();
+        //Setup();
         HideRecipeBook();
     }
 
@@ -21,6 +22,7 @@ public class RecipesBookManager : MonoBehaviour
         {
             if (_recipeData.stationType == craftingStationType)
             {
+                if (!ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.UnlockedRecipes.Contains(_recipeData.recipe_id)) continue;
                 GameObject recipeOptionObj = Instantiate(recipeOptionPrefab, recipeOptionsParent);
                 RecipeOption recipeOption = recipeOptionObj.GetComponent<RecipeOption>();
                 recipeOption.craftingRecipeData = _recipeData;
@@ -28,6 +30,29 @@ public class RecipesBookManager : MonoBehaviour
                 recipeOption.ItemNameTextBox.text = itemData.item_name;
                 recipeOption.IconImage.sprite = itemData.item_ui_image;
                 recipeOptionObj.GetComponent<Button>().onClick.AddListener(() => { craftingTableRecipeDisplay.ShowRecipe(_recipeData.recipe_id); });
+
+                addedRecipes.Add(_recipeData.recipe_id);
+            }
+        }
+    }
+
+    public void CheckForNewRecipes()
+    {
+        foreach (CraftingRecipeData _recipeData in ScriptRefrenceSingleton.instance.gameplayUtils.RecipeDatabase.recipes)
+        {
+            if (_recipeData.stationType == craftingStationType)
+            {
+                if (!ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.UnlockedRecipes.Contains(_recipeData.recipe_id)) continue;
+                if (addedRecipes.Contains(_recipeData.recipe_id)) continue;
+                GameObject recipeOptionObj = Instantiate(recipeOptionPrefab, recipeOptionsParent);
+                RecipeOption recipeOption = recipeOptionObj.GetComponent<RecipeOption>();
+                recipeOption.craftingRecipeData = _recipeData;
+                ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(_recipeData.recipe_output_id);
+                recipeOption.ItemNameTextBox.text = itemData.item_name;
+                recipeOption.IconImage.sprite = itemData.item_ui_image;
+                recipeOptionObj.GetComponent<Button>().onClick.AddListener(() => { craftingTableRecipeDisplay.ShowRecipe(_recipeData.recipe_id); });
+
+                addedRecipes.Add(_recipeData.recipe_id);
             }
         }
     }
@@ -46,6 +71,7 @@ public class RecipesBookManager : MonoBehaviour
 
     public void ShowRecipeBook()
     {
+        CheckForNewRecipes();
         gameObject.SetActive(true);
     }
 

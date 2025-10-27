@@ -95,6 +95,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 lastPlatformLocalPos;
     Vector3 lastPlatformGlobalPos;
     Vector3 platformCurrentFrameDelta;
+    Vector3 lastLocalRotation;
 
     //Checking last platform
     IMoveingPlatform lastMovingPlatform;
@@ -244,6 +245,20 @@ public class CharacterMovement : MonoBehaviour
         lastPlatformLocalPos = Vector3.zero;
         if (platformCurrentFrameDelta != Vector3.zero)
             transform.position += platformCurrentFrameDelta;
+        
+        if(lastLocalRotation != Vector3.zero)
+        {
+            if(moveingPlatform != null)
+            {
+                Vector3 lastGlobalRotation = moveingPlatform.getInterfaceTransform().TransformDirection(lastLocalRotation);
+                float angleDelta = Vector3.SignedAngle(transform.forward, lastGlobalRotation,Vector3.up);
+                if (angleDelta != 0)
+                {
+                    transform.Rotate(Vector3.up, angleDelta);
+                }
+            }
+            
+        }
            
         if(grounded)
             platformDelta = platformCurrentFrameDelta / Time.fixedDeltaTime;
@@ -316,6 +331,8 @@ public class CharacterMovement : MonoBehaviour
         {
             lastPlatformLocalPos = moveingPlatform.getInterfaceTransform().InverseTransformPoint(hitinfo.point);
             lastPlatformGlobalPos = hitinfo.point;
+
+            lastLocalRotation = moveingPlatform.getInterfaceTransform().InverseTransformDirection(transform.forward);
         }
 
     }
@@ -359,6 +376,11 @@ public class CharacterMovement : MonoBehaviour
             if (moveingPlatform != platform)
             {
                 //print("adding platform move");
+
+                if(moveingPlatform == null)
+                {
+                    print("landed on moving platform");
+                }
                 
                 moveingPlatform = platform;
                 if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
@@ -370,7 +392,6 @@ public class CharacterMovement : MonoBehaviour
                     //     collider.sharedMaterial.staticFriction = 5;
                     // }
                 }
-                platform.OnPlatformMove += trackPlatformDelta;
 
                 platform.OnBeforePlatformMove += BeforePlatformMove;
 
@@ -380,7 +401,6 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (moveingPlatform != null)
         {
-            moveingPlatform.OnPlatformMove -= trackPlatformDelta;
             moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
             //platformDelta = Vector3.zero;
             if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
@@ -450,7 +470,6 @@ public class CharacterMovement : MonoBehaviour
             GravityDir = Vector3.down;
             if(moveingPlatform != null)
             {
-                moveingPlatform.OnPlatformMove -= trackPlatformDelta;
                 moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
                 moveingPlatform = null;
 

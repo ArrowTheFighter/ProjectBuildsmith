@@ -115,8 +115,11 @@ public class SaveLoadManager : MonoBehaviour
 
         special_items_collected = saveFileStruct.special_items_collected.ToList();
 
+        //Load Unlocked Recipes
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.UnlockedRecipes = saveFileStruct.unlocked_recipes;
+
         //Quests
-        foreach(var quest in saveFileStruct.saved_quests)
+        foreach (var quest in saveFileStruct.saved_quests)
         {
             ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.LoadSavedQuest(quest);
         } 
@@ -193,6 +196,9 @@ public class SaveLoadManager : MonoBehaviour
         {
             saveFile.inventory_slots.Add(new SaveableInventroySlot(slot.isEmpty, slot.slot_id, slot.inventoryItemStack));
         }
+
+        //Unlocked Recipes
+        saveFile.unlocked_recipes = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.UnlockedRecipes;
 
         //Quests
         foreach(var quest in ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.activeQuests)
@@ -300,6 +306,7 @@ public class SaveFileStruct
         saveable_ids = new List<int>();
         saved_quests = new List<SaveableQuestInfo>();
         saved_inventory_savers = new List<SerializableInventory>();
+        unlocked_recipes = new List<string>();
     }
 
     public string file_name;
@@ -310,6 +317,7 @@ public class SaveFileStruct
     //Inventory
     public Dictionary<string, int> special_items;
     public List<SaveableInventroySlot> inventory_slots;
+    public List<string> unlocked_recipes;
 
     //Quests
     public List<SaveableQuestInfo> saved_quests;

@@ -17,21 +17,15 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
 
     Vector3 startPos;
     Vector3 endPos;
-    Vector3 lastPosition;
-    Rigidbody rb;
 
     Coroutine moveRoutine;
 
-    public event Action<Vector3> OnPlatformMove;
     public event Action OnBeforePlatformMove;
-    public event Action OnAfterPlatformMove;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         startPos = transform.position;
         endPos = startPos + MoveTo;
-        lastPosition = transform.position;
     }
 
     // =========================
@@ -131,14 +125,6 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
         transform.position = newPos;
         transform.Rotate(rotationAmount);
 
-        if (rb != null)
-        {
-            Vector3 delta = rb.position - lastPosition;
-            OnPlatformMove?.Invoke(delta);
-            lastPosition = rb.position;
-        }
-
-        OnAfterPlatformMove?.Invoke();
     }
 
     // =========================

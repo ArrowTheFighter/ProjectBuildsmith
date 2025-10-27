@@ -5,9 +5,7 @@ using DG.Tweening;
 
 public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
 {
-    public event Action<Vector3> OnPlatformMove;
     public event Action OnBeforePlatformMove;
-    public event Action OnAfterPlatformMove;
 
     Collider platformCollider;
     Vector3 startPos;
@@ -48,7 +46,6 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
             rb.MovePosition(startPos + Vector3.down * distance);
             //transform.position = startPos + Vector3.down * distance;
 
-            OnAfterPlatformMove?.Invoke();
             yield return new WaitForFixedUpdate();
         }
         yield return new WaitForSeconds(1);
@@ -70,7 +67,6 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         yield return new WaitUntil(() => !isScaling);
         isFalling = false;
         //TODO probably should change this when re doing moving platforms
-        OnPlatformMove?.Invoke(Vector3.zero);
     }
 
     void OnCollisionEnter(Collision collision)

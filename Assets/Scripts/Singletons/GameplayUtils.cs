@@ -9,6 +9,7 @@ using UnityEngine.Rendering.Universal;
 using System.Collections;
 using UnityEngine.InputSystem;
 using CI.PowerConsole;
+using System.Linq;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -163,6 +164,12 @@ public class GameplayUtils : MonoBehaviour
                 else
                 {
                     PowerConsole.Log(LogLevel.Information, "Cheating disabled");
+                }
+                break;
+            case "unlockrecipe":
+                if(arguments.Length > 1)
+                {
+                    UnlockRecipe(arguments[1]);
                 }
                 break;
         }
@@ -618,6 +625,25 @@ public class GameplayUtils : MonoBehaviour
         return null;
     }
 
+    public void UnlockRecipe(string recipe_id)
+    {
+        if (!inventoryManager.AddUnlockedRecipe(recipe_id)) return;
+
+        CraftingRecipeData recipeData = GetRecipeDataByID(recipe_id);
+        if (recipeData == null) return;
+        ItemData itemData = GetItemDataByID(recipeData.recipe_output_id);
+        if (itemData == null) return;
+
+        ShowCustomNotif($"{itemData.item_name} Recipe Unlocked");
+        
+    }
+    
+    public CraftingRecipeData GetRecipeDataByID(string id)
+    {
+        var recipe = RecipeDatabase.recipes.FirstOrDefault(item => item.recipe_id == id);
+        return recipe;
+    }
+
     public int GetItemCraftedAmount(string item_id)
     {
         if (ItemsCrafted.ContainsKey(item_id))
@@ -626,6 +652,7 @@ public class GameplayUtils : MonoBehaviour
         }
         return 0;
     }
+
 
     public void AddItemCraftedAmount(string item_id, int amount)
     {

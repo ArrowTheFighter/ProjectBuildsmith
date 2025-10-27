@@ -11,14 +11,10 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
 
     Vector3 startPos;
     Vector3 endPos;
-    Vector3 lastPosition;
     float elapsed;
     bool reverse;
-    Rigidbody rb;
 
-    public event Action<Vector3> OnPlatformMove;
     public event Action OnBeforePlatformMove;
-    public event Action OnAfterPlatformMove;
 
     public Transform obj_transform;
 
@@ -27,11 +23,9 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     void Start()
     {
         if (obj_transform == null) obj_transform = transform;
-        rb = obj_transform.GetComponent<Rigidbody>();
         startPos = obj_transform.position;
         endPos = startPos + MoveTo;
 
-        lastPosition = obj_transform.position;
         //transform.DOMove(transform.position + MoveTo, duration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
         // if (rb != null)
         // {
@@ -46,7 +40,6 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
 
 
         if (!IsActive) return;
-        if (rb == null) return;
         if (elapsed < duration)
         {
             OnBeforePlatformMove?.Invoke();
@@ -60,8 +53,6 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
             transform.Rotate(rotationAmount);
             //rb.MovePosition(newPos);
 
-            OnAfterPlatformMove?.Invoke();
-
         }
         else
         {
@@ -70,12 +61,6 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
         }
         
 
-        if (rb == null) return;
-        Vector3 delta = rb.position - lastPosition;
-
-        OnPlatformMove?.Invoke(delta);
-
-        lastPosition = rb.position;
     }
 
     void LateUpdate()
