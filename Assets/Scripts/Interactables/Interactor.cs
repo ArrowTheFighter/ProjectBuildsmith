@@ -1,5 +1,5 @@
-using System.Collections;
-using Unity.VisualScripting;
+
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +14,8 @@ public class Interactor : MonoBehaviour
     public int numberFound;
 
     private IInteractable interactable;
+
+    public event Action InteractorLostAllInteractions;
 
     void Awake()
     {
@@ -58,7 +60,11 @@ public class Interactor : MonoBehaviour
         }
         else
         {
-            if(interactable != null) interactable = null;
+            if(interactable != null)
+            {
+                InteractorLostAllInteractions?.Invoke();
+                interactable = null;
+            } 
             if (interactionPromptUI.IsDisplayed) interactionPromptUI.Close();
         }
     }

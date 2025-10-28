@@ -11,6 +11,7 @@ public class ItemData : ScriptableObject
     public GameObject item_pickup_object;
     [Header("Holding Item")]
     public GameObject holdingItem;
+    public GameObject item_prefab_obj;
     public Vector3 PositionOffset;
     public Vector3 Rotation;
     [Header("Sprite")]
