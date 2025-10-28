@@ -49,7 +49,7 @@ public class CharacterMovement : MonoBehaviour
     Vector3 groundNormal;
     RaycastHit steepSlopHit;
     RaycastHit slopeHit;
-    bool exitingSlope;
+    public bool exitingSlope;
 
     [Header("Input")]
     [HideInInspector] public ICharacterInput characterInput;
