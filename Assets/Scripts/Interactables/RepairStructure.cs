@@ -16,7 +16,8 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public GameObject HologramStructure;
 
     public item_requirement[] itemsRequired;
-    public item_requirement[] required_items => itemsRequired;
+    item_requirement[] itemsRequiredDisplay;
+    public item_requirement[] required_items => itemsRequiredDisplay;
 
     [SerializeField] List<Item_Check> added_items = new List<Item_Check>();
 
@@ -48,13 +49,14 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     Interactor last_interactor;
 
     [Header("particles")]
-    public ParticleKillOnEnterTrigger particleKillOnEnterTrigger;
+    public GameObject ParticleForceField;
     public Collider ParticleKillTrigger;
     public ParticleSystem startParticle;
     public Action<Collider, GameObject,RepairStructure> OnSpawnMaterialParticle;
 
     void Start()
     {
+        itemsRequiredDisplay = itemsRequired;
         foreach (var item_req in itemsRequired)
         {
             Item_Check item_check = new Item_Check();
@@ -63,9 +65,6 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
             item_check.required_amount = item_req.item_amount;
             added_items.Add(item_check);
         }
-
-        if (particleKillOnEnterTrigger != null)
-            particleKillOnEnterTrigger.OnParticleEnter += SpawnStartParticle;
 
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Interact"].canceled += StopInteract;
         ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnBindInputs;
@@ -116,6 +115,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         if(interactor.TryGetComponent(out AddMaterialParticleManager component))
         {
             print("hooking up spawner");
+            component.SetActiveForceField(ParticleForceField);
             OnSpawnMaterialParticle += component.SpawnParticle;
         }
         if (!runningCoroutine)
@@ -161,6 +161,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
             {
                 if (added_items[i].current_amount >= added_items[i].required_amount)
                 {
+
                     i++;
                     if (i >= added_items.Count)
                     {
@@ -174,6 +175,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
                 }
                 if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(added_items[i].item_id) > 0)
                 {
+                    itemsRequiredDisplay[i].item_amount--;
                     added_items[i].current_amount++;
                     ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(added_items[i].item_id, 1);
 

@@ -63,7 +63,11 @@ public class InteractionPromptUI : MonoBehaviour
                 GameObject item_requirement_ui_object = item_requirement_parent.GetChild(i).gameObject;
                 if (i < required_items.Length)
                 {
-
+                    if (required_items[i].item_amount <= 0)
+                    {
+                        item_requirement_ui_object.SetActive(false);
+                        continue;
+                    }
                     item_requirement_ui_object.SetActive(true);
                     item_requirement_ui_object.GetComponentInChildren<TextMeshProUGUI>().text = "<font-weight=500>x" + required_items[i].item_amount;
                     ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(required_items[i].item_id);
