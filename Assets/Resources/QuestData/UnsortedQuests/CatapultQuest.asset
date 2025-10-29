@@ -42,6 +42,7 @@ MonoBehaviour:
         Description: Get <style=Item>10 planks</style>
         StopAtThisObjective: 0
         StayCompleted: 1
+        isComplete: 1
         ObjectiveIDCollection: 0
         Item_ID: plank
         Item_Amount: 10
@@ -51,6 +52,7 @@ MonoBehaviour:
         Description: Get <style=Item>3 ropes</style>
         StopAtThisObjective: 0
         StayCompleted: 1
+        isComplete: 1
         ObjectiveIDCollection: 0
         Item_ID: rope
         Item_Amount: 3
@@ -60,6 +62,7 @@ MonoBehaviour:
         Description: Get <style=Item>2 cog wheels</style>
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 1
         ObjectiveIDCollection: 0
         Item_ID: cog_wheel
         Item_Amount: 2
@@ -69,6 +72,7 @@ MonoBehaviour:
         Description: Rebuild the catapult next to Adolin
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 0
         flag_id: AdolinCatapultRepaired
     - rid: 4434710397170483318
@@ -77,5 +81,6 @@ MonoBehaviour:
         Description: Talk to Adolin
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 1
         flag_id: AdolinTalkedAfterCatapultRepair
