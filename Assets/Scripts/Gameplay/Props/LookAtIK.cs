@@ -7,7 +7,7 @@ public class LookAtIK : MonoBehaviour
     private Quaternion startRotation;
     private Vector3 startDirection;
 
-    void Start()
+    void Awake()
     {
         if (target == null)
         {
@@ -15,10 +15,14 @@ public class LookAtIK : MonoBehaviour
             enabled = false;
             return;
         }
-
-        // Save the starting rotation and the initial direction to the target
-        startRotation = transform.rotation;
+        startRotation = transform.rotation; 
         startDirection = (target.position - transform.position).normalized;
+    }
+
+
+    void OnEnable()
+    {
+        LateUpdate();
     }
 
     void LateUpdate()

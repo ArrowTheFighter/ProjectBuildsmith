@@ -28,6 +28,10 @@ public class RotateFromVerticalIK : MonoBehaviour
             rotator = transform;
         startRotation = rotator.localRotation;
     }
+    private void OnEnable() 
+    {
+        LateUpdate();
+    }
 
     void LateUpdate()
     {
