@@ -43,11 +43,9 @@ public class ParticleKillOnEnterTrigger : MonoBehaviour
         psRenderer.mesh = meshFilter.sharedMesh;
         psRenderer.material = meshRenderer.sharedMaterial;
 
-        print(collider);
         // Optionally set the trigger collider
         if (collider != null)
         {
-            print("setting trigger");
             ps.trigger.SetCollider(0, collider);
         }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.Mathematics;
 
 public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 {
@@ -51,7 +52,8 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     [Header("particles")]
     public GameObject ParticleForceField;
     public Collider ParticleKillTrigger;
-    public ParticleSystem startParticle;
+    public ParticleSystem starParticle;
+    public GameObject itemGatheredParticle;
     public Action<Collider, GameObject,RepairStructure> OnSpawnMaterialParticle;
 
     void Start()
@@ -114,7 +116,6 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         isInteracting = true;
         if(interactor.TryGetComponent(out AddMaterialParticleManager component))
         {
-            print("hooking up spawner");
             component.SetActiveForceField(ParticleForceField);
             OnSpawnMaterialParticle += component.SpawnParticle;
         }
@@ -167,7 +168,6 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
                     {
                         if (is_repaired) break;
                         is_repaired = true;
-                        print("we repaired it!!");
                         Invoke(nameof(ScaleInStructure), 0.75f);
                         break;
                     }
@@ -183,7 +183,6 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
                     if (itemData != null && itemData.item_prefab_obj != null)
                     {
 
-                        print("Sending spawn event");
                         OnSpawnMaterialParticle?.Invoke(ParticleKillTrigger, itemData.item_prefab_obj,this);
                     }
 
@@ -206,18 +205,20 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public void SpawnStartParticle(Vector3 position, ParticleKillOnEnterTrigger particleKillOnEnterTrigger)
     {
         particleKillOnEnterTrigger.OnParticleEnter -= SpawnStartParticle;
-        if (startParticle == null) return;
+        if (starParticle == null) return;
         print(position);
-        startParticle.transform.position = position;
-        startParticle.Play();   
+        starParticle.transform.position = position;
+        starParticle.Play();
+        Instantiate(itemGatheredParticle, position, quaternion.identity);  
     }
 
 
     public void ScaleInStructure()
     {
-        RepairEvent?.Invoke();
-        HologramStructure.SetActive(false);
+        HologramStructure.transform.DOScale(Vector3.zero,0.2f).OnComplete(() => { HologramStructure.SetActive(false); });
         FinishedStructure.SetActive(true);
+        RepairEvent?.Invoke();
+        if (RepairEvent.GetPersistentEventCount() > 0) return;
         Sequence sequence = DOTween.Sequence();
         sequence.Append(
             FinishedStructure.transform.DOScale(scaleInSize, ScaleInDuration).SetEase(ScaleInEase))
@@ -226,18 +227,20 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         gameObject.SetActive(false);
     }
 
-    void LoadStructure()
+    IEnumerator LoadStructure()
     {
+        yield return new WaitForSeconds(0.0f);
         is_repaired = true;
         HologramStructure.SetActive(false);
         FinishedStructure.SetActive(true);
-        FinishedStructure.transform.localScale = scaleOutSize;
+        if (RepairEvent.GetPersistentEventCount() <= 0)
+            FinishedStructure.transform.localScale = scaleOutSize;
         gameObject.SetActive(false);
     }
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
-        LoadStructure();
+        StartCoroutine(LoadStructure());
     }
 }
 

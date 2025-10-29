@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Formats.Alembic.Importer; // make sure Alembic package is installed
 
@@ -14,6 +16,12 @@ public class AlembicTimeFromMover : MonoBehaviour
     private float startY;
     private float startTime;
 
+    public MeshRenderer mesh;
+
+    void Awake()
+    {
+        startTime = player.CurrentTime;
+    }
     void Start()
     {
         if (mover == null || player == null)
@@ -25,7 +33,22 @@ public class AlembicTimeFromMover : MonoBehaviour
 
         // Save starting positions and Alembic time
         startY = mover.position.y;
-        startTime = player.CurrentTime;
+    }
+    void OnEnable()
+    {
+        LateUpdate();
+        StartCoroutine(ShowMesh());
+    }
+
+    void OnDisable()
+    {
+        mesh.enabled = false;
+    }
+
+    IEnumerator ShowMesh()
+    {
+        yield return null;
+        mesh.enabled = true;
     }
 
     void LateUpdate()

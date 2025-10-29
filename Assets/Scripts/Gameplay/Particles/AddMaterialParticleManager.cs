@@ -7,7 +7,6 @@ public class AddMaterialParticleManager : MonoBehaviour
     public Transform spawnPos;
     public void SpawnParticle(Collider collider, GameObject meshObj, RepairStructure repairStructure)
     {
-        print("spawning particle");
         GameObject spawnedParticle = Instantiate(particlePrefab, spawnPos.position, Quaternion.identity);
 
         if (spawnedParticle.TryGetComponent(out ParticleKillOnEnterTrigger component))

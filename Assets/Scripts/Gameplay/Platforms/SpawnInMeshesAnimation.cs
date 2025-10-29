@@ -13,17 +13,27 @@ public class SpawnInMeshesAnimation : MonoBehaviour
     GameObject visualsParent;
     public float SpawnInScaleDuration;
     public float SpawnInMoveDuration;
+    public float SpawnInMoveInitalDuration;
+    public float SpawnInRotationDuration;
     public Ease SpawnInScaleEase;
     public Ease SpawnInMoveEase;
+    public Ease SpawnInMoveInitalEase;
+    public Ease SpawnInRotationEase;
     public Vector3 spawnOffset;
+    public Vector3 additionalOffset;
+    Vector3 currentOffset;
     public Vector3 rotationOffset;
 
     public float SpawnDelay;
     public float FinalDelay = 0.5f;
 
+    bool runningCoroutine;
+    
+
     [Button("Spawn Meshed")]
     public void SpawnMeshes()
     {
+        if (runningCoroutine) return;
         DuplicateAndReparent("TestPartent");
         MainGO.SetActive(false);
         StartCoroutine(SpawnMeshesCoroutine());
@@ -31,25 +41,40 @@ public class SpawnInMeshesAnimation : MonoBehaviour
 
     IEnumerator SpawnMeshesCoroutine()
     {
+        
+        runningCoroutine = true;
         List<spawn_info> spawn_Info = new List<spawn_info>();
+        currentOffset = spawnOffset;
         foreach (var _transform in visualsTransforms)
         {
-            spawn_Info.Add(new spawn_info(_transform, _transform.localScale, _transform.position,_transform.rotation));
+            spawn_Info.Add(new spawn_info(_transform, _transform.localScale, _transform.parent.position, _transform.parent.rotation));
+
+            // _transform.parent.position += spawnOffset;
+            // _transform.parent.rotation = _transform.rotation * Quaternion.Euler(rotationOffset);
+            // _transform.localScale = Vector3.zero;
+        }
+        foreach (var _transform in visualsTransforms)
+        {
+            //_transform.parent.position += currentOffset;
+            //currentOffset += additionalOffset;
+            _transform.parent.Rotate(rotationOffset);
             _transform.localScale = Vector3.zero;
-            _transform.position += spawnOffset;
-            _transform.rotation = _transform.rotation * Quaternion.Euler(rotationOffset);
         }
         foreach (var info in spawn_Info)
         {
             Sequence sequence = DOTween.Sequence();
             sequence.Append(info.spawn_transform.DOScale(info.spawn_scale, SpawnInScaleDuration).SetEase(SpawnInScaleEase))
-                .Join(info.spawn_transform.DORotateQuaternion(info.spawn_rotation, SpawnInScaleDuration * 2).SetEase(SpawnInScaleEase))
-                .Append(info.spawn_transform.DOMove(info.spawn_position, SpawnInMoveDuration).SetEase(SpawnInMoveEase));
+                .Join(info.spawn_transform.parent.DORotateQuaternion(info.spawn_rotation, SpawnInRotationDuration * 2).SetEase(SpawnInRotationEase))
+                .Join(info.spawn_transform.parent.DOMove(info.spawn_position + currentOffset, SpawnInMoveInitalDuration * 2).SetEase(SpawnInMoveInitalEase))
+                .Append(info.spawn_transform.parent.DOMove(info.spawn_position, SpawnInMoveDuration).SetEase(SpawnInMoveEase));
             yield return new WaitForSeconds(SpawnDelay);
         }
         yield return new WaitForSeconds(FinalDelay);
-        visualsParent.SetActive(false);
+
         MainGO.SetActive(true);
+        yield return null;
+        Destroy(visualsParent);
+        runningCoroutine = false;
     }
 
     public void DuplicateAndReparent(string newParentName = "DuplicatedObjects")
@@ -70,15 +95,24 @@ public class SpawnInMeshesAnimation : MonoBehaviour
         foreach (Transform original in transformsToSpawn)
         {
             if (original == null) continue;
-
+            GameObject duplicateParent = new GameObject(original.name + "Parent");
+            duplicateParent.transform.SetParent(visualsParent.transform);
+            duplicateParent.transform.position = original.transform.position;
+            duplicateParent.transform.localRotation = Quaternion.identity;
             // Duplicate the object
-            GameObject duplicateGO = Instantiate(original.gameObject, original.transform.position, original.transform.rotation);
+            //GameObject duplicateGO = Instantiate(original.gameObject, original.transform.position, original.transform.rotation);
+            GameObject duplicateGO = new GameObject(original.name);
+            duplicateGO.AddComponent<MeshFilter>().mesh = original.GetComponent<MeshFilter>().mesh;
+            duplicateGO.AddComponent<MeshRenderer>().materials = original.GetComponent<MeshRenderer>().materials;
+            duplicateGO.transform.position = original.transform.position;
+            duplicateGO.transform.rotation = original.transform.rotation;
+            duplicateGO.transform.localScale = original.transform.lossyScale;
             for (int i = duplicateGO.transform.childCount - 1; i >= 0; i--)
             {
                 Destroy(duplicateGO.transform.GetChild(i).gameObject);
             }
             // Parent to new parent while keeping world position
-            duplicateGO.transform.SetParent(visualsParent.transform, worldPositionStays: true);
+            duplicateGO.transform.SetParent(duplicateParent.transform, worldPositionStays: true);
 
             // Store the transform in the new list
             visualsTransforms.Add(duplicateGO.transform);
@@ -87,12 +121,14 @@ public class SpawnInMeshesAnimation : MonoBehaviour
         foreach (Transform original in transformsToSpawnWithChildren)
         {
             if (original == null) continue;
-
+            GameObject duplicateParent = new GameObject(original.name + "Parent");
+            duplicateParent.transform.SetParent(visualsParent.transform);
+            duplicateParent.transform.position = original.transform.position;
             // Duplicate the object
             GameObject duplicateGO = Instantiate(original.gameObject, original.transform.position, original.transform.rotation);
             
             // Parent to new parent while keeping world position
-            duplicateGO.transform.SetParent(visualsParent.transform, worldPositionStays: true);
+            duplicateGO.transform.SetParent(duplicateParent.transform, worldPositionStays: true);
 
             // Store the transform in the new list
             visualsTransforms.Add(duplicateGO.transform);
