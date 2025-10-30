@@ -10,6 +10,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using CI.PowerConsole;
 using System.Linq;
+using DG.Tweening;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -109,6 +110,9 @@ public class GameplayUtils : MonoBehaviour
 
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["hidebuild"].performed -= ToggleBuildNum;
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HideUI"].performed -= ToggleUIInputAction;
+
+
+        DOTween.Clear(true);
     }
 
     void ToggleBuildNum(InputAction.CallbackContext context)

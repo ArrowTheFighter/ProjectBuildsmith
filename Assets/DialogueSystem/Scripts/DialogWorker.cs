@@ -499,11 +499,13 @@ public class DialogWorker : MonoBehaviour, IInteractable
     {
         if (enabled)
         {
+            ScriptRefrenceSingleton.instance.compassScript.AddNewQuestMarker(transform);
             MarkerParticle.Play();
             hasMarker = true;
         }
         else
         {
+            ScriptRefrenceSingleton.instance.compassScript.RemoveQuestMarker(transform);
             MarkerParticle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             hasMarker = false;
         }

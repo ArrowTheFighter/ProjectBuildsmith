@@ -379,7 +379,7 @@ public class CharacterMovement : MonoBehaviour
 
                 if(moveingPlatform == null)
                 {
-                    print("landed on moving platform");
+                    //print("landed on moving platform");
                 }
                 
                 moveingPlatform = platform;

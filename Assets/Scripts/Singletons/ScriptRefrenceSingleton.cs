@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -40,6 +41,8 @@ public class ScriptRefrenceSingleton : MonoBehaviour
     public HotbarManager hotbarManager;
 
     public ItemTitlePopupManager itemTitlePopupManager;
+
+    public CompassScript compassScript;
 
     static bool notFirstTimeStarted;
 
