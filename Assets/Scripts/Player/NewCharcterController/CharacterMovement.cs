@@ -65,7 +65,7 @@ public class CharacterMovement : MonoBehaviour
     [HideInInspector] public bool grounded;
 
     [Header("Collider")]
-    [SerializeField] CapsuleCollider capsuleCollider;
+    [SerializeField] public CapsuleCollider capsuleCollider;
 
     public Transform orientation;
 

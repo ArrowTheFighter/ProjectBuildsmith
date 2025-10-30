@@ -1,4 +1,5 @@
 
+using System.Collections;
 using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -26,7 +27,16 @@ public class CatapultLaunch : PlayerAbility
         {
             cam.Lens.FieldOfView = context;
         });
+        characterMovement.capsuleCollider.enabled = false;
+        StartCoroutine(ReEnableCollisions());
         //initalVelocity = characterMovement.rb.linearVelocity;
+    }
+
+    IEnumerator ReEnableCollisions()
+    {
+        yield return new WaitForSeconds(0.5f);
+        characterMovement.capsuleCollider.enabled = true;
+
     }
 
     public override void UpdateAbility()

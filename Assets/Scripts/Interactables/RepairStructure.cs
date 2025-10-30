@@ -48,6 +48,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public bool Get_Should_Save { get => is_repaired; }
 
     Interactor last_interactor;
+    bool loadOnAwake;
 
     [Header("particles")]
     public GameObject ParticleForceField;
@@ -55,6 +56,15 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public ParticleSystem starParticle;
     public GameObject itemGatheredParticle;
     public Action<Collider, GameObject,RepairStructure> OnSpawnMaterialParticle;
+
+    void Awake()
+    {
+        if (loadOnAwake)
+        {
+            StartCoroutine(LoadStructure());
+            loadOnAwake = false;
+        } 
+    }
 
     void Start()
     {
@@ -201,7 +211,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         }
         runningCoroutine = false;
     }
-    
+
     public void SpawnStartParticle(Vector3 position, ParticleKillOnEnterTrigger particleKillOnEnterTrigger)
     {
         particleKillOnEnterTrigger.OnParticleEnter -= SpawnStartParticle;
@@ -209,12 +219,21 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         print(position);
         starParticle.transform.position = position;
         starParticle.Play();
-        Instantiate(itemGatheredParticle, position, quaternion.identity);  
+        Instantiate(itemGatheredParticle, position, quaternion.identity);
+    }
+    
+    public void AssignFlag()
+    {
+        if (flag_name != "" && flag_name != null)
+        {
+            FlagManager.Set_Flag(flag_name);
+        }
     }
 
 
     public void ScaleInStructure()
     {
+        AssignFlag();
         HologramStructure.transform.DOScale(Vector3.zero,0.2f).OnComplete(() => { HologramStructure.SetActive(false); });
         FinishedStructure.SetActive(true);
         RepairEvent?.Invoke();
@@ -229,9 +248,10 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     IEnumerator LoadStructure()
     {
-        yield return new WaitForSeconds(0.0f);
+        yield return new WaitForSeconds(1f);
+        AssignFlag();
         is_repaired = true;
-        HologramStructure.SetActive(false);
+        //HologramStructure.SetActive(false);
         FinishedStructure.SetActive(true);
         if (RepairEvent.GetPersistentEventCount() <= 0)
             FinishedStructure.transform.localScale = scaleOutSize;
@@ -240,7 +260,10 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
-        StartCoroutine(LoadStructure());
+        if (!gameObject.activeInHierarchy)
+            loadOnAwake = true;
+        else
+            StartCoroutine(LoadStructure());
     }
 }
 
