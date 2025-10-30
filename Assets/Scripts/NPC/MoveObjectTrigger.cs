@@ -41,7 +41,6 @@ public class MoveObjectTrigger : MonoBehaviour
     {
         if (ObjectToMove != null && NewPos != null)
         {
-            print("moving target");
             ObjectToMove.position = NewPos.position;
             activated = true;
             if (AlsoRotate)

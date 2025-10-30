@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ParticleKillOnEnterTrigger : MonoBehaviour
@@ -16,7 +15,7 @@ public class ParticleKillOnEnterTrigger : MonoBehaviour
         ps = GetComponent<ParticleSystem>();
     }
 
-    public void LaunchParticle(GameObject prefab, Collider collider)
+    public void LaunchParticle(GameObject prefab, Collider collider, Material material = null)
     {
 
         if (ps == null || prefab == null)
@@ -42,7 +41,10 @@ public class ParticleKillOnEnterTrigger : MonoBehaviour
         psRenderer.renderMode = ParticleSystemRenderMode.Mesh;
         psRenderer.mesh = meshFilter.sharedMesh;
         psRenderer.material = meshRenderer.sharedMaterial;
+        if (material != null)
+            psRenderer.material = material;
 
+        print($"Spawning item added particle: {meshFilter.sharedMesh} - {meshRenderer.sharedMaterial}");
         // Optionally set the trigger collider
         if (collider != null)
         {

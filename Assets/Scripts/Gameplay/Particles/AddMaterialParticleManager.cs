@@ -3,6 +3,8 @@ using UnityEngine;
 public class AddMaterialParticleManager : MonoBehaviour
 {
     GameObject ActiveParticleForceField;
+
+    public Material material;
     public GameObject particlePrefab;
     public Transform spawnPos;
     public void SpawnParticle(Collider collider, GameObject meshObj, RepairStructure repairStructure)
@@ -12,7 +14,7 @@ public class AddMaterialParticleManager : MonoBehaviour
         if (spawnedParticle.TryGetComponent(out ParticleKillOnEnterTrigger component))
         {
             print(collider);
-            component.LaunchParticle(meshObj, collider);
+            component.LaunchParticle(meshObj, collider,material);
             component.OnParticleEnter += repairStructure.SpawnStartParticle;
         }
     }

@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Collections;
 
 public class GameSettings : MonoBehaviour
 {
@@ -36,13 +37,17 @@ public class GameSettings : MonoBehaviour
 
     public Toggle[] EnableVsyncToggles;
     public Toggle[] EnableAntiAliasingToggles;
+    public Toggle[] EnableCompassToggles;
 
     public Slider[] RenderScaleSliders;
 
     public Action<bool> OnVsyncChanged;
     public Action<bool> OnAntiAliasingChanged;
+    public Action<bool> OnEnableCompassChanged;
 
     public Action<float> OnRenderScaleChanged;
+
+
 
 
 
@@ -58,9 +63,17 @@ public class GameSettings : MonoBehaviour
 
     void Start()
     {
+        SetMasterVolume(0);
         //ScreenFlashAccesibilitySetting();
         //ScreenShakeAccesibilitySetting();
         //SensitivitySetting();
+        StartCoroutine(waitBeforeSettingValues());
+    }
+
+    IEnumerator waitBeforeSettingValues()
+    {
+        yield return null;
+
         SetInitalSettings();
         SetUIValues();
     }
@@ -89,6 +102,7 @@ public class GameSettings : MonoBehaviour
         //Graphics settings
         foreach (var t in EnableVsyncToggles) t.isOn = settingsContainer.VSync;
         foreach (var t in EnableAntiAliasingToggles) t.isOn = settingsContainer.AntiAliasing;
+        foreach (var t in EnableCompassToggles) t.isOn = settingsContainer.CompassEnabled;
         foreach (var t in RenderScaleSliders) t.value = settingsContainer.RenderScale;
 
     }
@@ -110,6 +124,7 @@ public class GameSettings : MonoBehaviour
         // Graphics
         SetVsync(settingsContainer.VSync);
         SetAntiAliasing(settingsContainer.AntiAliasing);
+        SetEnableCompass(settingsContainer.CompassEnabled);
         SetRenderScale(settingsContainer.RenderScale);
     }
 
@@ -174,6 +189,14 @@ public class GameSettings : MonoBehaviour
         settingsContainer.AntiAliasing = value;
         OnAntiAliasingChanged?.Invoke(value);
         //SaveSettingsToFile();
+        SetUIValues();
+    }
+
+    public void SetEnableCompass(bool value)
+    {
+        settingsContainer.CompassEnabled = value;
+        OnEnableCompassChanged?.Invoke(value);
+
         SetUIValues();
     }
 
@@ -295,4 +318,5 @@ public class SettingsContainer
     public bool VSync = true;
     public bool AntiAliasing;
     public float RenderScale = 1f;
+    public bool CompassEnabled = true;
 }

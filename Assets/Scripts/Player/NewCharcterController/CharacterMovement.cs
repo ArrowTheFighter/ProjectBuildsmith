@@ -365,7 +365,7 @@ public class CharacterMovement : MonoBehaviour
         bool wasGrounded = grounded;
         float distance = groundCheckDistance;
         if (rb.linearVelocity.y < -4) distance += 0.3f;
-        grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask);
+        grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask,QueryTriggerInteraction.Ignore);
         if (groundHit.transform != null && groundHit.transform.tag == "CantWalk")
         {
             grounded = false;

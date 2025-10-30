@@ -1,12 +1,10 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public class CompassScript : MonoBehaviour
@@ -34,6 +32,12 @@ public class CompassScript : MonoBehaviour
     void Start()
     {
         PlayerTransform = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform;
+        ScriptRefrenceSingleton.instance.gameSettings.OnEnableCompassChanged += ToggleCompass;
+    }
+
+    void ToggleCompass(bool turnOn)
+    {
+        gameObject.SetActive(turnOn);
     }
 
     // Update is called once per frame
@@ -85,24 +89,25 @@ public class CompassScript : MonoBehaviour
     public void AddNewQuestMarker(Transform worldObjectTransform, GameObject particleObject = null)
     {
         GameObject spawnedMarker = Instantiate(MarkerPrefab, MarkerParent);
-        
+
         activeQuestMarkers.Add(new QuestMarkerInfo(spawnedMarker.GetComponent<RectTransform>(), worldObjectTransform,particleObject));
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(spawnedMarker.transform.GetChild(0).DOScale(1.5f, 0.15f).From(Vector3.zero))
-            .Append(spawnedMarker.transform.GetChild(0).DOScale(1f, 0.2f).SetEase(Ease.InOutQuint));
+
+        StartCoroutine(ScaleIn(spawnedMarker.transform.GetChild(0).GetChild(0)));
+        // sequence.Append(spawnedMarker.transform.GetChild(0).DOScale(1.5f, 0.15f).From(Vector3.zero).SetLink(spawnedMarker.transform.GetChild(0).gameObject))
+        //     .Append(spawnedMarker.transform.GetChild(0).DOScale(1f, 0.2f).SetEase(Ease.InOutQuint).SetLink(spawnedMarker.transform.GetChild(0).gameObject));
     }
 
     void RemoveQuestMarker(QuestMarkerInfo questMarkerInfo)
     {
         if (!activeQuestMarkers.Contains(questMarkerInfo)) return;
         if (questMarkerInfo.ParticleObject != null) Destroy(questMarkerInfo.ParticleObject);
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).DOScale(1.5f, 0.15f))
-            .Append(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).DOScale(0f, 0.2f).SetEase(Ease.InOutQuint)).OnComplete(() =>
-            {
-                Destroy(questMarkerInfo.MarkerRectTransform.gameObject);
-                activeQuestMarkers.Remove(questMarkerInfo);
-            });
+        StartCoroutine(ScaleOutAndDestroy(questMarkerInfo));
+        // sequence.Append(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).DOScale(1.5f, 0.15f).SetLink(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).gameObject))
+        //     .Append(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).DOScale(0f, 0.2f).SetEase(Ease.InOutQuint).SetLink(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).gameObject)).OnComplete(() =>
+        //     {
+        //         Destroy(questMarkerInfo.MarkerRectTransform.gameObject);
+        //         activeQuestMarkers.Remove(questMarkerInfo);
+        //     });
     }
 
     public void RemoveQuestMarker(Transform worldObjectTransform)
@@ -134,7 +139,7 @@ public class CompassScript : MonoBehaviour
         float distanceToMarker = Vector3.Distance(ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position, markerWorldPos);
         float scaleT = Mathf.InverseLerp(175, 35f, distanceToMarker);
         markerRectTransform.GetChild(0).localScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one, scaleT);
-        markerRectTransform.GetChild(0).GetComponent<Image>().color = Color.Lerp(new Color(0.7f, 0.7f, 0.7f),Color.white, scaleT);
+        markerRectTransform.GetComponentInChildren<Image>().color = Color.Lerp(new Color(0.7f, 0.7f, 0.7f),Color.white, scaleT);
 
     }
 
@@ -161,6 +166,85 @@ public class CompassScript : MonoBehaviour
             icon.anchoredPosition = Vector2.Lerp(CompassLeftPosition.anchoredPosition, CompassRightPosition.anchoredPosition, IconPos);
         }
     }
+
+    private IEnumerator ScaleIn(Transform target)
+    {
+        if (target == null) yield break;
+        // --- Stage 1: scale 0 → 1.5 ---
+        float t = 0f;
+        float durationUp = 0.15f;
+        Vector3 startScale = target.localScale;
+        Vector3 midScale = Vector3.one * 1.5f;
+        while (t < durationUp)
+        {
+            if (target == null) yield break;
+            t += Time.deltaTime;
+            float progress = t / durationUp;
+            Vector3 newScale = Vector3.Lerp(startScale, midScale, progress);
+            target.localScale = newScale;
+            yield return null;
+        }
+
+        // --- Stage 2: scale down to 0 ---
+        t = 0f;
+        float durationDown = 0.2f;
+        Vector3 endScale = Vector3.one;
+
+        while (t < durationDown)
+        {
+            if (target == null) yield break;
+            t += Time.deltaTime;
+            float progress = Mathf.SmoothStep(0f, 1f, t / durationDown); // smooth ease
+            target.localScale = Vector3.Lerp(midScale, endScale, progress);
+            yield return null;
+        }
+
+        target.localScale = endScale;
+    }
+
+
+    private IEnumerator ScaleOutAndDestroy(QuestMarkerInfo questMarkerInfo)
+    {
+        Transform target = questMarkerInfo.MarkerRectTransform.transform.GetChild(0);
+        if (target == null) yield break;
+
+        // --- Stage 1: scale up to 1.5x ---
+        float t = 0f;
+        float durationUp = 0.15f;
+        Vector3 startScale = target.localScale;
+        Vector3 midScale = Vector3.one * 1.5f;
+
+        while (t < durationUp)
+        {
+            if (target == null) yield break;
+            t += Time.deltaTime;
+            float progress = t / durationUp;
+            target.localScale = Vector3.Lerp(startScale, midScale, progress);
+            yield return null;
+        }
+
+        // --- Stage 2: scale down to 0 ---
+        t = 0f;
+        float durationDown = 0.2f;
+        Vector3 endScale = Vector3.zero;
+
+        while (t < durationDown)
+        {
+            if (target == null) yield break;
+            t += Time.deltaTime;
+            float progress = Mathf.SmoothStep(0f, 1f, t / durationDown); // smooth ease
+            target.localScale = Vector3.Lerp(midScale, endScale, progress);
+            yield return null;
+        }
+
+        // --- Cleanup ---
+        if (questMarkerInfo.MarkerRectTransform != null)
+            Destroy(questMarkerInfo.MarkerRectTransform.gameObject);
+
+        activeQuestMarkers.Remove(questMarkerInfo);
+    }
+
+
 }
 
 class QuestMarkerInfo

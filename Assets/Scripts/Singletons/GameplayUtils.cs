@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 using CI.PowerConsole;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.XR;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -82,7 +83,6 @@ public class GameplayUtils : MonoBehaviour
         PowerConsole.CommandEntered += CommandCheck;
         //PowerConsole.OpenCloseHotkeys = new List<KeyCode> { KeyCode.LeftControl,KeyCode.BackQuote};
 
-        print(ScriptRefrenceSingleton.instance != null);
         
 
 #if UNITY_EDITOR
@@ -104,7 +104,6 @@ public class GameplayUtils : MonoBehaviour
 
     void OnSceneReload()
     {
-        print("gameplay utils unsubscribing input");
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["console"].performed -= ToggleConsole;
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["consoleUI"].performed -= ToggleConsole;
 
@@ -120,9 +119,23 @@ public class GameplayUtils : MonoBehaviour
         BuildNumCanvas.SetActive(!BuildNumCanvas.activeInHierarchy);
     }
 
+    void OnEnable()
+    {
+        Application.logMessageReceived += HandleLog;
+    }
+
+    void OnDisable()
+    {
+        Application.logMessageReceived -= HandleLog;
+    }
+    
+    void HandleLog(string logString, string stackTrace, LogType logType)
+    {
+        PowerConsole.Log(LogLevel.Information, logString);
+    }
+
     void ToggleConsole(InputAction.CallbackContext context)
     {
-        print("toggling console");
         if (!PowerConsole.IsVisible)
         {
             OpenMenu();
@@ -132,7 +145,6 @@ public class GameplayUtils : MonoBehaviour
             CloseMenu();
         }
         PowerConsole.IsVisible = !PowerConsole.IsVisible;
-        PowerConsole.Clear();
     }
 
     void CommandCheck(object sender, CommandEnteredEventArgs args)
@@ -175,6 +187,25 @@ public class GameplayUtils : MonoBehaviour
                 {
                     UnlockRecipe(arguments[1]);
                 }
+                break;
+            case "printinfo":
+                if(arguments.Length > 1)
+                {
+                    switch (arguments[1])
+                    {
+                        case "itemdata":
+                            if(arguments.Length > 2)
+                            {
+                                ItemData itemData = GetItemDataByID(arguments[2]);
+                                if (itemData == null) return;
+                                PowerConsole.Log(LogLevel.Information, $"id: {itemData.item_id} - name:{itemData.item_name} - item prefab: {itemData.item_prefab_obj}");
+                            }
+                        break;
+                    }
+                }
+                break;
+            case "clear":
+                PowerConsole.Clear();
                 break;
         }
         // string id = callback.Args["-i"];
@@ -723,7 +754,6 @@ public class GameplayUtils : MonoBehaviour
     public void PlayerDropItem(string item_id, int item_amount)
     {
         ItemData itemData = GetItemDataByID(item_id);
-        print(itemData);
         GameObject spawned_item = Instantiate(itemData.item_pickup_object, PlayerTransform.position + Vector3.up * 1.5f + PlayerTransform.forward, Quaternion.identity);
         spawned_item.GetComponent<ItemPickup>().amount = item_amount;
         Rigidbody spawned_item_rigidbody = spawned_item.GetComponent<Rigidbody>();
