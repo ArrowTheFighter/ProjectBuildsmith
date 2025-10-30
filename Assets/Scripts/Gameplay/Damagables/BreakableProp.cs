@@ -21,9 +21,9 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
     public AttackType[] AttackTypes;
 
     [Header("Scale on hit")]
-    public float onHitScaleDuration = 0.075f;
-    public Ease OnHitScaleEase = Ease.InOutCirc;
-    public float onHitScaleAmount = 0.95f;
+    public float onHitTweenDuration = 0.075f;
+    public Ease OnHitTweenEase = Ease.InOutCirc;
+    public float onHitTweenAmount = 0.95f;
 
 
     public bool PlayerCanStomp { get; set; }
@@ -55,7 +55,7 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
         Health -= amount;
         ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, TakeDamageSoundEffects);
 
-        transform.DOScale(startScale * onHitScaleAmount, onHitScaleDuration).SetEase(OnHitScaleEase).SetLoops(2,LoopType.Yoyo);
+        transform.DOScale(startScale * onHitTweenAmount, onHitTweenDuration).SetEase(OnHitTweenEase).SetLoops(2,LoopType.Yoyo);
         if (Health <= 0)
         {
             Die();
