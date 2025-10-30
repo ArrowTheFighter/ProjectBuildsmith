@@ -21,8 +21,8 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
     public AttackType[] AttackTypes;
 
     [Header("Scale on hit")]
-    float onHitScaleDuration = 0.075f;
-    Ease OnHitScaleEase = Ease.InOutCirc;
+    public float onHitScaleDuration = 0.075f;
+    public Ease OnHitScaleEase = Ease.InOutCirc;
     public float onHitScaleAmount = 0.95f;
 
 
