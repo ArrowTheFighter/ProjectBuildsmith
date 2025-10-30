@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
@@ -19,6 +20,11 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
     public float destroyedSoundFXPitch;
     public AttackType[] AttackTypes;
 
+    [Header("Scale on hit")]
+    float onHitScaleDuration = 0.075f;
+    Ease OnHitScaleEase = Ease.InOutCirc;
+    public float onHitScaleAmount = 0.95f;
+
 
     public bool PlayerCanStomp { get; set; }
 
@@ -28,10 +34,17 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
     public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
 
     public bool Get_Should_Save => broken;
+    Vector3 startScale;
+
+    void Awake()
+    {
+        startScale = transform.localScale;
+    }
 
     void OnEnable()
     {
         broken = false;
+
     }
 
 
@@ -41,6 +54,8 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
         PlayParticle();
         Health -= amount;
         ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, TakeDamageSoundEffects);
+
+        transform.DOScale(startScale * onHitScaleAmount, onHitScaleDuration).SetEase(OnHitScaleEase).SetLoops(2,LoopType.Yoyo);
         if (Health <= 0)
         {
             Die();
