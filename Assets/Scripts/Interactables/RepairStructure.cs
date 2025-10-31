@@ -168,21 +168,38 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         runningCoroutine = true;
         while (isInteracting)
         {
-            for (int i = 0; i < added_items.Count;)
+            bool allItemsComplete = true;
+            for (int i = 0; i < added_items.Count; i++)
             {
-                if (added_items[i].current_amount >= added_items[i].required_amount)
+                if (added_items[i].current_amount < added_items[i].required_amount)
                 {
-
-                    i++;
-                    if (i >= added_items.Count)
-                    {
-                        if (is_repaired) break;
-                        is_repaired = true;
-                        Invoke(nameof(ScaleInStructure), 0.75f);
-                        break;
-                    }
-                    continue;
+                    allItemsComplete = false;
+                    break;
                 }
+            }
+
+            if (allItemsComplete && !is_repaired)
+            {
+                is_repaired = true;
+                Invoke(nameof(ScaleInStructure), 0.75f);
+                isInteracting = false; // stop loop
+                break;
+            }
+            for (int i = 0; i < added_items.Count; i++)
+            {
+                // if (added_items[i].current_amount >= added_items[i].required_amount)
+                // {
+
+                //     if (i >= added_items.Count)
+                //     {
+                //         if (is_repaired) break;
+                //         is_repaired = true;
+                //         Invoke(nameof(ScaleInStructure), 0.75f);
+                //         break;
+                //     }
+                //     continue;
+                // }
+                if (added_items[i].current_amount >= added_items[i].required_amount) continue;
                 if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(added_items[i].item_id) > 0)
                 {
                     itemsRequiredDisplay[i].item_amount--;
@@ -192,19 +209,23 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
                     ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(added_items[i].item_id);
                     if (itemData != null && itemData.item_pickup_object != null)
                     {
-                        if(itemData.item_pickup_object.transform.childCount > 0)
-                        OnSpawnMaterialParticle?.Invoke(ParticleKillTrigger, itemData.item_pickup_object.transform.GetChild(0).gameObject, this);
+                        if (itemData.item_pickup_object.transform.childCount > 0)
+                            OnSpawnMaterialParticle?.Invoke(ParticleKillTrigger, itemData.item_pickup_object.transform.GetChild(0).gameObject, this);
                     }
 
                     // if (particleKillOnEnterTrigger != null && ParticleKillTrigger != null)
                     // {
-                        
-                        
+
+
                     //         //particleKillOnEnterTrigger.LaunchParticle(itemData.item_prefab_obj, ParticleKillTrigger);
                     // }
-                    currentItemDelay = Mathf.Max(currentItemDelay - 0.015f,0.075f);
+                    currentItemDelay = Mathf.Max(currentItemDelay - 0.015f, 0.075f);
+                    break;
                 }
-                break;
+                else
+                {
+                    continue;
+                }
             }
 
             yield return new WaitForSeconds(currentItemDelay);
