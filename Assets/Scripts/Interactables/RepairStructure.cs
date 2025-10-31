@@ -190,10 +190,10 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
                     ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(added_items[i].item_id, 1);
 
                     ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(added_items[i].item_id);
-                    if (itemData != null && itemData.item_prefab_obj != null)
+                    if (itemData != null && itemData.item_pickup_object != null)
                     {
-
-                        OnSpawnMaterialParticle?.Invoke(ParticleKillTrigger, itemData.item_prefab_obj,this);
+                        if(itemData.item_pickup_object.transform.childCount > 0)
+                        OnSpawnMaterialParticle?.Invoke(ParticleKillTrigger, itemData.item_pickup_object.transform.GetChild(0).gameObject, this);
                     }
 
                     // if (particleKillOnEnterTrigger != null && ParticleKillTrigger != null)
