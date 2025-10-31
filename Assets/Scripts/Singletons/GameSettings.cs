@@ -50,7 +50,7 @@ public class GameSettings : MonoBehaviour
 
 
 
-
+    float startingVolume;
     // private static string screenFlashKey = "ScreenFlash";
     // private static string screenShakeKey = "ScreenShake";
     // private static string sensitivityKey = "CameraSensitivity";
@@ -63,7 +63,9 @@ public class GameSettings : MonoBehaviour
 
     void Start()
     {
+        startingVolume = settingsContainer.MasterVolume;
         SetMasterVolume(0);
+        settingsContainer.MasterVolume = startingVolume;
         //ScreenFlashAccesibilitySetting();
         //ScreenShakeAccesibilitySetting();
         //SensitivitySetting();
@@ -82,6 +84,7 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer = new SettingsContainer();
         SetInitalSettings();
+
         SetUIValues();
     }
 
