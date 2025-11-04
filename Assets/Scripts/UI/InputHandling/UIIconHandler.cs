@@ -100,23 +100,6 @@ public class UIIconHandler : MonoBehaviour
                     {
                         iconText = iconEntry.Switch_Icon_Name;
                     }
-                    // switch (CurrentControlDevice)
-                    // {
-                    //     case "DualShock4GamepadHID":
-                    //         print("showing playstation icon");
-                    //         iconText = iconEntry.Playstation_Icon_Name;
-                    //         break;
-                    //     // case "Xbox":
-                    //     //     iconText = iconEntry.Xbox_Icon_Name;
-                    //     //     break;
-                    //     case "SwitchProControllerHID":
-                    //         iconText = iconEntry.Switch_Icon_Name;
-                    //         break;
-                    //     default:
-                    //         iconText = iconEntry.Xbox_Icon_Name;
-                    //         break;
-                    // }
-                    //rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Playstation_Icon_Name}>");
                     rawText = Regex.Replace(
                         rawText,
                         $@"<icon={Regex.Escape(iconEntry.Action_Name)}>",  // pattern
@@ -126,10 +109,22 @@ public class UIIconHandler : MonoBehaviour
                 }
                 break;
         }
-        // foreach (var iconEntry in iconDatabase.icons)
-        // {
-        //     rawText = rawText.Replace($"<icon={iconEntry.Action_Name}>", $"<sprite name={iconEntry.Icon_Name}>");
-        // }
+
+        rawText = Regex.Replace(
+        rawText,
+        @"<itemamount=([a-zA-Z0-9_]+)>",  // e.g. <itemamount=plank>
+        match =>
+        {
+            string itemId = match.Groups[1].Value.ToLower();
+
+            // Replace this with your actual item lookup logic
+            int amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(itemId);
+
+            return amount.ToString();
+        },
+        RegexOptions.IgnoreCase
+    );
+
         return rawText;
     }
 }

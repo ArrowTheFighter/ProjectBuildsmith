@@ -49,6 +49,7 @@ MonoBehaviour:
         Description: Head to the old workshop to search for tools
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 0
         flag_id: CraftingTutorialWorkshopTriggered
     - rid: 4434710013077880834
@@ -57,6 +58,7 @@ MonoBehaviour:
         Description: Collect the <style=Item>rusty axe head</style>
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 1
         ObjectiveIDCollection: 0
         Item_ID: rusty_axe_head
         Item_Amount: 1
@@ -66,24 +68,27 @@ MonoBehaviour:
         Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 0
         flag_id: CraftingTutorialAxeHeadComplete
     - rid: 4434710013077880836
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Gather 5 pieces of <style=Item>wood</style>
+        Description: Gather <itemamount=wood>/5 pieces of <style=Item>wood</style>
         StopAtThisObjective: 0
         StayCompleted: 1
+        isComplete: 1
         ObjectiveIDCollection: 1
         Item_ID: wood
         Item_Amount: 5
     - rid: 4434710013077880837
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: 'Gather 5 <style=Item>plant fiber</style>    (hint: use the
-          stick <Icon=Action_Attack> )'
+        Description: 'Gather <itemamount=plant_fiber>/5 <style=Item>plant fiber</style>   
+          (hint: use the stick <Icon=Action_Attack> )'
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 1
         ObjectiveIDCollection: 1
         Item_ID: plant_fiber
         Item_Amount: 5
@@ -93,6 +98,7 @@ MonoBehaviour:
         Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 1
         flag_id: CraftingTutorialMaterialsComplete
     - rid: 4434710013077880928
@@ -102,6 +108,7 @@ MonoBehaviour:
           to the blueprint beside Rose
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 2
         flag_id: CraftingTutorialWorkbenchRebuilt
     - rid: 4434710013077880929
@@ -110,6 +117,7 @@ MonoBehaviour:
         Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 2
         flag_id: CraftingTutorialWorkbenchComplete
     - rid: 4434710013077880930
@@ -119,6 +127,7 @@ MonoBehaviour:
           at the crafting table)"
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 3
         Item_ID: rope
         Item_Amount: 1
@@ -128,6 +137,7 @@ MonoBehaviour:
         Description: Craft a <style=Item>simple axe</style>
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 3
         Item_ID: simple_axe
         Item_Amount: 1
@@ -137,6 +147,7 @@ MonoBehaviour:
         Description: Use your new axe to chop down the big tree
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 4
         flag_id: CraftingTutorialBigTreeChopComplete
     - rid: 4434710013077880934
@@ -145,5 +156,6 @@ MonoBehaviour:
         Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 4
         flag_id: CraftingTutorialComplete

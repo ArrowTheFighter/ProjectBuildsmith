@@ -11,7 +11,7 @@ public class InteractionPromptUI : MonoBehaviour
     public TextMeshProUGUI promptTextUI;
     item_requirement[] item_Requirements;
     [SerializeField] Transform item_requirement_parent;
-    string fontWeight = "<font-weight=500>";
+    string fontWeight = "";
 
     private void Start()
     {

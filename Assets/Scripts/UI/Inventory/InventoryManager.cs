@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Sirenix.OdinInspector;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -46,6 +49,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] GameObject PinQuestButton;
     [SerializeField] TextMeshProUGUI PinQuestText;
     public List<QuestInfo> activeQuests = new List<QuestInfo>();
+    public List<QuestInfo> CompletedQuests = new List<QuestInfo>();
 
     [Header("Pinned Quests")]
     public Transform PinnedQuestsParent;
@@ -582,6 +586,34 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void ClearQuestButtons()
+    {
+        for (int i = QuestItemsParent.transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(QuestItemsParent.transform.GetChild(0).gameObject);
+        }
+    }
+
+    [Button]
+    public void SpawnActiveQuestButtons()
+    {
+        ClearQuestButtons();
+        foreach (var quest in activeQuests)
+        {
+            AddQuestButton(quest);
+        }
+    }
+    
+    [Button]
+    public void SpawnCompletedQuestButtons()
+    {
+        ClearQuestButtons();
+        foreach(var quest in CompletedQuests)
+        {
+            AddQuestButton(quest);
+        }
+    }
+
 
     public void AssignQuest(string quest_id)
     {
@@ -594,14 +626,11 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (info.QuestData == data) return;
                 }
-                GameObject questButton = Instantiate(QuestButton, QuestItemsParent.transform);
 
-                QuestInfoButton questInfoButton = questButton.GetComponent<QuestInfoButton>();
-                questInfoButton.QuestID = quest_id;
-                questInfoButton.questData = data;
-                questInfoButton.buttonName.text = $"<font-weight=700>!</font-weight> {data.QuestName}";
 
                 QuestInfo questInfo = new QuestInfo(data);
+
+                AddQuestButton(questInfo,true);
 
                 foreach (QuestObjective questObjective in data.questObjectives)
                 {
@@ -621,34 +650,58 @@ public class InventoryManager : MonoBehaviour
         //return null;
     }
 
-    public void LoadSavedQuest(SaveableQuestInfo quest)
+    void AddQuestButton(QuestInfo questInfo, bool unread = false)
+    {
+        GameObject questButton = Instantiate(QuestButton, QuestItemsParent.transform);
+
+        QuestInfoButton questInfoButton = questButton.GetComponent<QuestInfoButton>();
+        questInfoButton.QuestID = questInfo.QuestData.ID;
+        questInfoButton.questData = questInfo.QuestData;
+        if(unread)
+        {
+            questInfoButton.buttonName.text = $"<font-weight=700>!</font-weight> {questInfo.QuestData.QuestName}";
+        }
+        else
+        {
+            questInfoButton.buttonName.text = $"{questInfo.QuestData.QuestName}";
+        }
+
+        
+    }
+
+    public void LoadSavedQuest(SaveableQuestInfo quest, bool completed = false)
     {
         QuestData[] allQuests = Resources.LoadAll<QuestData>("QuestData");
         foreach (var data in allQuests)
         {
             if (data.ID == quest.quest_id)
-            {
+            {   
                 foreach (QuestInfo info in activeQuests)
                 {
                     if (info.QuestData == data) return;
                 }
-                GameObject questButton = Instantiate(QuestButton, QuestItemsParent.transform);
-
-                QuestInfoButton questInfoButton = questButton.GetComponent<QuestInfoButton>();
-                questInfoButton.QuestID = quest.quest_id;
-                questInfoButton.questData = data;
-                questInfoButton.buttonName.text = $"{data.QuestName}";
-
                 QuestInfo questInfo = new QuestInfo(data);
 
-                for (int i = 0; i < data.questObjectives.Count; i++)
+                if(!completed)
                 {
-                    questInfo.QuestData.questObjectives[i].isComplete = quest.completed_objectives[i];
+                    for (int i = 0; i < data.questObjectives.Count; i++)
+                    {
+                        questInfo.QuestData.questObjectives[i].isComplete = quest.completed_objectives[i];
+                    }
                 }
+                
 
                 questInfo.IsComplete = quest.is_complete;
 
-                activeQuests.Add(questInfo);
+                if (!completed)
+                {
+                    AddQuestButton(questInfo);
+                    activeQuests.Add(questInfo);
+                }
+                else
+                {
+                    CompletedQuests.Add(questInfo);
+                }
 
                 if (quest.is_pinned)
                 {
@@ -673,7 +726,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     questComplete = false;
                     break;
-                } 
+                }
                 // switch (info.QuestData.questObjectives[i])
                 // {
                 //     case ObjectiveCollectItems objectiveCollect:
@@ -700,13 +753,24 @@ public class InventoryManager : MonoBehaviour
                 info.IsComplete = true;
                 ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotif("Quest Complete!", 8);
                 RemovePinnedQuest(info.QuestData);
+                CompletedQuests.Add(info);
                 for (int i = 0; i < QuestItemsParent.transform.childCount; i++)
                 {
                     if (QuestItemsParent.transform.GetChild(i).TryGetComponent(out QuestInfoButton questInfoButton))
                     {
                         questInfoButton.SetComplete();
+                        Destroy(questInfoButton.gameObject);
                     }
                 }
+            }
+        }
+        foreach(var info in CompletedQuests)
+        {
+            QuestInfo questInfo = activeQuests.FirstOrDefault(_activeQuest => _activeQuest == info);
+
+            if(questInfo != null)
+            {
+                activeQuests.Remove(questInfo);
             }
         }
     }

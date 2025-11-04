@@ -27,6 +27,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public ScriptableObject currentDialogSO;
     DSDialogueSO StarterNode;
 
+    public string InactivePrompt = "Talk";
+    public string ActivePrompt = "Continue";
     public string PROMPT;
     public string INTERACTION_PROMPT => PROMPT;
 
@@ -55,6 +57,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void Awake()
     {
         ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
+        PROMPT = InactivePrompt;
     }
 
 
@@ -73,6 +76,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void BindInputs()
     {
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed += ActiveAndInteractContext;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Click"].performed += ActiveAndClickInteract;
 
         ScriptRefrenceSingleton.OnScriptLoaded -= BindInputs;
         ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnbindInputs;
@@ -81,6 +85,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
     void UnbindInputs()
     {
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Submit"].performed -= ActiveAndInteractContext;
+        ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Click"].performed -= ActiveAndClickInteract;
         ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu -= UnbindInputs;
 
     }
@@ -148,7 +153,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     cinemachineBrainEvents.BlendCreatedEvent.AddListener(setCameraBlendInstant);
                 }
             }
-            
+
 
             if (TurnTowardsPlayer && TurnBackToOrigin)
             {
@@ -160,6 +165,11 @@ public class DialogWorker : MonoBehaviour, IInteractable
                     }
                 }
             }
+        }
+        PROMPT = active ? ActivePrompt : InactivePrompt;
+        if (TryGetComponent(out CharacterMovement component))
+        {
+            component.playerAnimationController.animator.SetBool("Talking", active);
         }
         isActive = active;
     }
@@ -184,6 +194,12 @@ public class DialogWorker : MonoBehaviour, IInteractable
             frozenCam.SetActive(false);
 
         }
+    }
+
+    void ActiveAndClickInteract(InputAction.CallbackContext callback)
+    {
+        if (ScriptRefrenceSingleton.instance.dialogManager.ActiveChoices.Count > 0) return;
+        ActiveAndInteract();
     }
     
     void ActiveAndInteractContext(InputAction.CallbackContext callback)

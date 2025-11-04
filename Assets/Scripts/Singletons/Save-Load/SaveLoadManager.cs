@@ -122,7 +122,11 @@ public class SaveLoadManager : MonoBehaviour
         foreach (var quest in saveFileStruct.saved_quests)
         {
             ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.LoadSavedQuest(quest);
-        } 
+        }
+        foreach (var quest in saveFileStruct.saved_completed_quests)
+        {
+            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.LoadSavedQuest(quest,true);
+        }
 
         //Flags
         foreach (var flag in saveFileStruct.Flags)
@@ -201,7 +205,7 @@ public class SaveLoadManager : MonoBehaviour
         saveFile.unlocked_recipes = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.UnlockedRecipes;
 
         //Quests
-        foreach(var quest in ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.activeQuests)
+        foreach (var quest in ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.activeQuests)
         {
 
             bool quest_is_pinned = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.activedPinnedQuests
@@ -215,8 +219,19 @@ public class SaveLoadManager : MonoBehaviour
             }
 
             saveFile.saved_quests.Add(saveableQuestInfo);
-            
-            
+
+        }
+
+        foreach (var quest in ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.CompletedQuests)
+        {
+
+            bool quest_is_complete = false;
+
+            SaveableQuestInfo saveableQuestInfo = new SaveableQuestInfo(quest, quest_is_complete);
+
+            saveableQuestInfo.is_complete = true;
+            saveFile.saved_completed_quests.Add(saveableQuestInfo);
+
         }
 
         //Player position
@@ -305,6 +320,7 @@ public class SaveFileStruct
         dialog_worker_has_marker = new List<int>();
         saveable_ids = new List<int>();
         saved_quests = new List<SaveableQuestInfo>();
+        saved_completed_quests = new List<SaveableQuestInfo>();
         saved_inventory_savers = new List<SerializableInventory>();
         unlocked_recipes = new List<string>();
     }
@@ -321,6 +337,7 @@ public class SaveFileStruct
 
     //Quests
     public List<SaveableQuestInfo> saved_quests;
+    public List<SaveableQuestInfo> saved_completed_quests;
 
     //Player position
     public SerializableVector3 player_position;
