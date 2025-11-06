@@ -9,6 +9,7 @@ public class ParticleKillOnEnterTrigger : MonoBehaviour
     public event Action<Vector3, ParticleKillOnEnterTrigger> OnParticleEnter;
     List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {

@@ -17,8 +17,9 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public GameObject HologramStructure;
 
     public item_requirement[] itemsRequired;
-    item_requirement[] itemsRequiredDisplay;
+    [HideInInspector] public item_requirement[] itemsRequiredDisplay;
     public item_requirement[] required_items => itemsRequiredDisplay;
+    public Action<float> requiredItemPercentUpdated;
 
     [SerializeField] List<Item_Check> added_items = new List<Item_Check>();
 
@@ -49,13 +50,19 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     Interactor last_interactor;
     bool loadOnAwake;
+    public Action onFinished;
 
     [Header("particles")]
+    int currentItemParticles;
     public GameObject ParticleForceField;
     public Collider ParticleKillTrigger;
     public ParticleSystem starParticle;
     public GameObject itemGatheredParticle;
-    public Action<Collider, GameObject,RepairStructure> OnSpawnMaterialParticle;
+    public Action<Collider, GameObject, RepairStructure> OnSpawnMaterialParticle;
+    public Action SpawnedStar;
+
+    [Header("Audio")]
+    public AudioCollection[] StarParticleAudio;
 
     void Awake()
     {
@@ -68,7 +75,16 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     void Start()
     {
-        itemsRequiredDisplay = itemsRequired;
+        itemsRequiredDisplay = new item_requirement[itemsRequired.Length];
+        for (int i = 0; i < itemsRequired.Length; i++)
+        {
+            itemsRequiredDisplay[i] = new item_requirement
+            {
+                item_id = itemsRequired[i].item_id,
+                item_name = itemsRequired[i].item_name,
+                item_amount = itemsRequired[i].item_amount
+            };
+        }
         foreach (var item_req in itemsRequired)
         {
             Item_Check item_check = new Item_Check();
@@ -168,23 +184,23 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         runningCoroutine = true;
         while (isInteracting)
         {
-            bool allItemsComplete = true;
-            for (int i = 0; i < added_items.Count; i++)
-            {
-                if (added_items[i].current_amount < added_items[i].required_amount)
-                {
-                    allItemsComplete = false;
-                    break;
-                }
-            }
+            // bool allItemsComplete = true;
+            // for (int i = 0; i < added_items.Count; i++)
+            // {
+            //     if (added_items[i].current_amount < added_items[i].required_amount)
+            //     {
+            //         allItemsComplete = false;
+            //         break;
+            //     }
+            // }
 
-            if (allItemsComplete && !is_repaired)
-            {
-                is_repaired = true;
-                Invoke(nameof(ScaleInStructure), 0.75f);
-                isInteracting = false; // stop loop
-                break;
-            }
+            // if (allItemsComplete && !is_repaired)
+            // {
+            //     is_repaired = true;
+            //     Invoke(nameof(ScaleInStructure), 0.75f);
+            //     isInteracting = false; // stop loop
+            //     break;
+            // }
             for (int i = 0; i < added_items.Count; i++)
             {
                 // if (added_items[i].current_amount >= added_items[i].required_amount)
@@ -204,13 +220,18 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
                 {
                     itemsRequiredDisplay[i].item_amount--;
                     added_items[i].current_amount++;
+                    requiredItemPercentUpdated?.Invoke(CalculateProgressPercentage(itemsRequired, itemsRequiredDisplay));
                     ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(added_items[i].item_id, 1);
 
                     ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(added_items[i].item_id);
                     if (itemData != null && itemData.item_pickup_object != null)
                     {
                         if (itemData.item_pickup_object.transform.childCount > 0)
+                        {
                             OnSpawnMaterialParticle?.Invoke(ParticleKillTrigger, itemData.item_pickup_object.transform.GetChild(0).gameObject, this);
+                            currentItemParticles++;
+                        }
+
                     }
 
                     // if (particleKillOnEnterTrigger != null && ParticleKillTrigger != null)
@@ -228,18 +249,49 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
                 }
             }
 
+            bool allItemsComplete = true;
+            for (int i = 0; i < added_items.Count; i++)
+            {
+                if (added_items[i].current_amount < added_items[i].required_amount)
+                {
+                    allItemsComplete = false;
+                    break;
+                }
+            }
+
+            if (allItemsComplete && !is_repaired)
+            {
+                is_repaired = true;
+                StartCoroutine(waitForParticlesToFinish());
+                isInteracting = false; // stop loop
+                break;
+            }
+
             yield return new WaitForSeconds(currentItemDelay);
         }
         runningCoroutine = false;
+    }
+    
+    IEnumerator waitForParticlesToFinish()
+    {   
+        while (currentItemParticles > 0)
+        {
+            yield return null;
+        }
+        Invoke(nameof(ScaleInStructure), 0.25f);
     }
 
     public void SpawnStartParticle(Vector3 position, ParticleKillOnEnterTrigger particleKillOnEnterTrigger)
     {
         particleKillOnEnterTrigger.OnParticleEnter -= SpawnStartParticle;
+        currentItemParticles--;
         if (starParticle == null) return;
         print(position);
         starParticle.transform.position = position;
         starParticle.Play();
+        SpawnedStar?.Invoke();
+        if (StarParticleAudio.Length > 0)
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, StarParticleAudio);
         Instantiate(itemGatheredParticle, position, quaternion.identity);
     }
     
@@ -254,28 +306,44 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     public void ScaleInStructure()
     {
+        onFinished?.Invoke();
         AssignFlag();
-        HologramStructure.transform.DOScale(Vector3.zero,0.2f).OnComplete(() => { HologramStructure.SetActive(false); });
-        FinishedStructure.SetActive(true);
+        if(HologramStructure != null)
+        {
+            HologramStructure.transform.DOScale(Vector3.zero, 0.2f).OnComplete(() => { HologramStructure.SetActive(false); });
+        }
+
+        if (FinishedStructure != null)
+            FinishedStructure.SetActive(true);
+            
         RepairEvent?.Invoke();
         if (RepairEvent.GetPersistentEventCount() > 0) return;
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(
-            FinishedStructure.transform.DOScale(scaleInSize, ScaleInDuration).SetEase(ScaleInEase))
-            .Append(
-                FinishedStructure.transform.DOScale(scaleOutSize, ScaleOutDuration).SetEase(ScaleOutEase));
+        
+        if (FinishedStructure != null)
+        {
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(
+                FinishedStructure.transform.DOScale(scaleInSize, ScaleInDuration).SetEase(ScaleInEase))
+                .Append(
+                    FinishedStructure.transform.DOScale(scaleOutSize, ScaleOutDuration).SetEase(ScaleOutEase));
+        }
+        
         gameObject.SetActive(false);
     }
 
     IEnumerator LoadStructure()
     {
         yield return new WaitForSeconds(1f);
+        onFinished?.Invoke();
         AssignFlag();
         is_repaired = true;
         //HologramStructure.SetActive(false);
-        FinishedStructure.SetActive(true);
+        if (FinishedStructure != null)
+            FinishedStructure.SetActive(true);
+
         if (RepairEvent.GetPersistentEventCount() <= 0)
             FinishedStructure.transform.localScale = scaleOutSize;
+            
         gameObject.SetActive(false);
     }
 
@@ -285,6 +353,27 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
             loadOnAwake = true;
         else
             StartCoroutine(LoadStructure());
+    }
+
+    public static float CalculateProgressPercentage(item_requirement[] starting, item_requirement[] current)
+    {
+        if (starting == null || current == null || starting.Length != current.Length)
+            throw new ArgumentException("Arrays must be non-null and of equal length");
+
+        float totalStart = 0f;
+        float totalCurrent = 0f;
+
+        for (int i = 0; i < starting.Length; i++)
+        {
+            totalStart += starting[i].item_amount;
+            totalCurrent += current[i].item_amount;
+        }
+
+        if (totalStart <= 0) return 1f; // avoid divide by zero, treat as complete
+        float percent = 1 - (totalCurrent / totalStart);
+
+        // Clamp to 0-1 just in case
+        return Mathf.Clamp01(percent);
     }
 }
 

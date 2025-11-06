@@ -7,9 +7,12 @@ public class AddMaterialParticleManager : MonoBehaviour
     public Material material;
     public GameObject particlePrefab;
     public Transform spawnPos;
+    public AudioCollection[] ParticleSpawnSoundFX;
     public void SpawnParticle(Collider collider, GameObject meshObj, RepairStructure repairStructure)
     {
         GameObject spawnedParticle = Instantiate(particlePrefab, spawnPos.position, Quaternion.identity);
+
+        ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, ParticleSpawnSoundFX);
 
         if (spawnedParticle.TryGetComponent(out ParticleKillOnEnterTrigger component))
         {

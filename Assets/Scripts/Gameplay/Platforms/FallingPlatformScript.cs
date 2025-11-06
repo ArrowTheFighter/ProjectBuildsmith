@@ -74,7 +74,6 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         float heightCheck = transform.position.y + platformCollider.bounds.extents.y;
         if (collision.gameObject.tag == "Player" && collision.transform.position.y > heightCheck)
         {
-            print("Player landed on us");
             StartCoroutine(Falling());
         }
     }

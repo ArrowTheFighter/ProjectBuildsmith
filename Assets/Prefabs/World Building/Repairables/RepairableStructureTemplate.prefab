@@ -196,6 +196,16 @@ MonoBehaviour:
   rotationOffset: {x: 0, y: 125, z: 0}
   SpawnDelay: 0.125
   FinalDelay: 0.59
+  SpawnMeshAudioCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 37df4af2b924eb44eb595ada8ff9b863, type: 3}
+    audioClipVolume: 0.5
+    audioClipPitch: 1
+  MeshFinishAudioCollection:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: b17697c725833b6478c4fbb41f119f87, type: 3}
+    audioClipVolume: 0.35
+    audioClipPitch: 1
 --- !u!1 &2916673672184620657
 GameObject:
   m_ObjectHideFlags: 0
@@ -5209,6 +5219,7 @@ MonoBehaviour:
   - item_id: wood
     item_name: Wood
     item_amount: 1
+  itemsRequiredDisplay: []
   added_items: []
   CInteract: 1
   AddItemsDelay: 0.2
@@ -5240,6 +5251,15 @@ MonoBehaviour:
   ParticleKillTrigger: {fileID: 2257611915018998111}
   starParticle: {fileID: 5278782027941976318}
   itemGatheredParticle: {fileID: 2580342549750806655, guid: 997fd0ee199959f4bbbba1ae11295b2e, type: 3}
+  StarParticleAudio:
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: 1353c79baac42854cb5a9b6799ab2c42, type: 3}
+    audioClipVolume: 0.4
+    audioClipPitch: 1
+  - AudioID: 
+    audioClip: {fileID: 8300000, guid: e92e2c5929ea4d442917b6b08ede9d34, type: 3}
+    audioClipVolume: 0.5
+    audioClipPitch: 1
 --- !u!135 &5801764530001404078
 SphereCollider:
   m_ObjectHideFlags: 0

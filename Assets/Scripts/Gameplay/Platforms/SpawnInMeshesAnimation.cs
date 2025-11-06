@@ -28,7 +28,11 @@ public class SpawnInMeshesAnimation : MonoBehaviour
     public float FinalDelay = 0.5f;
 
     bool runningCoroutine;
-    
+
+    [Header("Audio")]
+    public AudioCollection[] SpawnMeshAudioCollection;
+    public AudioCollection[] MeshFinishAudioCollection;
+
 
     [Button("Spawn Meshed")]
     public void SpawnMeshes()
@@ -60,14 +64,18 @@ public class SpawnInMeshesAnimation : MonoBehaviour
             _transform.parent.Rotate(rotationOffset);
             _transform.localScale = Vector3.zero;
         }
+        float currentSpawnDelay = SpawnDelay;
         foreach (var info in spawn_Info)
         {
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, SpawnMeshAudioCollection);
             Sequence sequence = DOTween.Sequence();
             sequence.Append(info.spawn_transform.DOScale(info.spawn_scale, SpawnInScaleDuration).SetEase(SpawnInScaleEase))
                 .Join(info.spawn_transform.parent.DORotateQuaternion(info.spawn_rotation, SpawnInRotationDuration * 2).SetEase(SpawnInRotationEase))
                 .Join(info.spawn_transform.parent.DOMove(info.spawn_position + currentOffset, SpawnInMoveInitalDuration * 2).SetEase(SpawnInMoveInitalEase))
-                .Append(info.spawn_transform.parent.DOMove(info.spawn_position, SpawnInMoveDuration).SetEase(SpawnInMoveEase));
-            yield return new WaitForSeconds(SpawnDelay);
+                .Append(info.spawn_transform.parent.DOMove(info.spawn_position, SpawnInMoveDuration).SetEase(SpawnInMoveEase))
+                .OnComplete(() => ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, MeshFinishAudioCollection));
+            yield return new WaitForSeconds(currentSpawnDelay);
+            currentSpawnDelay -= currentSpawnDelay * 0.1f;
         }
         yield return new WaitForSeconds(FinalDelay);
 

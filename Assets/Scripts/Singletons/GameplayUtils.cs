@@ -11,7 +11,6 @@ using UnityEngine.InputSystem;
 using CI.PowerConsole;
 using System.Linq;
 using DG.Tweening;
-using UnityEngine.XR;
 
 public class GameplayUtils : MonoBehaviour
 {
@@ -24,6 +23,7 @@ public class GameplayUtils : MonoBehaviour
     [SerializeField] public InventoryManager inventoryManager;
     [SerializeField] GameObject PauseMenu;
     [SerializeField] GameObject[] UI_Canvases;
+    [SerializeField] CanvasGroup worldCanvasGroup;
     [SerializeField] GameObject BuildNumCanvas;
     [SerializeField] Slider Main_volume_slider;
     [SerializeField] public ItemPickupNotifcationScript itemPickupNotifcationScript;
@@ -81,6 +81,7 @@ public class GameplayUtils : MonoBehaviour
         PowerConsole.Initialise();
 
         PowerConsole.CommandEntered += CommandCheck;
+        worldCanvasGroup.alpha = 0;
         //PowerConsole.OpenCloseHotkeys = new List<KeyCode> { KeyCode.LeftControl,KeyCode.BackQuote};
 
         
@@ -110,6 +111,8 @@ public class GameplayUtils : MonoBehaviour
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["hidebuild"].performed -= ToggleBuildNum;
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["HideUI"].performed -= ToggleUIInputAction;
 
+
+        PowerConsole.CommandEntered -= CommandCheck;
 
         DOTween.Clear(true);
     }
