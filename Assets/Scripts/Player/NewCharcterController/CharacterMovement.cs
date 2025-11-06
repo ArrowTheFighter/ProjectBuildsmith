@@ -215,6 +215,9 @@ public class CharacterMovement : MonoBehaviour
     void ApplyPlatformDelta()
     {
         Vector3 currentGlobalPos = Vector3.zero;
+
+        if (lastPlatformGlobalPos == Vector3.zero) return;
+        
         if (moveingPlatform == null)
         {
             if(lastMovingPlatform != null)
@@ -243,6 +246,11 @@ public class CharacterMovement : MonoBehaviour
 
         lastPlatformGlobalPos = Vector3.zero;
         lastPlatformLocalPos = Vector3.zero;
+        if(platformCurrentFrameDelta.magnitude > 15)
+        {
+            print($"platform delta was huge {platformCurrentFrameDelta}!!!");
+            Debug.Break();
+        }
         if (platformCurrentFrameDelta != Vector3.zero)
             transform.position += platformCurrentFrameDelta;
         
@@ -375,11 +383,13 @@ public class CharacterMovement : MonoBehaviour
         {
             if (moveingPlatform != platform)
             {
-                //print("adding platform move");
 
                 if(moveingPlatform == null)
                 {
-                    //print("landed on moving platform");
+
+                    platformDelta = Vector3.zero;
+                    //lastPlatformLocalPos = Vector3.zero;
+                    lastPlatformGlobalPos = Vector3.zero;
                 }
                 
                 moveingPlatform = platform;
@@ -395,13 +405,17 @@ public class CharacterMovement : MonoBehaviour
 
                 platform.OnBeforePlatformMove += BeforePlatformMove;
 
-                BeforePlatformMove();
+                //BeforePlatformMove();
             }
 
         }
         else if (moveingPlatform != null)
         {
+            platformDelta = Vector3.zero;
+            //lastPlatformLocalPos = Vector3.zero;
+            lastPlatformGlobalPos = Vector3.zero;
             moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
+
             //platformDelta = Vector3.zero;
             if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
             {
@@ -423,7 +437,7 @@ public class CharacterMovement : MonoBehaviour
         if (moveingPlatform == null && grounded)
         {
             platformDelta = Vector3.zero;
-            lastPlatformLocalPos = Vector3.zero;
+            //lastPlatformLocalPos = Vector3.zero;
             lastPlatformGlobalPos = Vector3.zero;
         }
 
@@ -475,7 +489,8 @@ public class CharacterMovement : MonoBehaviour
 
                 if (lastMovingPlatform != null)
                 {
-                    lastMovingPlatform.OnBeforePlatformMove += BeforeLastPlatformMove;
+                    //print("What about this one??");
+                    //lastMovingPlatform.OnBeforePlatformMove += BeforeLastPlatformMove;
                 }
             }
         }
