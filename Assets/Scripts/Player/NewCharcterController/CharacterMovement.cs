@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -357,8 +358,15 @@ public class CharacterMovement : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius);
-        Gizmos.DrawLine(transform.position + Vector3.down * playerHeight * 0.25f + Vector3.down * playerRadius, transform.position + Vector3.down * playerHeight * 0.25f + Vector3.down * playerRadius + Vector3.down * groundCheckDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position + Vector3.down * playerHeight * 0.23f, playerRadius);
+        Gizmos.color = Color.red;
+        Vector3 tempGravityDir = GravityDir;
+        if (tempGravityDir == Vector3.zero) tempGravityDir = Vector3.down;
+        Gizmos.DrawWireSphere((transform.position + Vector3.down * playerHeight * 0.23f) + tempGravityDir * groundSnapRayDistance, playerRadius);
+        
+        // Gizmos.DrawWireSphere(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius);
+        // Gizmos.DrawLine(transform.position + Vector3.down * playerHeight * 0.25f + Vector3.down * playerRadius, transform.position + Vector3.down * playerHeight * 0.25f + Vector3.down * playerRadius + Vector3.down * groundCheckDistance);
     }
 
 
@@ -741,16 +749,19 @@ public class CharacterMovement : MonoBehaviour
 
     void SnapToGround()
     {
-        if (OnSlope() && !exitingSlope)
+
+        Vector3 horVel = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        if (OnSlope() && !exitingSlope && horVel.magnitude > 0.5f)
         {
             RaycastHit raycastHit;
-            if (Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, GravityDir, out raycastHit, groundSnapRayDistance, ~IgnoreGroundLayerMask))
+            if (Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.23f, playerRadius, GravityDir, out raycastHit, groundSnapRayDistance, ~IgnoreGroundLayerMask))
             {
                 rb.MovePosition(transform.position + GravityDir * raycastHit.distance);
             }
 
         }
     }
+   
 
     public Vector3 GetSlopeMoveDirection()
     {

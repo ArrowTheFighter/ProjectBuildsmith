@@ -17,6 +17,7 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     public event Action OnBeforePlatformMove;
 
     public Transform obj_transform;
+    public MeshFilter visualMesh;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -90,15 +91,16 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     void OnDrawGizmosSelected()
     {
         Transform checkTransform = obj_transform;
+        if (visualMesh != null) checkTransform = visualMesh.transform;
         if (checkTransform == null) checkTransform = transform;
         Gizmos.color = Color.red;
         Gizmos.DrawLine(checkTransform.position, checkTransform.position + MoveTo);
         Gizmos.DrawSphere(checkTransform.position + MoveTo, 0.2f);
-        if (TryGetComponent(out MeshFilter meshFilter))
+        if (checkTransform.TryGetComponent(out MeshFilter meshFilter))
         {
             if (meshFilter.sharedMesh != null)
             {
-                Gizmos.DrawWireMesh(meshFilter.sharedMesh, checkTransform.position + MoveTo, checkTransform.rotation, checkTransform.localScale);
+                Gizmos.DrawWireMesh(meshFilter.sharedMesh, checkTransform.position + MoveTo, checkTransform.rotation, checkTransform.lossyScale);
              }
          }
     }
