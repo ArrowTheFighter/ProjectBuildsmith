@@ -115,6 +115,10 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                     if (!checkingForTriggers) return;
                     SetIsMoving(false);
                     break;
+                case NPCTriggers.NPCTriggerTypes.StartMoving:
+                    if (!checkingForTriggers) return;
+                    SetIsMoving(true);
+                    break;
                 case NPCTriggers.NPCTriggerTypes.DontJump:
                     canJump = false;
                     break;

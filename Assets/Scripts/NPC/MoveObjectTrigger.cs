@@ -11,6 +11,7 @@ public class MoveObjectTrigger : MonoBehaviour
 
     public Transform ObjectToMove;
     public Transform NewPos;
+    public bool ReparentObject;
 
     public UnityEvent ActivateEvent;
 
@@ -41,11 +42,16 @@ public class MoveObjectTrigger : MonoBehaviour
     {
         if (ObjectToMove != null && NewPos != null)
         {
+            if (ReparentObject)
+                ObjectToMove.SetParent(NewPos);
+            else ObjectToMove.SetParent(null);
             ObjectToMove.position = NewPos.position;
             activated = true;
             if (AlsoRotate)
             {
+                
                 ObjectToMove.transform.forward = NewPos.forward;
+                
             }
         }
         ActivateEvent?.Invoke();
