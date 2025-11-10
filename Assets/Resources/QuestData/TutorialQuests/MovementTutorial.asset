@@ -42,7 +42,6 @@ MonoBehaviour:
   - rid: 4434709966018052293
   - rid: 4434709966018052295
   - rid: 4434709966018052296
-  - rid: 4434709966018052297
   - rid: 4434709966018052301
   - rid: 4434709966018052306
   references:
@@ -196,16 +195,6 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 6
         flag_id: MovementTutorialMushroomComplete
-    - rid: 4434709966018052297
-      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
-      data:
-        Description: Hold <style=TutorialHint>dive</style> <icon=Action_Dive> to
-          slide down the hill
-        StopAtThisObjective: 1
-        StayCompleted: 0
-        isComplete: 0
-        ObjectiveIDCollection: 7
-        flag_id: MovementTutorialHillSlideTriggered
     - rid: 4434709966018052301
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
