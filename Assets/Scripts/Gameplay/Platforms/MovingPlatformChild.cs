@@ -13,7 +13,7 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void SetupComponenet()
     {
         if (ParentTransform == null)
         {
@@ -22,6 +22,24 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
                 ParentTransform = transform.parent;
             }
         }
+        AddEventConnection();
+        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnsubscribeFromPlatformEvents;
+    }
+
+    public void ResetComponenet()
+    {
+        if (ParentTransform == null) return;
+        foreach (var componenet in ParentTransform.gameObject.GetComponents<MonoBehaviour>())
+        {
+            if (componenet is IMoveingPlatform moveingPlatform)
+            {
+                moveingPlatform.OnBeforePlatformMove -= SendBeforeMoveEvent;
+            }
+        }
+    }
+
+    public void AddEventConnection()
+    {
         foreach (var componenet in ParentTransform.gameObject.GetComponents<MonoBehaviour>())
         {
             if (componenet is IMoveingPlatform moveingPlatform)
@@ -29,8 +47,8 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
                 moveingPlatform.OnBeforePlatformMove += SendBeforeMoveEvent;
             }
         }
-        ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnsubscribeFromPlatformEvents;
     }
+
 
     void UnsubscribeFromPlatformEvents()
     {
