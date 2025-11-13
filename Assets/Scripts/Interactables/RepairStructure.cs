@@ -343,7 +343,8 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
         if (RepairEvent.GetPersistentEventCount() <= 0)
             FinishedStructure.transform.localScale = scaleOutSize;
-            
+        else
+            RepairEvent?.Invoke();
         gameObject.SetActive(false);
     }
 
