@@ -111,12 +111,18 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
                 case NPCTriggers.NPCTriggerTypes.Dive:
                     OnDive?.Invoke();
                     break;
+                case NPCTriggers.NPCTriggerTypes.ForceStop:
+                    SetIsMoving(false);
+                    break;
                 case NPCTriggers.NPCTriggerTypes.Stop:
                     if (!checkingForTriggers) return;
                     SetIsMoving(false);
                     break;
                 case NPCTriggers.NPCTriggerTypes.StartMoving:
                     if (!checkingForTriggers) return;
+                    SetIsMoving(true);
+                    break;
+                case NPCTriggers.NPCTriggerTypes.ForceStartMoving:
                     SetIsMoving(true);
                     break;
                 case NPCTriggers.NPCTriggerTypes.DontJump:
