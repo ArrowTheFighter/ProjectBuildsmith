@@ -48,7 +48,7 @@ MonoBehaviour:
         Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 0
         flag_id: CraftingTutorialToolPiecesComplete
     - rid: 802173276136144988
@@ -60,7 +60,7 @@ MonoBehaviour:
           use the recipe book)'
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 1
         Item_ID: rusty_axe_head
         Item_Amount: 1
@@ -81,7 +81,7 @@ MonoBehaviour:
           )'
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 2
         Item_ID: plant_fiber
         Item_Amount: 3
@@ -100,7 +100,7 @@ MonoBehaviour:
         Description: 'Craft a <style=Item>rope</style> '
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 3
         Item_ID: rope
         Item_Amount: 1
@@ -110,9 +110,9 @@ MonoBehaviour:
         Description: Craft a <style=Item>rusty axe</style>
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 3
-        Item_ID: simple_axe
+        Item_ID: rusty_axe
         Item_Amount: 1
     - rid: 802173276136144994
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
@@ -149,7 +149,7 @@ MonoBehaviour:
           pieces</style>
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 0
         Item_ID: rusty_tool_piece
         Item_Amount: 3

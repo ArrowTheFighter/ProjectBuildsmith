@@ -9,18 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: connector21
+  m_Script: {fileID: 11500000, guid: b175dcde4c04bf14190934d3885829c0, type: 3}
+  m_Name: AssignQuest
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 
+  <DialogueName>k__BackingField: AssignQuest
   <Text>k__BackingField: Dialogue text.
-  <LocalizedKey>k__BackingField: 
   <Choices>k__BackingField:
-  - <Text>k__BackingField: 
+  - <Text>k__BackingField: output
     LocalizeKey: 
-    OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 3a503ebd7548f024a919d5628d3b2b40, type: 2}
-  <DialogueType>k__BackingField: 8
+    OutputID: IsTrue
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 16d08ec1f7b088045a2841ba2bbb689a, type: 2}
+  <DialogueType>k__BackingField: 11
   <IsStartingDialogue>k__BackingField: 0
-  CloseDialog: 0
-  <unique_id>k__BackingField: 814
+  <QuestID>k__BackingField: RepairBlacksmithQuest

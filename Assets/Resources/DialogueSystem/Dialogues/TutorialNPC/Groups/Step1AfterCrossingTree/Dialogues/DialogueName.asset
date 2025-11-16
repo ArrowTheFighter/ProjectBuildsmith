@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: TalkAfterTreeChopped
+  m_Name: DialogueName
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: TalkAfterTreeChopped
-  <Text>k__BackingField: You did it! Great job chopping that tree. Come on, let's
-    head across and continue making our way back to town.
+  <DialogueName>k__BackingField: DialogueName
+  <Text>k__BackingField: Seems Caladin needs some help with his furnace. Want to
+    head up to the top of town and see what he needs? The catapult across this bridge
+    is a quick way up there.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: d63e71b6bab16b144a7a40d042d80275, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e0d196f8be6c00741ab3c6e6eca8018e, type: 2}
   <DialogueType>k__BackingField: 0
-  <IsStartingDialogue>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
   <unique_id>k__BackingField: 0
