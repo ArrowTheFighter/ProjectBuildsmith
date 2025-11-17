@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: BackHome04
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: BackHome04
+  <Text>k__BackingField: I'll plan out the perfect spot for the bounce pad and take
+    care of the <style=item>iron bar</style> we need, I'm sure I have some pieces
+    of metal in my backpack somewhere...
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Sounds like a plan!
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 2fe2ef426db9df6439cca2b2b13eaed5, type: 2}
+  - <Text>k__BackingField: How do I get planks?
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 59e502bfe0ed79643b9e7e6092b94e48, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  CloseDialog: 0
+  <unique_id>k__BackingField: 0

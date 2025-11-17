@@ -23,28 +23,63 @@ MonoBehaviour:
     SerializationNodes: []
   ID: ReturnHomeQuest
   QuestName: Return Home
-  Description: With <style=Rose>Rose</style>'s help, I've made it part of the way
-    back to town. I should continue along the path and meet her up ahead.
+  Description: With <style=Rose>Rose</style>'s help, I crossed the gap left by the
+    fallen island, but there are still more obstacles ahead. I'll have to navigate
+    them to get back to town safely.
   AutoPinQuest: 1
   questObjectives:
   - rid: 4434710103579951192
   - rid: 2207732728327045218
+  - rid: 802173297928175725
+  - rid: 802173297928175726
+  - rid: 802173297928175727
   references:
     version: 2
     RefIds:
+    - rid: 802173297928175725
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft <itemamount=plank>/6 <style=item>planks</style>
+        StopAtThisObjective: 0
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        Item_ID: plank
+        Item_Amount: 6
+    - rid: 802173297928175726
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft <itemamount=rope>/2 <style=item>rope</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        Item_ID: rope
+        Item_Amount: 2
+    - rid: 802173297928175727
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Build the bounce pad
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: RepairedReturnHomeBouncePad
     - rid: 2207732728327045218
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Talk to Rose
+        Description: Talk to <style=Rose>Rose</style>
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 0
-        flag_id: TalkedToRoseAtTownEntrance
+        flag_id: TalkedToRoseAcrossTreeBridge
     - rid: 4434710103579951192
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Head back to town
+        Description: Cross the tree bridge
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 0
-        flag_id: ReturnedToTownForReturnHomeQuest
+        flag_id: ReturnHomeCrossedTreeBridge
