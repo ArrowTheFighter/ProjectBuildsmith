@@ -42,7 +42,7 @@ MonoBehaviour:
         Description: Craft <itemamount=plank>/6 <style=item>planks</style>
         StopAtThisObjective: 0
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 1
         Item_ID: plank
         Item_Amount: 6
@@ -52,7 +52,7 @@ MonoBehaviour:
         Description: Craft <itemamount=rope>/2 <style=item>rope</style>
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 1
         Item_ID: rope
         Item_Amount: 2
@@ -63,7 +63,7 @@ MonoBehaviour:
         StopAtThisObjective: 1
         StayCompleted: 0
         isComplete: 0
-        ObjectiveIDCollection: 1
+        ObjectiveIDCollection: 2
         flag_id: RepairedReturnHomeBouncePad
     - rid: 2207732728327045218
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}

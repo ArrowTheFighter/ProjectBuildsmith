@@ -54,6 +54,7 @@ MonoBehaviour:
         Description: Talk to Caladin at the town center
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 0
         flag_id: TalkedToCaladinAfterRoseStartsBlacksmithQuest
     - rid: 2207732728327045221
@@ -63,6 +64,7 @@ MonoBehaviour:
           caves
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 0
         Item_ID: borrowed_pickaxe
         Item_Amount: 1
@@ -73,6 +75,7 @@ MonoBehaviour:
           Mine</style>
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 0
         Item_ID: stone
         Item_Amount: 15
@@ -82,6 +85,7 @@ MonoBehaviour:
         Description: Craft <style=item>15 stone bricks</style>
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 0
         Item_ID: stone_brick
         Item_Amount: 15
@@ -91,6 +95,7 @@ MonoBehaviour:
         Description: Repair the furnace
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 0
         flag_id: FurnaceBuildingRepaired
     - rid: 2207732728327045225
@@ -99,6 +104,7 @@ MonoBehaviour:
         Description: Talk to Caladin
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 1
         flag_id: BlacksmithTalkedAboutGettingAnvil
     - rid: 2207732728327045226
@@ -107,6 +113,7 @@ MonoBehaviour:
         Description: Ask Gormak for a <style=item>spare anvil</style>
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 2
         flag_id: GormakTalkedAboutGettingAnvil
     - rid: 2207732728327045227
@@ -116,6 +123,7 @@ MonoBehaviour:
           yard
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 2
         Item_ID: spare_anvil
         Item_Amount: 1
@@ -125,6 +133,7 @@ MonoBehaviour:
         Description: Place the <style=item>spare anvil</style> next to Caladin
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 2
         flag_id: BlacksmithAnvilReturned
     - rid: 2207732728327045229
@@ -133,6 +142,7 @@ MonoBehaviour:
         Description: Talk to Caladin
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 3
         flag_id: BlacksmithTalkedAboutGettingIronItems
     - rid: 2207732728327045235
@@ -141,6 +151,7 @@ MonoBehaviour:
         Description: Talk to Callum
         StopAtThisObjective: 0
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 4
         flag_id: CallumGaveSpareIronItem
     - rid: 2207732728327045236
@@ -149,6 +160,7 @@ MonoBehaviour:
         Description: Talk to Henry
         StopAtThisObjective: 0
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 4
         flag_id: HenryGaveSpareIronItem
     - rid: 2207732728327045238
@@ -157,6 +169,7 @@ MonoBehaviour:
         Description: Talk to Sullivan
         StopAtThisObjective: 0
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 4
         flag_id: SullivanGaveSpareIronItem
     - rid: 2207732736445120512
@@ -165,6 +178,7 @@ MonoBehaviour:
         Description: Ask townsfolk for <style=item>spare iron items</style>
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 4
         Item_ID: spare_iron_item
         Item_Amount: 3
@@ -174,6 +188,7 @@ MonoBehaviour:
         Description: Smelt the <style=item>spare iron parts</style> in the furnace
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 5
         Item_ID: iron_bar
         Item_Amount: 3
@@ -183,6 +198,7 @@ MonoBehaviour:
         Description: Craft a <style=item>pickaxe head</style> at the anvil
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 5
         Item_ID: pickaxe_head
         Item_Amount: 1
@@ -192,6 +208,7 @@ MonoBehaviour:
         Description: Craft a <style=item>pickaxe</style> at the crafting table
         StopAtThisObjective: 1
         StayCompleted: 1
+        isComplete: 0
         ObjectiveIDCollection: 5
         Item_ID: pickaxe
         Item_Amount: 1
@@ -201,5 +218,6 @@ MonoBehaviour:
         Description: Talk to Caladin
         StopAtThisObjective: 1
         StayCompleted: 0
+        isComplete: 0
         ObjectiveIDCollection: 5
         flag_id: BlacksmithFinishedCraftPickaxeQuest
