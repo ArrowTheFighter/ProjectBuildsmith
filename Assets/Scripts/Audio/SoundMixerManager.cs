@@ -31,7 +31,8 @@ public class SoundMixerManager : MonoBehaviour
 
     public void SetMasterVolume(float level)
     {
-        audioMixer.SetFloat("masterVolume", Mathf.Log10(level) * 20f);
+        float adjustedLevel = Mathf.Lerp(0.0001f, 5f, level);
+        audioMixer.SetFloat("masterVolume", Mathf.Log10(adjustedLevel) * 20f);
         //PlayerPrefs.SetFloat("masterVolume", masterVolumeSlider.value);
     }
 

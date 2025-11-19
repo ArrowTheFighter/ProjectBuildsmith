@@ -11,6 +11,7 @@ public class TreeChopBridge : MonoBehaviour, IDamagable,ISaveable
     public List<GameObject> finalStage = new List<GameObject>();
 
     public UnityEvent finishedEvent;
+    public UnityEvent skippedUnityEvent;
 
     public ParticleSystem chopParticle;
 
@@ -86,11 +87,6 @@ public class TreeChopBridge : MonoBehaviour, IDamagable,ISaveable
         currentHealth = segmentHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
@@ -103,19 +99,20 @@ public class TreeChopBridge : MonoBehaviour, IDamagable,ISaveable
             obj.SetActive(true);
         }
         finished = true;
-        if (finishedEvent != null)
-        {
-            int count = finishedEvent.GetPersistentEventCount();
-            for (int i = 0; i < count; i++)
-            {
-                var target = finishedEvent.GetPersistentTarget(i) as ISkippable;
-                if (target != null)
-                {
-                    target.Skip();
-                }
-            }
-        }
-        InvokeNonSkippableListeners(finishedEvent);
+        skippedUnityEvent?.Invoke();
+        // if (finishedEvent != null)
+        // {
+        //     int count = finishedEvent.GetPersistentEventCount();
+        //     for (int i = 0; i < count; i++)
+        //     {
+        //         var target = finishedEvent.GetPersistentTarget(i) as ISkippable;
+        //         if (target != null)
+        //         {
+        //             target.Skip();
+        //         }
+        //     }
+        // }
+        // InvokeNonSkippableListeners(finishedEvent);
     }
 
     void InvokeNonSkippableListeners(UnityEvent evt)

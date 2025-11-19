@@ -120,7 +120,7 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
         else
         {
             broken = true;
-            ScriptRefrenceSingleton.instance.itemRespawnManager.item_respawns.Add(gameObject, RespawnTime);
+            ScriptRefrenceSingleton.instance.itemRespawnManager.item_respawns.Add(gameObject, Time.time + RespawnTime);
             gameObject.SetActive(false);
         }
     }

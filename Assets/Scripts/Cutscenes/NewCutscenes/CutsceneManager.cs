@@ -85,27 +85,28 @@ public class CutsceneManager : MonoBehaviour
         // Stop any coroutines (delayed events, etc.)
         StopAllCoroutines();
 
+        currentData.OnLoadSkipEvent?.Invoke();
         // Run all cutscene events instantly
-        foreach (var point in currentData.cameraPoints)
-        {
-            if (point.cutsceneEvent?.pointEvent != null)
-            {
-                int count = point.cutsceneEvent.pointEvent.GetPersistentEventCount();
-                for (int i = 0; i < count; i++)
-                {
-                    var target = point.cutsceneEvent.pointEvent.GetPersistentTarget(i) as ISkippable;
-                    if (target != null)
-                    {
-                        target.Skip();
-                    }
-                    else
-                    {
-                        // if not ISkippable, just invoke normally
-                        //point.cutsceneEvent.pointEvent.Invoke();
-                    }
-                }
-            }
-        }
+        // foreach (var point in currentData.cameraPoints)
+        // {
+        //     if (point.cutsceneEvent?.pointEvent != null)
+        //     {
+        //         int count = point.cutsceneEvent.pointEvent.GetPersistentEventCount();
+        //         for (int i = 0; i < count; i++)
+        //         {
+        //             var target = point.cutsceneEvent.pointEvent.GetPersistentTarget(i) as ISkippable;
+        //             if (target != null)
+        //             {
+        //                 target.Skip();
+        //             }
+        //             else
+        //             {
+        //                 // if not ISkippable, just invoke normally
+        //                 //point.cutsceneEvent.pointEvent.Invoke();
+        //             }
+        //         }
+        //     }
+        // }
 
         EndCutscene();
     }
@@ -119,6 +120,7 @@ public class CutsceneData
     public string CutsceneName;
     public Transform startPos;
     public CutscenePointData[] cameraPoints;
+    public UnityEvent OnLoadSkipEvent;
 }
 
 [Serializable]

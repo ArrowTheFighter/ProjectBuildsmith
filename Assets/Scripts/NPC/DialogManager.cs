@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using DS.Data;
+using System.Collections;
+using EasyTextEffects;
 
 public class DialogManager : MonoBehaviour
 {
     public TextMeshProUGUI text_box;
+    [SerializeField] TextEffect textEffect;
     public TextFormater DialogTextFormater;
     [SerializeField] public GameObject DialogUI;
     public bool TextIsAnimating;
@@ -53,13 +56,41 @@ public class DialogManager : MonoBehaviour
     
     static string Dialog_dir = "/Dialogue_Files";
 
-    
+
 
     public void SetTextIsAnimating(bool isAnimating)
     {
         //print("setting text is animting to: " + isAnimating);
+
         TextIsAnimating = isAnimating;
+        if(isAnimating)
+        {
+            textEffect.Refresh();
+            textEffect.StartManualEffects();
+
+
+            //Debug.Break();
+            //StartCoroutine(ReEnableTextBox());
+        }else
+        {
+            textEffect.StopManualEffects();
+        }
      }
+
+     IEnumerator ReEnableTextBox()
+    {
+        Color c = text_box.color;
+        c.a = 0;
+        text_box.color = c;
+
+        //Debug.Break();
+        yield return new WaitForSeconds(0.2f);
+
+        //Debug.Break();
+        c.a = 1;
+        text_box.color = c;
+        //text_box.gameObject.SetActive(true);
+    }
 
     public void Setup_Choices(List<DSDialogueChoiceData> data, DialogWorker dialogWorker, bool UseLocalization = true)
     {

@@ -234,7 +234,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
         //List<TextEffectStatus> textEffectStatus = textEffect.QueryEffectStatusesByTag(TextEffectType.Global, TextEffectEntry.TriggerWhen.Manual, "scale_text_in");
         if (ScriptRefrenceSingleton.instance.dialogManager.TextIsAnimating)
         {
-            textEffect.StopManualEffects();
+            //textEffect.StopManualEffects();
             ScriptRefrenceSingleton.instance.dialogManager.SetTextIsAnimating(false);
             return;
         }
@@ -248,8 +248,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
             ResetTMPSubMeshes(ScriptRefrenceSingleton.instance.dialogManager.text_box);
             ScriptRefrenceSingleton.instance.dialogManager.text_box.ForceMeshUpdate();
             //textEffect.StopAllEffects();
-            textEffect.Refresh();
-            textEffect.StartManualEffects();
+            //textEffect.Refresh();
+            //textEffect.StartManualEffects();
             ScriptRefrenceSingleton.instance.dialogManager.SetTextIsAnimating(true);
             interactCooldown = Time.time + 0.05f;
         }

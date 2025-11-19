@@ -21,6 +21,7 @@ public class ObjectMove : MonoBehaviour, ISkippable
 
     [Header("Events")]
     public UnityEvent finishedEvent;
+    public UnityEvent SkipEvent;
 
     [Header("Gizmo Display")]
     public GameObject displayObj;
@@ -34,7 +35,7 @@ public class ObjectMove : MonoBehaviour, ISkippable
     {
         DOTween.Kill(transform);
         transform.position = endTransform != null ? endTransform.position : startPos + endOffset;
-        finishedEvent?.Invoke();
+        SkipEvent?.Invoke();
     }
 
     public void StartMove()

@@ -42,6 +42,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     public string flag_name;
     [SerializeField] UnityEvent RepairEvent;
+    [SerializeField] UnityEvent OnLoadSkipEvent;
 
     public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
     public int unique_id;
@@ -341,10 +342,12 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         if (FinishedStructure != null)
             FinishedStructure.SetActive(true);
 
-        if (RepairEvent.GetPersistentEventCount() <= 0)
-            FinishedStructure.transform.localScale = scaleOutSize;
-        else
-            RepairEvent?.Invoke();
+
+        OnLoadSkipEvent?.Invoke();
+        // if (RepairEvent.GetPersistentEventCount() <= 0)
+        //     FinishedStructure.transform.localScale = scaleOutSize;
+        // else
+        //     RepairEvent?.Invoke();
         gameObject.SetActive(false);
     }
 
