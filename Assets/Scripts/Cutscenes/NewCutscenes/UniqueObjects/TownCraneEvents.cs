@@ -25,5 +25,15 @@ public class TownCraneEvents : MonoBehaviour
     {
         GetComponent<Animator>().SetTrigger("Start");
     }
-    
+
+    public void StartFirstHalfAnimation()
+    {
+        GetComponent<Animator>().Play("PickupBridgeAnimationFirstHalf");
+    }
+
+    public void StartSecondHalfAnimation()
+    {
+        GetComponent<Animator>().Play("PickupBridgeAnimationSecondHalf");
+    }
+
 }
