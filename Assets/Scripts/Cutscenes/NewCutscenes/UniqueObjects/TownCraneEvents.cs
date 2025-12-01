@@ -7,6 +7,9 @@ public class TownCraneEvents : MonoBehaviour
     public GameObject CraneBridge;
     public GameObject InitalBridge;
     public GameObject Droppingridge;
+    [Header("Cogwheels")]
+    public GameObject[] topCogs;
+    public GameObject[] bottomCogs;
 
     public void ShowCraneBridge()
     {
@@ -18,6 +21,20 @@ public class TownCraneEvents : MonoBehaviour
     {
         CraneBridge.SetActive(false);
         Droppingridge.SetActive(true);
+    }
+
+    public void SwitchToGroundCogs()
+    {
+        foreach(var cog in topCogs)
+        {
+            cog.SetActive(false);
+        }
+
+        foreach(var cog in bottomCogs)
+        {
+            cog.SetActive(true);
+        }
+        FlagManager.Set_Flag("SullivanCraneBroke");
     }
 
     [Button]
