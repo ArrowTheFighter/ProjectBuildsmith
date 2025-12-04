@@ -19,4 +19,9 @@ public class PlayAnimationClip : MonoBehaviour
     {
         PlayClip(defaultAnimName);
     }
+
+    public void SkipDefaultClip()
+    {
+        animator.Play(defaultAnimName,-1,1);
+    }
 }
