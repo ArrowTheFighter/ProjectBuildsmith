@@ -1,0 +1,225 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1510389222615407437
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1676659939527004551}
+  - component: {fileID: 5997568091114985214}
+  m_Layer: 0
+  m_Name: IslandCresentMoon_LOD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1676659939527004551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510389222615407437}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 324.1, y: 1149.8, z: 534.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9041591950581950009}
+  - {fileID: 1429704710053369612}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &5997568091114985214
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510389222615407437}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.014559002
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 893328842981664287}
+    - renderer: {fileID: 757137848995241577}
+  - screenRelativeHeight: 0
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 610506551660810723}
+    - renderer: {fileID: 7045096718650729778}
+  m_Enabled: 1
+--- !u!1001 &1467590353477595367
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1676659939527004551}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7195316379823054588, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cc5dfd39e062c7c409087e29eed742fb, type: 2}
+    - target: {fileID: -749607973585676843, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e762d1740c5e2394bbec8c581f492e83, type: 2}
+    - target: {fileID: 919132149155446097, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+      propertyPath: m_Name
+      value: IslandCresentMoon1LOD
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+--- !u!23 &610506551660810723 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7195316379823054588, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+  m_PrefabInstance: {fileID: 1467590353477595367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1429704710053369612 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+  m_PrefabInstance: {fileID: 1467590353477595367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7045096718650729778 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -749607973585676843, guid: 1864786f66a74fa448855fce3cf0fcf1, type: 3}
+  m_PrefabInstance: {fileID: 1467590353477595367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8858745964958745042
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1676659939527004551}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1120989108687609925, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cc5dfd39e062c7c409087e29eed742fb, type: 2}
+    - target: {fileID: -678588488315902003, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e762d1740c5e2394bbec8c581f492e83, type: 2}
+    - target: {fileID: -208595431880416365, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_TagString
+      value: CantWalk
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a9a4884961f46744fac45904291be466, type: 3}
+      propertyPath: m_Name
+      value: IslandCresentMoon1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a9a4884961f46744fac45904291be466, type: 3}
+--- !u!23 &757137848995241577 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1120989108687609925, guid: a9a4884961f46744fac45904291be466, type: 3}
+  m_PrefabInstance: {fileID: 8858745964958745042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &893328842981664287 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -678588488315902003, guid: a9a4884961f46744fac45904291be466, type: 3}
+  m_PrefabInstance: {fileID: 8858745964958745042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9041591950581950009 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a9a4884961f46744fac45904291be466, type: 3}
+  m_PrefabInstance: {fileID: 8858745964958745042}
+  m_PrefabAsset: {fileID: 0}
