@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
 {
@@ -35,6 +36,9 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
 
     public bool Get_Should_Save => broken;
     Vector3 startScale;
+
+    [Header("OnBreakEvent")]
+    public UnityEvent onBreakUnityEvent;
 
     void Awake()
     {
@@ -112,6 +116,8 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
             Instantiate(DestoryedParticle, transform.position + DestroyedParticleOffset, Quaternion.identity);
         }
 
+        onBreakUnityEvent?.Invoke();
+        
         if (RespawnTime <= 0)
         {
             broken = true;
