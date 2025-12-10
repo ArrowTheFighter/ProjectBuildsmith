@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TownCraneEvents : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TownCraneEvents : MonoBehaviour
     [Header("Cogwheels")]
     public GameObject[] topCogs;
     public GameObject[] bottomCogs;
+    public UnityEvent onCogsBroken;
 
     public void ShowCraneBridge()
     {
@@ -34,6 +36,7 @@ public class TownCraneEvents : MonoBehaviour
         {
             cog.SetActive(true);
         }
+        onCogsBroken?.Invoke();
         FlagManager.Set_Flag("SullivanCraneBroke");
     }
 

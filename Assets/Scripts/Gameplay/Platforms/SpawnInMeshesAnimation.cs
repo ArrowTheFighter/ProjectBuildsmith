@@ -89,7 +89,7 @@ public class SpawnInMeshesAnimation : MonoBehaviour
     {
         visualsTransforms.Clear(); // Clear any previous duplicates
 
-        if (transformsToSpawn.Count == 0)
+        if (transformsToSpawn.Count == 0 && transformsToSpawnWithChildren.Count == 0)
         {
             Debug.LogWarning("No transforms to duplicate!");
             return;
