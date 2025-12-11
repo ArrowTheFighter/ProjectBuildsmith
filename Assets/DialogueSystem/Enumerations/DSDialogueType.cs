@@ -13,6 +13,7 @@ namespace DS.Enumerations
         Connector,
         StartDialog,
         ReturnToStart,
-        AssignQuest
+        AssignQuest,
+        UnlockRecipe
     }
 }

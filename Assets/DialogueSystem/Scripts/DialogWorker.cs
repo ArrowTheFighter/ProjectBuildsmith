@@ -463,6 +463,14 @@ public class DialogWorker : MonoBehaviour, IInteractable
                         tempDialogSO = assignQuestSO.Choices[0].NextDialogue;
                     }
                     break;
+                case DSUnlockRecipeSO unlockRecipeSO:
+                    ScriptRefrenceSingleton.instance.gameplayUtils.UnlockRecipe(unlockRecipeSO.RecipeID);
+
+                    if (unlockRecipeSO.Choices.Count > 0)
+                    {
+                        tempDialogSO = unlockRecipeSO.Choices[0].NextDialogue;
+                    }
+                    break;
             }
         }
         return true;

@@ -303,6 +303,21 @@ namespace DS.Utilities
                     };
                     graphData.Nodes.Add(assignQuestSaveData);
                     break;
+                case DSUnlockRecipeNode unlockRecipeNode:
+                    DSUnlockRecipeSaveData unlockRecipeSaveData = new DSUnlockRecipeSaveData()
+                    {
+                        ID = unlockRecipeNode.ID,
+                        Name = unlockRecipeNode.DialogueName,
+                        Choices = choices,
+                        Text = unlockRecipeNode.Text,
+                        GroupID = unlockRecipeNode.Group?.ID,
+                        DialogueType = unlockRecipeNode.DialogueType,
+                        Position = unlockRecipeNode.GetPosition().position,
+                        CloseDialog = unlockRecipeNode.CloseDialog,
+                        recipe_id = unlockRecipeNode.recipe_id
+                    };
+                    graphData.Nodes.Add(unlockRecipeSaveData);
+                    break;
                 case DSNode _node:
                     DSNodeSaveData nodeData = new DSNodeSaveData()
                     {
@@ -425,7 +440,30 @@ namespace DS.Utilities
 
                     SaveAsset(assignQuestSO);
                     break;
+                case DSUnlockRecipeNode unlockRecipeNode:
+                    DSUnlockRecipeSO unlockRecipeSO;
 
+                    if (node.Group != null)
+                    {
+                        unlockRecipeSO = CreateAsset<DSUnlockRecipeSO>($"{containerFolderPath}/Groups/{node.Group.title}/Dialogues", node.DialogueName);
+                    }
+                    else
+                    {
+                        unlockRecipeSO = CreateAsset<DSUnlockRecipeSO>($"{containerFolderPath}/Global/Dialogues", node.DialogueName);
+                    }
+                    unlockRecipeSO.Initialize(
+                        unlockRecipeNode.DialogueName,
+                        unlockRecipeNode.Text,
+                        ConvertNodeChoicesToDialogueChoices(unlockRecipeNode.Choices),
+                        unlockRecipeNode.DialogueType,
+                        unlockRecipeNode.IsStartingNode(),
+                        unlockRecipeNode.recipe_id
+                    );
+
+                    createdScriptableObjects.Add(node.ID, unlockRecipeSO);
+
+                    SaveAsset(unlockRecipeSO);
+                    break;
                 case DSRequireFlagNode flagNode:
                     DSRequireFlagSO flagSO;
 
@@ -771,6 +809,26 @@ namespace DS.Utilities
                             SaveAsset(assignQuestSO);
                         }
                         break;
+                    case DSUnlockRecipeNode unlockRecipeNode:
+                        DSUnlockRecipeSO unlockRecipeSO = (DSUnlockRecipeSO)createdScriptableObjects[node.ID];
+
+                        for (int choiceIndex = 0; choiceIndex < node.Choices.Count; ++choiceIndex)
+                        {
+                            DSChoiceSaveData nodeChoice = node.Choices[choiceIndex];
+
+                            if (string.IsNullOrEmpty(nodeChoice.NodeID))
+                            {
+                                continue;
+                            }
+
+                            if (createdScriptableObjects.ContainsKey(nodeChoice.NodeID))
+                            {
+                                unlockRecipeSO.Choices[choiceIndex].NextDialogue = createdScriptableObjects[nodeChoice.NodeID];
+                            }
+
+                            SaveAsset(unlockRecipeSO);
+                        }
+                        break;
 
                     case DSItemRequirementNode itemNode:
                         DSItemRequirementSO itemDialogue = (DSItemRequirementSO)createdScriptableObjects[node.ID];
@@ -1017,6 +1075,16 @@ namespace DS.Utilities
 
                         DSAssignQuestSaveData assignQuestSaveData = (DSAssignQuestSaveData)nodeData;
                         assignQuestNode.quest_id = assignQuestSaveData.quest_id;
+                    }
+                }
+                if (nodeData is DSUnlockRecipeSaveData)
+                {
+                    if (node is DSUnlockRecipeNode)
+                    {
+                        DSUnlockRecipeNode unlockRecipeNode = (DSUnlockRecipeNode)node;
+
+                        DSUnlockRecipeSaveData unlockRecipeSaveData = (DSUnlockRecipeSaveData)nodeData;
+                        unlockRecipeNode.recipe_id = unlockRecipeSaveData.recipe_id;
                     }
                 }
                 if (nodeData is DSRunEventSaveData)

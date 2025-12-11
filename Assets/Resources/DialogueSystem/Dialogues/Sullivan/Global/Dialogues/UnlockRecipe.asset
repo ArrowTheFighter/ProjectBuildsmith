@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade0494dd7132e64c89b27eef454334e, type: 3}
+  m_Name: UnlockRecipe
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: UnlockRecipe
+  <Text>k__BackingField: Dialogue text.
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: output
+    LocalizeKey: 
+    OutputID: IsTrue
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: c790c6dfc171ac145a917aa5eff9cc6a, type: 2}
+  <DialogueType>k__BackingField: 12
+  <IsStartingDialogue>k__BackingField: 0
+  <RecipeID>k__BackingField: tool_handle_recipe

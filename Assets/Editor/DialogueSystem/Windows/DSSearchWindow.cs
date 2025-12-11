@@ -68,6 +68,11 @@ namespace DS.Windows
                     userData = DSDialogueType.AssignQuest,
                     level = 2
                 },
+                new SearchTreeEntry(new GUIContent("Unlock Recipe", indentationIcon))
+                {
+                    userData = DSDialogueType.UnlockRecipe,
+                    level = 2
+                },
                 new SearchTreeGroupEntry(new GUIContent("Dialogue Groups"), 1),
                 new SearchTreeEntry(new GUIContent("Single Group", indentationIcon))
                 {
@@ -185,6 +190,16 @@ namespace DS.Windows
 
                         return true;
                     }
+
+                case DSDialogueType.UnlockRecipe:
+                    {
+                        DSUnlockRecipeNode unlockRecipeNode = (DSUnlockRecipeNode)graphView.CreateNode("UnlockRecipe", DSDialogueType.UnlockRecipe, localMousePosition);
+
+                        graphView.AddElement(unlockRecipeNode);
+
+                        return true;
+                    }
+
 
                 case DSDialogueType.Connector:
                 {

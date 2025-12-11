@@ -49,5 +49,10 @@ public class LeverScript : MonoBehaviour, IInteractable
         //Play animation here
         animator.Play("TurnOff");
     }
+
+    public void SetInteractable(bool canInteract)
+    {
+        isInteractable = canInteract;
+    }
    
 }

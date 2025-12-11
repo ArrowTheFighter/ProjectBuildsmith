@@ -46,11 +46,16 @@ public class Interactor : MonoBehaviour
 
         if(numberFound > 0)
         {
-            interactable = colliders[0].GetComponent<IInteractable>();
+            for (int i = 0; i < numberFound; i++)
+            {
+                interactable = colliders[i].GetComponent<IInteractable>();
+                if(interactable != null && !interactable.CanInteract) continue;
+                break;
+            }
 
             if (interactable != null)
             {
-                if (!interactable.CanInteract) return;
+                //if (!interactable.CanInteract) return;
                 if (!interactionPromptUI.IsDisplayed) interactionPromptUI.SetUp(interactable.INTERACTION_PROMPT, interactable.required_items);
                 if (interactionPromptUI.IsDisplayed) interactionPromptUI.ChangeText(interactable.INTERACTION_PROMPT,interactable.required_items);
                 
