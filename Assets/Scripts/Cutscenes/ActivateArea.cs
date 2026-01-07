@@ -16,8 +16,14 @@ public class ActivateArea : MonoBehaviour, IInteractable
 
     public bool Interact(Interactor interactor)
     {
+        if (!IsInteractable) return false;
         ActivatedEvent?.Invoke();
         return true;
+    }
+
+    public void SetIsInteractable(bool state)
+    {
+        IsInteractable = state;
     }
 
     

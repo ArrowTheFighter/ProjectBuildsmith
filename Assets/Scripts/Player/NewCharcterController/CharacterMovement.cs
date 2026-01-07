@@ -187,6 +187,7 @@ public class CharacterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyPlatformDelta();
+        ResolveUpwardPlatformPenetration();
         if (!MovementControlledByAbility)
         {
             MovePlayer();
@@ -221,7 +222,7 @@ public class CharacterMovement : MonoBehaviour
         
         if (moveingPlatform == null)
         {
-            if(lastMovingPlatform != null)
+            if (lastMovingPlatform != null)
             {
                 // print("doing last platform check");
                 // Vector3 currentGlobalPos = lastMovingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPosCheck);
@@ -272,6 +273,53 @@ public class CharacterMovement : MonoBehaviour
         if(grounded)
             platformDelta = platformCurrentFrameDelta / Time.fixedDeltaTime;
         platformCurrentFrameDelta = Vector3.zero;
+    }
+
+    void ResolveUpwardPlatformPenetration()
+    {
+        Collider platformCollider = null;
+        if (moveingPlatform == null)
+        {
+            if (Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out RaycastHit _groundHit, 2, ~IgnoreGroundLayerMask, QueryTriggerInteraction.Ignore))
+            {
+               
+                platformCollider = _groundHit.collider;
+            }
+            
+        }
+        else
+        {
+            platformCollider =
+                ((Component)moveingPlatform).GetComponent<Collider>();
+        }
+
+        if (platformCollider == null) return;
+
+        if (Physics.ComputePenetration(
+            capsuleCollider,
+            transform.position,
+            transform.rotation,
+            platformCollider,
+            platformCollider.transform.position,
+            platformCollider.transform.rotation,
+            out Vector3 direction,
+            out float distance))
+        {
+            // Only resolve if the platform is pushing us UP
+            if (Vector3.Dot(direction, Vector3.up) > 0.5f && distance > 0.01f)
+            {
+                if (printStrings) print("attempting to pushout");
+                //print("Trying to resolve collision - " + direction * distance);
+                transform.position += direction * distance;
+
+                // Kill downward velocity so we don't re-penetrate
+                if (rb != null)
+                {
+                    if (rb.linearVelocity.y < 0f)
+                        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+                }
+            }
+        }
     }
 
     public void TurnAround(float duration = 0.5f)

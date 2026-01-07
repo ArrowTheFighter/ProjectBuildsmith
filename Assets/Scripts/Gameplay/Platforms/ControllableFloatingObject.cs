@@ -12,6 +12,7 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
     [SerializeField] float returnDelay = 1f;
     [SerializeField] AnimationCurve easing = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [SerializeField] Vector3 rotationAmount;
+    [SerializeField] bool AutoAddChildComponenets = true;
 
     public float positionBetweenPoints;
 
@@ -26,6 +27,22 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
     {
         startPos = transform.position;
         endPos = startPos + MoveTo;
+
+        if (AutoAddChildComponenets)
+        {
+            Collider[] childColliders = GetComponentsInChildren<Collider>();
+
+            foreach (var collider in childColliders)
+            {
+                if (collider.transform == transform) continue;
+                GameObject childObj = collider.gameObject;
+                MovingPlatformChild movingPlatformChild = childObj.AddComponent<MovingPlatformChild>();
+
+                movingPlatformChild.ResetComponenet();
+                movingPlatformChild.ParentTransform = transform;
+                movingPlatformChild.SetupComponenet();
+            }
+        }
     }
 
     // =========================
