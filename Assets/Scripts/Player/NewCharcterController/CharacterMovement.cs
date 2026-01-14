@@ -277,49 +277,85 @@ public class CharacterMovement : MonoBehaviour
 
     void ResolveUpwardPlatformPenetration()
     {
-        Collider platformCollider = null;
         if (moveingPlatform == null)
         {
-            if (Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out RaycastHit _groundHit, 2, ~IgnoreGroundLayerMask, QueryTriggerInteraction.Ignore))
+            Vector3 center = capsuleCollider.transform.TransformPoint(capsuleCollider.center);
+            float originalRadius = capsuleCollider.radius * Mathf.Max(
+                capsuleCollider.transform.lossyScale.x,
+                capsuleCollider.transform.lossyScale.z
+            );
+
+            float originalHeight = Mathf.Max(capsuleCollider.height * capsuleCollider.transform.lossyScale.y, originalRadius * 2f);
+
+            Vector3 dir;
+            switch (capsuleCollider.direction)
             {
-               
-                platformCollider = _groundHit.collider;
+                case 0: dir = capsuleCollider.transform.right; break;   // X-axis
+                case 1: dir = capsuleCollider.transform.up; break;      // Y-axis
+                case 2: dir = capsuleCollider.transform.forward; break; // Z-axis
+                default: dir = Vector3.up; break;
             }
-            
-        }
-        else
-        {
-            platformCollider =
-                ((Component)moveingPlatform).GetComponent<Collider>();
-        }
 
-        if (platformCollider == null) return;
+            float pointOffset = (originalHeight / 2f) - originalRadius;
 
-        if (Physics.ComputePenetration(
-            capsuleCollider,
-            transform.position,
-            transform.rotation,
-            platformCollider,
-            platformCollider.transform.position,
-            platformCollider.transform.rotation,
-            out Vector3 direction,
-            out float distance))
-        {
-            // Only resolve if the platform is pushing us UP
-            if (Vector3.Dot(direction, Vector3.up) > 0.5f && distance > 0.01f)
+            Vector3 point1 = center + dir * pointOffset;
+            Vector3 point2 = center - dir * pointOffset;
+
+            Collider[] results = new Collider[10];
+            float shrinkAmount = 0.05f; // world units
+            float radius = Mathf.Max(0f, originalRadius - shrinkAmount);
+            float height = Mathf.Max(radius * 2f, originalHeight - shrinkAmount * 2f);
+
+            int hitCount = Physics.OverlapCapsuleNonAlloc(
+                point1,
+                point2,
+                radius,
+                results,
+                ~IgnoreGroundLayerMask,
+                QueryTriggerInteraction.Ignore
+            );
+
+            if (hitCount > 0)
             {
-                if (printStrings) print("attempting to pushout");
-                //print("Trying to resolve collision - " + direction * distance);
-                transform.position += direction * distance;
+                if (printStrings) Debug.Log("Something is inside the capsule!");
 
-                // Kill downward velocity so we don't re-penetrate
-                if (rb != null)
+                // Loop through all hits and resolve penetration
+                for (int i = 0; i < hitCount; i++)
                 {
-                    if (rb.linearVelocity.y < 0f)
-                        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+                    Collider hitCollider = results[i];
+
+                    if (hitCollider == null || hitCollider == capsuleCollider)
+                        continue;
+
+                    if (Physics.ComputePenetration(
+                        capsuleCollider,
+                        transform.position,
+                        transform.rotation,
+                        hitCollider,
+                        hitCollider.transform.position,
+                        hitCollider.transform.rotation,
+                        out Vector3 direction,
+                        out float distance))
+                    {
+                        // Only resolve if the collision is pushing us UP
+                        if (Vector3.Dot(direction, Vector3.up) > 0.5f && distance > 0.01f)
+                        {
+                            // Move the object out of penetration
+                            transform.position += direction * distance;
+
+                            // Kill downward velocity so we don't re-penetrate
+                            if (rb != null && rb.linearVelocity.y < 0f)
+                            {
+                                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+                            }
+
+                            if (printStrings) Debug.Log($"Resolved penetration with {hitCollider.name}: {direction * distance}");
+                        }
+                    }
                 }
             }
         }
+
     }
 
     public void TurnAround(float duration = 0.5f)
