@@ -24,7 +24,7 @@ public class PlayerAnimationController : MonoBehaviour
     void Update()
     {
        
-        animator.SetBool("OnGround", characterMovement.grounded && !characterMovement.OnSteepSlope());
+        //animator.SetBool("OnGround", characterMovement.grounded && !characterMovement.OnSteepSlope());
         animator.SetFloat("OffGroundTime", offGroundTime);
         if (characterMovement.grounded && !currentlyOnGround)
         {
@@ -39,9 +39,17 @@ public class PlayerAnimationController : MonoBehaviour
         {
             offGroundTime += Time.deltaTime;
         }
-        if (characterMovement.grounded && walking) animator.SetLayerWeight(1, 1);
-        else animator.SetLayerWeight(1, 0);
+        
 
+    }
+
+    void LateUpdate()
+    {
+        bool grounded = Physics.SphereCast(transform.position + Vector3.down * characterMovement.playerHeight * 0.25f + (Vector3.up * 0.5f), characterMovement.playerRadius, Vector3.down, out RaycastHit groundHit, 1.1f, ~characterMovement.IgnoreGroundLayerMask, QueryTriggerInteraction.Ignore);
+        animator.SetBool("OnGround", grounded && !characterMovement.OnSteepSlope());
+
+        if (grounded && walking) animator.SetLayerWeight(1, 1);
+        else animator.SetLayerWeight(1, 0);
     }
 
     void FixedUpdate()
