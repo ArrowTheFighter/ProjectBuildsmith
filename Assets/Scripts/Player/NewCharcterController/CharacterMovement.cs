@@ -51,6 +51,7 @@ public class CharacterMovement : MonoBehaviour
     RaycastHit steepSlopHit;
     RaycastHit slopeHit;
     public bool exitingSlope;
+    bool forceSteepSlope = false;
 
     [Header("Input")]
     [HideInInspector] public ICharacterInput characterInput;
@@ -103,6 +104,9 @@ public class CharacterMovement : MonoBehaviour
 
     Vector3 lastPlatformLocalPosCheck;
     Vector3 lastPlatformGlobalPosCheck;
+
+
+    private static readonly Collider[] _trigger_check_results = new Collider[8];
 
     [Header("Debug")]
     public bool printStrings;
@@ -468,8 +472,22 @@ public class CharacterMovement : MonoBehaviour
         grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask,QueryTriggerInteraction.Ignore);
         if (groundHit.transform != null && groundHit.transform.tag == "CantWalk")
         {
-            grounded = false;
+            forceSteepSlope = true;
         }
+        else
+        {
+            forceSteepSlope = false;
+            LayerMask mask = 1 << 2;
+            if (groundHit.transform != null && CapsuleInsideTriggerWithTag(capsuleCollider, "CantWalk", mask))
+            {
+                forceSteepSlope = true;
+            }
+            else
+            {
+                forceSteepSlope = false;
+            }
+        }
+        
 
         if (grounded && groundHit.collider.TryGetComponent(out IMoveingPlatform platform))
         {
@@ -816,6 +834,7 @@ public class CharacterMovement : MonoBehaviour
 
     bool OnSlope()
     {
+        if(forceSteepSlope) return false;
         if (groundHit.normal == null) return false;
         if (groundHit.transform != null && groundHit.transform.tag == "CantWalk") return false;
         float angle = Vector3.Angle(Vector3.up, groundHit.normal);
@@ -824,6 +843,7 @@ public class CharacterMovement : MonoBehaviour
 
     public bool OnSteepSlope()
     {
+        if(forceSteepSlope) return true;
         if (groundHit.normal == null) return false;
         if (groundHit.transform != null && groundHit.transform.tag == "CantWalk") return true;
         float angle = Vector3.Angle(Vector3.up, groundHit.normal);
@@ -850,5 +870,41 @@ public class CharacterMovement : MonoBehaviour
     public Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+    public static bool CapsuleInsideTriggerWithTag(
+        CapsuleCollider capsule,
+        string requiredTag,
+        LayerMask layerMask)
+    {
+        Transform t = capsule.transform;
+
+        Vector3 center = t.TransformPoint(capsule.center);
+        float radius = capsule.radius * Mathf.Max(t.lossyScale.x, t.lossyScale.z);
+
+        float height = Mathf.Max(capsule.height * t.lossyScale.y, radius * 2f);
+        float halfHeight = height * 0.5f - radius;
+
+        Vector3 up = t.up;
+        Vector3 point1 = center + up * halfHeight;
+        Vector3 point2 = center - up * halfHeight;
+
+        int count = Physics.OverlapCapsuleNonAlloc(
+            point1,
+            point2,
+            radius,
+            _trigger_check_results,
+            layerMask,
+            QueryTriggerInteraction.Collide
+        );
+
+        for (int i = 0; i < count; i++)
+        {
+            Collider c = _trigger_check_results[i];
+            if (c != null && c.isTrigger && c.CompareTag(requiredTag))
+                return true;
+        }
+
+        return false;
     }
 }
