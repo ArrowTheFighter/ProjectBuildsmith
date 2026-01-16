@@ -65,7 +65,7 @@ public class PressurePlateScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" || other.tag == "NPC")
         {
             print("Player landed on pressure plate");
             if (!isActive)
@@ -78,7 +78,7 @@ public class PressurePlateScript : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" || other.tag == "NPC")
         {
             print("Player left the pressure plate");
             if (isActive)
