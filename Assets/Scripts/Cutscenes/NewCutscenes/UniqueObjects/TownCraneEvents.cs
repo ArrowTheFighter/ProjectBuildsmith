@@ -25,6 +25,11 @@ public class TownCraneEvents : MonoBehaviour
         Droppingridge.SetActive(true);
     }
 
+    public void SetCompleteBridgeFlag()
+    {
+        FlagManager.Set_Flag("SullivanCraneBridgeRepaired");
+    }
+
     public void SwitchToGroundCogs()
     {
         foreach(var cog in topCogs)
@@ -55,5 +60,4 @@ public class TownCraneEvents : MonoBehaviour
     {
         GetComponent<Animator>().Play("PickupBridgeAnimationSecondHalf");
     }
-
 }
