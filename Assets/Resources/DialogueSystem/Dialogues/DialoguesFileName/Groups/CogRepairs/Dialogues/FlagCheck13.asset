@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a24acc19b71f4c4b99f6ab09172d3bd, type: 3}
+  m_Name: FlagCheck13
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: FlagCheck13
+  <Text>k__BackingField: Dialogue text.
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Flag is true
+    LocalizeKey: 
+    OutputID: IsTrue
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: b322a200d4cb0c947ab4c20b628277ef, type: 2}
+  - <Text>k__BackingField: Flag is false
+    LocalizeKey: 
+    OutputID: IsFalse
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 846ec4f60b740f5499dc5a17caa629ea, type: 2}
+  <DialogueType>k__BackingField: 5
+  <IsStartingDialogue>k__BackingField: 0
+  <FlagID>k__BackingField: SullivanCraneBridgeRepaired
+  IsTrue: 1

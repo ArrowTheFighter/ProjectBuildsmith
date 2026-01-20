@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: 2_ChopToIt_Quest
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: CraftingTutorial
+  QuestName: Chop To It
+  Description: A fallen island left a gap in the path back to town. I'll need to
+    look around the old workshop to see if I can make something to cut down the big
+    tree and make a bridge.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 4434710013077880833
+  - rid: 4434710013077880834
+  - rid: 802173276136144987
+  - rid: 802173276136144988
+  - rid: 802173276136144989
+  - rid: 802173276136144990
+  - rid: 802173276136144991
+  - rid: 802173276136144992
+  - rid: 802173276136144993
+  - rid: 802173276136144994
+  - rid: 802173276136144995
+  references:
+    version: 2
+    RefIds:
+    - rid: 802173276136144987
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Rose>Rose</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 0
+        flag_id: CraftingTutorialToolPiecesComplete
+    - rid: 802173276136144988
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: 'Craft a <style=item>rusty axe head</style>
+
+          (hint:
+          use the recipe book)'
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 1
+        Item_ID: rusty_axe_head
+        Item_Amount: 1
+    - rid: 802173276136144989
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Rose>Rose</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: CraftingTutorialAxeHeadComplete
+    - rid: 802173276136144990
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: 'Gather <itemamount=plant_fiber>/3 <style=Item>plant fiber</style>   
+          (hint: use the <style=item>makeshift handle</style> <Icon=Action_Attack>
+          )'
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 2
+        Item_ID: plant_fiber
+        Item_Amount: 3
+    - rid: 802173276136144991
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Rose>Rose</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: CraftingTutorialMaterialsComplete
+    - rid: 802173276136144992
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: 'Craft a <style=Item>rope</style> '
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 3
+        Item_ID: rope
+        Item_Amount: 1
+    - rid: 802173276136144993
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft a <style=Item>rusty axe</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 3
+        Item_ID: rusty_axe
+        Item_Amount: 1
+    - rid: 802173276136144994
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Use the <style=item>rusty axe</style> to chop down the big tree
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 4
+        flag_id: CraftingTutorialBigTreeChopComplete
+    - rid: 802173276136144995
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Rose>Rose</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 4
+        flag_id: CraftingTutorialComplete
+    - rid: 4434710013077880833
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Head to the <style=location>Abandoned Workshop</style> to search
+          for tools
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: CraftingTutorialWorkshopTriggered
+    - rid: 4434710013077880834
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect <itemamount=rusty_iron_bar>/3 <style=Item>rusty iron
+          bars</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 0
+        Item_ID: rusty_iron_bar
+        Item_Amount: 3

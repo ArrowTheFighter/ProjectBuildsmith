@@ -22,8 +22,9 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   ID: CollectAllGems
-  Name: Find All Gems
+  QuestName: 
   Description: Find all the hidden Gems scattered around the world
+  AutoPinQuest: 0
   questObjectives:
   - rid: 3342525320290107763
   references:
@@ -33,5 +34,9 @@ MonoBehaviour:
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
         Description: Collect 25 gems
+        StopAtThisObjective: 0
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
         Item_ID: gem
         Item_Amount: 25

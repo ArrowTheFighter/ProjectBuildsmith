@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: 4_TownTroubles
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: TownTroubles
+  QuestName: Town Troubles
+  Description: I returned to Hammerstead, only to see the bridge collapse. I'll need
+    to use the crane to get the old bridge back in place, then see who else needs
+    help.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 4491993628725477469
+  - rid: 4491993629298524274
+  - rid: 4491993629298524275
+  - rid: 4491993629298524276
+  - rid: 4491993629298524277
+  - rid: 4491993629298524278
+  - rid: 4491993629298524285
+  - rid: 4491993629298524286
+  - rid: 4491993629298524287
+  - rid: 4491993629298524289
+  - rid: 4491993629298524290
+  references:
+    version: 2
+    RefIds:
+    - rid: 4491993628725477469
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Sullivan>Sullivan</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: SullivanInitialTalk
+    - rid: 4491993629298524274
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft a <style=item>tool handle</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 1
+        Item_ID: tool_handle
+        Item_Amount: 1
+    - rid: 4491993629298524275
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Fix the crane control lever
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: RepairedCraneControlLever
+    - rid: 4491993629298524276
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Use the crane control lever
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: CraneTowerPlayedFirstHalf
+    - rid: 4491993629298524277
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Wait for the crane to finish
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: SullivanCraneBroke
+    - rid: 4491993629298524278
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Sullivan>Sullivan</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: TalkedToSullivanAfterCraneBreaks
+    - rid: 4491993629298524285
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Find <style=item>cogs</style> in the junkyard <itemamount=cog_wheel>/2
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        Item_ID: cog_wheel
+        Item_Amount: 2
+    - rid: 4491993629298524286
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Attach the <style=item>cogs</style> to the crane
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        flag_id: SullivanCogRepaired
+    - rid: 4491993629298524287
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Use the crane control lever
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        flag_id: CraneTowerPlayedSecondHalf
+    - rid: 4491993629298524289
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Wait for the crane to finish
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 4
+        flag_id: SullivanCraneBridgeRepaired
+    - rid: 4491993629298524290
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Sullivan>Sullivan</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 4
+        flag_id: TalkedToSullivanAfterBridgeRepaired
