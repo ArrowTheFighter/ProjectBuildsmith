@@ -12,7 +12,12 @@ public class DespawnObjectsAnimation : MonoBehaviour
     public float delay;
     public float scaleOutDuration;
     public Ease scaleOutEase;
+    [Header("Particle")]
+    public GameObject scaleOutParticle;
+    public float particleScale = 1;
+    public Vector3 particleOffset;
 
+    [Header("Finished Event")]
     public UnityEvent OnFinishedUnityEvent;
 
     public AudioCollection[] scaleOutAudio;
@@ -27,6 +32,7 @@ public class DespawnObjectsAnimation : MonoBehaviour
     {
         for (int i = 0; i < ObjectsToDespawn.Count; i++)
         {
+            Instantiate(scaleOutParticle,ObjectsToDespawn[i].transform.position + particleOffset,Quaternion.identity).transform.localScale = Vector3.one * particleScale;
             ObjectsToDespawn[i].transform.DOScale(0,scaleOutDuration).SetEase(scaleOutEase);
             //.OnComplete(() => {ObjectsToDespawn[i].SetActive(false);});
             ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(ObjectsToDespawn[i].transform, scaleOutAudio);
