@@ -13,14 +13,22 @@ MonoBehaviour:
   m_Name: New1
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: New1
-  <Text>k__BackingField: Oh thank the stars, you're alright! I wasn't sure if I should
-    go get help or not...
+  <Text>k__BackingField: Oh thank the stars, you're alright! I got here as fast as
+    I could. I wasn't sure if I'd need more help...
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
   - <Text>k__BackingField: What happened?
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 435eef8ff8fe80b4fbad3fc8389cd5d0, type: 2}
+  - <Text>k__BackingField: Where am I?
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 82b86e3bec66f9143af3cd14ef2427a5, type: 2}
+  - <Text>k__BackingField: Who are you?
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 5c7abf7a8e9bdfe4e8853f73a31f4285, type: 2}
   <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0

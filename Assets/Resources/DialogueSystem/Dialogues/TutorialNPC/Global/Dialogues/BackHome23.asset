@@ -14,14 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: BackHome23
   <Text>k__BackingField: It looks like <style=Sullivan>Sullivan</style> is over at
-    the crane, maybe he knows a way to help?
+    the crane, maybe you could try lending him a hand? I'm sure he'd love to meet
+    you.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: Sure thing.
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: c3fc9647e2050434ca6cfb33da12a1e7, type: 2}
-  <DialogueType>k__BackingField: 0
+  - <Text>k__BackingField: If I have to...
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: c3fc9647e2050434ca6cfb33da12a1e7, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
   <unique_id>k__BackingField: 0

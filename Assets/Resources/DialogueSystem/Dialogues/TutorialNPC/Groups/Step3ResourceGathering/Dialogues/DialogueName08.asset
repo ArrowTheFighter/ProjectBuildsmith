@@ -14,14 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: DialogueName08
   <Text>k__BackingField: Hey that <style=item>rusty axe head</style> actually looks
-    pretty good, given the materials you had to work with, nice job!
+    pretty good, given the materials you had to work with. Nice job, maybe you have
+    a knack for tinkering too!
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: Thanks!
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: f56eaf4bf62a77b49820f3c7753b324a, type: 2}
-  <DialogueType>k__BackingField: 0
+  - <Text>k__BackingField: Beginner's luck.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: f56eaf4bf62a77b49820f3c7753b324a, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
   <unique_id>k__BackingField: 1030
