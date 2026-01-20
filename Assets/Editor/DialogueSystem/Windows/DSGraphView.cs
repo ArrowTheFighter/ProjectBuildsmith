@@ -627,7 +627,12 @@ namespace DS.Windows
 
             searchWindow.Initialize(this);
 
-            nodeCreationRequest = context => SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
+            nodeCreationRequest = context => 
+            {
+                editorWindow.openingSearchWindow = true;
+                SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
+            };
+            
         }
 
         private void AddMiniMap()

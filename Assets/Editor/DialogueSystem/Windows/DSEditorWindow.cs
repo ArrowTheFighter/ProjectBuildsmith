@@ -20,6 +20,9 @@ namespace DS.Windows
         private static TextField fileNameTextField;
         private Button saveButton;
         private Button miniMapButton;
+        private ToolbarToggle AskForSavingToggle;
+        private bool AskForSaving = true;
+        public bool openingSearchWindow;
 
         [MenuItem("Window/DS/Dialogue Graph")]
         public static void Open()
@@ -48,6 +51,7 @@ namespace DS.Windows
             graphView.StretchToParentSize();
 
             rootVisualElement.Add(graphView);
+
         }
 
         private void AddToolbar()
@@ -67,17 +71,55 @@ namespace DS.Windows
 
             miniMapButton = DSElementUtility.CreateButton("Minimap", () => ToggleMiniMap());
 
+            AskForSavingToggle = new ToolbarToggle
+            {
+                text = "Always ask to save",
+                value = AskForSaving 
+            };
+
+            AskForSavingToggle.RegisterValueChangedCallback(evt =>
+            {
+                AskForSaving = evt.newValue;
+                UpdateAskForSavingStyle(evt.newValue);
+            });
+
+
+            // Initialize value (does NOT fire callback)
+            AskForSavingToggle.SetValueWithoutNotify(AskForSaving);
+
+            // Manually apply style once
+            UpdateAskForSavingStyle(AskForSaving);
+
+
+
             toolbar.Add(fileNameTextField);
             toolbar.Add(saveButton);
             toolbar.Add(loadButton);
             toolbar.Add(clearButton);
             toolbar.Add(resetButton);
             toolbar.Add(miniMapButton);
+            toolbar.Add(AskForSavingToggle);
 
             toolbar.AddStyleSheets("DialogueSystem/DSToolbarStyles.uss");
 
             rootVisualElement.Add(toolbar);
         }
+
+        private void UpdateAskForSavingStyle(bool enabled)
+        {
+            if (enabled)
+            {
+                AskForSavingToggle.style.backgroundColor =
+                    new Color(0.18f, 0.8f, 0.44f);
+                AskForSavingToggle.style.color = Color.white;
+            }
+            else
+            {
+                AskForSavingToggle.style.backgroundColor = Color.red;
+                AskForSavingToggle.style.color = Color.black;
+            }
+        }
+
 
         private void AddStyles()
         {
@@ -190,6 +232,52 @@ namespace DS.Windows
         public void DisableSaving()
         {
             saveButton.SetEnabled(false);
+        }
+
+        public void OnLostFocus()
+        {
+            if(openingSearchWindow)
+            {
+                openingSearchWindow = false;
+                return;
+            }
+            if (!AskForSaving) return;
+
+            if (string.IsNullOrEmpty(fileNameTextField.value))
+            {
+                EditorUtility.DisplayDialog("Invalid file name.", "Please ensure the file name you've typed in is valid.", "Roger!");
+
+                return;
+            }
+
+            bool confirm = EditorUtility.DisplayDialog(
+            "You are leaving the graph editor, do you want to save?",
+            $"This will overwrite any saved data for the file [{fileNameTextField.value}]",
+            "Yes",
+            "Cancel"
+            );
+
+            if (confirm)
+            {
+                DSIOUtility.Initialize(graphView, fileNameTextField.value);
+                DSIOUtility.Save();
+
+                AskForSaving = false;
+                // Initialize value (does NOT fire callback)
+                AskForSavingToggle.value = false;
+
+                Focus();
+            }
+            else
+            {
+                AskForSaving = false;
+                // Initialize value (does NOT fire callback)
+                AskForSavingToggle.value = false;
+
+                Focus();
+                return;
+            }
+            //Save();
         }
     }
 }

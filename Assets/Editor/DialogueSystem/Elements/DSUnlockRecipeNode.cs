@@ -33,7 +33,7 @@ namespace DS.Elements
         public override void Draw()
         {
 
-            Label label = new Label("Set Flag");
+            Label label = new Label("Unlock Recipe");
 
             label.style.paddingTop = 8;
             label.style.paddingBottom = 8;
