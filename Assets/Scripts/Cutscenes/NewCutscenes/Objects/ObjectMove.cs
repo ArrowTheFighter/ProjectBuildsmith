@@ -72,7 +72,7 @@ public class ObjectMove : MonoBehaviour, ISkippable
 
     void OnDrawGizmosSelected()
     {
-        if (!useArch) return;
+        //if (!useArch) return;
 
         Vector3 start = displayObj != null ? displayObj.transform.position : transform.position;
         Vector3 end = endTransform != null ? endTransform.position : start + endOffset;
@@ -94,5 +94,18 @@ public class ObjectMove : MonoBehaviour, ISkippable
 
         Gizmos.color = Color.red;
         Gizmos.DrawSphere(end, 0.15f);
+
+        Transform checkTransform = transform;
+        if (displayObj != null) checkTransform = displayObj.transform;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(checkTransform.position, checkTransform.position + endOffset);
+        Gizmos.DrawSphere(checkTransform.position + endOffset, 0.2f);
+        if (checkTransform.TryGetComponent(out MeshFilter meshFilter))
+        {
+            if (meshFilter.sharedMesh != null)
+            {
+                Gizmos.DrawWireMesh(meshFilter.sharedMesh, checkTransform.position + endOffset, checkTransform.rotation, checkTransform.lossyScale);
+            }
+        }
     }
 }

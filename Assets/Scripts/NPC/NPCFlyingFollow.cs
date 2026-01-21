@@ -49,6 +49,7 @@ public class NPCFlyingFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!gameObject.activeInHierarchy) return;
         if(TargetTransform != null)
         {
             
