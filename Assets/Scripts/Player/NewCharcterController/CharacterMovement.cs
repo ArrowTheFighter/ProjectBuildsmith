@@ -128,6 +128,7 @@ public class CharacterMovement : MonoBehaviour
         AddAbility<DoubleJumpAbility>();
         AddAbility<DashAbility>();
         AddAbility<PlayerStompAbility>();
+        AddAbility<RailGrindAbility>();
         if (characterInput is PlayerInputClass)
         {
             AddAbility<NoClip>();
@@ -321,7 +322,6 @@ public class CharacterMovement : MonoBehaviour
 
             if (hitCount > 0)
             {
-                if (printStrings) Debug.Log("Something is inside the capsule!");
 
                 // Loop through all hits and resolve penetration
                 for (int i = 0; i < hitCount; i++)
