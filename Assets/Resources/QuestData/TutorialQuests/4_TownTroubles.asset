@@ -39,6 +39,11 @@ MonoBehaviour:
   - rid: 4491993629298524287
   - rid: 4491993629298524289
   - rid: 4491993629298524290
+  - rid: 4491993695716114526
+  - rid: 4491993695716114527
+  - rid: 4491993695716114528
+  - rid: 4491993695716114531
+  - rid: 4491993695716114532
   references:
     version: 2
     RefIds:
@@ -143,3 +148,49 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 4
         flag_id: TalkedToSullivanAfterBridgeRepaired
+    - rid: 4491993695716114526
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Find <style=Callum>Callum</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        flag_id: TalkedToCallumAtBrokenElevator
+    - rid: 4491993695716114527
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Lacey>Lacey</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 6
+        flag_id: TalkedToLaceyAboutThickRope
+    - rid: 4491993695716114528
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Learn the <style=item>thick rope</style> recipe from <style=Lacey>Lacey</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 6
+        flag_id: LearnedThickRopeRecipe
+    - rid: 4491993695716114531
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft a <style=item>thick rope</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 7
+        Item_ID: thick_rope
+        Item_Amount: 1
+    - rid: 4491993695716114532
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Fix the elevator with the <style=item>thick rope</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 7
+        flag_id: ElevatorRepaired
