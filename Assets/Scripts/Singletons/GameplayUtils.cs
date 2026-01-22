@@ -72,6 +72,10 @@ public class GameplayUtils : MonoBehaviour
         OnStartMoveToMainMenu += OnSceneReload;
         Reset();
         RecipeDatabase = Resources.Load<RecipeDatabase>("Recipes/RecipeDatabase");
+        foreach(var recipe in RecipeDatabase.recipes)
+        {
+            recipe.BuildPattern();
+        }
         StartCoroutine(InitalFade());
 
         ScriptRefrenceSingleton.instance.gameSettings.OnVsyncChanged += SetVsync;
@@ -82,6 +86,7 @@ public class GameplayUtils : MonoBehaviour
 
         PowerConsole.CommandEntered += CommandCheck;
         worldCanvasGroup.alpha = 0;
+
         //PowerConsole.OpenCloseHotkeys = new List<KeyCode> { KeyCode.LeftControl,KeyCode.BackQuote};
 
         

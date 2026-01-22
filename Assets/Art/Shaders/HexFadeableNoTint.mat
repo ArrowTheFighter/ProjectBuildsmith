@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HexFadeableNoTint
-  m_Shader: {fileID: -6465566751694194690, guid: 684af355078676c40978b97037b24ca9, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 2ca86c44386921f4a88ac62b02256cfe, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -44,11 +44,12 @@ Material:
     m_Floats:
     - _Alpha_Clip_Threashold: 0.25
     - _Ambiant_Occlusion: 1
-    - _EffectStrength: 1.2
+    - _EffectStrength: 0.75
     - _FadeAmount: 0
     - _Metalic: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _SecondaryStrength: 2.6
     - _Smoothness: 0.5
     m_Colors:
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
