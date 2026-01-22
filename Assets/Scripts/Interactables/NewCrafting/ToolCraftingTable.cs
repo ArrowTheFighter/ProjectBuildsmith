@@ -45,26 +45,44 @@ public class ToolCraftingTable : CraftingTableBase
     bool IsValidRecipe(out CraftingRecipeData validRecipeData)
     {
         validRecipeData = null;
-        foreach (CraftingRecipeData recipeData in craftingRecipeData)
-        {
 
-            bool recipeIsValid = true;
-            for (int i = 0; i < craftingTableSlots.Length; i++)
+        // Build 3x3 grid from crafting table
+        string[,] grid = new string[3, 3];
+
+        for (int i = 0; i < 9; i++)
+        {
+            int y = i / 3;
+            int x = i % 3;
+            grid[y, x] = craftingTableSlots[i]
+                .inventorySlot.inventoryItemStack.ID;
+        }
+
+        foreach (CraftingRecipeData recipe in craftingRecipeData)
+        {
+            // Make sure pattern exists
+            if (recipe.pattern == null)
+                continue;
+
+            int maxY = 3 - recipe.height;
+            int maxX = 3 - recipe.width;
+
+            for (int y = 0; y <= maxY; y++)
             {
-                if (string.IsNullOrEmpty(recipeData.recipe_items[i]) && string.IsNullOrEmpty(craftingTableSlots[i].inventorySlot.inventoryItemStack.ID))
+                for (int x = 0; x <= maxX; x++)
                 {
-                    continue;
+                    if (PatternMatches(grid, recipe, y, x) &&
+                        !HasExtraItems(grid, recipe, y, x))
+                    {
+                        validRecipeData = recipe;
+                        return true;
+                    }
                 }
-                if (recipeData.recipe_items[i] != craftingTableSlots[i].inventorySlot.inventoryItemStack.ID) recipeIsValid = false;
-            }
-            if (recipeIsValid)
-            {
-                validRecipeData = recipeData;
-                return true;
             }
         }
+
         return false;
-     }
+    }
+
 
     void itemCrafted(InventoryItemStack inventoryItemStack)
     {
@@ -87,4 +105,55 @@ public class ToolCraftingTable : CraftingTableBase
         OnItemCraftedEvent?.Invoke();
         print("item was crafted");
     }
+
+    bool PatternMatches(
+    string[,] grid,
+    CraftingRecipeData recipe,
+    int startY,
+    int startX)
+    {
+        for (int y = 0; y < recipe.height; y++)
+        {
+            for (int x = 0; x < recipe.width; x++)
+            {
+                string recipeItem = recipe.pattern[y, x];
+                string gridItem = grid[startY + y, startX + x];
+
+                if (string.IsNullOrEmpty(recipeItem))
+                {
+                    if (!string.IsNullOrEmpty(gridItem))
+                        return false;
+                }
+                else if (recipeItem != gridItem)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    bool HasExtraItems(
+    string[,] grid,
+    CraftingRecipeData recipe,
+    int startY,
+    int startX)
+    {
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                bool inside =
+                    y >= startY && y < startY + recipe.height &&
+                    x >= startX && x < startX + recipe.width;
+
+                if (!inside && !string.IsNullOrEmpty(grid[y, x]))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
 }
