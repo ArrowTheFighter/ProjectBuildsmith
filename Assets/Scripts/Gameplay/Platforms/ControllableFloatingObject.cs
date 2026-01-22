@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
 {
@@ -22,6 +23,8 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
     Coroutine moveRoutine;
 
     public event Action OnBeforePlatformMove;
+
+    private readonly HashSet<IPlatformPassenger> passengers = new();
 
     void Start()
     {
@@ -170,5 +173,21 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
     public Transform getInterfaceTransform()
     {
         return transform;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            passengers.Add(passenger.GetPassengerScript());
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            passengers.Remove(passenger.GetPassengerScript());
+        }
     }
 }

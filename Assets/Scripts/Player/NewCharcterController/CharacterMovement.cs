@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour, IPlatformPassenger
 {
     [Header("Movement")]
     public float maxSpeed;
@@ -247,7 +246,6 @@ public class CharacterMovement : MonoBehaviour
         {
             currentGlobalPos = moveingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPos);
         }
-        if (lastPlatformGlobalPos == Vector3.zero) return;
             //currentGlobalPos = moveingPlatform.getInterfaceTransform().TransformPoint(lastPlatformLocalPos);
         platformCurrentFrameDelta = currentGlobalPos - lastPlatformGlobalPos;
 
@@ -421,6 +419,11 @@ public class CharacterMovement : MonoBehaviour
         //platformDelta = delta / Time.fixedDeltaTime;
     }
 
+    void IPlatformPassenger.BeforePlatformMove(IMoveingPlatform moveingPlatform)
+    {
+        BeforePlatformMove();
+    }
+
     void BeforePlatformMove()
     {
         if (moveingPlatform == null) return;
@@ -462,7 +465,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (moveingPlatform == null && lastMovingPlatform != null)
         {
-            lastMovingPlatform.OnBeforePlatformMove -= BeforeLastPlatformMove;
+            //lastMovingPlatform.OnBeforePlatformMove -= BeforeLastPlatformMove;
         }
         lastMovingPlatform = moveingPlatform;
 
@@ -512,8 +515,8 @@ public class CharacterMovement : MonoBehaviour
                     //     collider.sharedMaterial.staticFriction = 5;
                     // }
                 }
-
-                platform.OnBeforePlatformMove += BeforePlatformMove;
+                //print($"adding moving platform for ${((Component)moveingPlatform).gameObject.name}");
+                //platform.OnBeforePlatformMove += BeforePlatformMove;
 
                 //BeforePlatformMove();
             }
@@ -524,7 +527,8 @@ public class CharacterMovement : MonoBehaviour
             platformDelta = Vector3.zero;
             //lastPlatformLocalPos = Vector3.zero;
             lastPlatformGlobalPos = Vector3.zero;
-            moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
+            //print($"removing moving platform from ${((Component)moveingPlatform).gameObject.name}");
+            //moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
 
             //platformDelta = Vector3.zero;
             if ((Component)moveingPlatform != null && ((Component)moveingPlatform).gameObject != null)
@@ -541,7 +545,8 @@ public class CharacterMovement : MonoBehaviour
             moveingPlatform = null;
             if(lastMovingPlatform != null)
             {
-                lastMovingPlatform.OnBeforePlatformMove += BeforeLastPlatformMove;
+                //print($"adding moving platform from last moving platform for ${((Component)lastMovingPlatform).gameObject.name}");
+                //lastMovingPlatform.OnBeforePlatformMove += BeforeLastPlatformMove;
             }
         }
         if (moveingPlatform == null && grounded)
@@ -594,7 +599,8 @@ public class CharacterMovement : MonoBehaviour
             GravityDir = Vector3.down;
             if(moveingPlatform != null)
             {
-                moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
+                //print($"SECOND: removing moving platform from ${((Component)moveingPlatform).gameObject.name}");
+                //moveingPlatform.OnBeforePlatformMove -= BeforePlatformMove;
                 moveingPlatform = null;
 
                 if (lastMovingPlatform != null)
@@ -906,5 +912,11 @@ public class CharacterMovement : MonoBehaviour
         }
 
         return false;
+    }
+
+    
+    public IPlatformPassenger GetPassengerScript()
+    {
+        return this;
     }
 }

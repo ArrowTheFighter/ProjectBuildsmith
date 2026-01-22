@@ -6,4 +6,6 @@ public interface IMoveingPlatform
     public event Action OnBeforePlatformMove;
 
     public Transform getInterfaceTransform();
- }
+}
+
+

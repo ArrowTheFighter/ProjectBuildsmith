@@ -72,7 +72,6 @@ public class RailGrindAbility : PlayerAbility
 
     public void PlayerJumped()
     {
-        print("RailGrind - Player jumped");
         ExitGrindRail();
 
         //characterMovement.OverrideGravity = true;

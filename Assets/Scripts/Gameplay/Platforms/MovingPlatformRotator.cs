@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class MovingPlatformRotator : MonoBehaviour, IMoveingPlatform
 {
@@ -8,6 +9,9 @@ public class MovingPlatformRotator : MonoBehaviour, IMoveingPlatform
 
     public event Action OnBeforePlatformMove;
     [SerializeField] bool AutoAddChildComponenets = true;
+
+
+    private readonly HashSet<IPlatformPassenger> passengers = new();
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -51,5 +55,23 @@ public class MovingPlatformRotator : MonoBehaviour, IMoveingPlatform
     public Transform getInterfaceTransform()
     {
         return transform;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            passengers.Add(passenger.GetPassengerScript());
+        }
+
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            passengers.Remove(passenger.GetPassengerScript());
+
+        }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class FloatingObject : MonoBehaviour, IMoveingPlatform
 {
@@ -15,10 +16,13 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     float elapsed;
     bool reverse;
 
+    private readonly HashSet<IPlatformPassenger> passengers = new();
+
     public event Action OnBeforePlatformMove;
 
     public Transform obj_transform;
     public MeshFilter visualMesh;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,6 +65,10 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
         if (!IsActive) return;
         if (elapsed < duration)
         {
+            foreach (var passenger in passengers)
+            {
+                passenger.BeforePlatformMove(this);
+            }
             OnBeforePlatformMove?.Invoke();
             elapsed += Time.fixedDeltaTime;
 
@@ -79,17 +87,6 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
             elapsed = 0f;
         }
         
-
-    }
-
-    void LateUpdate()
-    {
-        // if (rb == null) return;
-        // Vector3 delta = rb.position - lastPosition;
-
-        // OnPlatformMove?.Invoke(delta);
-
-        // lastPosition = rb.position;
 
     }
 
@@ -126,5 +123,27 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     public Transform getInterfaceTransform()
     {
         return obj_transform;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        print("moving platform Collided with object");
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            print("adding object to moving platform passengers");
+            passengers.Add(passenger.GetPassengerScript());
+        }
+            
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        print("moving platform Left collision with object");
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            print("removing object from moving platform passengers");
+            passengers.Remove(passenger.GetPassengerScript());
+            
+        }
     }
 }

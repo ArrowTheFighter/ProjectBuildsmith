@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
 {
@@ -17,6 +18,8 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
     public AnimationCurve fallCurve;
     bool isFalling;
     Rigidbody rb;
+
+    private readonly HashSet<IPlatformPassenger> passengers = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,6 +72,11 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         //TODO probably should change this when re doing moving platforms
     }
 
+    public Transform getInterfaceTransform()
+    {
+        return transform;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         float heightCheck = transform.position.y + platformCollider.bounds.extents.y;
@@ -76,10 +84,19 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         {
             StartCoroutine(Falling());
         }
+
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            passengers.Add(passenger.GetPassengerScript());
+        }
     }
 
-    public Transform getInterfaceTransform()
+    void OnCollisionExit(Collision collision)
     {
-        return transform;
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            passengers.Remove(passenger.GetPassengerScript());
+
+        }
     }
 }

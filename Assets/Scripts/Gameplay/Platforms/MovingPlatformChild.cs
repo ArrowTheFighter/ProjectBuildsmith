@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
 {
+    private readonly HashSet<IPlatformPassenger> passengers = new();
     public event Action OnBeforePlatformMove;
 
     public Transform ParentTransform;
@@ -66,7 +68,33 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
 
     void SendBeforeMoveEvent()
     {
+        foreach (var passenger in passengers)
+        {
+            print("call child beforePlatformMove");
+            passenger.BeforePlatformMove(this);
+        }
         OnBeforePlatformMove?.Invoke();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        print("moving platform child Collided with object");
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            print("adding object to moving platform child passengers");
+            passengers.Add(passenger.GetPassengerScript());
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        print("moving platform child Left collision with object");
+        if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
+        {
+            print("removing object from moving platform child passengers");
+
+            passengers.Remove(passenger.GetPassengerScript());
+        }
     }
 
 }
