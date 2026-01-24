@@ -53,8 +53,19 @@ public class AssignSpecialItemID : Button
         // Gather existing non-zero IDs
         foreach (var saveable in savablesArray)
         {
-            if (saveable.Get_Unique_ID != 0)
-                usedIDs.Add(saveable.Get_Unique_ID);
+            int id = saveable.Get_Unique_ID;
+            if (id != 0)
+            {
+                if(usedIDs.Contains(id))
+                {
+                    saveable.Get_Unique_ID = 0;
+                }
+                else
+                {
+                    usedIDs.Add(saveable.Get_Unique_ID);
+                }
+            }
+                
         }
 
         int nextID = 1;
@@ -104,8 +115,18 @@ public class AssignSpecialItemID : Button
         // Gather existing non-zero IDs
         foreach (var pickup in pickups)
         {
-            if (pickup.pickup_id != 0)
-                usedIDs.Add(pickup.pickup_id);
+            int id = pickup.pickup_id;
+            if (id != 0)
+            {
+                if (usedIDs.Contains(id))
+                {
+                    pickup.pickup_id = 0;
+                }
+                else
+                {
+                    usedIDs.Add(pickup.pickup_id);
+                }
+            }
         }
 
         int nextID = 1;
@@ -137,8 +158,18 @@ public class AssignSpecialItemID : Button
         // Collect existing IDs
         foreach (var obj in saveObjects)
         {
-            if (obj.SaveObjectID != 0)
-                usedIDs.Add(obj.SaveObjectID);
+            int id = obj.SaveObjectID;
+            if (id != 0)
+            {
+                if (usedIDs.Contains(id))
+                {
+                    obj.SaveObjectID = 0;
+                }
+                else
+                {
+                    usedIDs.Add(obj.SaveObjectID);
+                }
+            }
         }
 
         int nextID = 1;
@@ -203,8 +234,18 @@ public class AssignSpecialItemID : Button
         // Collect existing IDs
         foreach (var obj in dialogWorkers)
         {
-            if (obj.unique_id != 0)
-                usedIDs.Add(obj.unique_id);
+            int id = obj.unique_id;
+            if (id != 0)
+            {
+                if (usedIDs.Contains(id))
+                {
+                    obj.unique_id = 0;
+                }
+                else
+                {
+                    usedIDs.Add(obj.unique_id);
+                }
+            }
         }
 
         int nextID = 1;
@@ -313,11 +354,33 @@ public class AssignSpecialItemID : Button
             switch (obj)
             {
                 case DSDialogueSO dialog when dialog.unique_id != 0:
-                    usedIDs.Add(dialog.unique_id);
+                    int id = dialog.unique_id;
+                    if (id != 0)
+                    {
+                        if (usedIDs.Contains(id))
+                        {
+                            dialog.unique_id = 0;
+                        }
+                        else
+                        {
+                            usedIDs.Add(dialog.unique_id);
+                        }
+                    }
                     break;
 
                 case DSCloseDialogSO closeDialog when closeDialog.unique_id != 0:
-                    usedIDs.Add(closeDialog.unique_id);
+                    int CDid = closeDialog.unique_id;
+                    if (CDid != 0)
+                    {
+                        if (usedIDs.Contains(CDid))
+                        {
+                            closeDialog.unique_id = 0;
+                        }
+                        else
+                        {
+                            usedIDs.Add(closeDialog.unique_id);
+                        }
+                    }
                     break;
             }
         }

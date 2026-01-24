@@ -14,6 +14,7 @@ public class LeverScript : MonoBehaviour, IInteractable
     public bool CanInteract { get => isInteractable; set {isInteractable = value;} }
 
     bool isOn;
+    public bool ActivateWhenOnAndOff;
 
     public UnityEvent LeverPulled;
 
@@ -47,6 +48,8 @@ public class LeverScript : MonoBehaviour, IInteractable
         isOn =false;
 
         //Play animation here
+        if(ActivateWhenOnAndOff)
+            LeverPulled?.Invoke();
         animator.Play("TurnOff");
     }
 

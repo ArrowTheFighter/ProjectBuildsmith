@@ -68,14 +68,14 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 
     void Update()
     {
-        if (JumpWhenWallInFront)
+        if (JumpWhenWallInFront && isMoving)
         {
             if (Physics.Raycast(transform.position, transform.forward, DistanceForWallCheck, ~wallCheckLayersIgnore))
             {
                 Jump();
             }
         }
-        if (JumpWhenEmptySpaceInFront)
+        if (JumpWhenEmptySpaceInFront && isMoving)
         {
             if (!Physics.Raycast(transform.position + transform.forward * emptySpaceForwardDistance, Vector3.down, emptySpaceDownDistance, ~wallCheckLayersIgnore))
             {
