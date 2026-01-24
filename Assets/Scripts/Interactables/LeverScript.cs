@@ -19,11 +19,14 @@ public class LeverScript : MonoBehaviour, IInteractable
     public UnityEvent LeverPulled;
 
     public Animator animator;
+    float cooldown;
 
     public bool Interact(Interactor interactor)
     {
+        if(cooldown > Time.time) return false;
         if(!isInteractable) return false;
         ToggleLever();
+        cooldown = Time.time + 0.2f;
         return true;
     }
 

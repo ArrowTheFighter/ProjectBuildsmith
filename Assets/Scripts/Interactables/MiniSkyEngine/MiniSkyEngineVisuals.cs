@@ -58,6 +58,7 @@ public class MiniSkyEngineVisuals : MonoBehaviour
         {
             repairStructure.requiredItemPercentUpdated += RequiredItemsUpdated;
             repairStructure.onFinished += repairFinished;
+            repairStructure.onSkipLoad += SkipFinished;
         }
 
 
@@ -66,6 +67,12 @@ public class MiniSkyEngineVisuals : MonoBehaviour
     void repairFinished()
     {
         SetIsFinished(true);
+    }
+
+    void SkipFinished()
+    {
+        finished = true;
+        EngineLid.DOLocalRotate(new Vector3(0, 0, 0), EngineLidOpenDuration).SetEase(EngineLidOpenEase);
     }
     
     public void SetIsFinished(bool full)

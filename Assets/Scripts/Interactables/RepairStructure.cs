@@ -52,6 +52,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     Interactor last_interactor;
     bool loadOnAwake;
     public Action onFinished;
+    public Action onSkipLoad;
 
     [Header("particles")]
     int currentItemParticles;
@@ -335,7 +336,8 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     IEnumerator LoadStructure()
     {
         yield return new WaitForSeconds(1f);
-        onFinished?.Invoke();
+        //onFinished?.Invoke();
+        onSkipLoad?.Invoke();
         AssignFlag();
         is_repaired = true;
         //HologramStructure.SetActive(false);

@@ -139,6 +139,10 @@ public class ControllableFloatingObject : MonoBehaviour, IMoveingPlatform
     {
         if (moveRoutine == null) return;
 
+        foreach (var passenger in passengers)
+        {
+            passenger.BeforePlatformMove(this);
+        }
         OnBeforePlatformMove?.Invoke();
 
         Vector3 newPos = Vector3.Lerp(startPos, endPos, Mathf.Clamp01(positionBetweenPoints));

@@ -31,7 +31,7 @@ public class MiniSkyEngineAnimationEvents : MonoBehaviour
         repairStructure.SpawnedStar += PlayScaleAnim;
     }
 
-    void Osable()
+    void OnDisable()
     {
         repairStructure.SpawnedStar -= PlayScaleAnim;
     }
