@@ -8,7 +8,7 @@ public class InventoryDataSaver : MonoBehaviour,ISaveable
 {
     public List<InventorySlotComponent> inventorySlots = new List<InventorySlotComponent>();
     public List<InventorySlot> savedSlots = new List<InventorySlot>();
-    public bool ActiveContainer;
+    [HideInInspector] public bool ActiveContainer;
 
     public event Action slotsUpdated;
 
