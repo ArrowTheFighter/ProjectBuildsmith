@@ -63,6 +63,10 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable,ISaveabl
                 IsLocked = false;
             }
         }
+        else if(IsLocked)
+        {
+            return false;
+        }
 
         ScriptRefrenceSingleton.instance.gameplayUtils.OpenInventoryUI(inventroyType);
         OnOpened?.Invoke();
@@ -86,6 +90,11 @@ public class StorageContainer : MonoBehaviour, IInteractable, IStorable,ISaveabl
             storageFilled?.Invoke();
         }
         ContainerIsEmpty = updateIsEmpty;
+    }
+
+    public void SetIsLocked(bool unlocked)
+    {
+        IsLocked = unlocked;
     }
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
