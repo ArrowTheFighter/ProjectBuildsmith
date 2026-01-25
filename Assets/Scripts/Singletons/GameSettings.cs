@@ -15,9 +15,11 @@ public class GameSettings : MonoBehaviour
     [Header("Accessibility Settings")]
     public Action<bool> OnScreenFlashChanged;
     public Action<bool> OnScreenShakeChanged;
+    public Action<bool> OnColorBlindModeChanged;
 
     public Toggle[] screenFlashToggles;
     public Toggle[] screenShakeToggles;
+    public Toggle[] screenColorBlindToggles;
 
 
     [Header("Control Settings")]
@@ -93,6 +95,7 @@ public class GameSettings : MonoBehaviour
         //Accessibilitiy settings
         foreach (var t in screenFlashToggles) t.isOn = settingsContainer.ScreenFlash;
         foreach (var t in screenShakeToggles) t.isOn = settingsContainer.ScreenShake;
+        foreach (var t in screenColorBlindToggles) t.isOn = settingsContainer.ColorBlindMode;
 
         //Control settings
         foreach (var t in sensitivitySliders) t.value = settingsContainer.CameraSensitivity;
@@ -115,6 +118,7 @@ public class GameSettings : MonoBehaviour
         // Accessibility
         SetScreenFlashSetting(settingsContainer.ScreenFlash);
         SetScreenShakeSetting(settingsContainer.ScreenShake);
+        SetColorBlindSetting(settingsContainer.ColorBlindMode);
 
         // Controls
         SetCameraSensitivity(settingsContainer.CameraSensitivity);
@@ -143,6 +147,14 @@ public class GameSettings : MonoBehaviour
     {
         settingsContainer.ScreenShake = value;
         OnScreenShakeChanged?.Invoke(value);
+        //SaveSettingsToFile();
+        SetUIValues();
+    }
+
+    public void SetColorBlindSetting(bool value)
+    {
+        settingsContainer.ColorBlindMode = value;
+        OnColorBlindModeChanged?.Invoke(value);
         //SaveSettingsToFile();
         SetUIValues();
     }
@@ -279,6 +291,11 @@ public class GameSettings : MonoBehaviour
         //return PlayerPrefs.GetInt(screenShakeKey, 0) == 1;
     }
 
+    public bool IsColorBlindModeDisabled()
+    {
+        return settingsContainer.ColorBlindMode;
+    }
+
     public void SaveSettingsToFile()
     {
         string json = JsonUtility.ToJson(settingsContainer, true); // true = pretty print
@@ -308,6 +325,7 @@ public class SettingsContainer
     //Accessibility
     public bool ScreenFlash;
     public bool ScreenShake;
+    public bool ColorBlindMode;
 
     //Controls
     public float CameraSensitivity = 0.2f;
