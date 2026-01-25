@@ -26,13 +26,11 @@ public class EnableParticleWhenPlayerIsNearby : MonoBehaviour
 
     void PlayerEntered()
     {
-        print("starting particle");
         ps.Play();
     }
 
     void PlayerExited()
     {
-        print("stoping particle");
         ps.Stop();
     }
 
