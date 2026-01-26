@@ -51,6 +51,9 @@ namespace DS.Elements
                 
                 choicePort.userData = choice;
 
+                // Move it one "line" down
+                choicePort.style.marginTop = 18; // adjust value as needed
+
                 outputContainer.Add(choicePort);
             }
 

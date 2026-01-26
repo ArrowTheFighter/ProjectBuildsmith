@@ -10772,6 +10772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7956660880481570790}
   - component: {fileID: 7922086010231133117}
+  - component: {fileID: 3020148453291202209}
   m_Layer: 2
   m_Name: Collider
   m_TagString: NPC
@@ -10817,6 +10818,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3020148453291202209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3548831037643653147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ecf018c8c35be44caab12a78f289f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainPlatformPassengerTransform: {fileID: 7761975376654643713}
 --- !u!1 &3567950814673544362
 GameObject:
   m_ObjectHideFlags: 0
@@ -11298,6 +11312,7 @@ MonoBehaviour:
   walkSpeed: 100
   sprintSpeed: 0
   maxSlopeAngle: 55
+  exitingSlope: 0
   playerInput: {fileID: 0}
   playerHeight: 2
   playerRadius: 0.49
@@ -11501,14 +11516,19 @@ MonoBehaviour:
   Localized_Table: NPC
   nPC_Events: []
   UseLocalization: 0
+  currentDialogSO: {fileID: 0}
+  InactivePrompt: Talk
+  ActivePrompt: Continue
   PROMPT: Talk
   item_Requirements: []
   NPCCanInteract: 1
+  hasMarker: 0
   MarkerParticle: {fileID: 4321131716949761933}
   blendTime: 4
   NPCCamera: {fileID: 0}
   TurnTowardsPlayer: 0
   TurnBackToOrigin: 0
+  unique_id: 0
 --- !u!136 &4494476586334733913
 CapsuleCollider:
   m_ObjectHideFlags: 0
