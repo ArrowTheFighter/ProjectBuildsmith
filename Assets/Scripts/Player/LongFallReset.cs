@@ -42,6 +42,9 @@ public class LongFallReset : MonoBehaviour
                     case NoClip noClip:
                         if (noClip.NoClipActive) return;
                         break;
+                    case RailGrindAbility railGrindAbility:
+                        if (railGrindAbility.onGrindrail) return;
+                        break;
                 }
             }
         }
