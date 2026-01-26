@@ -102,6 +102,7 @@ public class CompassScript : MonoBehaviour
         if (!activeQuestMarkers.Contains(questMarkerInfo)) return;
         if (questMarkerInfo.ParticleObject != null) Destroy(questMarkerInfo.ParticleObject);
         StartCoroutine(ScaleOutAndDestroy(questMarkerInfo));
+
         // sequence.Append(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).DOScale(1.5f, 0.15f).SetLink(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).gameObject))
         //     .Append(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).DOScale(0f, 0.2f).SetEase(Ease.InOutQuint).SetLink(questMarkerInfo.MarkerRectTransform.transform.GetChild(0).gameObject)).OnComplete(() =>
         //     {
@@ -112,10 +113,18 @@ public class CompassScript : MonoBehaviour
 
     public void RemoveQuestMarker(Transform worldObjectTransform)
     {
-        QuestMarkerInfo questMarkerInfo = activeQuestMarkers.FirstOrDefault(marker => marker.MarkerWorldTransform == worldObjectTransform);
-        if (questMarkerInfo == null) return;
+        foreach(var questMarker in activeQuestMarkers)
+        {
+            if(questMarker.MarkerWorldTransform == worldObjectTransform)
+            {
+                if(questMarker == null) continue;
+                RemoveQuestMarker(questMarker);
+            }
+        }
+        // QuestMarkerInfo questMarkerInfo = activeQuestMarkers.FirstOrDefault(marker => marker.MarkerWorldTransform == worldObjectTransform);
+        // if (questMarkerInfo == null) return;
 
-        RemoveQuestMarker(questMarkerInfo);
+        // RemoveQuestMarker(questMarkerInfo);
 
     }
 
