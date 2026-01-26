@@ -1,20 +1,25 @@
+using NUnit.Framework.Internal;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Splines;
 
 public class RailGrindAbility : PlayerAbility
 {
     Collider[] collisionsAllocation = new Collider[10];
-    bool onZipline;
+    bool onGrindrail;
     float ziplineCooldown;
     Spline currentSpline;
     SplineContainer currentSplineContainer;
     float currentSplinePos;
-    public float splineSpeed = 0.5f;
+    public float splineSpeed = 1f;
+    Vector3 storedVelocity;
+    bool directionIsForward = true;
 
     Vector3 PlayerOffsetPosition
     {
-        set{transform.position = value + Vector3.up;}
+        get => transform.position + Vector3.up * 1.5f;
+        set {transform.position = value + Vector3.up * 1.5f;}
     }
 
     public override void Initialize(CharacterMovement player)
@@ -25,7 +30,6 @@ public class RailGrindAbility : PlayerAbility
     
     public override void UpdateAbility()
     {
-
         CapsuleCollider capsuleCollider = characterMovement.capsuleCollider;
         GetCapsulePoints(capsuleCollider,out Vector3 p1, out Vector3 p2);
         Physics.OverlapCapsuleNonAlloc(p1+ Vector3.down * 0.15f,p2,1.25f,collisionsAllocation);
@@ -36,38 +40,75 @@ public class RailGrindAbility : PlayerAbility
             if(col.tag == "Zipline")
             {
                 hitSomething = true;
-                if(onZipline) break;
+                if(onGrindrail) break;
                 if(ziplineCooldown > Time.time) break;
                 print("hit zipline");
                 Vector3 nearestPoint = GetNearestPointOnSpline(col.GetComponent<SplineContainer>(),characterMovement.transform.position, out Spline spline,out float curvePos);
+                
                 currentSpline = spline;
                 currentSplineContainer = col.GetComponent<SplineContainer>();
                 currentSplinePos = curvePos;
+
+                float3 tangent = SplineUtility.EvaluateTangent(currentSpline, currentSplinePos);
+                directionIsForward = Vector3.Dot(characterMovement.orientation.forward,tangent) > 0;
+
                 PlayerOffsetPosition = nearestPoint;
-                onZipline = true;
+                onGrindrail = true;
                 characterMovement.MovementControlledByAbility = true;
                 characterMovement.rb.linearVelocity = Vector3.zero;
+                characterMovement.readyToJump = false;
                 //characterMovement.OverrideGravity = false;
             }
         }
-        if(!hitSomething)
+        if(!hitSomething && onGrindrail)
         {
             ExitGrindRail();
         }
-
-        if(onZipline)
+        // Move the player while on a grindRail
+        if(onGrindrail)
         {
             if(currentSpline != null)
             {
-                print("moving player on spline");
                 characterMovement.rb.linearVelocity = Vector3.zero;
-                SplineUtility.Evaluate(currentSpline,currentSplinePos,out float3 position,out float3 tangent, out float3 upVector);
-                characterMovement.transform.position = characterMovement.transform.position + (Vector3)tangent * Time.deltaTime * splineSpeed;
+                Vector3 lastPos = characterMovement.transform.position;
 
-                Vector3 nearestPoint = GetNearestPointOnSpline(currentSplineContainer, characterMovement.transform.position, out Spline spline, out float curvePos);
+                SplineUtility.Evaluate(currentSpline,currentSplinePos,out float3 position,out float3 tangent, out float3 upVector);
+                //characterMovement.rb.linearVelocity += (Vector3)tangent * Time.deltaTime * splineSpeed;
+                int dir = directionIsForward? 1 : -1;
+                Vector3 directionToTest = ((Vector3)tangent).normalized * dir;
+                directionToTest.y = 0;
+                //print(directionToTest);
+                print(directionToTest * (splineSpeed * Time.deltaTime ));
+                Vector3 testPoint = characterMovement.transform.position + directionToTest * (splineSpeed * Time.deltaTime);
+
+                Vector3 newGlobalPosition = GetNearestPointOnSpline(currentSplineContainer, testPoint, out Spline spline, out float curvePos);
+                //float3 newPosition = SplineUtility.EvaluatePosition(currentSpline, curvePos);
+
+                //Vector3 newGlobalPosition = currentSplineContainer.transform.TransformPoint(newPosition);
+                PlayerOffsetPosition = newGlobalPosition;
+                //characterMovement.transform.position = newGlobalPosition;
+
+                //Vector3 nearestPoint = GetNearestPointOnSpline(currentSplineContainer, characterMovement.transform.position, out Spline _spline, out float _curvePos);
                 currentSplinePos = curvePos;
+
+                Vector3 dirThingy = testPoint - lastPos;
+                storedVelocity = dirThingy.normalized * (splineSpeed * 0.25f) / Time.fixedDeltaTime;
+                //print(storedVelocity);
             }
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if(currentSpline == null) return;
+        SplineUtility.Evaluate(currentSpline, currentSplinePos, out float3 position, out float3 tangent, out float3 upVector);
+        //characterMovement.rb.linearVelocity += (Vector3)tangent * Time.deltaTime * splineSpeed;
+        int dir = directionIsForward ? 1 : -1;
+        Vector3 directionToTest = ((Vector3)tangent).normalized * dir;
+        directionToTest.y = 0;
+        //print(directionToTest);
+        Vector3 testPoint = characterMovement.transform.position + (directionToTest * splineSpeed);
+        Gizmos.DrawSphere(testPoint,0.5f);
     }
 
     public void PlayerJumped()
@@ -79,11 +120,22 @@ public class RailGrindAbility : PlayerAbility
 
     void ExitGrindRail()
     {
-        if(!onZipline) return;
-        onZipline = false;
+        if(!onGrindrail) return;
+        onGrindrail = false;
         characterMovement.MovementControlledByAbility = false;
-        ziplineCooldown = Time.time + 1;
+        ziplineCooldown = Time.time + 0.25f;
         currentSpline = null;
+
+        characterMovement.SimulateVelocity(storedVelocity,3);
+
+        characterMovement.rb.linearVelocity += new Vector3(0,20,2);
+        storedVelocity = Vector3.zero;
+        Invoke("ResetReadyToJump",0.1f);
+    }
+
+    void ResetReadyToJump()
+    {
+        characterMovement.readyToJump = true;
     }
 
     public override void FixedUpdateAbility()

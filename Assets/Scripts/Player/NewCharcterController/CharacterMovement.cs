@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
@@ -27,6 +28,8 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
     [HideInInspector] public bool MovementControlledByAbility;
     [HideInInspector] public bool OverrideGravity;
     [HideInInspector] public float OverrideAirDragAmount;
+    Vector3 simulatedVelocity;
+    Vector3 lastAppliedSimulatedVelocity;
     bool jumpOveride;
 
     [Header("Rotation")]
@@ -200,6 +203,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
             // Set max speed
             SpeedControl();
         }
+        ApplySimulatedVelocity();
         if (moveingPlatform != null)
         {
             //capsuleCollider.excludeLayers = 1 << 14;
@@ -677,6 +681,50 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
         dragVelocity.z /= (1 + amount * Time.deltaTime);
 
         rb.linearVelocity = new Vector3(dragVelocity.x, rb.linearVelocity.y, dragVelocity.z);
+    }
+
+    public void SimulateVelocity(Vector3 direction,float duration)
+    {
+        print("called simulate velocity");
+        simulatedVelocity = direction;
+        StartCoroutine(ApplySimulatedVelocityCoroutine(duration));
+    }
+
+    void ApplySimulatedVelocity()
+    {
+        //rb.linearVelocity -= lastAppliedSimulatedVelocity;
+
+        lastAppliedSimulatedVelocity = simulatedVelocity;
+        if(lastAppliedSimulatedVelocity == Vector3.zero) return;
+        //print($"applying simulated velocity : {lastAppliedSimulatedVelocity}");
+
+        rb.MovePosition(transform.position + (lastAppliedSimulatedVelocity * Time.fixedDeltaTime));
+    }
+
+    IEnumerator ApplySimulatedVelocityCoroutine(float duration)
+    {
+        float currentDuration = 0;
+        Vector3 appliedVelocity = Vector3.zero;
+        while(currentDuration < duration)
+        {
+
+            if(grounded)
+            {
+                print("Player was grounded during simulated velocity");
+                
+                break;
+            } 
+            //print("applying simulated velocity");
+            // rb.linearVelocity -= appliedVelocity;
+
+            // appliedVelocity = simulatedVelocity / Time.fixedDeltaTime;
+            // rb.linearVelocity += appliedVelocity;
+
+
+            // currentDuration += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        simulatedVelocity = Vector3.zero;
     }
 
     private void MyInput()
