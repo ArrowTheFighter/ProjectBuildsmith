@@ -15,7 +15,7 @@ public class RailGrindAbility : PlayerAbility
     public float splineSpeed = 20f;
     Vector3 storedVelocity;
     bool directionIsForward = true;
-    SplineAnimate splineAnimate;
+    SplineAnimateCustom splineAnimate;
     Vector3 lastPosition;
     
 
@@ -34,9 +34,9 @@ public class RailGrindAbility : PlayerAbility
         characterMovement.characterInput.OnJump += PlayerJumped;
 
         GameObject splineAnimateGameObject = new GameObject();
-        splineAnimate = splineAnimateGameObject.AddComponent<SplineAnimate>();
-        splineAnimate.m_Method = SplineAnimate.Method.Speed;
-        splineAnimate.m_LoopMode = SplineAnimate.LoopMode.Once;
+        splineAnimate = splineAnimateGameObject.AddComponent<SplineAnimateCustom>();
+        splineAnimate.m_Method = SplineAnimateCustom.Method.Speed;
+        splineAnimate.m_LoopMode = SplineAnimateCustom.LoopMode.Once;
         splineAnimate.PlayOnAwake = false;
 
     }
