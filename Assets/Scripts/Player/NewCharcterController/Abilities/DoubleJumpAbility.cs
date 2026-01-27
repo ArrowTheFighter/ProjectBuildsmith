@@ -31,7 +31,7 @@ public class DoubleJumpAbility : PlayerAbility
         }
         if (characterMovement.grounded && !characterMovement.OnSteepSlope())
         {
-            remainingDoubleJumps = maxDoubleJumps;
+            ResetAbility();
          }
         
     }
@@ -69,6 +69,6 @@ public class DoubleJumpAbility : PlayerAbility
 
     public override void ResetAbility()
     {
-        //No need to reset anything
+        remainingDoubleJumps = maxDoubleJumps;
     }
 }

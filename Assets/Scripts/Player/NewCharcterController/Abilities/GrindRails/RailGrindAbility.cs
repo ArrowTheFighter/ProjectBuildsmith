@@ -58,7 +58,24 @@ public class RailGrindAbility : PlayerAbility
                 hitSomething = true;
                 if(onGrindrail) break;
                 if(ziplineCooldown > Time.time) break;
+
                 print("hit zipline");
+
+                foreach (var ability in characterMovement.playerAbilities)
+                {
+                    if (ability is DashAbility dashAbility)
+                    {
+                        dashAbility.ResetAbility();
+                        dashAbility.canDash = true;
+                    }
+                    if(ability is DoubleJumpAbility doubleJumpAbility)
+                    {
+                        doubleJumpAbility.ResetAbility();
+                    }
+                }
+
+
+
                 Vector3 nearestPoint = GetNearestPointOnSpline(col.GetComponent<SplineContainer>(),characterMovement.transform.position, out Spline spline,out float curvePos);
                 
                 currentSpline = spline;
@@ -81,6 +98,8 @@ public class RailGrindAbility : PlayerAbility
                 characterMovement.MovementControlledByAbility = true;
                 characterMovement.rb.linearVelocity = Vector3.zero;
                 characterMovement.readyToJump = false;
+
+                
                 //characterMovement.OverrideGravity = false;
             }
         }
@@ -106,14 +125,21 @@ public class RailGrindAbility : PlayerAbility
 
                 transform.position = splineAnimate.transform.position + splineAnimate.transform.up * 1.15f;
 
+                Vector3 downDir = splineAnimate.transform.position - transform.position;
+
+                Quaternion newLookDir = Quaternion.LookRotation(splineAnimate.transform.right * (directionIsForward ? 1 : -1),-downDir);
+
+                characterMovement.transform.rotation = newLookDir;
+
+                // Quaternion rotationAmount = directionIsForward ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, 270, 0);
+                // characterMovement.orientation.rotation = rotationAmount * splineAnimate.transform.rotation;
+
                 Vector3 moveDelta = characterMovement.transform.position - lastPosition;
 
                 storedVelocity = moveDelta.normalized * splineSpeed;
 
                 lastPosition = characterMovement.transform.position;
 
-                Quaternion rotationAmount = directionIsForward? Quaternion.Euler(0,90,0) : Quaternion.Euler(0,270,0);
-                characterMovement.orientation.rotation = rotationAmount * splineAnimate.transform.rotation ;
                 // characterMovement.rb.linearVelocity = Vector3.zero;
                 // Vector3 lastPos = characterMovement.transform.position;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DashAbility : PlayerAbility
 {
-    bool canDash;
+    public bool canDash;
     public bool isDashing;
     bool groundSliding;
     bool slideJumping;
