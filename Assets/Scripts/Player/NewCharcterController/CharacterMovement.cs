@@ -30,6 +30,8 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
     [HideInInspector] public float OverrideAirDragAmount;
     Vector3 simulatedVelocity;
     Vector3 lastAppliedSimulatedVelocity;
+    Coroutine simulatedVelocityCoroutine;
+    bool isSimulatingVelocity;
     bool jumpOveride;
 
     [Header("Rotation")]
@@ -685,9 +687,28 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
 
     public void SimulateVelocity(Vector3 direction,float duration)
     {
-        print("called simulate velocity");
+        if(isSimulatingVelocity)
+        {
+            if(simulatedVelocityCoroutine != null)
+                StopCoroutine(simulatedVelocityCoroutine);
+            simulatedVelocityCoroutine = null;
+        }
         simulatedVelocity = direction;
-        StartCoroutine(ApplySimulatedVelocityCoroutine(duration));
+        simulatedVelocityCoroutine = StartCoroutine(ApplySimulatedVelocityCoroutine(duration));
+    }
+
+    public bool StopSimulatingVelocity()
+    {
+        if(isSimulatingVelocity)
+        {
+            if(simulatedVelocityCoroutine != null)
+                StopCoroutine(simulatedVelocityCoroutine);
+            simulatedVelocityCoroutine = null;
+            simulatedVelocity = Vector3.zero;
+            isSimulatingVelocity = false;
+            return true;
+        }
+        return false;
     }
 
     void ApplySimulatedVelocity()
@@ -703,28 +724,29 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
 
     IEnumerator ApplySimulatedVelocityCoroutine(float duration)
     {
+        print("starting simulated velocity coroutine");
+        isSimulatingVelocity = true;
         float currentDuration = 0;
-        Vector3 appliedVelocity = Vector3.zero;
+        bool NoDuration = false;
+        if(duration < 0)
+        {
+            NoDuration = true;
+            duration = 1f;
+        }
         while(currentDuration < duration)
         {
-
+            if(!NoDuration)
+                currentDuration += Time.fixedDeltaTime;
             if(grounded)
             {
                 print("Player was grounded during simulated velocity");
-                
                 break;
             } 
-            //print("applying simulated velocity");
-            // rb.linearVelocity -= appliedVelocity;
-
-            // appliedVelocity = simulatedVelocity / Time.fixedDeltaTime;
-            // rb.linearVelocity += appliedVelocity;
-
-
-            // currentDuration += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
         simulatedVelocity = Vector3.zero;
+        isSimulatingVelocity = false;
+        print("stopping simulated velocity coroutine");
     }
 
     private void MyInput()

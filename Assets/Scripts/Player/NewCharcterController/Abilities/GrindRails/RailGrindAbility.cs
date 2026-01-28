@@ -17,16 +17,7 @@ public class RailGrindAbility : PlayerAbility
     bool directionIsForward = true;
     SplineAnimateCustom splineAnimate;
     Vector3 lastPosition;
-    
-
-    Vector3 PlayerOffsetPosition
-    {
-        
-        get => transform.position + Vector3.up * 1.5f;
-        set {
-            transform.position = value + Vector3.up * 1.5f;
-            }
-    }
+  
 
     public override void Initialize(CharacterMovement player)
     {
@@ -99,7 +90,7 @@ public class RailGrindAbility : PlayerAbility
                 characterMovement.rb.linearVelocity = Vector3.zero;
                 characterMovement.readyToJump = false;
 
-                
+                return;
                 //characterMovement.OverrideGravity = false;
             }
         }
@@ -140,33 +131,8 @@ public class RailGrindAbility : PlayerAbility
 
                 lastPosition = characterMovement.transform.position;
 
-                // characterMovement.rb.linearVelocity = Vector3.zero;
-                // Vector3 lastPos = characterMovement.transform.position;
+                Physics.SyncTransforms();
 
-                // SplineUtility.Evaluate(currentSpline,currentSplinePos,out float3 position,out float3 tangent, out float3 upVector);
-                // //characterMovement.rb.linearVelocity += (Vector3)tangent * Time.deltaTime * splineSpeed;
-                // int dir = directionIsForward? 1 : -1;
-                // Vector3 directionToTest = ((Vector3)tangent).normalized * dir;
-                // directionToTest.y = 0;
-                // //print(directionToTest);
-                // print(directionToTest * (splineSpeed * Time.deltaTime ));
-                // Vector3 testPoint = characterMovement.transform.position + directionToTest * (splineSpeed * Time.deltaTime);
-
-                // Vector3 newGlobalPosition = GetNearestPointOnSpline(currentSplineContainer, testPoint, out Spline spline, out float curvePos);
-                // Debug.DrawLine(characterMovement.transform.position, newGlobalPosition + Vector3.up * 1.5f,Color.green,5f);
-                // //float3 newPosition = SplineUtility.EvaluatePosition(currentSpline, curvePos);
-
-                // //Vector3 newGlobalPosition = currentSplineContainer.transform.TransformPoint(newPosition);
-                // //PlayerOffsetPosition = newGlobalPosition;
-                // transform.position = newGlobalPosition + Vector3.up * 1.5f;
-                // //characterMovement.transform.position = newGlobalPosition;
-
-                // //Vector3 nearestPoint = GetNearestPointOnSpline(currentSplineContainer, characterMovement.transform.position, out Spline _spline, out float _curvePos);
-                // currentSplinePos = curvePos;
-
-                // Vector3 dirThingy = testPoint - lastPos;
-                // storedVelocity = dirThingy.normalized *  2f;
-                // //print(storedVelocity);
             }
         }
     }
@@ -202,7 +168,7 @@ public class RailGrindAbility : PlayerAbility
 
         characterMovement.orientation.localEulerAngles = Vector3.zero;
 
-        characterMovement.SimulateVelocity(storedVelocity,3);
+        characterMovement.SimulateVelocity(storedVelocity,-1);
 
         characterMovement.rb.linearVelocity += new Vector3(0,20,2);
         storedVelocity = Vector3.zero;
@@ -221,7 +187,8 @@ public class RailGrindAbility : PlayerAbility
 
     public override void ResetAbility()
     {
-        //we chill for now
+        print("reseting rail grind ability");
+        characterMovement.StopSimulatingVelocity();
     }
 
     Vector3 GetNearestPointOnSpline(SplineContainer splineContainer,Vector3 position,out Spline _spline,out float curvePos)

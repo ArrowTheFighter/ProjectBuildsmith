@@ -411,6 +411,15 @@ public class DashAbility : PlayerAbility
     void Dash()
     {
         if (characterMovement.MovementControlledByAbility) return;
+
+        foreach(var ability in characterMovement.playerAbilities)
+        {
+            if(ability is RailGrindAbility railGrindAbility)
+            {
+                railGrindAbility.ResetAbility();
+            }
+        }
+
         lastSlopeForce = 0;
         lastGroundNormal = Vector3.zero;
         characterMovement.OnDash?.Invoke();
