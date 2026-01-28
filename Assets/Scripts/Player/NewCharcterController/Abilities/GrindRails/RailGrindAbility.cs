@@ -52,6 +52,14 @@ public class RailGrindAbility : PlayerAbility
 
                 print("hit zipline");
 
+                Vector3 nearestPoint = GetNearestPointOnSpline(col.GetComponent<SplineContainer>(),characterMovement.transform.position, out Spline spline,out float curvePos);
+                
+                Vector3 directionToNearestPoint = nearestPoint - transform.position;
+                if(Vector3.Dot(directionToNearestPoint.normalized, Vector3.down) < 0.2f) continue;
+
+
+                characterMovement.playerAnimationController.animator.SetTrigger("StartRailGrind");
+
                 foreach (var ability in characterMovement.playerAbilities)
                 {
                     if (ability is DashAbility dashAbility)
@@ -59,16 +67,12 @@ public class RailGrindAbility : PlayerAbility
                         dashAbility.ResetAbility();
                         dashAbility.canDash = true;
                     }
-                    if(ability is DoubleJumpAbility doubleJumpAbility)
+                    if (ability is DoubleJumpAbility doubleJumpAbility)
                     {
                         doubleJumpAbility.ResetAbility();
                     }
                 }
 
-
-
-                Vector3 nearestPoint = GetNearestPointOnSpline(col.GetComponent<SplineContainer>(),characterMovement.transform.position, out Spline spline,out float curvePos);
-                
                 currentSpline = spline;
                 currentSplineContainer = col.GetComponent<SplineContainer>();
                 currentSplinePos = curvePos;
@@ -114,7 +118,7 @@ public class RailGrindAbility : PlayerAbility
                     return;
                 }
 
-                transform.position = splineAnimate.transform.position + splineAnimate.transform.up * 1.15f;
+                transform.position = splineAnimate.transform.position + splineAnimate.transform.up * 1.25f;
 
                 Vector3 downDir = splineAnimate.transform.position - transform.position;
 
@@ -169,6 +173,9 @@ public class RailGrindAbility : PlayerAbility
         characterMovement.orientation.localEulerAngles = Vector3.zero;
 
         characterMovement.SimulateVelocity(storedVelocity,-1);
+
+
+        characterMovement.playerAnimationController.animator.SetTrigger("StopRailGrind");
 
         characterMovement.rb.linearVelocity += new Vector3(0,20,2);
         storedVelocity = Vector3.zero;
@@ -234,6 +241,37 @@ public class RailGrindAbility : PlayerAbility
         p2 = t.TransformPoint(p2Local);
     }
 
+    public static bool GetDirectionToOtherCollider(
+    Collider primary,
+    Collider other,
+    out Vector3 directionToOther,
+    out float penetrationDepth
+)
+    {
+        directionToOther = Vector3.zero;
+        penetrationDepth = 0f;
+
+        bool overlapped = Physics.ComputePenetration(
+            primary,
+            primary.transform.position,
+            primary.transform.rotation,
+            other,
+            other.transform.position,
+            other.transform.rotation,
+            out Vector3 separationDirection,
+            out float separationDistance
+        );
+
+        if (!overlapped)
+            return false;
+
+        // separationDirection points in the direction to move PRIMARY
+        // to get out of OTHER, so invert it to get direction TO other
+        directionToOther = -separationDirection.normalized;
+        penetrationDepth = separationDistance;
+
+        return true;
+    }
 
 
 }
