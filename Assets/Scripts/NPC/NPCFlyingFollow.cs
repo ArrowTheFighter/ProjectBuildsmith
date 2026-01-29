@@ -15,6 +15,7 @@ public class NPCFlyingFollow : MonoBehaviour
             return Vector3.zero;
         }
     }
+    public bool IsActive;
     public float FollowDistance;
     public float FarFollowDistance;
     float velocity;
@@ -40,7 +41,7 @@ public class NPCFlyingFollow : MonoBehaviour
 
     void Start()
     {
-        if(BodyVisuals != null)
+        if(BodyVisuals != null && IsActive)
         {
             BodyVisuals.DOLocalMoveY(-0.5f, 2).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
         }
@@ -50,6 +51,7 @@ public class NPCFlyingFollow : MonoBehaviour
     void Update()
     {
         if(!gameObject.activeInHierarchy) return;
+        if(!IsActive) return;
         if(TargetTransform != null)
         {
             
