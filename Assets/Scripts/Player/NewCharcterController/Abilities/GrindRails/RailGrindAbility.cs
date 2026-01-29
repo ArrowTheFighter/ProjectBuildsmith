@@ -13,6 +13,7 @@ public class RailGrindAbility : PlayerAbility
     SplineContainer currentSplineContainer;
     float currentSplinePos;
     public float splineSpeed = 20f;
+    public float exitForceMultiplier = 0.8f;
     Vector3 storedVelocity;
     bool directionIsForward = true;
     SplineAnimateCustom splineAnimate;
@@ -57,7 +58,7 @@ public class RailGrindAbility : PlayerAbility
                 Vector3 directionToNearestPoint = nearestPoint - transform.position;
                 if(Vector3.Dot(directionToNearestPoint.normalized, Vector3.down) < 0.2f) continue;
 
-
+                ScriptRefrenceSingleton.instance.playerParticlesManager.GetParticleByID("RailGrind").Play();
                 characterMovement.playerAnimationController.animator.SetTrigger("StartRailGrind");
 
                 foreach (var ability in characterMovement.playerAbilities)
@@ -172,8 +173,9 @@ public class RailGrindAbility : PlayerAbility
 
         characterMovement.orientation.localEulerAngles = Vector3.zero;
 
-        characterMovement.SimulateVelocity(storedVelocity,-1);
+        characterMovement.SimulateVelocity(storedVelocity * exitForceMultiplier,-1);
 
+        ScriptRefrenceSingleton.instance.playerParticlesManager.GetParticleByID("RailGrind").Stop();
 
         characterMovement.playerAnimationController.animator.SetTrigger("StopRailGrind");
 
