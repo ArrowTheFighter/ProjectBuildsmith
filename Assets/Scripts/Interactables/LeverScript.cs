@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering.Universal;
 
 public class LeverScript : MonoBehaviour, IInteractable
 {
@@ -15,6 +14,7 @@ public class LeverScript : MonoBehaviour, IInteractable
 
     bool isOn;
     public bool ActivateWhenOnAndOff;
+    public bool onlyOnce;
 
     public UnityEvent LeverPulled;
 
@@ -27,6 +27,7 @@ public class LeverScript : MonoBehaviour, IInteractable
         if(!isInteractable) return false;
         ToggleLever();
         cooldown = Time.time + 0.2f;
+        if(onlyOnce) isInteractable = false;
         return true;
     }
 

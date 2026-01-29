@@ -23,7 +23,8 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     public Transform obj_transform;
     public MeshFilter visualMesh;
 
-
+    [Header("Debug")]
+    public bool PrintDebug;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -57,11 +58,8 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
         // }
     }
 
-
     void FixedUpdate()
     {
-
-
         if (!IsActive) return;
         if (elapsed < duration)
         {
@@ -71,7 +69,7 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
             }
             OnBeforePlatformMove?.Invoke();
             elapsed += Time.fixedDeltaTime;
-
+        
 
             float t = Mathf.Clamp01(elapsed / duration);
             float easedT = easing.Evaluate(t);

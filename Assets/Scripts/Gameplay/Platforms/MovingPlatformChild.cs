@@ -70,7 +70,6 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
     {
         foreach (var passenger in passengers)
         {
-            Debug.Log($"{gameObject.name} calling child beforePlatformMove",((Component)passenger).gameObject);
             passenger.BeforePlatformMove(this);
         }
         OnBeforePlatformMove?.Invoke();
@@ -78,21 +77,16 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
 
     void OnCollisionEnter(Collision collision)
     {
-        print("moving platform child Collided with object");
         if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
         {
-            print("adding object to moving platform child passengers");
             passengers.Add(passenger.GetPassengerScript());
         }
     }
 
     void OnCollisionExit(Collision collision)
     {
-        print("moving platform child Left collision with object");
         if (collision.collider.TryGetComponent(out IPlatformPassenger passenger))
         {
-            print("removing object from moving platform child passengers");
-
             passengers.Remove(passenger.GetPassengerScript());
         }
     }

@@ -1,7 +1,9 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Events;
+using System;
 
+[Obsolete]
 public class CutsceneBuilder : MonoBehaviour
 {
     [SerializeField] Transform CameraTransform;
@@ -14,6 +16,7 @@ public class CutsceneBuilder : MonoBehaviour
     [SerializeField] bool hide_ui = true;
     [SerializeField] UnityEvent endCutsceneEvent;
 
+    
     [ContextMenu("StartCutscene")]
     public void StartCutscene()
     {
