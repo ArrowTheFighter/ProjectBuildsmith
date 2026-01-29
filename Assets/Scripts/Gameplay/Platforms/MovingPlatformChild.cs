@@ -70,7 +70,7 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
     {
         foreach (var passenger in passengers)
         {
-            print("call child beforePlatformMove");
+            Debug.Log($"{gameObject.name} calling child beforePlatformMove",((Component)passenger).gameObject);
             passenger.BeforePlatformMove(this);
         }
         OnBeforePlatformMove?.Invoke();
