@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: Caladin10
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: Caladin10
+  <Text>k__BackingField: Aye, what can this old tinker help ya with?
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Callum sent me to help.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 55bf0cfe8c542c7409bdada4ad2edd63, type: 2}
+  - <Text>k__BackingField: Have any tips?
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 66efcc38fca8648459d6934af0dd4af8, type: 2}
+  - <Text>k__BackingField: Nothing, I gotta go.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 6151adf5b49aebc43a1c137279b527e7, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  CloseDialog: 0
+  <unique_id>k__BackingField: 0

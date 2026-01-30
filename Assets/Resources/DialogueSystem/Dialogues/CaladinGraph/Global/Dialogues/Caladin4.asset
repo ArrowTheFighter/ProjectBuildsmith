@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: Caladin4
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: Caladin4
+  <Text>k__BackingField: I've been the tinker here for many years. Gatherin' stuff.
+    Fixin' stuff. Buildin' stuff. But since my accident a little while ago, been
+    forced into an early retirement of sorts.
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Callum sent me to help.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 55bf0cfe8c542c7409bdada4ad2edd63, type: 2}
+  - <Text>k__BackingField: Accident?
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 45d122be7864c4a4cbd472f36de0086a, type: 2}
+  - <Text>k__BackingField: Sorry to hear that.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 46073de051b4d874697d58f17fc9793a, type: 2}
+  - <Text>k__BackingField: I gotta go.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 4035cb45884995c4e860917c78688710, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  CloseDialog: 0
+  <unique_id>k__BackingField: 0
