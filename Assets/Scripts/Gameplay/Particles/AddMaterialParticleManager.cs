@@ -14,10 +14,12 @@ public class AddMaterialParticleManager : MonoBehaviour
 
         ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, ParticleSpawnSoundFX);
 
+        Material _mat = meshObj.GetComponent<MeshRenderer>().sharedMaterial;
+
         if (spawnedParticle.TryGetComponent(out ParticleKillOnEnterTrigger component))
         {
             print(collider);
-            component.LaunchParticle(meshObj, collider,material);
+            component.LaunchParticle(meshObj, collider, _mat);
             component.OnParticleEnter += repairStructure.SpawnStartParticle;
         }
     }
