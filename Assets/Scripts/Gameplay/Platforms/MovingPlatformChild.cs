@@ -26,6 +26,9 @@ public class MovingPlatformChild : MonoBehaviour, IMoveingPlatform
         }
         AddEventConnection();
         ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnsubscribeFromPlatformEvents;
+        
+        //Set the platform to be on the NotSafe Layer
+        gameObject.layer = 13;
     }
 
     public void ResetComponenet()
