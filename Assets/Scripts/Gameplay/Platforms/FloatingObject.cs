@@ -7,6 +7,7 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     [SerializeField] Vector3 MoveTo;
     [SerializeField] Vector3 rotationAmount;
     [SerializeField] float duration;
+    [SerializeField] float delay;
     [SerializeField] bool AutoAddChildComponenets = true;
     [SerializeField] AnimationCurve easing = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public bool IsActive;
@@ -14,7 +15,7 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     Vector3 startPos;
     Vector3 endPos;
     float elapsed;
-    bool reverse;
+    public bool reverse;
 
     private readonly HashSet<IPlatformPassenger> passengers = new();
 
@@ -29,7 +30,7 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        elapsed = delay;
         if(AutoAddChildComponenets)
         {
             Collider[] childColliders = GetComponentsInChildren<Collider>();
