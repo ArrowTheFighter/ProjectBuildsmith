@@ -97,8 +97,10 @@ public class DashAbility : PlayerAbility
                     //print(characterMovement.rb.linearVelocity.magnitude);
                     Vector3 HorVel = new Vector3(characterMovement.rb.linearVelocity.x, 0, characterMovement.rb.linearVelocity.z);
                     Vector3 platformVel = new Vector3(characterMovement.platformDelta.x, 0, characterMovement.platformDelta.z);
+                    
                     Vector3 adjustedVel = HorVel - platformVel;
-                    if (adjustedVel.magnitude < 5f && !slideJumping && !characterMovement.characterInput.GetDashInput())
+                    print(HorVel);
+                    if (HorVel.magnitude < 5f && !slideJumping && !characterMovement.characterInput.GetDashInput())
                     {
                         if (Time.time - lastTimeDashed > 0.75f)
                         {
