@@ -41,7 +41,7 @@ public class FloatingItem : MonoBehaviour
             .SetDelay(randomDelay)
             .Pause();
 
-        spinTween = objectToAnimate.DOLocalRotate(new Vector3(0, 360, 0), animation_duration_spin, RotateMode.LocalAxisAdd)
+        spinTween = objectToAnimate.DOLocalRotate(new Vector3(0, 360, 0), animation_duration_spin, RotateMode.WorldAxisAdd)
             .SetLoops(-1)
             .SetEase(Ease.Linear)
             .SetLink(gameObject)
