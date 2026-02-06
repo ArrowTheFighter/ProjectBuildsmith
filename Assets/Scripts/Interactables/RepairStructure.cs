@@ -138,6 +138,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     public bool Interact(Interactor interactor)
     {
+        if (!CInteract) return false;
         currentItemDelay = AddItemsDelay;
         last_interactor = interactor;
         last_interactor.InteractorLostAllInteractions += LostInteractor;
@@ -150,33 +151,6 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         if (!runningCoroutine)
             StartCoroutine(RepairCoroutine());
 
-        return true;
-        if (!CanInteract) return false;
-        foreach (item_requirement item in itemsRequired)
-        {
-            int current_item_amount = ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(item.item_id);
-            if (current_item_amount < item.item_amount)
-            {
-                ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotifCenter("Not enough resources");
-                return false;
-            }
-        }
-
-        if (is_repaired) return false;
-        is_repaired = true;
-
-        foreach (item_requirement item in itemsRequired)
-        {
-            print($"removing {item.item_amount} {item.item_name} from the players inventory");
-            ScriptRefrenceSingleton.instance.gameplayUtils.remove_items_from_inventory(item.item_id, item.item_amount);
-        }
-
-        if (flag_name != "" && flag_name != null)
-        {
-            FlagManager.Set_Flag(flag_name);
-        }
-
-        ScaleInStructure();
         return true;
     }
 

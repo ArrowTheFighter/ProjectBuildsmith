@@ -357,7 +357,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
                                 rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
                             }
 
-                            if (printStrings) Debug.Log($"Resolved penetration with {hitCollider.name}: {direction * distance}");
+                            //if (printStrings) Debug.Log($"Resolved penetration with {hitCollider.name}: {direction * distance}");
                         }
                     }
                 }
@@ -478,7 +478,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
         bool wasGrounded = grounded;
         float distance = groundCheckDistance;
         if (rb.linearVelocity.y < -4) distance += 0.3f;
-        grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f, playerRadius, Vector3.down, out groundHit, distance, ~IgnoreGroundLayerMask,QueryTriggerInteraction.Ignore);
+        grounded = Physics.SphereCast(transform.position + Vector3.down * playerHeight * 0.25f + Vector3.up * 0.5f, playerRadius, Vector3.down, out groundHit, distance + 0.5f, ~IgnoreGroundLayerMask,QueryTriggerInteraction.Ignore);
         if (groundHit.transform != null && groundHit.transform.tag == "CantWalk")
         {
             forceSteepSlope = true;
@@ -891,7 +891,9 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
         exitingSlope = true;
         // reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        float platformUpDelta = platformDelta.y;
+        if(printStrings) print($"Platform up delta was {platformUpDelta}");
+        rb.AddForce(transform.up * jumpForce + Vector3.up * platformUpDelta , ForceMode.Impulse);
         AudioCollection audioCollectionJumpGrunt = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Jump");
         AudioCollection audioCollectionJumpSound = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("JumpSound");
         ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
