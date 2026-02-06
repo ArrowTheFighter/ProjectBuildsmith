@@ -37,7 +37,8 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
 
             foreach (var collider in childColliders)
             {
-                if (collider.transform == transform) continue;
+                if (collider.transform == transform) continue; 
+                if (collider.isTrigger) continue;
                 GameObject childObj = collider.gameObject;
                 MovingPlatformChild movingPlatformChild = childObj.AddComponent<MovingPlatformChild>();
 
