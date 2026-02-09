@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a24acc19b71f4c4b99f6ab09172d3bd, type: 3}
-  m_Name: TalkedToCaladinForgingAhead
+  m_Name: TalkedToCallumAfterRepairingForgeBuildingsCheck
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: TalkedToCaladinForgingAhead
+  <DialogueName>k__BackingField: TalkedToCallumAfterRepairingForgeBuildingsCheck
   <Text>k__BackingField: Dialogue text.
   <Choices>k__BackingField:
   - <Text>k__BackingField: Flag is true
     LocalizeKey: 
     OutputID: IsTrue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 989cec9c6db833443a67f6b90b016fda, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 2ba3d31179a54504a9bf93a4c4e3d117, type: 2}
   - <Text>k__BackingField: Flag is false
     LocalizeKey: 
     OutputID: IsFalse
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: bdb92994a859f5244ae9d639120e44bd, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: a5227f71f154ab54fba07a0f00c0490f, type: 2}
   <DialogueType>k__BackingField: 5
   <IsStartingDialogue>k__BackingField: 0
-  <FlagID>k__BackingField: LearnedCaladinsRecipes
+  <FlagID>k__BackingField: TalkedToCallumAfterRepairingForgeBuildings
   IsTrue: 1
