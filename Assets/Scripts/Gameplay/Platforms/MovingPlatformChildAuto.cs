@@ -20,7 +20,6 @@ public class MovingPlatformChildAuto : MonoBehaviour
         foreach(var collider in childColliders)
         {
             //if (collider.transform == transform) continue;
-            print($"adding movingplatformchild componenet to {collider.gameObject.name}");
             GameObject childObj = collider.gameObject;
             MovingPlatformChild movingPlatformChild = childObj.AddComponent<MovingPlatformChild>();
 
