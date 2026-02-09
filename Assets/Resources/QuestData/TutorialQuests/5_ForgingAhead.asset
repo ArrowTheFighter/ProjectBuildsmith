@@ -56,7 +56,7 @@ MonoBehaviour:
         StayCompleted: 0
         isComplete: 0
         ObjectiveIDCollection: 0
-        flag_id: ToldCallumAboutRobot
+        flag_id: CallumSentPlayerToSeeCaladin
     - rid: 4491993879288741892
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
@@ -72,14 +72,14 @@ MonoBehaviour:
         Description: Get a <style=item>rusty pickaxe</style> from <style=Caladin>Caladin</style>
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 0
+        isComplete: 1
         ObjectiveIDCollection: 1
         Item_ID: rusty_pickaxe
         Item_Amount: 1
     - rid: 4491993879288741894
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Learn the building recipes from <style=Caladin>Caladin</style
+        Description: Learn the building recipes from <style=Caladin>Caladin</style>
         StopAtThisObjective: 1
         StayCompleted: 0
         isComplete: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Repair the forge's building
-        StopAtThisObjective: 0
+        StopAtThisObjective: 1
         StayCompleted: 0
         isComplete: 0
         ObjectiveIDCollection: 2
