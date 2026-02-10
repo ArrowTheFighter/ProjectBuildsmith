@@ -12,6 +12,7 @@ public class BatEnemy : EnemyBase
     float speed;
     bool waitingForNewPos;
     bool canAttack;
+    bool isDissy;
     float startingHealth;
 
     enum AttackingStates { Roaming, Spotted, Charging, Cooldown }
@@ -54,6 +55,7 @@ public class BatEnemy : EnemyBase
 
         OnPlayerFound += PlayerFound;
         OnPlayerLost += PlayerLost;
+        OnTakeDamage += SelfTakeDamage;
 
     }
 
@@ -64,6 +66,15 @@ public class BatEnemy : EnemyBase
         enemyState = AttackingStates.Roaming;
         StartCoroutine(CheckForPlayerRoutine());
         StartCoroutine(getNewTargetPos(0));
+    }
+
+    void SelfTakeDamage()
+    {
+        if(isDissy)
+        {
+            StopCoroutine("ChargeToCooldownDelay");
+            StartCoroutine(ChargeToCooldownDelay(0));
+        }
     }
 
 
@@ -210,9 +221,11 @@ public class BatEnemy : EnemyBase
 
     IEnumerator ChargeToCooldownDelay(float delay)
     {
+        isDissy = true;
         runningEnumerator = true;
         yield return new WaitForSeconds(delay);
 
+        isDissy = false;
         DizzyParticles.Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
         TargetPos = getRandomPositionNearStart();
         TargetDir = (TargetPos - transform.position).normalized;
