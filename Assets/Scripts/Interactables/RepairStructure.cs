@@ -45,6 +45,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     [SerializeField] UnityEvent OnLoadSkipEvent;
 
     public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
+    public bool EnableOnLoad;
     public int unique_id;
 
     public bool Get_Should_Save { get => is_repaired; }
@@ -320,6 +321,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
 
         OnLoadSkipEvent?.Invoke();
+        Debug.Log($"Calling OnLoadSkipEvent on {gameObject.name}",gameObject);
         // if (RepairEvent.GetPersistentEventCount() <= 0)
         //     FinishedStructure.transform.localScale = scaleOutSize;
         // else
@@ -330,7 +332,13 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
         if (!gameObject.activeInHierarchy)
-            loadOnAwake = true;
+            if(!EnableOnLoad)
+                loadOnAwake = true;
+            else
+            {
+                gameObject.SetActive(true);
+                StartCoroutine(LoadStructure());
+            }
         else
             StartCoroutine(LoadStructure());
     }
