@@ -11,6 +11,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     [HideInInspector] public Action OnPlayerLost;
     [HideInInspector] public Action OnDeath;
     [HideInInspector] public Transform PlayerTransform;
+    [HideInInspector] public Action OnTakeDamage;
 
     public bool EnemyActive;
     [Header("Health")]
@@ -102,6 +103,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         else
         {
             ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, takeDamageCollection);
+            OnTakeDamage?.Invoke();
         }
     }
 
