@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d9f4dd225859a48b7730eed535ca2a, type: 3}
+  m_Name: Wooden_Support_Recipe
+  m_EditorClassIdentifier: 
+  ID: wood_support
+  Item_Name: Wooden Support
+  Output_Amount: 1
+  item_Requirements:
+  - item_id: wood
+    item_name: Wood
+    item_amount: 4
+  - item_id: rope
+    item_name: Rope
+    item_amount: 1
