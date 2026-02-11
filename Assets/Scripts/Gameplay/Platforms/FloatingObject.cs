@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class FloatingObject : MonoBehaviour, IMoveingPlatform
+public class FloatingObject : MonoBehaviour, IMoveingPlatform , IEnableDisable
 {
     [SerializeField] Vector3 MoveTo;
     [SerializeField] Vector3 rotationAmount;
@@ -11,6 +11,7 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
     [SerializeField] bool AutoAddChildComponenets = true;
     [SerializeField] AnimationCurve easing = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public bool IsActive;
+    bool disabled;
 
     Vector3 startPos;
     Vector3 endPos;
@@ -62,6 +63,7 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
 
     void FixedUpdate()
     {
+        if (disabled) return;
         if (!IsActive) return;
         if (elapsed < duration)
         {
@@ -145,5 +147,15 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform
             passengers.Remove(passenger.GetPassengerScript());
             
         }
+    }
+
+    public void EnableInterface()
+    {
+        disabled = false;
+    }
+
+    public void DisableInterface()
+    {
+        disabled = true;
     }
 }

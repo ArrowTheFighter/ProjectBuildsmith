@@ -135,7 +135,8 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         //Player Position
-        playerSafeZone.transform.position = saveFileStruct.player_position.ToVector3();
+        playerSafeZone.GetComponent<Rigidbody>().MovePosition(saveFileStruct.player_position.ToVector3());
+        //playerSafeZone.transform.position = saveFileStruct.player_position.ToVector3();
         playerSafeZone.transform.eulerAngles = saveFileStruct.player_rotation.ToVector3();
 
         //Player Camera
