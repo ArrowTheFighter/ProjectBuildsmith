@@ -260,7 +260,7 @@ public class DashAbility : PlayerAbility
 
     void SlideJump()
     {
-        if (groundSliding && !isBonking && !slideJumping)
+        if (groundSliding && !isBonking && !slideJumping && !characterMovement.forceSteepSlope)
         {
             characterMovement.rb.linearDamping = 1;
             characterMovement.OnDashStop?.Invoke();

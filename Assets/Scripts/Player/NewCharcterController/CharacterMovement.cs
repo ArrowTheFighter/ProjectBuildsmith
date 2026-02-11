@@ -55,7 +55,8 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
     RaycastHit steepSlopHit;
     RaycastHit slopeHit;
     public bool exitingSlope;
-    bool forceSteepSlope = false;
+    [HideInInspector]
+    public bool forceSteepSlope = false;
 
     [Header("Input")]
     [HideInInspector] public ICharacterInput characterInput;
@@ -482,6 +483,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
         if (groundHit.transform != null && groundHit.transform.tag == "CantWalk")
         {
             forceSteepSlope = true;
+            grounded = false;
         }
         else
         {
@@ -490,6 +492,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
             if (groundHit.transform != null && CapsuleInsideTriggerWithTag(capsuleCollider, "CantWalk", mask))
             {
                 forceSteepSlope = true;
+                grounded = false;
             }
             else
             {
