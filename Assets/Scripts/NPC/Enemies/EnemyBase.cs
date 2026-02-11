@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.Events;
 
 public abstract class EnemyBase : MonoBehaviour, IDamagable
 {
@@ -12,10 +13,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     [HideInInspector] public Action OnDeath;
     [HideInInspector] public Transform PlayerTransform;
     [HideInInspector] public Action OnTakeDamage;
+    public UnityEvent OnEnemyDeathUnityEvent;
 
     public bool EnemyActive;
     [Header("Health")]
-    float startHealth;
+    
+    public float startHealth;
     public float Health;
     public float extraBounceForce;
     public ParticleSystem onDamageParticles;
@@ -42,12 +45,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     [SerializeField] public string flag_id;
     [SerializeField] public bool is_true;
 
-    void Awake()
+    public virtual void Awake()
     {
         startHealth = Health;
     }
 
-    void OnEnable()
+    public virtual void OnEnable()
     {
         Health = startHealth;
     }
@@ -127,6 +130,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             Instantiate(onDeathParticlesPrefab, transform.position, Quaternion.identity);
         }
         OnDeath?.Invoke();
+        OnEnemyDeathUnityEvent?.Invoke();
 
         if (flag_id != null)
         {
@@ -155,7 +159,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
         if (RespawnTime <= 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         else
         {
@@ -165,5 +169,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
         ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, DeathAudioCollection);
 
+    }
+
+    public void SetHealth(float health)
+    {
+        Health = health;
+    }
+
+    public void ResetHealth()
+    {
+        SetHealth(startHealth);
     }
 }

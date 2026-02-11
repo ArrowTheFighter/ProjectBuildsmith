@@ -17,4 +17,9 @@ public class EnterAreaTrigger : MonoBehaviour
             if(use_once) used = true;
         }    
     }
+
+    public void ResetTrigger()
+    {
+        used = false;
+    }
 }

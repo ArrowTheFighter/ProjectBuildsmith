@@ -13,7 +13,6 @@ public class BatEnemy : EnemyBase
     bool waitingForNewPos;
     bool canAttack;
     bool isDissy;
-    float startingHealth;
 
     enum AttackingStates { Roaming, Spotted, Charging, Cooldown }
     AttackingStates enemyState;
@@ -42,9 +41,9 @@ public class BatEnemy : EnemyBase
     [Header("Attacks")]
     public float chargeAttackCooldown = 1.5f;
 
-    void Awake()
+    public override void Awake()
     {
-        startingHealth = Health;
+        base.Awake();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -59,10 +58,9 @@ public class BatEnemy : EnemyBase
 
     }
 
-    void OnEnable()
+    public override void OnEnable()
     {
         PlayerTransform = null;
-        Health = startingHealth;
         enemyState = AttackingStates.Roaming;
         StartCoroutine(CheckForPlayerRoutine());
         StartCoroutine(getNewTargetPos(0));
