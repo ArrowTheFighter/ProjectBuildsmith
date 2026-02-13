@@ -54,6 +54,9 @@ public class PlayerAnimationController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(characterMovement == null) return; 
+        if(characterMovement.rb == null) return;
+        
         Vector3 HorVel = new Vector3(characterMovement.rb.linearVelocity.x, 0, characterMovement.rb.linearVelocity.z);
         Vector3 platformVel = new Vector3(characterMovement.platformDelta.x, 0, characterMovement.platformDelta.z);
         Vector3 adjustedVel = HorVel - platformVel;

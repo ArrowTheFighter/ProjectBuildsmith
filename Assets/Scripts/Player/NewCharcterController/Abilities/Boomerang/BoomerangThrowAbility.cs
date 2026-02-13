@@ -16,8 +16,8 @@ public class BoomerangThrowAbility : PlayerAbility
     bool movingAway;
     public float speed = 22;
     float currentSpeed;
-    public float maxDistance = 25;
-    public float radiusCheck = 7;
+    public float maxDistance = 30;
+    public float radiusCheck = 9;
     LayerMask targetableLayers;
     float spinSpeed = 500;
 

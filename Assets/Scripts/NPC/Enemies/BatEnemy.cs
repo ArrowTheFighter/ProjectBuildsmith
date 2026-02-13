@@ -3,7 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
-public class BatEnemy : EnemyBase
+public class BatEnemy : EnemyBase, IEnableDisable
 {
     Vector3 startPos;
     [SerializeField] Animator animator;
@@ -13,6 +13,7 @@ public class BatEnemy : EnemyBase
     bool waitingForNewPos;
     bool canAttack;
     bool isDissy;
+    bool disabled;
 
     enum AttackingStates { Roaming, Spotted, Charging, Cooldown }
     AttackingStates enemyState;
@@ -104,6 +105,8 @@ public class BatEnemy : EnemyBase
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(disabled) return;
+        
         if (PlayerTransform == null && enemyState != AttackingStates.Roaming)
         {
             PlayerLost();
@@ -269,5 +272,17 @@ public class BatEnemy : EnemyBase
 
         }
         return startPos;
+    }
+
+    public void EnableInterface()
+    {
+        disabled = false;
+        OnEnable();
+    }
+
+    public void DisableInterface()
+    {
+        disabled = true;
+        StopAllCoroutines();
     }
 }
