@@ -36,12 +36,19 @@ public class BoomerangThrowAbility : PlayerAbility
             if (TargetCheck.Length > 0)
             {
                 closestHit = TargetCheck[0].transform;
+                float closestDot = Vector3.Dot(checkDir, transform.position - TargetCheck[0].transform.transform.position);
                 foreach (RaycastHit hit in TargetCheck)
                 {
-                    if (Vector3.Distance(hit.transform.position, transform.position) < Vector3.Distance(closestHit.position, transform.position))
+                    float dotProduct = Vector3.Dot(checkDir,hit.transform.position - transform.position);
+                    if(dotProduct > closestDot)
                     {
+                        closestDot = dotProduct;
                         closestHit = hit.transform;
                     }
+                    // if (Vector3.Distance(hit.transform.position, transform.position) < Vector3.Distance(closestHit.position, transform.position))
+                    // {
+                    //     closestHit = hit.transform;
+                    // }
                 }
             }
             else
@@ -115,10 +122,11 @@ public class BoomerangThrowAbility : PlayerAbility
                         DOVirtual.Float(0, speed, 0.5f, (value) => { currentSpeed = value; });
                     });
                 }
-
-                if (Physics.Raycast(boomerang.transform.position, flyDir, out RaycastHit hitInfo, 0.75f))
+                LayerMask layerMask = ~(1 << 2);
+                if (Physics.Raycast(boomerang.transform.position, flyDir, out RaycastHit hitInfo, 0.75f,layerMask))
                 {
                     //Boomerang hit something
+                    Debug.Log($"boomerang hit {hitInfo.transform.gameObject.name}", hitInfo.transform.gameObject);
                     if (hitInfo.collider.TryGetComponent(out IDamagable component))
                     {
                         if (hitInfo.collider.transform.tag != "Player")
