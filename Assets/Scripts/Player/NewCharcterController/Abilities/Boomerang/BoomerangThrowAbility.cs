@@ -14,12 +14,12 @@ public class BoomerangThrowAbility : PlayerAbility
     Vector3 targetPos;
     Vector3 flyDir;
     bool movingAway;
-    public float speed = 22;
+    public float speed = 40;
     float currentSpeed;
     public float maxDistance = 30;
     public float radiusCheck = 9;
     LayerMask targetableLayers;
-    float spinSpeed = 500;
+    float spinSpeed = 1000;
 
     public void Start()
     {
@@ -123,7 +123,7 @@ public class BoomerangThrowAbility : PlayerAbility
                     });
                 }
                 LayerMask layerMask = ~(1 << 2);
-                if (Physics.Raycast(boomerang.transform.position, flyDir, out RaycastHit hitInfo, 0.75f,layerMask))
+                if (Physics.Raycast(boomerang.transform.position, flyDir, out RaycastHit hitInfo, currentSpeed * Time.deltaTime + 0.1f, layerMask))
                 {
                     //Boomerang hit something
                     Debug.Log($"boomerang hit {hitInfo.transform.gameObject.name}", hitInfo.transform.gameObject);
