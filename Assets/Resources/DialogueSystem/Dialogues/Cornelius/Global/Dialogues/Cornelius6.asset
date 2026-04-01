@@ -13,17 +13,21 @@ MonoBehaviour:
   m_Name: Cornelius6
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: Cornelius6
-  <Text>k__BackingField: I knew you'd say that, very well. Ancient texts describe
-    an artifact that may be the first piece of this mysterious puzzle, which lies
-    deep in the forest islands. I shall meet you further into the forest, I am confident
-    you will be capable of reaching me. For now, I bid you adieu.
+  <Text>k__BackingField: I can only draw one conclusion from this series of events.
+    This <style=Engine>sky engine</style> appears to have intertwined our shared
+    survival. Will you join me in saving <style=location>Hammerstead</style> and
+    all that exists around it?
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: Of course I'll help.
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 5fd3da23fcaa6524eacb68e770e7f3a6, type: 2}
-  <DialogueType>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 889c711c4164ee3478430d59557b626e, type: 2}
+  - <Text>k__BackingField: If I have no other choice.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 889c711c4164ee3478430d59557b626e, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
   <unique_id>k__BackingField: 0
