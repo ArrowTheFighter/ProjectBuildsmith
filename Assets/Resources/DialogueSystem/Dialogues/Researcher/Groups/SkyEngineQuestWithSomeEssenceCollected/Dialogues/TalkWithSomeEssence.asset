@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: TalkWithSomeEssence
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: TalkWithSomeEssence
-  <Text>k__BackingField: Salutations! I see you have already recovered some of the
-    <style=Engine>sky essence</style>, most excellent! Yet the <style=Engine>sky
-    engine</style> is not yet fully restored, and the path ahead remains broken.
-    Most inconvenient... though terribly interesting, wouldn't you agree?
+  <Text>k__BackingField: I see you have already recovered some of the <style=Engine>sky
+    essence</style>, most excellent! Yet the <style=Engine>essence engine</style>
+    is not yet fully restored, and the path ahead remains broken. Recover the rest,
+    and the path itself shall recover with it.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: 'We saw a bigger island collapse. '
+  - <Text>k__BackingField: I'll get the rest.
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 87684594e8782804b8ae8ef86f0f1fbd, type: 2}
-  - <Text>k__BackingField: Sky essence?
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 6d01e8e7217f49a4094becfb13f038e8, type: 2}
+  - <Text>k__BackingField: Essence engine?
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 0018747900d46714fb2b3fe22f7debb1, type: 2}
