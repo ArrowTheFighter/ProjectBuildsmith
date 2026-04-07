@@ -23,9 +23,9 @@ MonoBehaviour:
     SerializationNodes: []
   ID: HattieSaveChickensQuest
   QuestName: Chicken Run
-  Description: Hattie's chickens escaped after the fence broke. She wants my help
-    rounding them back into the pen, and then fixing the fence to keep them from
-    escaping again.
+  Description: Hattie's chickens escaped after a rock smashed the fence. She wants
+    my help rounding them back into their pen, and then fixing the fence to keep
+    them from escaping again.
   AutoPinQuest: 1
   questObjectives:
   - rid: 6043923110839976051
@@ -43,11 +43,11 @@ MonoBehaviour:
         StayCompleted: 0
         isComplete: 0
         ObjectiveIDCollection: 1
-        flag_id: ReceivedBoomerang
+        flag_id: ChickenRunComplete
     - rid: 6043923110839976051
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Corral the 4 chickens back into the pen
+        Description: Get the 3 chickens back into their pen
         StopAtThisObjective: 1
         StayCompleted: 0
         isComplete: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
     - rid: 6043923110839976053
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
-        Description: Repair the fence
+        Description: Repair the broken fence
         StopAtThisObjective: 1
         StayCompleted: 0
         isComplete: 0
