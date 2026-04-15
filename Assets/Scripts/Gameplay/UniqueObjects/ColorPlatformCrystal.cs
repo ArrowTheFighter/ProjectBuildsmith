@@ -5,7 +5,7 @@ using UnityEngine;
 public class ColorPlatformCrystal : MonoBehaviour
 {
     public List<ColorPlatform> colorPlatforms = new List<ColorPlatform>();
-    CrystalPlatformColors crystalColor;
+    public CrystalPlatformColors crystalColor;
     Material crystalMat;
 
     public void RandomizeCrystal()
