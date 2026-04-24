@@ -81,6 +81,7 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
 
     void SmoothRotateTowardsTarget(Vector3 targetPos)
     {
+        targetPos.y = transform.position.y;
         Vector3 directionToTarget = targetPos - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
 
