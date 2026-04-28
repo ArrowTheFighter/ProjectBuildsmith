@@ -4,7 +4,8 @@ using System.Collections;
 
 public class SimonSaysColorCrystalDisplay : MonoBehaviour
 {
-    public float Delay;
+    public float ColorDelay;
+    public float GreyDelay;
     public List<ColorPlatformCrystal> colorCrystals = new List<ColorPlatformCrystal>();
     bool playingSequence;
     Material material;
@@ -28,9 +29,9 @@ public class SimonSaysColorCrystalDisplay : MonoBehaviour
         for (int i = 0; i < colorCrystals.Count; i++)
         {
             SetMaterialColor((int)colorCrystals[i].crystalColor);
-            yield return new WaitForSeconds(Delay * 0.5f);
+            yield return new WaitForSeconds(ColorDelay);
             SetMaterialColor(4);
-            yield return new WaitForSeconds(Delay * 0.5f);
+            yield return new WaitForSeconds(GreyDelay);
         }
 
         playingSequence = false;

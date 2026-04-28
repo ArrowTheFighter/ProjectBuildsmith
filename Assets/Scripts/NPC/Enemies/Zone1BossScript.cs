@@ -15,7 +15,12 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
     public float speed;
     public float rotationSpeed;
 
-    public UnityEvent OnReachedZoneUnityEvent;
+
+    public UnityEvent[] OnReachedZoneUnityEvent;
+
+
+    [Header("Particles")]
+    public ParticleSystem TakeDamageParticle;
 
     enum BossStates 
     {
@@ -92,7 +97,7 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
     {
         canBeHit = true;
         bossState = BossStates.WaitingAtZone;
-        OnReachedZoneUnityEvent?.Invoke();
+        OnReachedZoneUnityEvent[currentZone]?.Invoke();
     }
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
@@ -108,6 +113,7 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
             print("We should die now");
             return;
         }
+        TakeDamageParticle.Play();
         currentZone++;
         canBeHit = false;
         bossState = BossStates.MoveingToZone;

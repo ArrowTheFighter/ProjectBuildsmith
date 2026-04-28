@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ColorPlatformCrystal : MonoBehaviour
 {
@@ -28,7 +29,17 @@ public class ColorPlatformCrystal : MonoBehaviour
             platform.SetPlatformCheckColor(crystalColor);
         }
     }
+
+    public void SpawnInPlatforms()
+    {
+        foreach (var platform in colorPlatforms)
+        {
+            platform.ScaleInPlatform();
+        }
+    }
 }
+
+
 
 public enum CrystalPlatformColors
 {
