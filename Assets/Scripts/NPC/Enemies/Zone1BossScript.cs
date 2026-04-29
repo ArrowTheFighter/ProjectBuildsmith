@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Localization.PropertyVariants.TrackedProperties;
 
 public class Zone1BossScript : MonoBehaviour, IDamagable
 {
@@ -17,10 +16,12 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
 
 
     public UnityEvent[] OnReachedZoneUnityEvent;
+    public UnityEvent OnDeathUnityEvent;
 
 
     [Header("Particles")]
     public ParticleSystem TakeDamageParticle;
+    public GameObject DeathParticlePrefab;
 
     enum BossStates 
     {
@@ -111,6 +112,9 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
         if(Health <= 0)
         {
             print("We should die now");
+            Instantiate(DeathParticlePrefab,transform.position,Quaternion.identity);
+            OnDeathUnityEvent?.Invoke();
+            Destroy(gameObject);
             return;
         }
         TakeDamageParticle.Play();
@@ -128,5 +132,10 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         TakeDamage(amount,attackTypes,source);
+    }
+
+    public void PlayGrabAnimation()
+    {
+        Animator.Play("BossGrab");
     }
 }

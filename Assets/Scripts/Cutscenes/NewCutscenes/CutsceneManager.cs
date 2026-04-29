@@ -60,7 +60,7 @@ public class CutsceneManager : MonoBehaviour
     void EndCutscene()
     {
         print("ending cutscene");
-
+        currentData.cutsceneFinishedUnityEvent?.Invoke();
         if (ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
         {
             characterMovement.MovementControlledByAbility = false;
@@ -120,6 +120,7 @@ public class CutsceneData
     public string CutsceneName;
     public Transform startPos;
     public CutscenePointData[] cameraPoints;
+    public UnityEvent cutsceneFinishedUnityEvent;
     public UnityEvent OnLoadSkipEvent;
 }
 
