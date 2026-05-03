@@ -18,6 +18,10 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
     public UnityEvent[] OnReachedZoneUnityEvent;
     public UnityEvent OnDeathUnityEvent;
 
+    [Header("Item To Drop")]
+    [SerializeField] GameObject ItemToDropPrefab;
+    [SerializeField] Vector3 itemDropOffset;
+    [SerializeField] float itemDropForce;
 
     [Header("Particles")]
     public ParticleSystem TakeDamageParticle;
@@ -112,6 +116,7 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
         if(Health <= 0)
         {
             print("We should die now");
+            DropItem();
             Instantiate(DeathParticlePrefab,transform.position,Quaternion.identity);
             OnDeathUnityEvent?.Invoke();
             Destroy(gameObject);
@@ -121,6 +126,19 @@ public class Zone1BossScript : MonoBehaviour, IDamagable
         currentZone++;
         canBeHit = false;
         bossState = BossStates.MoveingToZone;
+    }
+
+    void DropItem()
+    {
+        GameObject itemDropped = Instantiate(ItemToDropPrefab, transform.position + Vector3.up + itemDropOffset, Quaternion.identity);
+        ItemPickup itemPickup = itemDropped.GetComponent<ItemPickup>();
+
+        itemPickup.amount = 1;
+        itemPickup.respawn_time = -1;
+        Rigidbody rigidbody = itemDropped.GetComponent<Rigidbody>();
+        rigidbody.useGravity = true;
+        Vector3 horDir = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
+        rigidbody.AddForce((horDir + Vector3.up) * itemDropForce * UnityEngine.Random.Range(1f, 1.25f), ForceMode.Impulse);
     }
 
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
