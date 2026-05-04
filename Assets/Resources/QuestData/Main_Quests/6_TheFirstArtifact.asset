@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: 6_TheFirstArtifact
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: TheFirstArtifact
+  QuestName: The First Artifact
+  Description: MAC has alerted me that the Sky Engine in Hammerstead is damaged and
+    needs immediate repairs. I should go investigate.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 752171596906496
+  - rid: 752171596906591
+  - rid: 752171596906592
+  - rid: 752171596906593
+  references:
+    version: 2
+    RefIds:
+    - rid: 752171596906496
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Go to the <style=Engine>sky engine</style> in <stye=location>Hammerstead</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: VisitedHammersteadSkyEngine
+    - rid: 752171596906591
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Cornelius>Cornelius</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: TalkedToCorneliusAtHammersteadSkyEngine
+    - rid: 752171596906592
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Place the <ARTIFACTNAME> in the <style=Engine>sky engine</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: PlacedFirstArtifactInSkyEngine
+    - rid: 752171596906593
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Cornelius>Cornelius</style>
+        StopAtThisObjective: 0
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: TalkedToCorneliusAtHammersteadSkyEngineAfterFirstArtifact

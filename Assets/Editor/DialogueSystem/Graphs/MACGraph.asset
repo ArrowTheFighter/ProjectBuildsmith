@@ -27,7 +27,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 7
       Data: 1|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
@@ -170,77 +170,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 7|DSCloseDialogSaveData, Assembly-CSharp-Editor
-    - Name: <ID>k__BackingField
-      Entry: 1
-      Data: 2c0233e2-d594-4b31-add6-178c39ff9516
-    - Name: <Name>k__BackingField
-      Entry: 1
-      Data: CloseDialog
-    - Name: <Text>k__BackingField
-      Entry: 1
-      Data: Dialogue text.
-    - Name: <LocalizedKey>k__BackingField
-      Entry: 6
-      Data: 
-    - Name: <Choices>k__BackingField
-      Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 9|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
-    - Name: <Text>k__BackingField
-      Entry: 1
-      Data: Output
-    - Name: LocalizeKey
-      Entry: 6
-      Data: 
-    - Name: OutputID
-      Entry: 6
-      Data: 
-    - Name: <NodeID>k__BackingField
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: <GroupID>k__BackingField
-      Entry: 1
-      Data: 3a2d29db-8f69-43d1-ae2b-2b59c9b371f5
-    - Name: <DialogueType>k__BackingField
-      Entry: 3
-      Data: 4
-    - Name: <Position>k__BackingField
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 2079
-    - Name: 
-      Entry: 4
-      Data: 302
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: CloseDialog
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 10|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+      Data: 7|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
       Data: c674b121-2ff3-40a7-96fd-0a7dce58fa59
@@ -255,14 +185,14 @@ MonoBehaviour:
       Data: LOCAL_DIALOG_KEY
     - Name: <Choices>k__BackingField
       Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
-        Assembly-CSharp-Editor]], mscorlib
+      Data: 8|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor]],
+        mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 12|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+      Data: 9|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Next Dialogue
@@ -274,7 +204,7 @@ MonoBehaviour:
       Data: 
     - Name: <NodeID>k__BackingField
       Entry: 1
-      Data: 2c0233e2-d594-4b31-add6-178c39ff9516
+      Data: 05a68484-032b-4e75-9a5a-f2e33788d361
     - Name: 
       Entry: 8
       Data: 
@@ -310,13 +240,86 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 13|DSRunEventSaveData, Assembly-CSharp-Editor
+      Data: 10|DSAssignQuestSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
-      Data: b7dc8c37-531f-4073-86df-c6cf21b9a50c
+      Data: 05a68484-032b-4e75-9a5a-f2e33788d361
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: RunEvent
+      Data: StartTheFirstArtifactQuest
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 12|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: a47ecbe7-0e19-461c-8581-8f9cefaedb33
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 1
+      Data: 3a2d29db-8f69-43d1-ae2b-2b59c9b371f5
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 11
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2055
+    - Name: 
+      Entry: 4
+      Data: 302
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: quest_id
+      Entry: 1
+      Data: TheFirstArtifact
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 13|DSCloseDialogSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 2c0233e2-d594-4b31-add6-178c39ff9516
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: CloseDialog
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Dialogue text.
@@ -356,7 +359,77 @@ MonoBehaviour:
       Data: 
     - Name: <GroupID>k__BackingField
       Entry: 1
-      Data: d56da8af-27ba-4201-9721-e4a27c23d388
+      Data: 3a2d29db-8f69-43d1-ae2b-2b59c9b371f5
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 4
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 2794
+    - Name: 
+      Entry: 4
+      Data: 302
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 16|DSRunEventSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: a47ecbe7-0e19-461c-8581-8f9cefaedb33
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: EnableFlagTriggerAtSkyEngine
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 17|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 18|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 2c0233e2-d594-4b31-add6-178c39ff9516
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 1
+      Data: 3a2d29db-8f69-43d1-ae2b-2b59c9b371f5
     - Name: <DialogueType>k__BackingField
       Entry: 3
       Data: 7
@@ -365,10 +438,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 1949
+      Data: 2391
     - Name: 
       Entry: 4
-      Data: 4
+      Data: 302
     - Name: 
       Entry: 8
       Data: 
@@ -377,7 +450,7 @@ MonoBehaviour:
       Data: false
     - Name: event_id
       Entry: 1
-      Data: 
+      Data: EnableFlagTriggerAtSkyEngine
     - Name: 
       Entry: 8
       Data: 
@@ -391,13 +464,9 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: 3a2d29db-8f69-43d1-ae2b-2b59c9b371f5
     <Name>k__BackingField: ForceDialog1
-    <Position>k__BackingField: {x: 597.00006, y: 242.99998}
-  - <ID>k__BackingField: d56da8af-27ba-4201-9721-e4a27c23d388
-    <Name>k__BackingField: MaybeStartAQuestToVisitTheSkyEngineAndSpeakToCornelius
-    <Position>k__BackingField: {x: 1924, y: -54.999985}
+    <Position>k__BackingField: {x: 597.0001, y: 243.00002}
   <OldGroupNames>k__BackingField:
   - ForceDialog1
-  - MaybeStartAQuestToVisitTheSkyEngineAndSpeakToCornelius
   <OldUngroupedNodeNames>k__BackingField: []
   <OldGroupedNodeNames>k__BackingField:
     list:
@@ -405,8 +474,7 @@ MonoBehaviour:
       Value:
       - MAC1
       - MAC2
-      - CloseDialog
       - MAC3
-    - Key: MaybeStartAQuestToVisitTheSkyEngineAndSpeakToCornelius
-      Value:
-      - RunEvent
+      - StartTheFirstArtifactQuest
+      - CloseDialog
+      - EnableFlagTriggerAtSkyEngine

@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: 7_TheSecondArtifact
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: TheSecondArtifact
+  QuestName: The Second Artifact
+  Description: After placing the first artifact in the sky engine, Cornelius informed
+    me of another potential artifact deep in the mountain islands. I'll have to make
+    my way there to find both him and the next artifact.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 752171596906594
+  - rid: 752171596906595
+  - rid: 752171596906596
+  - rid: 752171596906597
+  - rid: 752171596906598
+  - rid: 752171596906599
+  - rid: 752171596906600
+  - rid: 752171596906601
+  references:
+    version: 2
+    RefIds:
+    - rid: 752171596906594
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Repair the <style=engine>mini sky engine</style> leading to
+          the mountains
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: RepairedMountainMiniSkyEngine
+    - rid: 752171596906595
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Find <style=Cornelius>Cornelius</style> in the snowy mountains
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: TalkedToCorneliusAtMountainEssenceEngine
+    - rid: 752171596906596
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Power the <style=engine>sky engine</style> with 5 nearby <style=engine>sky
+          essence</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: CollectedAllSkyEssence
+    - rid: 752171596906597
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Cornelius>Cornelius</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: SkyEngineTutorialComplete
+    - rid: 752171596906598
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Locate and collect the next artifact at the mountain outpost
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        Item_ID: <SECOND ARTIFACT ID>
+        Item_Amount: 1
+    - rid: 752171596906599
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Return to <style=Cornelius> in <style=location>Hammerstead</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 4
+        flag_id: ReturnedToCorneliusInHammersteadWithSecondArtifact
+    - rid: 752171596906600
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Place the <ARTIFACTNAME> in the <style=Engine>sky engine</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        flag_id: PlacedSecondArtifactInSkyEngine
+    - rid: 752171596906601
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Cornelius>Cornelius</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        flag_id: TalkedToCorneliusAtHammersteadSkyEngineAfterFirstArtifact
