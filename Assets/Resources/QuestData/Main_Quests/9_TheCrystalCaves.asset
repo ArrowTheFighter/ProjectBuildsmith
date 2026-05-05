@@ -23,9 +23,84 @@ MonoBehaviour:
     SerializationNodes: []
   ID: TheCrystalCaves
   QuestName: The Crystal Caves
-  Description: Mattie told me...
-  AutoPinQuest: 0
-  questObjectives: []
+  Description: Mattie told me the mine started shaking, forcing him to leave. Now,
+    it's infested with bats, and he claims there's a shiny crystal at the end of
+    the cave that he needs my help getting.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 752194541322240
+  - rid: 752194541322241
+  - rid: 752194541322242
+  - rid: 752194541322243
+  - rid: 752194541322244
+  - rid: 752194541322245
+  - rid: 752194541322246
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 752194541322240
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Repair the <style=engine>mini sky engine</style> to access the
+          mine
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: RepairedMiniSkyEngineToWindCave
+    - rid: 752194541322241
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Find the shiny crystal
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: ReachedMineBatBoss
+    - rid: 752194541322242
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Defeat the <style=enemy>big puffwing</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: PuffwingBoss
+    - rid: 752194541322243
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Gather a <style=item>wind crystal</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        Item_ID: wind_crystal
+        Item_Amount: 1
+    - rid: 752194541322244
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Mattie
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: TalkedToMattieAfterPuffwingBoss
+    - rid: 752194541322245
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Hattie
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: TalkedToHattieAfterPuffwingBoss
+    - rid: 752194541322246
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft a <style=item>boomerang</style>
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        Item_ID: boomerang
+        Item_Amount: 1
