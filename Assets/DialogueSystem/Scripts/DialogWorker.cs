@@ -128,7 +128,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
             }
             if (TurnTowardsPlayer)
             {
-                if (TryGetComponent(out CharacterMovement characterMovement))
+                if (TryGetComponent(out CharacterMovement characterMovement) && characterMovement.isActiveAndEnabled)
                 {
                     Vector3 playerPos = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position;
                     playerPos.y = transform.position.y;
@@ -157,7 +157,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
             if (TurnTowardsPlayer && TurnBackToOrigin)
             {
-                if (TryGetComponent(out CharacterMovement characterMovement))
+                if (TryGetComponent(out CharacterMovement characterMovement) && characterMovement.isActiveAndEnabled)
                 {
                     if (TryGetComponent(out NPCFollowTargetInput nPCFollowTargetInput))
                     {
@@ -167,7 +167,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
             }
         }
         PROMPT = active ? ActivePrompt : InactivePrompt;
-        if (TryGetComponent(out CharacterMovement component))
+        if (TryGetComponent(out CharacterMovement component) && component.isActiveAndEnabled)
         {
             component.playerAnimationController.animator.SetBool("Talking", active);
         }
