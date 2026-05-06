@@ -107,12 +107,12 @@ MonoBehaviour:
     - rid: 4491993629298524285
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Find <style=item>cogs</style> in the junkyard <itemamount=cog_wheel>/2
+        Description: Find <style=item>cogs</style> in the junkyard <itemamount=cog>/2
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 1
+        isComplete: 0
         ObjectiveIDCollection: 3
-        Item_ID: cog_wheel
+        Item_ID: cog
         Item_Amount: 2
     - rid: 4491993629298524286
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
@@ -183,7 +183,7 @@ MonoBehaviour:
         Description: Craft a <style=item>thick rope</style>
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 1
+        isComplete: 0
         ObjectiveIDCollection: 7
         Item_ID: thick_rope
         Item_Amount: 1
