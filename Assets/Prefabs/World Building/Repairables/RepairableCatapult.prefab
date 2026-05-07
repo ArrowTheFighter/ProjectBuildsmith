@@ -602,8 +602,8 @@ MonoBehaviour:
   - item_id: rope
     item_name: Rope
     item_amount: 3
-  - item_id: cog_wheel
-    item_name: Cog Wheel
+  - item_id: cog
+    item_name: Cog
     item_amount: 2
   itemsRequiredDisplay: []
   added_items: []
@@ -632,6 +632,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnLoadSkipEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EnableOnLoad: 0
   unique_id: 0
   ParticleForceField: {fileID: 1983099823908086411}
   ParticleKillTrigger: {fileID: 2840040499074797216}
@@ -6208,6 +6212,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 58572e9640bb7d842aa07ef0f0aeaa7c, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 58572e9640bb7d842aa07ef0f0aeaa7c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
