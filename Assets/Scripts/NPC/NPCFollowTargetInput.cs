@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 
     [HideInInspector]
     public Vector3 forwardDir;
+    [HideInInspector]
+    public bool SkipTriggerChecks;
 
     bool canJump = true;
     bool checkingForTriggers = true;
@@ -99,7 +102,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 
     void OnTriggerEnter(Collider other)
     {
-
+        if(SkipTriggerChecks) return;
         if (other.TryGetComponent(out NPCTriggers trigger))
         {
             if (trigger.Activated) return;
@@ -175,9 +178,6 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
         }
     }
 
-
-
-
     public void SetIsMoving(bool _isMoving)
     {
         isMoving = _isMoving;
@@ -193,5 +193,17 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
     public void SetTargetTransform(Transform newTarget)
     {
         target = newTarget;    
+    }
+
+    public void SetSkipTriggerForDuration(float duration)
+    {
+        StartCoroutine(SkipTriggerForDurationCoroutine(duration));
+    }
+
+    IEnumerator SkipTriggerForDurationCoroutine(float duration)
+    {
+        SkipTriggerChecks = true;
+        yield return new WaitForSeconds(duration);
+        SkipTriggerChecks = false;
     }
 }

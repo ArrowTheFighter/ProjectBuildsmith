@@ -12,6 +12,8 @@ public class TownCraneEvents : MonoBehaviour
     public GameObject[] topCogs;
     public GameObject[] bottomCogs;
     public UnityEvent onCogsBroken;
+    [Header("Force Cutscene")]
+    public NewCutsceneBuilder ForceCutscene;
 
     public void ShowCraneBridge()
     {
@@ -45,19 +47,41 @@ public class TownCraneEvents : MonoBehaviour
         FlagManager.Set_Flag("SullivanCraneBroke");
     }
 
+    public void ForceCutsceneOfCogsBreaking()
+    {
+        print("Playing cog breaking cutscene");
+        ForceCutscene.PlayCutscene();
+    }
+
     [Button]
     public void StartAnimation()
     {
         GetComponent<Animator>().SetTrigger("Start");
     }
 
+    [Button]
     public void StartFirstHalfAnimation()
     {
         GetComponent<Animator>().Play("PickupBridgeAnimationFirstHalf");
+    }
+
+    public void SkipFirstHalfAnimation()
+    {
+        GetComponent<Animator>().Play("PickupBridgeAnimationFirstHalf",0,1);
+        ShowCraneBridge();
+        SwitchToGroundCogs();
     }
 
     public void StartSecondHalfAnimation()
     {
         GetComponent<Animator>().Play("PickupBridgeAnimationSecondHalf");
     }
+
+    public void SkipSecondHalfAnimation()
+    {
+        GetComponent<Animator>().Play("PickupBridgeAnimationSecondHalf",0,1);
+        ShowDroppingBridge();
+    }
+
+
 }

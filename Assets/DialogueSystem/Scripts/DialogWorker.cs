@@ -521,6 +521,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     public void EnableMarker(bool enabled)
     {
+        if(MarkerParticle == null) return;
         if (enabled)
         {
             ScriptRefrenceSingleton.instance.compassScript.AddNewQuestMarker(transform);

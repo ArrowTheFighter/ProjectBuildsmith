@@ -144,9 +144,14 @@ public class SaveLoadManager : MonoBehaviour
         OrbitalFollow.VerticalAxis.Value = saveFileStruct.camera_y;
 
 
+
         //Load Save_Object_Positions and Rotations
         foreach (var saveObject in saveObjectPositions)
         {
+            if (saveObject.TryGetComponent(out NPCFollowTargetInput component))
+            {
+                component.SetSkipTriggerForDuration(1);
+            }
             if (saveFileStruct.SaveObjectPositions.TryGetValue(saveObject.SaveObjectID, out var pos))
                 saveObject.transform.position = pos.ToVector3();
             if (saveFileStruct.SaveObjectRotations.TryGetValue(saveObject.SaveObjectID, out var rotation))
@@ -159,7 +164,13 @@ public class SaveLoadManager : MonoBehaviour
             if (saveFileStruct.dialog_worker_current_dialogs.TryGetValue(worker.unique_id, out var dialog_id))
                 worker.SetCurrentDialogByID(dialog_id);
             if (saveFileStruct.dialog_worker_has_marker.Contains(worker.unique_id))
+            {
                 worker.EnableMarker(true);
+            }
+            else
+            {
+                worker.EnableMarker(false);
+            }
         }
 
 
