@@ -30,11 +30,12 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetStartingPosition()
     {
-
+        startPos = transform.position;
+        startingScale = transform.localScale;
     }
+
 
     IEnumerator Falling()
     {

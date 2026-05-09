@@ -14,7 +14,7 @@ public class AddMaterialParticleManager : MonoBehaviour
 
         ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, ParticleSpawnSoundFX);
 
-        Material _mat = meshObj.GetComponent<MeshRenderer>().sharedMaterial;
+        Material _mat = meshObj.GetComponentInChildren<MeshRenderer>().sharedMaterial;
 
         if (spawnedParticle.TryGetComponent(out ParticleKillOnEnterTrigger component))
         {

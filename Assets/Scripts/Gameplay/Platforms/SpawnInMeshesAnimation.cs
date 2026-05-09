@@ -78,7 +78,7 @@ public class SpawnInMeshesAnimation : MonoBehaviour
             currentSpawnDelay -= currentSpawnDelay * 0.1f;
         }
         yield return new WaitForSeconds(FinalDelay);
-
+        
         MainGO.SetActive(true);
         yield return null;
         Destroy(visualsParent);
