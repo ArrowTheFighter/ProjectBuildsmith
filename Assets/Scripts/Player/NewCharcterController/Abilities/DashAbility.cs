@@ -100,7 +100,7 @@ public class DashAbility : PlayerAbility
                     
                     Vector3 adjustedVel = HorVel - platformVel;
                     print(HorVel);
-                    if (HorVel.magnitude < 5f && !slideJumping && !characterMovement.characterInput.GetDashInput())
+                    if (HorVel.magnitude < 5f && !slideJumping)
                     {
                         if (Time.time - lastTimeDashed > 0.75f)
                         {
@@ -120,83 +120,83 @@ public class DashAbility : PlayerAbility
                     //         characterMovement.rb.linearDamping = 5;
                     //     }
                     // }
-                    if (characterMovement.characterInput.GetDashInput() && !isBonking)
-                    {
-                        RaycastHit hit;
-                        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
-                        {
-                            Vector3 groundNormal = hit.normal;
-                            Vector3 slopeDirection = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
+                    // if (characterMovement.characterInput.GetDashInput() && !isBonking)
+                    // {
+                    //     RaycastHit hit;
+                    //     if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+                    //     {
+                    //         Vector3 groundNormal = hit.normal;
+                    //         Vector3 slopeDirection = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
 
-                            Vector3 MoveDirection = Vector3.ProjectOnPlane(characterMovement.orientation.forward, groundNormal).normalized;
-                            lastGroundNormal = MoveDirection;
-                            float alignment = Vector3.Dot(characterMovement.orientation.forward, slopeDirection);
+                    //         Vector3 MoveDirection = Vector3.ProjectOnPlane(characterMovement.orientation.forward, groundNormal).normalized;
+                    //         lastGroundNormal = MoveDirection;
+                    //         float alignment = Vector3.Dot(characterMovement.orientation.forward, slopeDirection);
 
-                            float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
+                    //         float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
 
-                            float clampedAngle = Mathf.Clamp(slopeAngle, 5f,35f);
+                    //         float clampedAngle = Mathf.Clamp(slopeAngle, 5f,35f);
 
-                            float t = Mathf.InverseLerp(0f, 35f, clampedAngle);
+                    //         float t = Mathf.InverseLerp(0f, 35f, clampedAngle);
 
-                            float forceMultiplier;
-
-
-                            if (alignment > 0)
-                            {
-                                forceMultiplier = Mathf.Lerp(0f, 50f, t);
-                                characterMovement.rb.AddForce(MoveDirection * 150);
-                            }
-                            else
-                            {
-                                forceMultiplier = Mathf.Lerp(0f, 25f, t);
-                            }
-
-                            lastSlopeForce = forceMultiplier;
-
-                            characterMovement.rb.AddForce(MoveDirection * forceMultiplier);
-                        }
+                    //         float forceMultiplier;
 
 
+                    //         if (alignment > 0)
+                    //         {
+                    //             forceMultiplier = Mathf.Lerp(0f, 50f, t);
+                    //             characterMovement.rb.AddForce(MoveDirection * 150);
+                    //         }
+                    //         else
+                    //         {
+                    //             forceMultiplier = Mathf.Lerp(0f, 25f, t);
+                    //         }
+
+                    //         lastSlopeForce = forceMultiplier;
+
+                    //         characterMovement.rb.AddForce(MoveDirection * forceMultiplier);
+                    //     }
 
 
-                        Vector3 camForward = Camera.main.transform.forward;
-                        camForward.y = 0;
 
-                        // float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.forward);
-                        // if (dot < -0.4f)
-                        // {
-                        //     characterMovement.rb.linearVelocity = Vector3.Lerp(characterMovement.rb.linearVelocity, Vector3.zero, 0.1f);
-                        // }
-                        // if (characterMovement.characterInput.GetDashInput())
-                        // // (dot > 0.4f)
-                        // {
-                        //     characterMovement.rb.linearDamping = 5f;
-                        // }
-                        // else
-                        // {
-                        //     characterMovement.rb.linearDamping = 5;
-                        // }
-                        if (characterMovement.rb.linearVelocity.magnitude > 0.01)
-                        {
-                            //float turnAmount = 0;
-                            float dotRight = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.orientation.right);
-                            float turnAmount = slideTurnAmount * dotRight;
-                            // if (dotRight > 0.1f)
-                            // {
-                            //     turnAmount = slideTurnAmount;
-                            // }
-                            // else if (dotRight < -0.1f)
-                            // {
-                            //     turnAmount = -slideTurnAmount;
-                            // }
-                            if (turnAmount != 0)
-                            {
-                                Quaternion turn = Quaternion.AngleAxis(turnAmount * Time.fixedDeltaTime, Vector3.up);
-                                Vector3 newVelocity = turn * characterMovement.rb.linearVelocity;
-                                characterMovement.rb.linearVelocity = newVelocity;
-                            }
-                        }
-                    }
+
+                    //     Vector3 camForward = Camera.main.transform.forward;
+                    //     camForward.y = 0;
+
+                    //     // float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.transform.forward);
+                    //     // if (dot < -0.4f)
+                    //     // {
+                    //     //     characterMovement.rb.linearVelocity = Vector3.Lerp(characterMovement.rb.linearVelocity, Vector3.zero, 0.1f);
+                    //     // }
+                    //     // if (characterMovement.characterInput.GetDashInput())
+                    //     // // (dot > 0.4f)
+                    //     // {
+                    //     //     characterMovement.rb.linearDamping = 5f;
+                    //     // }
+                    //     // else
+                    //     // {
+                    //     //     characterMovement.rb.linearDamping = 5;
+                    //     // }
+                    //     if (characterMovement.rb.linearVelocity.magnitude > 0.01)
+                    //     {
+                    //         //float turnAmount = 0;
+                    //         float dotRight = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), characterMovement.orientation.right);
+                    //         float turnAmount = slideTurnAmount * dotRight;
+                    //         // if (dotRight > 0.1f)
+                    //         // {
+                    //         //     turnAmount = slideTurnAmount;
+                    //         // }
+                    //         // else if (dotRight < -0.1f)
+                    //         // {
+                    //         //     turnAmount = -slideTurnAmount;
+                    //         // }
+                    //         if (turnAmount != 0)
+                    //         {
+                    //             Quaternion turn = Quaternion.AngleAxis(turnAmount * Time.fixedDeltaTime, Vector3.up);
+                    //             Vector3 newVelocity = turn * characterMovement.rb.linearVelocity;
+                    //             characterMovement.rb.linearVelocity = newVelocity;
+                    //         }
+                    //     }
+                    // }
                     if (characterMovement.rb.linearVelocity.magnitude > 0.1f && !isBonking)
                     {
                         characterMovement.orientation.forward = Vector3.Lerp(characterMovement.orientation.forward, characterMovement.rb.linearVelocity.normalized, 0.2f);
@@ -228,12 +228,12 @@ public class DashAbility : PlayerAbility
             }
             else
             {
-                if (lastSlopeForce > 10f)
-                {
-                    print($"Last slope force = {lastSlopeForce}");
-                    characterMovement.rb.AddForce(lastGroundNormal * lastSlopeForce);
-                    lastSlopeForce -= 0.5f;
-                }
+                // if (lastSlopeForce > 10f)
+                // {
+                //     print($"Last slope force = {lastSlopeForce}");
+                //     characterMovement.rb.AddForce(lastGroundNormal * lastSlopeForce);
+                //     lastSlopeForce -= 0.5f;
+                // }
                 if (isBonking)
                 {
                     characterMovement.rb.linearDamping = 0;
