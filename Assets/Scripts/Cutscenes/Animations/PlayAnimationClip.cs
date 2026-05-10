@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class PlayAnimationClip : MonoBehaviour
 {
-    Animator animator;
+    public Animator animator;
     public string defaultAnimName;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        animator = GetComponent<Animator>();
+        if(animator == null)
+            animator = GetComponent<Animator>();
     }
 
     public void PlayClip(string clip_name)
