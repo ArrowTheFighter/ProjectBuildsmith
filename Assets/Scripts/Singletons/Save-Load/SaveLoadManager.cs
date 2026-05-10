@@ -150,7 +150,8 @@ public class SaveLoadManager : MonoBehaviour
         {
             if (saveObject.TryGetComponent(out NPCFollowTargetInput component))
             {
-                component.SetSkipTriggerForDuration(1);
+                if(!saveFileStruct.saveable_ids.Contains(component.Get_Unique_ID))
+                    component.SetSkipTriggerForDuration(1);
             }
             if (saveFileStruct.SaveObjectPositions.TryGetValue(saveObject.SaveObjectID, out var pos))
                 saveObject.transform.position = pos.ToVector3();
@@ -257,8 +258,17 @@ public class SaveLoadManager : MonoBehaviour
         //Save Object Positions
         foreach (SaveObjectPosition saveObjectPosition in saveObjectPositions)
         {
-            saveFile.SaveObjectPositions.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(saveObjectPosition.transform.position));
-            saveFile.SaveObjectRotations.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(saveObjectPosition.transform.eulerAngles));
+            if(saveObjectPosition.TryGetComponent(out NPCFollowTargetInput component) && component.isMoving)
+            {
+                    saveFile.SaveObjectPositions.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(component.target.position));
+                    saveFile.SaveObjectRotations.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(component.target.eulerAngles));
+            }
+            else
+            {
+                saveFile.SaveObjectPositions.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(saveObjectPosition.transform.position));
+                saveFile.SaveObjectRotations.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(saveObjectPosition.transform.eulerAngles));
+            }
+            
         }
 
         //Flags

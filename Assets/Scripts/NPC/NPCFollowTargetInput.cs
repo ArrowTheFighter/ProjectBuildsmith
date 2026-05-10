@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
+using NUnit.Framework;
 using UnityEngine;
 
-public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
+public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput,ISaveable
 {
     public string NPCType;
     public Transform target;
@@ -31,6 +31,15 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
 
     bool canJump = true;
     bool checkingForTriggers = true;
+
+    [SerializeField] int unique_id;
+    public int Get_Unique_ID { get => unique_id; set => unique_id = value;}
+
+    public bool Get_Should_Save { get
+        {
+            return isMoving;
+        }
+    }
 
     public event Action OnJump;
     public event Action OnDive;
@@ -205,5 +214,10 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput
         SkipTriggerChecks = true;
         yield return new WaitForSeconds(duration);
         SkipTriggerChecks = false;
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        isMoving = true;
     }
 }
