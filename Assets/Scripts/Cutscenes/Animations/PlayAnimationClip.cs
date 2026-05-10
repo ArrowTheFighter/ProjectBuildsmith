@@ -4,6 +4,7 @@ public class PlayAnimationClip : MonoBehaviour
 {
     public Animator animator;
     public string defaultAnimName;
+    public float TransitionTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,7 +14,13 @@ public class PlayAnimationClip : MonoBehaviour
 
     public void PlayClip(string clip_name)
     {
-        animator.Play(clip_name);
+        if(TransitionTime < 0)
+        {
+            animator.Play(clip_name);
+        }else
+        {
+            animator.CrossFade(clip_name,TransitionTime);
+        }
     }
 
     public void PlayDefaultClip()

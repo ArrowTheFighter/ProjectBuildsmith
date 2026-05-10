@@ -16,6 +16,22 @@ public class NPCFlyingFollow : MonoBehaviour
         }
     }
     public bool IsActive;
+    bool _isActive
+    {
+        get => IsActive;
+
+        set
+        {
+            if(value && !IsActive)
+            {
+                floatTween?.Kill();
+                floatTween = BodyVisuals.DOLocalMoveY(-0.5f, 2).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+                BodyVisuals.DOLocalRotate(Vector3.zero,0.25f);
+            }
+            IsActive = value;
+
+        }
+    }
     public float FollowDistance;
     public float FarFollowDistance;
     float velocity;
@@ -32,6 +48,7 @@ public class NPCFlyingFollow : MonoBehaviour
     public float FarSpeed;
     [Header("Body Visuals")]
     public Transform BodyVisuals;
+    Tween floatTween;
 
     [Header("Animation")]
     public Animator animator;
@@ -43,7 +60,7 @@ public class NPCFlyingFollow : MonoBehaviour
     {
         if(BodyVisuals != null && IsActive)
         {
-            BodyVisuals.DOLocalMoveY(-0.5f, 2).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+            floatTween = BodyVisuals.DOLocalMoveY(-0.5f, 2).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
         }
     }
 
@@ -105,5 +122,10 @@ public class NPCFlyingFollow : MonoBehaviour
 
             
         }
+    }
+
+    public void SetIsActive(bool active)
+    {
+        _isActive = active;
     }
 }

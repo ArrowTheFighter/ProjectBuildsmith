@@ -78,6 +78,7 @@ public class CutsceneManager : MonoBehaviour
     public void SkipCutscene()
     {
         if (!cutsceneIsRunning) return;
+        if (!currentData.Skippable) return;
 
         // Kill any active tweens
         DOTween.Kill(CameraTransform);
@@ -118,6 +119,7 @@ public class CutsceneManager : MonoBehaviour
 public class CutsceneData
 {
     public string CutsceneName;
+    public bool Skippable = true;
     public Transform startPos;
     public CutscenePointData[] cameraPoints;
     public UnityEvent cutsceneFinishedUnityEvent;
