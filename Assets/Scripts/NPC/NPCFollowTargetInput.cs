@@ -8,6 +8,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput,ISaveable
     public string NPCType;
     public Transform target;
     public bool isMoving;
+    public bool stopped;
     public bool CanNotTalkWhileMoving;
     public float followDistanceThreshold = 1;
     public float walkingDistanceThreshold = 3;
@@ -23,6 +24,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput,ISaveable
     public float emptySpaceForwardDistance = 2;
     public float emptySpaceDownDistance = 3;
     public LayerMask wallCheckLayersIgnore;
+    public MoveObjectTrigger LastMoveObjectTrigger;
 
     [HideInInspector]
     public Vector3 forwardDir;
@@ -64,7 +66,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput,ISaveable
         if (target == null) return Vector3.zero;
         Vector3 character2DPosition = transform.position; character2DPosition.y = 0;
         Vector3 target2DPosition = target.position; target2DPosition.y = 0;
-        if (isMoving && Vector3.Distance(character2DPosition, target2DPosition) > followDistanceThreshold)
+        if (isMoving && !stopped && Vector3.Distance(character2DPosition, target2DPosition) > followDistanceThreshold)
         {
             if (Vector3.Distance(character2DPosition, target2DPosition) < walkingDistanceThreshold)
             {
@@ -112,6 +114,7 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput,ISaveable
     void OnTriggerEnter(Collider other)
     {
         if(SkipTriggerChecks) return;
+        other.TryGetComponent(out LastMoveObjectTrigger);
         if (other.TryGetComponent(out NPCTriggers trigger))
         {
             if (trigger.Activated) return;
@@ -124,7 +127,8 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput,ISaveable
                     OnDive?.Invoke();
                     break;
                 case NPCTriggers.NPCTriggerTypes.ForceStop:
-                    SetIsMoving(false);
+                    stopped = true;
+                    //SetIsMoving(false);
                     break;
                 case NPCTriggers.NPCTriggerTypes.Stop:
                     if (!checkingForTriggers) return;
@@ -135,7 +139,8 @@ public class NPCFollowTargetInput : MonoBehaviour, ICharacterInput,ISaveable
                     SetIsMoving(true);
                     break;
                 case NPCTriggers.NPCTriggerTypes.ForceStartMoving:
-                    SetIsMoving(true);
+                    stopped = false;
+                    //SetIsMoving(true);
                     break;
                 case NPCTriggers.NPCTriggerTypes.DontJump:
                     canJump = false;

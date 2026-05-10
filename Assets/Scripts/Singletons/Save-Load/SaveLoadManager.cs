@@ -260,8 +260,17 @@ public class SaveLoadManager : MonoBehaviour
         {
             if(saveObjectPosition.TryGetComponent(out NPCFollowTargetInput component) && component.isMoving)
             {
+                if(component.LastMoveObjectTrigger != null && component.LastMoveObjectTrigger.SavePos != null)
+                {
+                    saveFile.SaveObjectPositions.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(component.LastMoveObjectTrigger.SavePos.position));
+                    saveFile.SaveObjectRotations.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(component.LastMoveObjectTrigger.SavePos.eulerAngles));
+                }
+                else
+                {
                     saveFile.SaveObjectPositions.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(component.target.position));
                     saveFile.SaveObjectRotations.Add(saveObjectPosition.SaveObjectID, new SerializableVector3(component.target.eulerAngles));
+                }
+                    
             }
             else
             {

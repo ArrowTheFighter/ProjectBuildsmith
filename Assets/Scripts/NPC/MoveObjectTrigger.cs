@@ -6,11 +6,12 @@ public class MoveObjectTrigger : MonoBehaviour
     public bool OnlyForNPC;
     public bool OnlyForPlayer;
     public bool OnlyOnce;
-    public bool AlsoRotate;
+    public bool RotateTarget = true;
     bool activated;
 
     public Transform ObjectToMove;
     public Transform NewPos;
+    public Transform SavePos;
     public bool ReparentObject;
 
     public UnityEvent ActivateEvent;
@@ -47,11 +48,9 @@ public class MoveObjectTrigger : MonoBehaviour
             else ObjectToMove.SetParent(null);
             ObjectToMove.position = NewPos.position;
             activated = true;
-            if (AlsoRotate)
+            if (RotateTarget)
             {
-                
                 ObjectToMove.transform.forward = NewPos.forward;
-                
             }
         }
         ActivateEvent?.Invoke();
