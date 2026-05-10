@@ -1,6 +1,7 @@
 using System;
 using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -81,7 +82,8 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                 }
                 else 
                 {
-                    ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name);
+                    ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+                    ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name,itemData.item_description);
                     
                 }
             }
@@ -133,7 +135,8 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         slotFilled += ShowAndUnsubscribeItemPopup;
         if (inventorySlot.isEmpty) return;
-        ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name);
+        ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+        ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name, itemData.item_description);
         slotEmptied += HideAndUnsubscribeItemPopup;
     }
 
@@ -152,7 +155,9 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void ShowAndUnsubscribeItemPopup()
     {
-        ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name);
+
+        ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
+        ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name,itemData.item_description);
         //slotFilled -= ShowAndUnsubscribeItemPopup;
     }
 

@@ -2,7 +2,9 @@ public enum AttackType
 {
     Simple,
     Chop,
-    StrongChop,
+    CopperChop,
     Mine,
-    StrongMine
+    CopperMine,
+    IronChop,
+    IronMine
 }

@@ -7,8 +7,9 @@ using DG.Tweening;
 public class ItemTitlePopupManager : MonoBehaviour
 {
 
-    RectTransform rectTransform;
+    public RectTransform rectTransform;
     public TextMeshProUGUI Textbox;
+    public TextMeshProUGUI TextboxDescription;
     CanvasGroup canvasGroup;
     Canvas canvas;
 
@@ -17,7 +18,7 @@ public class ItemTitlePopupManager : MonoBehaviour
     {
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();
-        rectTransform = GetComponent<RectTransform>();
+        //rectTransform = GetComponent<RectTransform>();
     }
 
     void Update()
@@ -62,12 +63,13 @@ public class ItemTitlePopupManager : MonoBehaviour
         }
     }
 
-    public void ShowPopup(string item_name)
+    public void ShowPopup(string item_name,string item_description)
     {
         if (!ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.inventoryIsOpen) return;
-        rectTransform.DOScale(1, 0.1f).From(0f).SetEase(Ease.InOutQuad);
         Textbox.text = item_name;
+        TextboxDescription.text = item_description;
         canvasGroup.alpha = 1;
+        rectTransform.DOScale(1, 0.1f).From(0f).SetEase(Ease.InOutQuad);
 
     }
 

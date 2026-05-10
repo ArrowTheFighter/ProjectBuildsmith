@@ -215,6 +215,12 @@ public class GameplayUtils : MonoBehaviour
             case "clear":
                 PowerConsole.Clear();
                 break;
+            case "timescale":
+                if (arguments.Length > 1)
+                {
+                    Time.timeScale = float.Parse(arguments[1]);
+                }
+                break;
         }
         // string id = callback.Args["-i"];
         // int amount = int.Parse(callback.Args["-a"]);
