@@ -9,7 +9,10 @@ public class EnableObject : MonoBehaviour
     {
         foreach (GameObject obj in Objects_To_enable)
         {
-            obj.SetActive(true);
+            if(obj != null)
+            {
+                obj.SetActive(true);
+            }   
         }
     }
 
@@ -17,7 +20,10 @@ public class EnableObject : MonoBehaviour
     {
         foreach (GameObject obj in Objects_To_disbale)
         {
-            obj.SetActive(false);
+            if (obj != null)
+            {
+                obj.SetActive(false);
+            }
         }
     }
 
