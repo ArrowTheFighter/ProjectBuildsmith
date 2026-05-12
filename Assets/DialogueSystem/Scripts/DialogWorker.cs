@@ -56,7 +56,14 @@ public class DialogWorker : MonoBehaviour, IInteractable
 
     void Awake()
     {
-        ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
+        if(ScriptRefrenceSingleton.is_ready)
+        {
+            BindInputs();
+        }
+        else
+        {
+            ScriptRefrenceSingleton.OnScriptLoaded += BindInputs;
+        }
         PROMPT = InactivePrompt;
     }
 
