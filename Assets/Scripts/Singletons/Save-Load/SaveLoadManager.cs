@@ -52,6 +52,9 @@ public class SaveLoadManager : MonoBehaviour
         saveables = FindObjectsByType<MonoBehaviour>( FindObjectsInactive.Include,FindObjectsSortMode.None)
         .OfType<ISaveable>()
         .ToList();
+
+        int count = saveables.OfType<LoadIfFlag>().Count();
+        Debug.Log($"LoadIfFlag saves was {count}");
     }
 
 

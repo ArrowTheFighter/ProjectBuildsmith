@@ -22,10 +22,12 @@ public class LoadIfFlag : MonoBehaviour, ISaveable
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
+        Debug.Log("Load if Flag running",gameObject);
         for (int i = flagRules.Length - 1; i >= 0 ; i--)
         {
             if(FlagManager.Get_Flag_Value(flagRules[i].Flag))
             {
+                Debug.Log($"Loading event because flag {flagRules[i].Flag} was true",gameObject);
                 flagRules[i].FlagUnitEvent?.Invoke();
                 return;
             }
