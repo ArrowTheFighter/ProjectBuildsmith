@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class FloatingObject : MonoBehaviour, IMoveingPlatform , IEnableDisable
+public class FloatingObject : MonoBehaviour, IMoveingPlatform , IEnableDisable,ISaveable
 {
     [SerializeField] Vector3 MoveTo;
     [SerializeField] Vector3 rotationAmount;
@@ -27,6 +27,12 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform , IEnableDisable
 
     [Header("Debug")]
     public bool PrintDebug;
+
+    [SerializeField] int unique_id;
+    public int Get_Unique_ID { get => unique_id; set => unique_id = value; }
+
+    public bool Get_Should_Save => IsActive;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -157,5 +163,10 @@ public class FloatingObject : MonoBehaviour, IMoveingPlatform , IEnableDisable
     public void DisableInterface()
     {
         disabled = true;
+    }
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        SetActive(true);
     }
 }

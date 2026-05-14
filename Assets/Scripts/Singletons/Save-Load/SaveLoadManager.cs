@@ -292,6 +292,7 @@ public class SaveLoadManager : MonoBehaviour
         //ISaveables
         foreach (var saveable in saveables)
         {
+            if(((Component)saveable) == null) continue;
             if (saveable.Get_Should_Save)
             {
                 saveFile.saveable_ids.Add(saveable.Get_Unique_ID);

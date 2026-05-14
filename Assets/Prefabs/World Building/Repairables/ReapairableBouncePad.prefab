@@ -3103,12 +3103,15 @@ MonoBehaviour:
   FinishedStructure: {fileID: 1468338117019075911}
   HologramStructure: {fileID: 4565971910940677466}
   itemsRequired:
-  - item_id: wood
-    item_name: Wood
-    item_amount: 10
-  - item_id: stone
-    item_name: Stone
-    item_amount: 10
+  - item_id: plank
+    item_name: Plank
+    item_amount: 6
+  - item_id: rope
+    item_name: Rope
+    item_amount: 2
+  - item_id: iron_bar
+    item_name: Iron Bar
+    item_amount: 2
   itemsRequiredDisplay: []
   added_items: []
   CInteract: 1
@@ -3136,6 +3139,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnLoadSkipEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  EnableOnLoad: 0
   unique_id: 0
   ParticleForceField: {fileID: 4384701867372729781}
   ParticleKillTrigger: {fileID: 3746643459077150960}

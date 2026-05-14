@@ -110,8 +110,8 @@ public class SpawnInMeshesAnimation : MonoBehaviour
             // Duplicate the object
             //GameObject duplicateGO = Instantiate(original.gameObject, original.transform.position, original.transform.rotation);
             GameObject duplicateGO = new GameObject(original.name);
-            duplicateGO.AddComponent<MeshFilter>().mesh = original.GetComponent<MeshFilter>().mesh;
-            duplicateGO.AddComponent<MeshRenderer>().materials = original.GetComponent<MeshRenderer>().materials;
+            duplicateGO.AddComponent<MeshFilter>().mesh = original.GetComponentInChildren<MeshFilter>().mesh;
+            duplicateGO.AddComponent<MeshRenderer>().materials = original.GetComponentInChildren<MeshRenderer>().materials;
             duplicateGO.transform.position = original.transform.position;
             duplicateGO.transform.rotation = original.transform.rotation;
             duplicateGO.transform.localScale = original.transform.lossyScale;

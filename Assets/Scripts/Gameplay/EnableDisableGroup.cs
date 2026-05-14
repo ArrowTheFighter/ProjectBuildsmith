@@ -37,4 +37,20 @@ public class EnableDisableGroup : MonoBehaviour, IEnableDisable
         }
 
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            EnableInterface();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            DisableInterface();
+        }
+    }
 }

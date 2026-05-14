@@ -54,7 +54,7 @@ public class CompassScript : MonoBehaviour
 
         foreach (var marker in activeQuestMarkers)
         {
-            if (marker.MarkerWorldTransform == null) RemoveQuestMarker(marker);
+            if (marker.MarkerWorldTransform == null || !marker.MarkerWorldTransform.gameObject.activeInHierarchy) RemoveQuestMarker(marker);
             UpdateMarkerPos(playerForward, marker.MarkerWorldTransform.position, marker.MarkerRectTransform);
         }
 
