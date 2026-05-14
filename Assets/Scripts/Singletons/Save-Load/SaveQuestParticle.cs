@@ -3,7 +3,7 @@ using UnityEngine;
 public class SaveQuestParticle : MonoBehaviour, ISaveable
 {
     [SerializeField, TextArea]
-    string INSTRUCTION = "Any quest marker needs to have this script on it's parent to properly save. Don't add any other childred to this gameobject";
+    string INSTRUCTION = "Any quest marker needs to have this script on it's parent to properly save. Don't add any other children to this gameobject";
 
     public int unique_id;
     public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
