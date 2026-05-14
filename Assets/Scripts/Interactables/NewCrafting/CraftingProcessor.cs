@@ -31,7 +31,7 @@ public class CraftingProcessor : CraftingTableBase
 
 
 
-    void Awake()
+    void OnEnable() 
     {
         inventoryDataSaver = GetComponent<InventoryDataSaver>();
         inventoryDataSaver.OnFinshedInitalizing += Initalize;

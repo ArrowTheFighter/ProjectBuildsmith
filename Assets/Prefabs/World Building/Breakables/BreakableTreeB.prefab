@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 2
   ItemDropForce: 3
-  RespawnTime: 0
+  RespawnTime: 200
   ExtraBounceForce: 0
   HitParticle: {fileID: 5912073021161205084}
   DestoryedParticle: {fileID: 4662947785959668623, guid: b271e4203c6ed724996977c864729bfc, type: 3}
@@ -117,7 +117,7 @@ MonoBehaviour:
     audioClipVolume: 0.4
     audioClipPitch: 1
   destroyedSoundFX: {fileID: 8300000, guid: 63a6ca556be95d44a980a41209c54de3, type: 3}
-  destroyedSoundFXVolume: 0.5
+  destroyedSoundFXVolume: 0.1
   destroyedSoundFXPitch: 1.1
   AttackTypes: 0100000002000000
   onHitTweenDuration: 0.075

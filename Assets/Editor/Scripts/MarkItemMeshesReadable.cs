@@ -4,7 +4,7 @@ using System.IO;
 
 public class MarkItemMeshesReadable : EditorWindow
 {
-    public string itemDataFolder = "Assets/ScriptableObjects/ItemData";
+    public string itemDataFolder = "Assets/Resources/ItemData";
 
     [MenuItem("Tools/Mark Item Meshes Read/Write")]
     public static void ShowWindow()
