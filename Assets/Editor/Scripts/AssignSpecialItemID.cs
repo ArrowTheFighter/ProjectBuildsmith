@@ -152,7 +152,7 @@ public class AssignSpecialItemID : Button
 
     private static void AssignIDsToSaveObjectPositions()
     {
-        SaveObjectPosition[] saveObjects = GameObject.FindObjectsByType<SaveObjectPosition>(FindObjectsSortMode.None);
+        SaveObjectPosition[] saveObjects = GameObject.FindObjectsByType<SaveObjectPosition>(FindObjectsInactive.Include,FindObjectsSortMode.None);
         HashSet<int> usedIDs = new HashSet<int>();
 
         // Collect existing IDs
