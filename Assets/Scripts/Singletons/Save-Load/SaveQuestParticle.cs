@@ -8,7 +8,7 @@ public class SaveQuestParticle : MonoBehaviour, ISaveable
     public int unique_id;
     public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
 
-    public bool Get_Should_Save {get { return transform.childCount > 0; }}
+    public bool Get_Should_Save {get { return gameObject.activeInHierarchy && transform.childCount > 0; }}
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
