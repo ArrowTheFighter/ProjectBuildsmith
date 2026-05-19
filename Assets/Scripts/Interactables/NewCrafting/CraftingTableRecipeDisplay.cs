@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,6 +51,7 @@ public class CraftingTableRecipeDisplay : MonoBehaviour
             GameObject spawnedObj = Instantiate(imageObj, imageObj.transform.parent);
             spawnedObj.GetComponent<Image>().sprite = itemData.item_ui_image;
             spawnedObj.GetComponent<Image>().color = new Color(1, 1, 1, 0.3f);
+            spawnedObj.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
             SpawnedObjs.Add(spawnedObj);
         }
