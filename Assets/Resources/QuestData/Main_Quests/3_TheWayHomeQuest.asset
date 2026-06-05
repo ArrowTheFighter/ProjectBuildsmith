@@ -45,20 +45,20 @@ MonoBehaviour:
     - rid: 802173297928175725
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Craft <itemamount=plank>/6 <style=item>planks</style>
+        Description: Craft <style=item>planks</style> <itemamount=plank>/6
         StopAtThisObjective: 0
         StayCompleted: 1
-        isComplete: 1
+        isComplete: 0
         ObjectiveIDCollection: 1
         Item_ID: plank
         Item_Amount: 6
     - rid: 802173297928175726
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Craft <itemamount=rope>/2 <style=item>rope</style>
+        Description: Craft <style=item>rope</style> <itemamount=rope>/2
         StopAtThisObjective: 1
         StayCompleted: 1
-        isComplete: 1
+        isComplete: 0
         ObjectiveIDCollection: 1
         Item_ID: rope
         Item_Amount: 2
@@ -92,7 +92,7 @@ MonoBehaviour:
     - rid: 802173548357746791
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Collect <itemamount=wood>/5 <style=item>wood</style>
+        Description: Collect <style=item>wood</style> <itemamount=wood>/5
         StopAtThisObjective: 1
         StayCompleted: 1
         isComplete: 0

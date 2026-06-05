@@ -76,7 +76,7 @@ MonoBehaviour:
     - rid: 802173276136144990
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: 'Gather <itemamount=plant_fiber>/3 <style=Item>plant fiber</style>   
+        Description: 'Gather <style=Item>plant fiber</style> <itemamount=plant_fiber>/3   
           (hint: use the <style=item>makeshift handle</style> <Icon=Action_Attack>
           )'
         StopAtThisObjective: 1
@@ -145,8 +145,7 @@ MonoBehaviour:
     - rid: 4434710013077880834
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
-        Description: Collect <itemamount=rusty_iron_bar>/3 <style=Item>rusty iron
-          bars</style>
+        Description: Collect <style=Item>rusty iron bars</style> <itemamount=rusty_iron_bar>/3
         StopAtThisObjective: 1
         StayCompleted: 1
         isComplete: 1
