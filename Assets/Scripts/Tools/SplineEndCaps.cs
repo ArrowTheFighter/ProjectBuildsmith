@@ -4,6 +4,8 @@ using UnityEngine.Splines;
 [ExecuteAlways]
 public class SplineEndCaps : MonoBehaviour
 {
+    [SerializeField] Mesh sphereMesh;
+    [SerializeField] Material sphereMaterial;
     [Header("Cap Settings")]
     [SerializeField] GameObject m_SpherePrefab;
     [SerializeField] bool m_UpdateContinuously = true;
@@ -22,7 +24,7 @@ public class SplineEndCaps : MonoBehaviour
     void OnEnable()
     {
         TryInitialize();
-        UpdateCaps();
+        //UpdateCaps();
     }
 
     void OnDisable()
@@ -50,21 +52,21 @@ public class SplineEndCaps : MonoBehaviour
         if (m_SplineContainer == null || m_SplineExtrude == null)
             return;
 
-        if (m_SpherePrefab == null)
-        {
-            m_SpherePrefab = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            m_SpherePrefab.hideFlags = HideFlags.HideAndDontSave;
-            DestroyImmediate(m_SpherePrefab.GetComponent<Collider>());
-        }
+        // if (m_SpherePrefab == null)
+        // {
+        //     m_SpherePrefab = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //     m_SpherePrefab.hideFlags = HideFlags.HideAndDontSave;
+        //     DestroyImmediate(m_SpherePrefab.GetComponent<Collider>());
+        // }
 
-        if (m_StartCap == null)
-            m_StartCap = Instantiate(m_SpherePrefab, transform);
+        // if (m_StartCap == null)
+        //     m_StartCap = Instantiate(m_SpherePrefab, transform);
 
-        if (m_EndCap == null)
-            m_EndCap = Instantiate(m_SpherePrefab, transform);
+        // if (m_EndCap == null)
+        //     m_EndCap = Instantiate(m_SpherePrefab, transform);
 
-        ApplyMaterial(m_StartCap);
-        ApplyMaterial(m_EndCap);
+        // ApplyMaterial(m_StartCap);
+        // ApplyMaterial(m_EndCap);
     }
 
     void UpdateCaps()
@@ -82,17 +84,20 @@ public class SplineEndCaps : MonoBehaviour
 
     void PlaceCap(GameObject cap, Spline spline, float t, float radius)
     {
-        if (cap == null)
-            return;
+        // if (cap == null)
+        //     return;
 
         Vector3 localPos = spline.EvaluatePosition(t);
-        Vector3 localTangent = ((Vector3)spline.EvaluateTangent(t)).normalized;
-
-        cap.transform.position = transform.TransformPoint(localPos);
-        cap.transform.rotation = Quaternion.LookRotation(transform.TransformDirection(localTangent));
+        //Vector3 localTangent = ((Vector3)spline.EvaluateTangent(t)).normalized;
 
         float diameter = radius * 2f;
-        cap.transform.localScale = Vector3.one * diameter;
+        //cap.transform.localScale = Vector3.one * diameter;
+
+        DrawSphere(sphereMesh, transform.TransformPoint(localPos), diameter,sphereMaterial);
+
+        // cap.transform.position = transform.TransformPoint(localPos);
+        // cap.transform.rotation = Quaternion.LookRotation(transform.TransformDirection(localTangent));
+
     }
 
     void ApplyMaterial(GameObject cap)
@@ -117,5 +122,25 @@ public class SplineEndCaps : MonoBehaviour
 
         if (m_EndCap != null)
             DestroyImmediate(m_EndCap);
+    }
+
+
+    public static void DrawSphere(Mesh sphereMesh, Vector3 position, float size, Material material)
+    {
+        if (sphereMesh == null)
+        {
+            sphereMesh = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
+        }
+
+        Graphics.DrawMesh(
+            sphereMesh,
+            Matrix4x4.TRS(
+                position,
+                Quaternion.identity,
+                Vector3.one * size
+            ),
+            material,
+            0
+        );
     }
 }
