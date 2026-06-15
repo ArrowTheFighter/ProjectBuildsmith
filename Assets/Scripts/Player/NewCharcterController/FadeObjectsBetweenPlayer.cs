@@ -38,13 +38,15 @@ public class FadeObjectsBetweenPlayer : MonoBehaviour
                 {
                     // New detection: add and fade it out
                     trackedTransforms.Add(hit.transform);
-
-                    Material mat = meshRenderer.material; // use .material so it's unique to this renderer
-                    if (mat.HasFloat("_FadeAmount"))
+                    if(meshRenderer.sharedMaterial.HasFloat("_FadeAmount"))
                     {
-                        DOTween.Kill(mat);
-                        mat.DOFloat(0.4f, "_FadeAmount", 0.2f);
-                        //mat.SetFloat("_FadeAmount", 0.4f);
+                        Material mat = meshRenderer.material; // use .material so it's unique to this renderer
+                        if (mat.HasFloat("_FadeAmount"))
+                        {
+                            DOTween.Kill(mat);
+                            mat.DOFloat(0.4f, "_FadeAmount", 0.2f);
+                            //mat.SetFloat("_FadeAmount", 0.4f);
+                        }
                     }
                 }
             }
