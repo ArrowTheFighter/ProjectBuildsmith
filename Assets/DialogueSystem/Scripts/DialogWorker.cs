@@ -303,6 +303,10 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 tempDialogSO = ScriptRefrenceSingleton.instance.dialogManager.ActiveChoices[0];
                 ScriptRefrenceSingleton.instance.dialogManager.ActiveChoices = new List<ScriptableObject>();
             }
+            else if(dialogueSO.DialogueType == DS.Enumerations.DSDialogueType.Random)
+            {
+                tempDialogSO = dialogueSO.Choices[Random.Range(0,dialogueSO.Choices.Count)].NextDialogue;
+            }
             else if (dialogueSO.Choices.Count <= 1)
             {
                 tempDialogSO = dialogueSO.Choices[0].NextDialogue;
@@ -340,6 +344,10 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 DSDialogueSO dialogueSO = (DSDialogueSO)tempDialogSO;
                 switch (dialogueSO.DialogueType)
                 {
+                    case DS.Enumerations.DSDialogueType.Random:
+                        currentDialogSO = dialogueSO;
+                        breakLoop = true;
+                        break;
                     case DS.Enumerations.DSDialogueType.MultipleChoice:
                         if (currentDialogSO == dialogueSO)
                         {

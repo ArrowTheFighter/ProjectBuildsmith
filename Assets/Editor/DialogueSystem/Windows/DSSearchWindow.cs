@@ -37,6 +37,11 @@ namespace DS.Windows
                     userData = DSDialogueType.MultipleChoice,
                     level = 2
                 },
+                new SearchTreeEntry(new GUIContent("NPC Dialog With Random Output", indentationIcon))
+                {
+                    userData = DSDialogueType.Random,
+                    level = 2
+                },
                 new SearchTreeGroupEntry(new GUIContent("Settings"), 1),
                 new SearchTreeEntry(new GUIContent("Item Check", indentationIcon))
                 {
@@ -124,6 +129,15 @@ namespace DS.Windows
                     DSMultipleChoiceNode multipleChoiceNode = (DSMultipleChoiceNode) graphView.CreateNode("DialogueName", DSDialogueType.MultipleChoice, localMousePosition);
 
                     graphView.AddElement(multipleChoiceNode);
+
+                    return true;
+                }
+
+                case DSDialogueType.Random:
+                {
+                    DSRandomNode randomNode = (DSRandomNode)graphView.CreateNode("RandomNode", DSDialogueType.Random, localMousePosition);
+
+                    graphView.AddElement(randomNode);
 
                     return true;
                 }

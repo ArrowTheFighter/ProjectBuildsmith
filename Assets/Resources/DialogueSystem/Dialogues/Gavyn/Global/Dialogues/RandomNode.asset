@@ -10,17 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: Gavyn1
+  m_Name: RandomNode
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: Gavyn1
-  <Text>k__BackingField: Output 1
+  <DialogueName>k__BackingField: RandomNode
+  <Text>k__BackingField: Random node
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
-    LocalizeKey: LOCAL_CHOICE_KEY
+  - <Text>k__BackingField: Random Output
+    LocalizeKey: 
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 294e100a5fd51fb4abb160404aff58be, type: 2}
-  <DialogueType>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 70be38c0d7f6f6847b89feaeb304c08d, type: 2}
+  - <Text>k__BackingField: Random Output
+    LocalizeKey: 
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 429d3bfd30263de40b8761cdbf380efc, type: 2}
+  <DialogueType>k__BackingField: 13
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
-  <unique_id>k__BackingField: 531
+  <unique_id>k__BackingField: 0

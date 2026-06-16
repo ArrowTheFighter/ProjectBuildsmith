@@ -14,6 +14,7 @@ namespace DS.Enumerations
         StartDialog,
         ReturnToStart,
         AssignQuest,
-        UnlockRecipe
+        UnlockRecipe,
+        Random
     }
 }
