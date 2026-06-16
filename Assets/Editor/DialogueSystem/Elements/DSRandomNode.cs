@@ -28,7 +28,59 @@ namespace DS.Elements
 
         public override void Draw()
         {
-            base.Draw();
+            TextField dialogueNameTextField = DSElementUtility.CreateTextField(DialogueName, null, callback =>
+            {
+                TextField target = (TextField)callback.target;
+
+                target.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+
+                if (string.IsNullOrEmpty(target.value))
+                {
+                    if (!string.IsNullOrEmpty(DialogueName))
+                    {
+                        ++graphView.NameErrorsAmount;
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(DialogueName))
+                    {
+                        --graphView.NameErrorsAmount;
+                    }
+                }
+
+                if (Group == null)
+                {
+                    graphView.RemoveUngroupedNode(this);
+
+                    DialogueName = target.value;
+
+                    graphView.AddUngroupedNode(this);
+
+                    return;
+                }
+
+                DSGroup currentGroup = Group;
+
+                graphView.RemoveGroupedNode(this, Group);
+
+                DialogueName = target.value;
+
+                graphView.AddGroupedNode(this, currentGroup);
+            });
+
+            dialogueNameTextField.AddClasses(
+                "ds-node__text-field",
+                "ds-node__filename-text-field"
+            );
+
+            titleContainer.Insert(0, dialogueNameTextField);
+
+            /* INPUT CONTAINER */
+
+            Port inputPort = this.CreatePort("Input", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
+
+            inputContainer.Add(inputPort);
 
             /* MAIN CONTAINER */
 
@@ -66,7 +118,7 @@ namespace DS.Elements
 
             addChoiceButton.AddToClassList("ds-node__button");
 
-            Label label = new Label("NPC Dialog with Random Output");
+            Label label = new Label("Random Node Selector");
 
             label.style.paddingTop = 8;
             label.style.paddingBottom = 8;

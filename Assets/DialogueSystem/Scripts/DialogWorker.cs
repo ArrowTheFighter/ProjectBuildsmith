@@ -345,8 +345,7 @@ public class DialogWorker : MonoBehaviour, IInteractable
                 switch (dialogueSO.DialogueType)
                 {
                     case DS.Enumerations.DSDialogueType.Random:
-                        currentDialogSO = dialogueSO;
-                        breakLoop = true;
+                        tempDialogSO = dialogueSO.Choices[Random.Range(0,dialogueSO.Choices.Count)].NextDialogue;
                         break;
                     case DS.Enumerations.DSDialogueType.MultipleChoice:
                         if (currentDialogSO == dialogueSO)

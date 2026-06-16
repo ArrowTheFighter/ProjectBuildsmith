@@ -37,11 +37,6 @@ namespace DS.Windows
                     userData = DSDialogueType.MultipleChoice,
                     level = 2
                 },
-                new SearchTreeEntry(new GUIContent("NPC Dialog With Random Output", indentationIcon))
-                {
-                    userData = DSDialogueType.Random,
-                    level = 2
-                },
                 new SearchTreeGroupEntry(new GUIContent("Settings"), 1),
                 new SearchTreeEntry(new GUIContent("Item Check", indentationIcon))
                 {
@@ -76,6 +71,11 @@ namespace DS.Windows
                 new SearchTreeEntry(new GUIContent("Unlock Recipe", indentationIcon))
                 {
                     userData = DSDialogueType.UnlockRecipe,
+                    level = 2
+                },
+                new SearchTreeEntry(new GUIContent("Random Node Selector", indentationIcon))
+                {
+                    userData = DSDialogueType.Random,
                     level = 2
                 },
                 new SearchTreeGroupEntry(new GUIContent("Dialogue Groups"), 1),
