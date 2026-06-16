@@ -32,7 +32,7 @@ namespace DS.Elements
 
             /* MAIN CONTAINER */
 
-            Button addChoiceButton = DSElementUtility.CreateButton("Add Choice", () =>
+            Button addChoiceButton = DSElementUtility.CreateButton("Add Output", () =>
             {
                 if (Choices.Count > 3) return;
                 DSChoiceSaveData choiceData = new DSChoiceSaveData()
