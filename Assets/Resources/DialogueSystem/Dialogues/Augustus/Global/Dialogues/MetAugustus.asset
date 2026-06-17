@@ -9,16 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f2cb4ff91aff30418263c9d6c57c3ca, type: 3}
-  m_Name: DialogName0
+  m_Script: {fileID: 11500000, guid: 0e1d548be11e2ab409c0b46832fc8deb, type: 3}
+  m_Name: MetAugustus
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: DialogName
+  <DialogueName>k__BackingField: MetAugustus
   <Text>k__BackingField: Dialogue text.
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Output
+  - <Text>k__BackingField: output
     LocalizeKey: 
-    OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: b828aed5ea0335447aa71c16a72cf9cc, type: 2}
-  <DialogueType>k__BackingField: 4
+    OutputID: IsTrue
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 188606699a994a043bbc15d2a43b89a0, type: 2}
+  <DialogueType>k__BackingField: 6
   <IsStartingDialogue>k__BackingField: 0
-  <unique_id>k__BackingField: 18
+  <FlagID>k__BackingField: MetAugustus
+  IsTrue: 1
