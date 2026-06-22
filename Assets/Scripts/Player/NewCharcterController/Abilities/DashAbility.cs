@@ -283,9 +283,12 @@ public class DashAbility : PlayerAbility
 
     public void PlayDashSound()
     {
-        AudioCollection audioCollectionDash1 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash1");
-        AudioCollection audioCollectionDash2 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash2");
-        ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, audioCollectionDash1, audioCollectionDash2);
+        if (gameObject.tag == "Player") 
+        {
+            AudioCollection audioCollectionDash1 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash1");
+            AudioCollection audioCollectionDash2 = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Dash2");
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayRandomSoundCollection(transform, audioCollectionDash1, audioCollectionDash2);
+        }
     }
 
     IEnumerator EndDiveAfterDelay(float duration)

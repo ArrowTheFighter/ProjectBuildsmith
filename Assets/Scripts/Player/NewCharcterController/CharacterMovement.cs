@@ -896,11 +896,13 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         float platformUpDelta = platformDelta.y;
         if(printStrings) print($"Platform up delta was {platformUpDelta}");
-        rb.AddForce(transform.up * jumpForce + Vector3.up * platformUpDelta , ForceMode.Impulse);
-        AudioCollection audioCollectionJumpGrunt = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Jump");
-        AudioCollection audioCollectionJumpSound = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("JumpSound");
-        ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
-        
+        rb.AddForce(transform.up * jumpForce + Vector3.up * platformUpDelta, ForceMode.Impulse);
+        if (gameObject.tag == "Player") // So only the player makes jump sounds, and to prevent Rose from making manly grunts
+        {
+            AudioCollection audioCollectionJumpGrunt = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Jump");
+            AudioCollection audioCollectionJumpSound = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("JumpSound");
+            ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, audioCollectionJumpGrunt, audioCollectionJumpSound);
+        }
         if(moveingPlatform != null)
         {
             rb.AddForce(platformCurrentFrameDelta / Time.fixedDeltaTime, ForceMode.VelocityChange);
