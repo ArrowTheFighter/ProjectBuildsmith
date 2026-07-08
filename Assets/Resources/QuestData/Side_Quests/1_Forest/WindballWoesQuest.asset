@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: WindballWoesQuest
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: windballwoes
+  QuestName: Windball Woes
+  Description: Luma and Luka lost their windball while playing, and asked for my
+    help to retrieve it. They said it was tricky to catch, so I might have to chase
+    it down a bit.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 2972232901568757899
+  - rid: 2972232901568757900
+  references:
+    version: 2
+    RefIds:
+    - rid: 2972232901568757899
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Catch the windball
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 0
+        flag_id: WindballWoesBallCollected
+    - rid: 2972232901568757900
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Luma or Luka
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 1
+        flag_id: WindballWoesQuestComplete
