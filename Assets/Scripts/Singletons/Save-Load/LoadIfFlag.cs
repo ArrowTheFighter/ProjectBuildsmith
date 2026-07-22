@@ -39,6 +39,7 @@ public class LoadIfFlag : MonoBehaviour, ISaveable
 [Serializable]
 class FlagRule
 {
+    public bool CheckIfTrue = true;
     public string Flag;
     public UnityEvent FlagUnitEvent;
 }
