@@ -10,17 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: connector0
+  m_Name: Henry3
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: 
-  <Text>k__BackingField: Dialogue text.
+  <DialogueName>k__BackingField: Henry3
+  <Text>k__BackingField: But I showed them. I grew carrots all over these mountain
+    islands! Except now, there's too many carrots and I'm struggling to keep up.
+    Maybe you could help me out?
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: 
-    LocalizeKey: 
+  - <Text>k__BackingField: I'll help you out.
+    LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: 31231e910e3ef404ba06251aa6b862c0, type: 2}
-  <DialogueType>k__BackingField: 8
+  - <Text>k__BackingField: Maybe another time.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: a39a58fa9e5e67e4cb785a4f7cd614fa, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
-  <unique_id>k__BackingField: 592
+  <unique_id>k__BackingField: 1751
