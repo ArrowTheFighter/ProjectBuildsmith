@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: CarrotQuest
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: CarrotQuest
+  QuestName: Collecting Carrots
+  Description: Henry is proud of all the carrots he's managed to grow in the mountains,
+    but they're growing out of control. I should head down to his carrot fields and
+    help him harvest them.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 398114019738124288
+  - rid: 398114019738124289
+  - rid: 398114019738124389
+  - rid: 398114019738124390
+  - rid: 398114019738124391
+  - rid: 398114019738124392
+  references:
+    version: 2
+    RefIds:
+    - rid: 398114019738124288
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect <style=Item>carrots</style> <itemamount=carrot>/50
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 1
+        ObjectiveIDCollection: 0
+        Item_ID: carrot
+        Item_Amount: 50
+    - rid: 398114019738124289
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Henry
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: HenryGiantCarrotMission
+    - rid: 398114019738124389
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Henry
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: HenryGoRebuildBridge
+    - rid: 398114019738124390
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Build a bridge to reach <style=item>Henry's prized carrot</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: RebuiltCarrotBridge
+    - rid: 398114019738124391
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect <style=item>Henry's prized carrot</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        Item_ID: carrot_quest_giant
+        Item_Amount: 1
+    - rid: 398114019738124392
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Return <style=item>Henry's prized carrot</style> to Henry
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        flag_id: ReturnedHenryGiantCarrot
