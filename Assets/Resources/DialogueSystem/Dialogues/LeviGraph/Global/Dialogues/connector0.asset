@@ -9,17 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e1d548be11e2ab409c0b46832fc8deb, type: 3}
-  m_Name: MetNPCLeviFlag
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: connector0
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: MetNPCLeviFlag
+  <DialogueName>k__BackingField: 
   <Text>k__BackingField: Dialogue text.
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: output
+  - <Text>k__BackingField: 
     LocalizeKey: 
-    OutputID: IsTrue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 1678589d643b0dd409b64d40bb597176, type: 2}
-  <DialogueType>k__BackingField: 6
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e6630c03bba25994295508cce05ddb03, type: 2}
+  <DialogueType>k__BackingField: 8
   <IsStartingDialogue>k__BackingField: 0
-  <FlagID>k__BackingField: MetNPCLevi
-  IsTrue: 1
+  CloseDialog: 0
+  <unique_id>k__BackingField: 0
