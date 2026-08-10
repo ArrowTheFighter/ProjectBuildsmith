@@ -28,6 +28,7 @@ MonoBehaviour:
   AutoPinQuest: 1
   questObjectives:
   - rid: 2582445104042082304
+  - rid: 2582445191865303040
   references:
     version: 2
     RefIds:
@@ -40,3 +41,12 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 0
         flag_id: FoundSylvie
+    - rid: 2582445191865303040
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Dress up Sylvie's snow friend
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: QuestSnowmanRebuilt
