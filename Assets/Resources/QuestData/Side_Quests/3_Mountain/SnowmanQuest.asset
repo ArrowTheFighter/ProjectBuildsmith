@@ -29,6 +29,8 @@ MonoBehaviour:
   questObjectives:
   - rid: 2582445104042082304
   - rid: 2582445191865303040
+  - rid: 2582445285446778880
+  - rid: 2582445285446778881
   references:
     version: 2
     RefIds:
@@ -50,3 +52,21 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 1
         flag_id: QuestSnowmanRebuilt
+    - rid: 2582445285446778880
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Sylvie
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: TalkedToSylvieAfterSnowman
+    - rid: 2582445285446778881
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Levi
+        StopAtThisObjective: 1
+        StayCompleted: 0
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: TalkedToLeviToFinishQuest
