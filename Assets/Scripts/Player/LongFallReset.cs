@@ -25,7 +25,7 @@ public class LongFallReset : MonoBehaviour
         }
     }
 
-    void ResetTime()
+    public void ResetTime()
     {
         timeOffGround = 0;
     }

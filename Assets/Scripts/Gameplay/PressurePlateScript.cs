@@ -6,6 +6,7 @@ public class PressurePlateScript : MonoBehaviour
 {
     public UnityEvent ActivatedEvent;
     public UnityEvent DeactivatedEvent;
+    bool usable = true;
     bool isActive;
     Collider col;
 
@@ -65,6 +66,7 @@ public class PressurePlateScript : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if(!usable) return;
         if (other.tag == "Player" || other.tag == "NPC")
         {
             print("Player landed on pressure plate");
@@ -87,5 +89,10 @@ public class PressurePlateScript : MonoBehaviour
                 isActive = false;
             }
         }
+    }
+
+    public void SetActive(bool active)
+    {
+        usable = active;
     }
 }

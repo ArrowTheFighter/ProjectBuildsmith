@@ -142,7 +142,6 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
 
     private void Update()
     {
-
         if (characterInput is NPCFollowTargetInput)
         {
             NPCFollowTargetInput nPCFollow = (NPCFollowTargetInput)characterInput;

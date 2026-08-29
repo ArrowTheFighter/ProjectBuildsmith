@@ -28,7 +28,10 @@ public class CutsceneManager : MonoBehaviour
         if (ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.TryGetComponent(out CharacterMovement characterMovement))
         {
             characterMovement.MovementControlledByAbility = true;
-            characterMovement.rb.isKinematic = true;
+            if (currentData.freeze_player)
+            {
+                characterMovement.rb.isKinematic = true;
+            }
         }
         ScriptRefrenceSingleton.instance.gameplayUtils.HideUI();
         ScriptRefrenceSingleton.instance.gameplayUtils.SetCanPause(false);
@@ -120,6 +123,7 @@ public class CutsceneData
 {
     public string CutsceneName;
     public bool Skippable = true;
+    public bool freeze_player = true;
     public Transform startPos;
     public CutscenePointData[] cameraPoints;
     public UnityEvent cutsceneFinishedUnityEvent;

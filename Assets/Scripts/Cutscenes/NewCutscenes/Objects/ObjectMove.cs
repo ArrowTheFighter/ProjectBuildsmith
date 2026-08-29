@@ -1,8 +1,9 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ObjectMove : MonoBehaviour, ISkippable
+public class ObjectMove : MonoBehaviour, ISkippable, IMoveingPlatform
 {
     [Header("Movement Settings")]
     public Vector3 endOffset;
@@ -26,9 +27,33 @@ public class ObjectMove : MonoBehaviour, ISkippable
     [Header("Gizmo Display")]
     public GameObject displayObj;
 
+    public event Action OnBeforePlatformMove;
+
+    [SerializeField] bool AutoAddChildComponenets = true;
+
     void OnEnable()
     {
         startPos = transform.position;
+    }
+
+    void Start()
+    {
+        if (AutoAddChildComponenets)
+        {
+            Collider[] childColliders = GetComponentsInChildren<Collider>();
+
+            foreach (var collider in childColliders)
+            {
+                if (collider.transform == transform) continue;
+                if (collider.isTrigger) continue;
+                GameObject childObj = collider.gameObject;
+                MovingPlatformChild movingPlatformChild = childObj.AddComponent<MovingPlatformChild>();
+
+                movingPlatformChild.ResetComponenet();
+                movingPlatformChild.ParentTransform = transform;
+                movingPlatformChild.SetupComponenet();
+            }
+        }
     }
 
     public void Skip()
@@ -55,6 +80,8 @@ public class ObjectMove : MonoBehaviour, ISkippable
                 float yOffset = archHeight * (1 - Mathf.Pow(Mathf.Abs(2 * t - 1), archSharpness));
                 pos.y += yOffset;
 
+                OnBeforePlatformMove?.Invoke();
+
                 transform.position = pos;
             }, 1f, duration)
             .SetEase(ease)
@@ -63,10 +90,25 @@ public class ObjectMove : MonoBehaviour, ISkippable
         }
         else
         {
-            transform.DOMove(end, duration)
-                .SetEase(ease)
-                .SetUpdate(UpdateType.Fixed)
-                .OnComplete(() => finishedEvent?.Invoke());
+            float t = 0;
+            DOTween.To(() => t, x =>
+            {
+                t = x;
+                Vector3 pos = Vector3.Lerp(start, end, t);
+
+                OnBeforePlatformMove?.Invoke();
+
+                transform.position = pos;
+            }, 1f, duration)
+            .SetEase(ease)
+            .SetUpdate(UpdateType.Fixed)
+            .OnComplete(() => finishedEvent?.Invoke());
+
+
+            // transform.DOMove(end, duration)
+            //     .SetEase(ease)
+            //     .SetUpdate(UpdateType.Fixed)
+            //     .OnComplete(() => finishedEvent?.Invoke());
         }
     }
 
@@ -107,5 +149,10 @@ public class ObjectMove : MonoBehaviour, ISkippable
                 Gizmos.DrawWireMesh(meshFilter.sharedMesh, checkTransform.position + endOffset, checkTransform.rotation, checkTransform.lossyScale);
             }
         }
+    }
+
+    public Transform getInterfaceTransform()
+    {
+        return transform;
     }
 }

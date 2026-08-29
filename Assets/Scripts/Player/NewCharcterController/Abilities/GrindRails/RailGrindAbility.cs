@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -78,6 +79,14 @@ public class RailGrindAbility : PlayerAbility
                 currentSplineContainer = col.GetComponent<SplineContainer>();
                 currentSplinePos = curvePos;
 
+                if (currentSpline.Closed)
+                {
+                    splineAnimate.m_LoopMode = SplineAnimateCustom.LoopMode.Loop;
+                }else
+                {
+                    splineAnimate.m_LoopMode = SplineAnimateCustom.LoopMode.Once;
+                }
+
                 float3 tangent = SplineUtility.EvaluateTangent(currentSpline, currentSplinePos);
                 directionIsForward = Vector3.Dot(characterMovement.orientation.forward,tangent) > 0;
 
@@ -108,12 +117,12 @@ public class RailGrindAbility : PlayerAbility
         {
             if(currentSpline != null && splineAnimate != null)
             {
-                if(directionIsForward && splineAnimate.NormalizedTime >= 1)
+                if(directionIsForward && !currentSpline.Closed && splineAnimate.NormalizedTime >= 1)
                 {
                     ExitGrindRail();
                     return;
                 }
-                else if(!directionIsForward && splineAnimate.NormalizedTime <= 0)
+                else if(!directionIsForward && !currentSpline.Closed && splineAnimate.NormalizedTime <= 0)
                 {
                     ExitGrindRail();
                     return;
@@ -182,6 +191,7 @@ public class RailGrindAbility : PlayerAbility
         characterMovement.rb.linearVelocity += new Vector3(0,20,2);
         storedVelocity = Vector3.zero;
         Invoke("ResetReadyToJump",0.1f);
+        characterMovement.GetComponent<LongFallReset>().ResetTime();
     }
 
     void ResetReadyToJump()
