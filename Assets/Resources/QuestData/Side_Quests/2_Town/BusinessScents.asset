@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: BusinessScents
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: BusinessScents
+  QuestName: Business Scents
+  Description: Laura is experimenting with different perfume recipes and needs my
+    help gathering ingredients.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 2582445667305652224
+  - rid: 2582445667305652318
+  - rid: 2582445667305652319
+  - rid: 2582445667305652320
+  - rid: 2582445667305652321
+  - rid: 2582445667305652322
+  - rid: 2582445667305652323
+  - rid: 2582445667305652324
+  references:
+    version: 2
+    RefIds:
+    - rid: 2582445667305652224
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect <style=Item>10 flowers</style> <itemamount=flower>/10
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        Item_ID: flower
+        Item_Amount: 10
+    - rid: 2582445667305652318
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Laura
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: TalkedToLauraWithFlowers
+    - rid: 2582445667305652319
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect <style=Item>10 mushrooms</style> <itemamount=mushrooms>/10
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        Item_ID: mushroom
+        Item_Amount: 10
+    - rid: 2582445667305652320
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Laura
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: TalkedToLauraWithMushrooms
+    - rid: 2582445667305652321
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect <style=Item>10 sticky sap</style> <itemamount=sticky
+          sap>/10
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        Item_ID: sticky_sap
+        Item_Amount: 10
+    - rid: 2582445667305652322
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Laura
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: TalkedToLauraWithStickySap
+    - rid: 2582445667305652323
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Build the market stall
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        flag_id: LauraMarketStallBuilt
+    - rid: 2582445667305652324
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Laura
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        flag_id: TalkedToLauraAfterMarketStall
