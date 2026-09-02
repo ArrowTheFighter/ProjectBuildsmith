@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e6b184fd5a78944c8c74a36e658c209, type: 3}
-  m_Name: MuhsroomCheck2
+  m_Name: FlowerCheck2
   m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: MuhsroomCheck2
+  <DialogueName>k__BackingField: FlowerCheck2
   <Text>k__BackingField: Dialogue text.
   <Choices>k__BackingField:
   - <Text>k__BackingField: Has items
     LocalizeKey: 
     OutputID: IsTrue
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 18f5c01fc6edf4341828cedf7a3a5002, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e8a14068d8f350e40b967d46c83ab90a, type: 2}
   - <Text>k__BackingField: Doesn't have items
     LocalizeKey: 
     OutputID: IsFalse
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: c9963240dc722b748843b8c0b77e4289, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 880b8b32c86fb2c4cbc97d030d385099, type: 2}
   <DialogueType>k__BackingField: 3
   <IsStartingDialogue>k__BackingField: 0
-  <ItemID>k__BackingField: mushroom
+  <ItemID>k__BackingField: flower
   <ItemAmount>k__BackingField: 10
-  RemoveItems: 1
+  RemoveItems: 0
