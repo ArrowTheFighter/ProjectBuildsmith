@@ -14,10 +14,13 @@ public class FrogBoss : MonoBehaviour
     Vector3 midPos;
     Vector3 endPos;
 
+    Vector3 lastDirectionToPlayer;
+
     float progress;
     public float speed;
     public float height = 2;
     public float jumpHeight = 15;
+    public float pauseDuration = 0.5f;
     public AnimationCurve animationCurve;
 
     int platformsQueuedUp;
@@ -25,7 +28,9 @@ public class FrogBoss : MonoBehaviour
     enum jumpingState
     {
         BreakingPlatforms,
-        MovingToFinal
+        WaitingToJump,
+        MovingToFinal,
+        AttackingPlayer
     }
 
     jumpingState currentState;
@@ -49,22 +54,36 @@ public class FrogBoss : MonoBehaviour
                     UpdateProgress();
                     if (progress >= 1)
                     {
-                        KnockDownPlatform();
-                        platformsQueuedUp--;
                         progress = 0;
-                        if (platformsQueuedUp <= 0)
-                        {
-                            currentState = jumpingState.MovingToFinal;
-                            GetFinalPlatformPoint();
-                            platformsQueuedUp++;
-                        }
-                        else
-                        {
-                            GetNewPoint();
-                        }
+                        currentState = jumpingState.WaitingToJump;
                     }
                 }
                 break;
+            case jumpingState.WaitingToJump:
+                
+                progress += Time.deltaTime;
+                if (progress > pauseDuration)
+                {
+                    currentState = jumpingState.BreakingPlatforms;
+                    platformsQueuedUp--;
+                    progress = 0;
+
+                    KnockDownPlatform();
+
+                    if (platformsQueuedUp <= 0)
+                    {
+                        currentState = jumpingState.MovingToFinal;
+                        GetFinalPlatformPoint();
+                        platformsQueuedUp++;
+                    }
+                    else
+                    {
+                        GetNewPoint();
+                    }
+
+                }
+
+            break;
 
             case jumpingState.MovingToFinal:
                 if (platformsQueuedUp > 0)
@@ -74,10 +93,47 @@ public class FrogBoss : MonoBehaviour
                     {
                         platformsQueuedUp--;
                         progress = 0;
+                        currentState = jumpingState.AttackingPlayer;
                     }
                 }
                 break;
+
+            case jumpingState.AttackingPlayer:
+
+                Vector3 direction = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position - transform.position;
+                direction.y = 0;
+                Quaternion newRotation = Quaternion.LookRotation(direction.normalized);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, 0.2f);
+
+                break;
         }
+    }
+
+    void SwitchState(jumpingState newState)
+    {
+        switch (newState)
+        {
+            case jumpingState.BreakingPlatforms:
+
+            break;
+
+            case jumpingState.WaitingToJump:
+            
+            break;
+
+            case jumpingState.MovingToFinal:
+
+            break;
+
+            case jumpingState.AttackingPlayer:
+
+                Vector3 direction = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position - transform.position;
+                direction.y = 0;
+
+                lastDirectionToPlayer = direction;
+            break;
+        }
+        currentState = newState;
     }
 
     void UpdateProgress()
