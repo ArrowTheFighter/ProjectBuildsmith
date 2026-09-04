@@ -22,6 +22,11 @@ public class FrogBossPlatform : MonoBehaviour
         return transform.position + Vector3.up * topOffset;
     }
 
+    public Vector3 getForward()
+    {
+        return transform.forward;
+    }
+
     public void KnockDown()
     {
         transform.DOScale(Vector3.zero,0.25f).SetEase(Ease.InOutQuad);
