@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class FrogBoss : MonoBehaviour,IDamagable
 {
@@ -27,6 +28,7 @@ public class FrogBoss : MonoBehaviour,IDamagable
     public float height = 2;
     public float jumpHeight = 15;
     public float pauseDuration = 0.5f;
+    public float attackDelay = 4;
     public float playerBounceForce = 10;
     public AnimationCurve animationCurve;
     public AnimationCurve fallingCurve;
@@ -114,6 +116,13 @@ public class FrogBoss : MonoBehaviour,IDamagable
                 break;
 
             case jumpingState.AttackingPlayer:
+                
+                progress += Time.deltaTime;
+                if (progress > attackDelay)
+                {
+                    progress = 0;
+                    print("Attacking!");
+                }
 
                 Vector3 currentDirection = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position - transform.position;
                 currentDirection.y = 0;
@@ -179,7 +188,7 @@ public class FrogBoss : MonoBehaviour,IDamagable
                 break;
 
             case jumpingState.AttackingPlayer:
-
+                progress = 0;
                 Vector3 direction = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position - transform.position;
                 direction.y = 0;
 
