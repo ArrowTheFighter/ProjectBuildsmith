@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
 
 public class FrogBoss : MonoBehaviour,IDamagable
 {
@@ -33,8 +31,16 @@ public class FrogBoss : MonoBehaviour,IDamagable
     public AnimationCurve animationCurve;
     public AnimationCurve fallingCurve;
     public AnimationCurve returningCurve;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject deathParticlePrefab;
+    [SerializeField] ParticleSystem takeDamageParticle;
+    [SerializeField] ParticleSystem jumpParticle;
+    [SerializeField] Animator animator;
+    [SerializeField] string itemDropId;
+    bool hasLanded;
 
     int platformsQueuedUp;
+    [SerializeField] int health = 3;
 
     enum jumpingState
     {
@@ -43,7 +49,9 @@ public class FrogBoss : MonoBehaviour,IDamagable
         MovingToFinal,
         AttackingPlayer,
         KnockedDown,
-        JumpingBackUp
+        JumpingBackUp,
+        Idle
+
     }
 
     jumpingState currentState;
@@ -55,6 +63,11 @@ public class FrogBoss : MonoBehaviour,IDamagable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SwitchState(jumpingState.Idle);
+    }
+
+    public void EnableBoss()
+    {
         SwitchState(jumpingState.BreakingPlatforms);
     }
 
@@ -65,13 +78,20 @@ public class FrogBoss : MonoBehaviour,IDamagable
         {
             case jumpingState.BreakingPlatforms:
                 if (platformsQueuedUp > 0)
-                {
+                {   
+
                     UpdateProgress(animationCurve);
                     UpdateRotation();
+                    
                     if (progress >= 1)
                     {
                         progress = 0;
                         currentState = jumpingState.WaitingToJump;
+                    }
+                    if (progress > 0.7f && !hasLanded)
+                    {
+                        hasLanded = true;
+                        animator.SetTrigger("Land");
                     }
                 }
                 break;
@@ -80,7 +100,12 @@ public class FrogBoss : MonoBehaviour,IDamagable
                 progress += Time.deltaTime;
                 if (progress > pauseDuration)
                 {
+                    hasLanded = false;
+                    animator.SetTrigger("Jump");
                     currentState = jumpingState.BreakingPlatforms;
+
+                    jumpParticle.Play();
+
                     platformsQueuedUp--;
                     progress = 0;
 
@@ -112,6 +137,11 @@ public class FrogBoss : MonoBehaviour,IDamagable
                         progress = 0;
                         SwitchState(jumpingState.AttackingPlayer);
                     }
+                    if (progress > 0.7f && !hasLanded)
+                    {
+                        hasLanded = true;
+                        animator.SetTrigger("Land");
+                    }
                 }
                 break;
 
@@ -121,14 +151,15 @@ public class FrogBoss : MonoBehaviour,IDamagable
                 if (progress > attackDelay)
                 {
                     progress = 0;
-                    print("Attacking!");
+                    animator.SetTrigger("attack");
                 }
 
                 Vector3 currentDirection = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position - transform.position;
                 currentDirection.y = 0;
-                if(Vector3.Angle(lastDirectionToPlayer.normalized,currentDirection.normalized) > 15)
+                if(Vector3.Angle(lastDirectionToPlayer.normalized,currentDirection.normalized) > 7.5f)
                 {
                     lastDirectionToPlayer = currentDirection;
+                    animator.SetTrigger("shuffle");
                 }
                 Quaternion newRotation = Quaternion.LookRotation(lastDirectionToPlayer.normalized);
                 transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, 0.2f);
@@ -152,6 +183,7 @@ public class FrogBoss : MonoBehaviour,IDamagable
                 FacePlatformForward();
                 if (progress >= 1)
                 {
+                    hasLanded = false;
                     SwitchState(jumpingState.BreakingPlatforms);
                 }
 
@@ -169,6 +201,9 @@ public class FrogBoss : MonoBehaviour,IDamagable
                 {
                     platform.ResetPlatform();
                 }
+
+                jumpParticle.Play();
+                animator.SetTrigger("Jump");
 
                 canTakeDamage = false;
                 canStomp = false;
@@ -204,7 +239,7 @@ public class FrogBoss : MonoBehaviour,IDamagable
                 break;
             
             case jumpingState.JumpingBackUp:
-
+                animator.SetTrigger("float");
                 GetJumpingBackUpPoint();
                 progress = 0;
                 speed = returningSpeed;
@@ -321,11 +356,41 @@ public class FrogBoss : MonoBehaviour,IDamagable
         GetNewPoint();
     }
 
+    void Die()
+    {
+        ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(itemDropId);
+        GameObject itemDropped = Instantiate(itemData.item_pickup_object, transform.position + Vector3.up, Quaternion.identity);
+        ItemPickup itemPickup = itemDropped.GetComponent<ItemPickup>();
+
+        itemPickup.amount = 1;
+        itemPickup.respawn_time = -1;
+        Rigidbody rigidbody = itemDropped.GetComponent<Rigidbody>();
+        rigidbody.useGravity = true;
+        rigidbody.AddForce(Vector3.up * 5, ForceMode.Impulse);
+
+        Instantiate(deathParticlePrefab,transform.position,Quaternion.identity); 
+
+        gameObject.SetActive(false);
+    }
+
+    public void SpawnBullet()
+    {
+        Instantiate(bulletPrefab, transform.position + transform.forward, transform.rotation);
+    }
+
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
     {
         if(!canTakeDamage) return;
         print("Taking damage!");
 
+        health--;
+        takeDamageParticle.Play();
+        animator.SetTrigger("damaged");
+        if (health <= 0)
+        {
+            Die();
+            return;    
+        }
         SwitchState(jumpingState.KnockedDown);
 
     }
