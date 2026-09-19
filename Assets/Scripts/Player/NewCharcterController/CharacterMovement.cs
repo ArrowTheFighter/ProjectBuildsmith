@@ -133,7 +133,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
         AddAbility<DoubleJumpAbility>();
         AddAbility<DashAbility>();
         AddAbility<PlayerStompAbility>();
-        AddAbility<RailGrindAbility>();
+        //AddAbility<RailGrindAbility>();
         if (characterInput is PlayerInputClass)
         {
             AddAbility<NoClip>();
