@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
+  m_Name: Laura16
+  m_EditorClassIdentifier: 
+  <DialogueName>k__BackingField: Laura16
+  <Text>k__BackingField: I have one more idea, though it may be a terrible one. I've
+    heard that some perfumes are made from the scent glands of creatures, and well,
+    nothing has a stronger scent than <style=enemy>stinkshrooms</style>. Maybe their
+    <style=item>sticky sap</style> could work?
+  <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
+  <Choices>k__BackingField:
+  - <Text>k__BackingField: Let's try it.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 8925258bb7cc8574199b39494c6f3da1, type: 2}
+  - <Text>k__BackingField: Yep, a terrible idea.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 810090d3294b40f42aa5060b8ea8ecc3, type: 2}
+  <DialogueType>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
+  CloseDialog: 0
+  <unique_id>k__BackingField: 0
