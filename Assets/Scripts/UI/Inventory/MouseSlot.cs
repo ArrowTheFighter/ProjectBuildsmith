@@ -73,41 +73,41 @@ public class MouseSlot : MonoBehaviour
         
 
         // -- Drop item if clicking off the ui with an item stack --
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            if (!inventorySlotComponent.inventorySlot.isEmpty)
-            {
-                print(IsPointerOverUI());
-                if (!IsPointerOverUI())
-                {
-                    inventorySlotComponent.RemoveItemFromSlot(true);
-                    ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated?.Invoke();
-                }
-            }
-        }
+        // if (Mouse.current.leftButton.wasPressedThisFrame)
+        // {
+        //     if (!inventorySlotComponent.inventorySlot.isEmpty)
+        //     {
+        //         print(IsPointerOverUI());
+        //         if (!IsPointerOverUI())
+        //         {
+        //             inventorySlotComponent.RemoveItemFromSlot(true);
+        //             ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated?.Invoke();
+        //         }
+        //     }
+        // }
         // -- Drop one item if clicking off the ui with an item stack --
-        else if (Mouse.current.rightButton.wasPressedThisFrame)
-        {
-            if (!inventorySlotComponent.inventorySlot.isEmpty)
-            {
-                if (!IsPointerOverUI())
-                {
-                    if (inventorySlotComponent.inventorySlot.inventoryItemStack.Amount > 1)
-                    {
-                        ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlotComponent.inventorySlot.inventoryItemStack.ID);
-                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(itemData, inventorySlotComponent.inventorySlot.inventoryItemStack.Amount - 1, true);
-                        inventorySlotComponent.DropItem(1);
-                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated?.Invoke();
-                    }
-                    // if there is only one item left drop it and remove from inventory
-                    else
-                    {
-                        inventorySlotComponent.RemoveItemFromSlot(true);
-                        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated?.Invoke();
-                    }
-                }
-            }
-        }
+        // else if (Mouse.current.rightButton.wasPressedThisFrame)
+        // {
+        //     if (!inventorySlotComponent.inventorySlot.isEmpty)
+        //     {
+        //         if (!IsPointerOverUI())
+        //         {
+        //             if (inventorySlotComponent.inventorySlot.inventoryItemStack.Amount > 1)
+        //             {
+        //                 ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlotComponent.inventorySlot.inventoryItemStack.ID);
+        //                 ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToMouseSlot(itemData, inventorySlotComponent.inventorySlot.inventoryItemStack.Amount - 1, true);
+        //                 inventorySlotComponent.DropItem(1);
+        //                 ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated?.Invoke();
+        //             }
+        //             // if there is only one item left drop it and remove from inventory
+        //             else
+        //             {
+        //                 inventorySlotComponent.RemoveItemFromSlot(true);
+        //                 ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.OnInventoryUpdated?.Invoke();
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     bool ContainsNaN(Vector3 v)
@@ -119,8 +119,10 @@ public class MouseSlot : MonoBehaviour
     {
         if (!inventorySlotComponent.inventorySlot.isEmpty)
         {
-            inventorySlotComponent.RemoveItemFromSlot(true);
-         }
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlotComponent.inventorySlot.inventoryItemStack.ID);
+            ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.AddItemToInventory(itemData,inventorySlotComponent.inventorySlot.inventoryItemStack.Amount);
+            inventorySlotComponent.RemoveItemFromSlot(false);
+        }
     }
 
     bool IsPointerOverUI()
