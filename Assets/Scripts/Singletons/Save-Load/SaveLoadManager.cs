@@ -47,6 +47,11 @@ public class SaveLoadManager : MonoBehaviour
 
     public event Action<SaveFileStruct> OnSaveLoaded;
 
+    [HideInInspector]
+    public bool canSave = true;
+
+    public GameSavedPopup gameSavedPopup;
+
     void Start()
     {
         saveables = FindObjectsByType<MonoBehaviour>( FindObjectsInactive.Include,FindObjectsSortMode.None)
@@ -194,11 +199,17 @@ public class SaveLoadManager : MonoBehaviour
     public void SaveTest()
     {
         SaveFile("TestFile");
+        
     }
 
 
-    public void SaveFile(string save_name)
+    public bool SaveFile(string save_name)
     {
+        if (!canSave)
+        {
+            gameSavedPopup.ShowCantSavePopup();
+            return false;
+        } 
         InsureFilePathExists();
         string SaveFile = Path.Combine(FilePath, save_name + ".txt");
         SaveFileStruct saveFile = new SaveFileStruct();
@@ -308,6 +319,10 @@ public class SaveLoadManager : MonoBehaviour
         string json = JsonConvert.SerializeObject(saveFile, Formatting.Indented); // true = pretty print
         File.WriteAllText(SaveFile, json);
         Debug.Log("Saved settings to " + SaveFile);
+
+        gameSavedPopup.ShowPopup();
+
+        return true;
     }
     
     SaveFileStruct SaveDialogIDs(SaveFileStruct saveFileStruct)
