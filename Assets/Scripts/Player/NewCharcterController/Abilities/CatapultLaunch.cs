@@ -1,4 +1,3 @@
-
 using System.Collections;
 using DG.Tweening;
 using Unity.Cinemachine;
@@ -6,128 +5,197 @@ using UnityEngine;
 
 public class CatapultLaunch : PlayerAbility
 {
-    public float initalCooldown;
-    public Vector3 initalVelocity;
+    [Header("Launch Settings")]
+    [SerializeField] private float launchSpeed = 100f;
+    [SerializeField] private float arcHeight;
+    [SerializeField] private float arcHeightMultiplier = 0.4f;
+
+    private Vector3 launchStart;
+    private Vector3 launchDestination;
+
+    private float launchDuration;
+    private float launchTimer;
+
+    private bool launchStarted;
 
     public override void Initialize(CharacterMovement player)
     {
         base.Initialize(player);
-        initalCooldown = Time.time + 0.2f;
+
         characterMovement.MovementControlledByAbility = true;
-        characterMovement.rb.linearDamping = 0;
+        characterMovement.rb.linearDamping = 0f;
+
+        launchTimer = 0f;
+        launchStarted = false;
+
         if (TryGetComponent(out LongFallReset longFallReset))
         {
             longFallReset.CanReset = false;
         }
-        characterMovement.playerAnimationController.animator.CrossFade("CatapultRoll", 0.1f);
-        ScriptRefrenceSingleton.instance.playerParticlesManager.PlayParticleByID("SpeedLines");
 
-        CinemachineCamera cam = characterMovement.GetComponent<CameraManager>().axisController.GetComponent<CinemachineCamera>();
-        DOVirtual.Float(cam.Lens.FieldOfView, 70, 0.5f, (context) =>
-        {
-            cam.Lens.FieldOfView = context;
-        });
+        characterMovement.playerAnimationController.animator
+            .CrossFade("CatapultRoll", 0.1f);
+
+        ScriptRefrenceSingleton.instance.playerParticlesManager
+            .PlayParticleByID("SpeedLines");
+
+        CinemachineCamera cam = characterMovement
+            .GetComponent<CameraManager>()
+            .axisController
+            .GetComponent<CinemachineCamera>();
+
+        DOVirtual.Float(
+            cam.Lens.FieldOfView,
+            70f,
+            0.5f,
+            value => cam.Lens.FieldOfView = value
+        );
+
         characterMovement.capsuleCollider.enabled = false;
+
         StartCoroutine(ReEnableCollisions());
-        //initalVelocity = characterMovement.rb.linearVelocity;
     }
 
-    IEnumerator ReEnableCollisions()
+    private IEnumerator ReEnableCollisions()
     {
         yield return new WaitForSeconds(0.5f);
-        characterMovement.capsuleCollider.enabled = true;
 
+        characterMovement.capsuleCollider.enabled = true;
+    }
+
+    public void StartLaunch(Vector3 destination)
+    {
+        launchStart = characterMovement.rb.position;
+        launchDestination = destination;
+
+        Vector3 horizontalStart = launchStart;
+        Vector3 horizontalDestination = launchDestination;
+
+        Vector3 direction = horizontalDestination - horizontalStart;
+        direction.y = 0f;
+
+        if (direction != Vector3.zero)
+        {
+            characterMovement.transform.rotation = Quaternion.LookRotation(direction);
+        }
+
+        horizontalStart.y = 0f;
+        horizontalDestination.y = 0f;
+
+        float distance = Vector3.Distance(
+            horizontalStart,
+            horizontalDestination
+        );
+
+        launchDuration = distance / launchSpeed;
+
+        arcHeight = distance * arcHeightMultiplier;
+
+        launchTimer = 0f;
+        launchStarted = true;
     }
 
     public override void UpdateAbility()
     {
-        characterMovement.ApplyGravity(0.25f);
-
-
-        if (Time.time > initalCooldown && characterMovement.grounded)
-        {
-            if (TryGetComponent(out LongFallReset longFallReset))
-            {
-                longFallReset.CanReset = true;
-            }
-            characterMovement.MovementControlledByAbility = false;
-            characterMovement.RemoveAbility<CatapultLaunch>();
-
-
-            ScriptRefrenceSingleton.instance.playerParticlesManager.GetParticleByID("SpeedLines").Stop(false, ParticleSystemStopBehavior.StopEmittingAndClear);
-
-            CinemachineCamera cam = characterMovement.GetComponent<CameraManager>().axisController.GetComponent<CinemachineCamera>();
-            DOVirtual.Float(cam.Lens.FieldOfView, 60, 0.5f, (context) =>
-            {
-                cam.Lens.FieldOfView = context;
-            });
-
-            characterMovement.playerAnimationController.animator.CrossFade("WalkingBlend", 0.1f);
-
-            float tweenDuration = 0.15f;
-            characterMovement.orientation.DOScale(new Vector3(1.25f, 0.75f, 1.25f), tweenDuration).SetLoops(2, LoopType.Yoyo)
-                .OnComplete(() => { characterMovement.orientation.localScale = Vector3.one; });
-            characterMovement.orientation.DOLocalMoveY(-0.125f, tweenDuration).SetLoops(2, LoopType.Yoyo)
-                .OnComplete(() => { characterMovement.orientation.transform.localPosition = Vector3.zero; });
-        }
     }
-
 
     public override void FixedUpdateAbility()
     {
-        if (characterMovement.characterInput.GetMovementInput() != Vector3.zero)
+        if (!launchStarted)
+            return;
+
+        launchTimer += Time.fixedDeltaTime;
+
+        float t = Mathf.Clamp01(launchTimer / launchDuration);
+
+        Vector3 targetPosition = EvaluateArc(t);
+
+        characterMovement.rb.MovePosition(targetPosition);
+
+        if (t >= 1f)
         {
-            Vector3 camForward = Camera.main.transform.forward;
-            camForward.y = 0;
-
-            Vector3 horVel = new Vector3(characterMovement.rb.linearVelocity.x, 0, characterMovement.rb.linearVelocity.z);
-
-            float dot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), horVel.normalized);
-            if (dot < -0.4f)
-            {
-                // Vector3 velocity = characterMovement.rb.linearVelocity;
-                // velocity.x *= 0.995f;
-                // velocity.z *= 0.995f;
-                // characterMovement.rb.linearVelocity = velocity;
-
-                Vector3 Horizontalvelocity = horVel;
-                Vector3 initalHorVel = new Vector3(initalVelocity.x, 0, initalVelocity.z);
-                Horizontalvelocity = Vector3.Lerp(Horizontalvelocity, initalHorVel * 0.65f, 0.05f);
-                Horizontalvelocity.y += characterMovement.rb.linearVelocity.y;
-                characterMovement.rb.linearVelocity = Horizontalvelocity;
-
-            }
-            else if (dot > 0.4f)
-            {
-                Vector3 Horizontalvelocity = horVel;
-                Vector3 initalHorVel = new Vector3(initalVelocity.x, 0, initalVelocity.z);
-                Horizontalvelocity = Vector3.Lerp(Horizontalvelocity, initalHorVel * 1.35f, 0.05f);
-                Horizontalvelocity.y += characterMovement.rb.linearVelocity.y;
-                characterMovement.rb.linearVelocity = Horizontalvelocity;
-            }
-
-            Vector3 rightDir = Vector3.Cross(Vector3.up, horVel.normalized);
-            float rightDot = Vector3.Dot(characterMovement.characterInput.GetMovementInput(), rightDir.normalized);
-            print(rightDot);
-            if (Mathf.Abs(rightDot) > 0.4f)
-            {
-                characterMovement.rb.AddForce(rightDir.normalized * rightDot * 200 * Time.fixedDeltaTime);
-            }
-
-
-
+            FinishLaunch();
         }
     }
 
-    public void SetInitalVelocity()
+    private Vector3 EvaluateArc(float t)
     {
-        initalVelocity = characterMovement.rb.linearVelocity;
-        Vector3 horVel = new Vector3(characterMovement.rb.linearVelocity.x, 0, characterMovement.rb.linearVelocity.z);
-        characterMovement.transform.forward = horVel.normalized;
+        Vector3 p0 = launchStart;
+        Vector3 p2 = launchDestination;
+
+        Vector3 p1 = Vector3.Lerp(p0, p2, 0.5f);
+        p1.y += arcHeight;
+
+        float oneMinusT = 1f - t;
+
+        return
+            oneMinusT * oneMinusT * p0 +
+            2f * oneMinusT * t * p1 +
+            t * t * p2;
+    }
+
+    private void FinishLaunch()
+    {
+        launchStarted = false;
+
+        characterMovement.rb.linearVelocity = Vector3.zero;
+
+        characterMovement.rb.MovePosition(launchDestination);
+
+        characterMovement.MovementControlledByAbility = false;
+
+        if (TryGetComponent(out LongFallReset longFallReset))
+        {
+            longFallReset.CanReset = true;
+        }
+
+        ScriptRefrenceSingleton.instance.playerParticlesManager
+            .GetParticleByID("SpeedLines")
+            .Stop(
+                false,
+                ParticleSystemStopBehavior.StopEmittingAndClear
+            );
+
+        CinemachineCamera cam = characterMovement
+            .GetComponent<CameraManager>()
+            .axisController
+            .GetComponent<CinemachineCamera>();
+
+        DOVirtual.Float(
+            cam.Lens.FieldOfView,
+            60f,
+            0.5f,
+            value => cam.Lens.FieldOfView = value
+        );
+
+        characterMovement.playerAnimationController.animator
+            .CrossFade("WalkingBlend", 0.1f);
+
+        float tweenDuration = 0.15f;
+
+        characterMovement.orientation
+            .DOScale(
+                new Vector3(1.25f, 0.75f, 1.25f),
+                tweenDuration
+            )
+            .SetLoops(2, LoopType.Yoyo)
+            .OnComplete(() =>
+            {
+                characterMovement.orientation.localScale = Vector3.one;
+            });
+
+        characterMovement.orientation
+            .DOLocalMoveY(-0.125f, tweenDuration)
+            .SetLoops(2, LoopType.Yoyo)
+            .OnComplete(() =>
+            {
+                characterMovement.orientation.localPosition = Vector3.zero;
+            });
+
+        characterMovement.RemoveAbility<CatapultLaunch>();
     }
 
     public override void ResetAbility()
     {
-        return;
     }
 }

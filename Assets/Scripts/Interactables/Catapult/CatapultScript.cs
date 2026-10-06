@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class CatapultScript : MonoBehaviour, IInteractable
 {
+    public Transform DestinationTransform;
     public Transform CatapultArm;
     public Vector3 ArmFinalPos;
     public float LaunchForwardForce;
@@ -87,7 +88,7 @@ public class CatapultScript : MonoBehaviour, IInteractable
                     if (ability is CatapultLaunch)
                     {
                         CatapultLaunch catapultLaunch = (CatapultLaunch)ability;
-                        StartCoroutine(SetInitalVelocity(catapultLaunch));
+                        catapultLaunch.StartLaunch(DestinationTransform.position);
                      }
                  }
             }
@@ -102,11 +103,11 @@ public class CatapultScript : MonoBehaviour, IInteractable
         }
     }
 
-    IEnumerator SetInitalVelocity(CatapultLaunch catapultLaunch)
-    {
-        yield return new WaitForFixedUpdate();
-        catapultLaunch.SetInitalVelocity();
-     }
+    // IEnumerator SetInitalVelocity(CatapultLaunch catapultLaunch)
+    // {
+    //     yield return new WaitForFixedUpdate();
+    //     catapultLaunch.SetInitalVelocity();
+    //  }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
