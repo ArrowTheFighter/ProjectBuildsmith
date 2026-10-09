@@ -146,7 +146,7 @@ public class ObjectMove : MonoBehaviour, ISkippable, IMoveingPlatform
         {
             if (meshFilter.sharedMesh != null)
             {
-                Gizmos.DrawWireMesh(meshFilter.sharedMesh, checkTransform.position + endOffset, checkTransform.rotation, checkTransform.lossyScale);
+                Gizmos.DrawWireMesh(meshFilter.sharedMesh, end, checkTransform.rotation, checkTransform.lossyScale);
             }
         }
     }
