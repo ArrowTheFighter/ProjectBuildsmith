@@ -9,11 +9,22 @@ public class ParticleKillOnEnterTrigger : MonoBehaviour
     public event Action<Vector3, ParticleKillOnEnterTrigger> OnParticleEnter;
     List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
+    float timeSpawned;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         ps = GetComponent<ParticleSystem>();
+    }
+
+    void Update()
+    {
+        timeSpawned = Time.time;
+        if(timeSpawned + 3 < Time.time)
+        {
+            OnParticleEnter?.Invoke(transform.parent.position, this);
+            Destroy(gameObject);
+        }
     }
 
     public void LaunchParticle(GameObject prefab, Collider collider, Material material = null)

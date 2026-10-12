@@ -140,6 +140,13 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public bool Interact(Interactor interactor)
     {
         if (!CInteract) return false;
+        if (interactor.TryGetComponent(out AddMaterialParticleManager particleManager))
+        {
+            if(!particleManager.CanUseThisField(ParticleForceField))
+            {
+                return false;
+            }
+        }
         currentItemDelay = AddItemsDelay;
         last_interactor = interactor;
         last_interactor.InteractorLostAllInteractions += LostInteractor;

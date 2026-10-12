@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AddMaterialParticleManager : MonoBehaviour
@@ -8,9 +9,13 @@ public class AddMaterialParticleManager : MonoBehaviour
     public GameObject particlePrefab;
     public Transform spawnPos;
     public AudioCollection[] ParticleSpawnSoundFX;
+
+    public int spawnedParticles;
     public void SpawnParticle(Collider collider, GameObject meshObj, RepairStructure repairStructure)
     {
         GameObject spawnedParticle = Instantiate(particlePrefab, spawnPos.position, Quaternion.identity);
+        
+        spawnedParticles++;
 
         ScriptRefrenceSingleton.instance.soundFXManager.PlayAllSoundCollection(transform, ParticleSpawnSoundFX);
 
@@ -21,7 +26,26 @@ public class AddMaterialParticleManager : MonoBehaviour
             print(collider);
             component.LaunchParticle(meshObj, collider, _mat);
             component.OnParticleEnter += repairStructure.SpawnStartParticle;
+            component.OnParticleEnter += ParticleDied;
         }
+    }
+
+    void ParticleDied(Vector3 _pos, ParticleKillOnEnterTrigger _trigger)
+    {
+        _trigger.OnParticleEnter -= ParticleDied;
+        spawnedParticles--;
+    }
+
+    public bool CanUseThisField(GameObject forceFieldObject)
+    {
+        if (ActiveParticleForceField != null)
+        {
+            if(forceFieldObject != ActiveParticleForceField && spawnedParticles > 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
     
     public void SetActiveForceField(GameObject forceFieldObject)
