@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: 10_TheThirdArtifact
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: TheThirdArtifact
+  QuestName: The Third Artifact
+  Description: With two artifacts secured, I'll have to track down the third and
+    final one. Cornelius believes it can be found deep in the mesa islands, however,
+    with the path gone, I'll need to find another way there. An inventor in the maple
+    islands may be able to help.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 579703546138329088
+  - rid: 579703546138329089
+  references:
+    version: 2
+    RefIds:
+    - rid: 579703546138329088
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Repair the <style=engine>mini sky engine</style> leading to
+          the maple islands
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: RepairedMapleMiniSkyEngine
+    - rid: 579703546138329089
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Find Sponglefritz in the maple islands
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: MetSponglefritz

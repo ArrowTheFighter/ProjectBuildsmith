@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a923b727664dc1846b16a7f243d19420, type: 3}
+  m_Name: 11_AStickySituation
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  ID: AStickySituation
+  QuestName: A Sticky Situation
+  Description: '!!! NEEDS DESCRIPTION !!!'
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 579703546138329095
+  - rid: 579703546138329096
+  references:
+    version: 2
+    RefIds:
+    - rid: 579703546138329095
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect the <style=item>water bucket</style> at the lake
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        Item_ID: wood_bucket_water
+        Item_Amount: 1
+    - rid: 579703546138329096
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Give Sponglefritz the <style=item>water bucket</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: FreedSponglefritzFromTree
