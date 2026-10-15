@@ -24,13 +24,19 @@ MonoBehaviour:
   ID: TheThirdArtifact
   QuestName: The Third Artifact
   Description: With two artifacts secured, I'll have to track down the third and
-    final one. Cornelius believes it can be found deep in the mesa islands, however,
+    final one. Cornelius believes it can be found deep in the mesa ruins, however,
     with the path gone, I'll need to find another way there. An inventor in the maple
     islands may be able to help.
   AutoPinQuest: 1
   questObjectives:
   - rid: 579703546138329088
   - rid: 579703546138329089
+  - rid: 579703568355295236
+  - rid: 579703568355295237
+  - rid: 579703568355295239
+  - rid: 579703568355295240
+  - rid: 579703568355295241
+  - rid: 579703568355295242
   references:
     version: 2
     RefIds:
@@ -53,3 +59,59 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 1
         flag_id: MetSponglefritz
+    - rid: 579703568355295236
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Help Sponglefritz complete his invention
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 1
+        flag_id: ReturnedToSponglefritzWithSap
+    - rid: 579703568355295237
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Reach the mesa islands
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: MesaBiomeEntered
+    - rid: 579703568355295239
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Locate and collect the next artifact at the mesa ruins
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        Item_ID: artifact_3
+        Item_Amount: 1
+    - rid: 579703568355295240
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Return to <style=Cornelius>Cornelius</style> in <style=location>Hammerstead</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 4
+        flag_id: ReturnedToCorneliusInHammersteadWithThirdArtifact
+    - rid: 579703568355295241
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Place the <style=item>special artifact</style> in the <style=Engine>sky
+          engine</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        flag_id: PlacedSecondArtifactInSkyEngine
+    - rid: 579703568355295242
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=Cornelius>Cornelius</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        flag_id: TalkedToCorneliusAtHammersteadSkyEngineAfterThirdArtifact

@@ -23,11 +23,17 @@ MonoBehaviour:
     SerializationNodes: []
   ID: AStickySituation
   QuestName: A Sticky Situation
-  Description: '!!! NEEDS DESCRIPTION !!!'
+  Description: Sponglefritz seems to have gotten himself stuck to a tree with maple
+    sap. I'll need to get some water from the lake to help free him before I can
+    help him further.
   AutoPinQuest: 1
   questObjectives:
   - rid: 579703546138329095
   - rid: 579703546138329096
+  - rid: 579703568355295232
+  - rid: 579703568355295233
+  - rid: 579703568355295234
+  - rid: 579703568355295235
   references:
     version: 2
     RefIds:
@@ -50,3 +56,43 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 1
         flag_id: FreedSponglefritzFromTree
+    - rid: 579703568355295232
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft 4 <style=item>tree taps</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        Item_ID: tree_tap
+        Item_Amount: 4
+    - rid: 579703568355295233
+      type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Craft 4 <style=item>wood_bucket</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        Item_ID: wood_bucket
+        Item_Amount: 4
+    - rid: 579703568355295234
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect 4 <style=item>maple_sap</style> from the large maple
+          trees
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        Item_ID: maple_sap
+        Item_Amount: 4
+    - rid: 579703568355295235
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Sponglefritz
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 3
+        flag_id: ReturnedToSponglefritzWithSap
