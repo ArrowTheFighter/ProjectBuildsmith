@@ -13,6 +13,7 @@ public class ActivateAfterXAmountOfTimes : MonoBehaviour
     public void InscreaseAmount()
     {
         currentAmount++;
+        Debug.Log($"New amount is {currentAmount}");
         if (currentAmount >= RequiredAmount && !activated)
         {
             Activate?.Invoke();

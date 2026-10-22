@@ -86,6 +86,7 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
 
     public void Die()
     {
+        if (!gameObject.activeSelf) return;
         if (destroyedSoundFX != null)
         {
             ScriptRefrenceSingleton.instance.soundFXManager.PlaySoundFXClip(destroyedSoundFX, transform, destroyedSoundFXVolume, destroyedSoundFXPitch);
