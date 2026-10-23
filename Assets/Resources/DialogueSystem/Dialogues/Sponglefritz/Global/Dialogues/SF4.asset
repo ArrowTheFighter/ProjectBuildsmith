@@ -18,11 +18,15 @@ MonoBehaviour:
     for.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Next Dialogue
+  - <Text>k__BackingField: I'll go grab it.
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 7033e7d190c9b8f42a2a7b609c14ec43, type: 2}
-  <DialogueType>k__BackingField: 0
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 5b8b4da2eead7a44395fa531412fea08, type: 2}
+  - <Text>k__BackingField: I already have it.
+    LocalizeKey: LOCAL_CHOICE_KEY
+    OutputID: 
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: dda991d822043364080e33d98eb9d679, type: 2}
+  <DialogueType>k__BackingField: 1
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
   <unique_id>k__BackingField: 0
