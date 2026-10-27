@@ -30,10 +30,11 @@ MonoBehaviour:
   questObjectives:
   - rid: 579703546138329095
   - rid: 579703546138329096
-  - rid: 579703568355295232
-  - rid: 579703568355295233
-  - rid: 579703568355295234
-  - rid: 579703568355295235
+  - rid: 579703840970375168
+  - rid: 579703840970375169
+  - rid: 579703840970375170
+  - rid: 579703840970375171
+  - rid: 579703840970375172
   references:
     version: 2
     RefIds:
@@ -56,27 +57,36 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 1
         flag_id: FreedSponglefritzFromTree
-    - rid: 579703568355295232
+    - rid: 579703840970375168
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Sponglefritz
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 2
+        flag_id: SpongleFritzGoCollectSap
+    - rid: 579703840970375169
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
         Description: Craft 4 <style=item>tree taps</style>
         StopAtThisObjective: 1
         StayCompleted: 1
         isComplete: 0
-        ObjectiveIDCollection: 2
+        ObjectiveIDCollection: 3
         Item_ID: tree_tap
         Item_Amount: 4
-    - rid: 579703568355295233
+    - rid: 579703840970375170
       type: {class: ObjectiveCraftItem, ns: , asm: Assembly-CSharp}
       data:
         Description: Craft 4 <style=item>wood_bucket</style>
         StopAtThisObjective: 1
         StayCompleted: 1
         isComplete: 0
-        ObjectiveIDCollection: 2
+        ObjectiveIDCollection: 3
         Item_ID: wood_bucket
         Item_Amount: 4
-    - rid: 579703568355295234
+    - rid: 579703840970375171
       type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
       data:
         Description: Collect 4 <style=item>maple_sap</style> from the large maple
@@ -84,15 +94,15 @@ MonoBehaviour:
         StopAtThisObjective: 1
         StayCompleted: 1
         isComplete: 0
-        ObjectiveIDCollection: 3
+        ObjectiveIDCollection: 4
         Item_ID: maple_sap
         Item_Amount: 4
-    - rid: 579703568355295235
+    - rid: 579703840970375172
       type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
       data:
         Description: Talk to Sponglefritz
         StopAtThisObjective: 1
         StayCompleted: 1
         isComplete: 0
-        ObjectiveIDCollection: 3
+        ObjectiveIDCollection: 4
         flag_id: ReturnedToSponglefritzWithSap
