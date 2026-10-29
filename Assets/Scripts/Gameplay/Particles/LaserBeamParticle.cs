@@ -7,7 +7,10 @@ public class LaserBeamParticle : MonoBehaviour
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform lookAtTarget;
 
-
+    void OnEnable()
+    {
+        Update();
+    }
 
     // Update is called once per frame
     void Update()
@@ -23,6 +26,13 @@ public class LaserBeamParticle : MonoBehaviour
             sparksParticle.position = transform.position + newPosition;
             sparksParticle.rotation = Quaternion.LookRotation(ray.normal,Vector3.up);
             lineRenderer.SetPosition(1, new Vector3(0,0,ray.distance));
-        }    
+        }
+        else if(lookAtTarget != null)
+        {
+            sparksParticle.position = lookAtTarget.position; 
+            sparksParticle.rotation = Quaternion.LookRotation(Vector3.up, Vector3.up);
+
+            lineRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(transform.position,lookAtTarget.position)));
+        }
     }
 }
