@@ -6,6 +6,7 @@ public class LaserBeamParticle : MonoBehaviour
     [SerializeField] LayerMask layersToIgnore;
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform lookAtTarget;
+    [SerializeField] Vector3 targetOffset;
 
     void OnEnable()
     {
@@ -17,7 +18,7 @@ public class LaserBeamParticle : MonoBehaviour
     {
         if (lookAtTarget != null)
         {
-            transform.LookAt(lookAtTarget.position);
+            transform.LookAt(lookAtTarget.position + targetOffset);
         }
 
         if(Physics.Raycast(transform.position, transform.forward, out RaycastHit ray,200, ~layersToIgnore,QueryTriggerInteraction.Ignore))
@@ -29,10 +30,10 @@ public class LaserBeamParticle : MonoBehaviour
         }
         else if(lookAtTarget != null)
         {
-            sparksParticle.position = lookAtTarget.position; 
+            sparksParticle.position = lookAtTarget.position + targetOffset; 
             sparksParticle.rotation = Quaternion.LookRotation(Vector3.up, Vector3.up);
 
-            lineRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(transform.position,lookAtTarget.position)));
+            lineRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(transform.position,lookAtTarget.position + targetOffset)));
         }
     }
 }
