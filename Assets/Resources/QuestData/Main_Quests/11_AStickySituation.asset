@@ -35,6 +35,9 @@ MonoBehaviour:
   - rid: 579703840970375170
   - rid: 579703840970375171
   - rid: 579703840970375172
+  - rid: 579703929334398976
+  - rid: 579703929334398977
+  - rid: 579703929334398978
   references:
     version: 2
     RefIds:
@@ -106,3 +109,32 @@ MonoBehaviour:
         isComplete: 0
         ObjectiveIDCollection: 4
         flag_id: ReturnedToSponglefritzWithSap
+    - rid: 579703929334398976
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect 10 <style=item>animal hides</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        Item_ID: animal_hide
+        Item_Amount: 10
+    - rid: 579703929334398977
+      type: {class: ObjectiveCollectItems, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Collect 10 <style=item>sticky sap</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        Item_ID: sticky_sap
+        Item_Amount: 10
+    - rid: 579703929334398978
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to Sponglefritz
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 5
+        flag_id: ObtainRailGrindBootsFromSponglefritz
