@@ -242,6 +242,13 @@ public class DashAbility : PlayerAbility
         }
     }
 
+    public void ApplyBonkFromOutside()
+    {
+        isDashing = true;
+        characterMovement.MovementControlledByAbility = true;
+        Bonk();
+    }
+
     void Bonk()
     {
         characterMovement.rb.linearDamping = 1;

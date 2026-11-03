@@ -64,4 +64,10 @@ public class MacBoss : MonoBehaviour
         print("attack finished");
         phase1AttackInProgress = false; 
     }
+
+    public void StartPhase1()
+    {
+        isActive = true;
+        phase1Attacking = true;
+    }
 }

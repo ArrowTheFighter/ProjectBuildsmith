@@ -109,10 +109,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5611c768e7ad66844aaf08cd872d35d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveUpDuration: 0.05
-  pauseAtTopDuration: 0.1
+  moveUpDuration: 0.8
+  pauseAtTopDuration: 0.2
   moveDownDuration: 0.2
   pauseBeforeDestruction: 1
+  layersToHit:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1001 &9207098363554236713
 PrefabInstance:
   m_ObjectHideFlags: 0
