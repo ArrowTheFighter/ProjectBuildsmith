@@ -633245,6 +633245,7 @@ MonoBehaviour:
   phase1Attacking: 0
   speed: 9
   HammerAttackPrefab: {fileID: 9038706006216482359, guid: 639c327bd0cd17b48a7b6beead3e0bfd, type: 3}
+  canTakeDamge: 0
 --- !u!1001 &793268768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1690349,11 +1690350,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.43
+  m_Radius: 1
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!23 &209392032835345726
 MeshRenderer:
@@ -1698206,7 +1698207,7 @@ GameObject:
   - component: {fileID: 793076135}
   - component: {fileID: 793076149}
   - component: {fileID: 8186808807834288636}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: CraftingAlly_Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}

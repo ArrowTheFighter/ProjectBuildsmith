@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class MacBoss : MonoBehaviour
+public class MacBoss : MonoBehaviour, IDamagable
 {
     [SerializeField] Transform TargetTransform;
     [SerializeField] float distanceToFollow;
@@ -11,10 +11,14 @@ public class MacBoss : MonoBehaviour
     float velocity;
     float timer;
     bool phase1AttackInProgress;
+    float phase1Health = 3;
 
     [Header("Prefabs")]
     [SerializeField] GameObject HammerAttackPrefab;
 
+    public bool canTakeDamge;
+
+    public bool PlayerCanStomp { get => canTakeDamge; set => canTakeDamge = value; }
 
 
     // Update is called once per frame
@@ -69,5 +73,39 @@ public class MacBoss : MonoBehaviour
     {
         isActive = true;
         phase1Attacking = true;
+        canTakeDamge = true;
+    }
+
+    IEnumerator resetCanTakeDamageRoutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canTakeDamge = true;
+    }
+
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source)
+    {
+        if (source == gameObject) return;
+        canTakeDamge = false;
+        StartCoroutine(resetCanTakeDamageRoutine(2));
+        if(phase1Attacking)
+        {
+            phase1Health -= amount;
+            if (phase1Health <= 0)
+            {
+                Debug.Log("Phase 1 finished");
+                phase1Attacking = false;
+            }
+        }
+    }
+
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, out float ExtraForce)
+    {
+        ExtraForce = 1;
+        TakeDamage(amount,attackTypes,source);
+    }
+
+    public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
+    {
+        TakeDamage(amount, attackTypes, source);
     }
 }
