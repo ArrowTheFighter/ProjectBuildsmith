@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MacBoss : MonoBehaviour, IDamagable
 {
@@ -20,6 +21,7 @@ public class MacBoss : MonoBehaviour, IDamagable
 
     public bool PlayerCanStomp { get => canTakeDamge; set => canTakeDamge = value; }
 
+    [SerializeField] UnityEvent phase1FinishedUnityEvent;
 
     // Update is called once per frame
     void Update()
@@ -94,6 +96,8 @@ public class MacBoss : MonoBehaviour, IDamagable
             {
                 Debug.Log("Phase 1 finished");
                 phase1Attacking = false;
+                isActive = false;
+                phase1FinishedUnityEvent?.Invoke();
             }
         }
     }
