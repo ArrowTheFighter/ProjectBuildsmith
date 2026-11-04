@@ -8,11 +8,13 @@ public class MacBoss : MonoBehaviour, IDamagable
     [SerializeField] float distanceToFollow;
     [SerializeField] bool isActive;
     [SerializeField] bool phase1Attacking;
+    [SerializeField] bool phase2Attacking;
     [SerializeField] float speed;
     float velocity;
     float timer;
     bool phase1AttackInProgress;
     float phase1Health = 3;
+    float phase2Health = 1;
 
     [Header("Prefabs")]
     [SerializeField] GameObject HammerAttackPrefab;
@@ -22,6 +24,7 @@ public class MacBoss : MonoBehaviour, IDamagable
     public bool PlayerCanStomp { get => canTakeDamge; set => canTakeDamge = value; }
 
     [SerializeField] UnityEvent phase1FinishedUnityEvent;
+    [SerializeField] UnityEvent phase2FinishedUnityEvent;
 
     // Update is called once per frame
     void Update()
@@ -78,6 +81,12 @@ public class MacBoss : MonoBehaviour, IDamagable
         canTakeDamge = true;
     }
 
+    public void StartPhase2()
+    {
+        phase2Attacking = true;
+        canTakeDamge = true;
+    }
+
     IEnumerator resetCanTakeDamageRoutine(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -98,6 +107,16 @@ public class MacBoss : MonoBehaviour, IDamagable
                 phase1Attacking = false;
                 isActive = false;
                 phase1FinishedUnityEvent?.Invoke();
+            }
+        }
+        if(phase2Attacking)
+        {
+            phase2Health -= amount;
+            if(phase2Health <= 0)
+            {
+                Debug.Log("Phase 2 finished");
+                phase2Attacking = false;
+                phase2FinishedUnityEvent?.Invoke();
             }
         }
     }

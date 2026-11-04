@@ -16,4 +16,10 @@ public class ForceFieldController : MonoBehaviour
         forceFieldShader.DOFloat(1,"_VerticalCut",duration).SetEase(Ease.InOutSine)
         .OnComplete(() => {GetComponent<Collider>().isTrigger = true;});
     }
+
+    public void InstantlyTransitionFromNothing()
+    {
+        forceFieldShader.SetFloat("_VerticalCut",1);
+        GetComponent<Collider>().isTrigger = true;
+    }
 }

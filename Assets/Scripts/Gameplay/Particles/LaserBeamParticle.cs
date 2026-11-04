@@ -6,7 +6,9 @@ public class LaserBeamParticle : MonoBehaviour
     [SerializeField] LayerMask layersToIgnore;
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform lookAtTarget;
+    [SerializeField] float maxRotation;
     [SerializeField] Vector3 targetOffset;
+    [SerializeField] float maxDistance = 100;
 
     void OnEnable()
     {
@@ -18,11 +20,22 @@ public class LaserBeamParticle : MonoBehaviour
     {
         if (lookAtTarget != null)
         {
-            transform.LookAt(lookAtTarget.position + targetOffset);
+            if(maxRotation <= 0)
+            {
+                transform.LookAt(lookAtTarget.position + targetOffset);
+            }
+            else
+            {
+                Vector3 lookDirection = (lookAtTarget.position + targetOffset - transform.position).normalized;
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxRotation * Time.deltaTime);
+            }
         }
 
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit ray,200, ~layersToIgnore,QueryTriggerInteraction.Ignore))
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit ray,maxDistance, ~layersToIgnore,QueryTriggerInteraction.Ignore))
         {
+            if (!sparksParticle.gameObject.activeSelf) { sparksParticle.gameObject.SetActive(true); }
             Vector3 newPosition = transform.forward * (ray.distance - 0.75f);
             sparksParticle.position = transform.position + newPosition;
             sparksParticle.rotation = Quaternion.LookRotation(ray.normal,Vector3.up);
@@ -30,10 +43,9 @@ public class LaserBeamParticle : MonoBehaviour
         }
         else if(lookAtTarget != null)
         {
-            sparksParticle.position = lookAtTarget.position + targetOffset; 
-            sparksParticle.rotation = Quaternion.LookRotation(Vector3.up, Vector3.up);
+            if(sparksParticle.gameObject.activeSelf) { sparksParticle.gameObject.SetActive(false); }
 
-            lineRenderer.SetPosition(1, new Vector3(0, 0, Vector3.Distance(transform.position,lookAtTarget.position + targetOffset)));
+            lineRenderer.SetPosition(1, new Vector3(0, 0, maxDistance));
         }
     }
 }
