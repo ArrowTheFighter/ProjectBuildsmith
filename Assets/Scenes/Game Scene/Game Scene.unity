@@ -258693,6 +258693,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 175792495062916448, guid: 4f96e06aae464b04592139b54032a8f3, type: 3}
   m_PrefabInstance: {fileID: 304125963}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &304157911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 304157912}
+  m_Layer: 0
+  m_Name: MacFinishedPhase2_Cutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &304157912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304157911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1112.96, y: 336.03, z: 247.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 415804121}
+  - {fileID: 411928564}
+  - {fileID: 912790586}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &304168945
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -342012,6 +342046,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8219036483324663008, guid: fa3271ee0cc166c42a13cc638a1ba6ac, type: 3}
   m_PrefabInstance: {fileID: 411910890}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &411928563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 411928564}
+  m_Layer: 0
+  m_Name: Pos1
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &411928564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411928563}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.1380577, y: -0.16083303, z: 0.022883274, w: 0.9770103}
+  m_LocalPosition: {x: 1.6781006, y: 22.502045, z: -5.3621063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 304157912}
+  m_LocalEulerAnglesHint: {x: 20.422, y: 20.97, z: -0.001}
 --- !u!1001 &412149443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -344146,6 +344211,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8511172807407984263, guid: b3655bc670ee2154e9ff3b952b1c2eff, type: 3}
   m_PrefabInstance: {fileID: 415658181}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &415804119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 415804121}
+  - component: {fileID: 415804120}
+  m_Layer: 0
+  m_Name: CutsceneBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &415804120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415804119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad21380e93b71d641805833baef53531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneData:
+    CutsceneName: 
+    Skippable: 1
+    freeze_player: 1
+    startPos: {fileID: 411928564}
+    cameraPoints:
+    - targetPoint: {fileID: 912790586}
+      ease: 4
+      moveDelay: 2
+      cutsceneEvent:
+        pointEvent:
+          m_PersistentCalls:
+            m_Calls: []
+        DelayFromPoint: 1
+    cutsceneFinishedUnityEvent:
+      m_PersistentCalls:
+        m_Calls: []
+    OnLoadSkipEvent:
+      m_PersistentCalls:
+        m_Calls: []
+  has_played: 0
+  save_played: 0
+  unique_id: 0
+--- !u!4 &415804121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415804119}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 304157912}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &415973277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -634087,6 +634219,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 415804120}
+        m_TargetAssemblyTypeName: NewCutsceneBuilder, Assembly-CSharp
+        m_MethodName: PlayCutscene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &793268768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -723093,6 +723237,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5005484245105510556, guid: 43cb4a7d73194254d854710245208128, type: 3}
   m_PrefabInstance: {fileID: 912748408}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &912790585
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 912790586}
+  m_Layer: 0
+  m_Name: Pos2
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &912790586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912790585}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.13805458, y: -0.16083181, z: 0.022882529, w: 0.97701097}
+  m_LocalPosition: {x: 0.7249756, y: 21.644257, z: -2.5452576}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 304157912}
+  m_LocalEulerAnglesHint: {x: 20.422, y: 20.97, z: -0.001}
 --- !u!1001 &912807697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1711388,6 +1711563,7 @@ SceneRoots:
   - {fileID: 934244308}
   - {fileID: 496534245}
   - {fileID: 1014035733}
+  - {fileID: 304157912}
   - {fileID: 909936587}
   - {fileID: 499147603}
   - {fileID: 1886692444}
