@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: Keeper2
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: Keeper2
-  <Text>k__BackingField: Dialogue text.
+  <Text>k__BackingField: I am The Keeper of this sanctuary and its trials. The other
+    keepers have long since left or passed on, so now it is my duty to ensure only
+    those worthy pass through the gates.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Choice Text
+  - <Text>k__BackingField: What do I have to do?
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 0}
-  - <Text>k__BackingField: Choice Text
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 6f4ab235293ec7643a51132df085bc5a, type: 2}
+  - <Text>k__BackingField: What is this place?
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 0}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: ee6dd013f8e14b246b98b0b14fb6fc7f, type: 2}
   <DialogueType>k__BackingField: 1
-  <IsStartingDialogue>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
   <unique_id>k__BackingField: 0

@@ -13,18 +13,19 @@ MonoBehaviour:
   m_Name: Keeper3
   m_EditorClassIdentifier: 
   <DialogueName>k__BackingField: Keeper3
-  <Text>k__BackingField: Dialogue text.
+  <Text>k__BackingField: This is the village of The Keepers. My people have guarded
+    the artifact since the <style=engine>sky engine</style> was created ages ago.
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
-  - <Text>k__BackingField: Choice Text
+  - <Text>k__BackingField: What do I have to do?
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 0}
-  - <Text>k__BackingField: Choice Text
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 3eacbdae2f3136e45bc8a0c3afec0026, type: 2}
+  - <Text>k__BackingField: Who are you?
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 0}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 16ec6859c83be5240a95aec0ad156d0c, type: 2}
   <DialogueType>k__BackingField: 1
-  <IsStartingDialogue>k__BackingField: 1
+  <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
   <unique_id>k__BackingField: 0
