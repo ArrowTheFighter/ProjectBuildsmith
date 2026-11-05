@@ -1,10 +1,13 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class MacBoss : MonoBehaviour, IDamagable
 {
     [SerializeField] Transform TargetTransform;
+    [SerializeField] Transform dodgePositionTransform;
+    [SerializeField] float dodgeDistance;
     [SerializeField] float distanceToFollow;
     [SerializeField] bool isActive;
     [SerializeField] bool phase1Attacking;
@@ -18,6 +21,7 @@ public class MacBoss : MonoBehaviour, IDamagable
 
     [Header("Prefabs")]
     [SerializeField] GameObject HammerAttackPrefab;
+    [SerializeField] ParticleSystem TakeDamageParticle;
 
     public bool canTakeDamge;
 
@@ -101,12 +105,22 @@ public class MacBoss : MonoBehaviour, IDamagable
         if(phase1Attacking)
         {
             phase1Health -= amount;
+            TakeDamageParticle?.Play();
             if (phase1Health <= 0)
             {
                 Debug.Log("Phase 1 finished");
                 phase1Attacking = false;
                 isActive = false;
                 phase1FinishedUnityEvent?.Invoke();
+            }
+            else
+            {
+                isActive = false;
+                Vector3 dodgeDirection = (dodgePositionTransform.position - transform.position).normalized;
+                dodgeDirection.y = 0;
+                dodgeDirection = dodgeDirection.normalized;
+                Vector3 dodgePosition = transform.position + dodgeDirection * dodgeDistance;
+                transform.DOMove(dodgePosition,0.75f).SetEase(Ease.InOutQuad).OnComplete(() => {isActive = true;});
             }
         }
         if(phase2Attacking)

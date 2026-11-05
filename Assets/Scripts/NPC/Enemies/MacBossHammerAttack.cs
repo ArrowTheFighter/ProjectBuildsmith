@@ -12,11 +12,21 @@ public class MacBossHammerAttack : MonoBehaviour
     [SerializeField] float pauseBeforeDestruction = 1f;
 
     [SerializeField] LayerMask layersToHit;
+    [SerializeField] LayerMask groundLayers;
 
     [SerializeField] bool canDamage;
 
     void OnEnable()
     {
+        
+        float distance = 0f;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo, 10, groundLayers))
+        {
+            BoxCollider boxCollider = GetComponent<BoxCollider>();
+            float height = boxCollider.size.y * 0.5f;
+            distance = hitInfo.distance - height;
+        }
+
         startPos = transform.position;
         transform.position += Vector3.up * 3;
         startScale = transform.localScale;
@@ -24,11 +34,13 @@ public class MacBossHammerAttack : MonoBehaviour
 
         transform.DOScale(startScale,0.2f).SetEase(Ease.OutBack);
 
+        
+
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMoveY(transform.position.y + 2f, moveUpDuration).SetEase(Ease.OutExpo))
         .AppendInterval(pauseAtTopDuration)
         .AppendCallback(() => { canDamage = true; })
-        .Append(transform.DOMoveY(startPos.y, moveDownDuration).SetEase(Ease.InExpo))
+        .Append(transform.DOMoveY(startPos.y - distance, moveDownDuration).SetEase(Ease.InExpo))
         .AppendInterval(0.1f)
         .AppendCallback(() => { 
             canDamage = false;
