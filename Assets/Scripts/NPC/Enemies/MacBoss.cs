@@ -13,6 +13,7 @@ public class MacBoss : MonoBehaviour, IDamagable
     [SerializeField] bool phase1Attacking;
     [SerializeField] bool phase2Attacking;
     [SerializeField] float speed;
+    [SerializeField] float delayBetweenHammerAttacks = 3;
     float velocity;
     float timer;
     bool phase1AttackInProgress;
@@ -59,7 +60,7 @@ public class MacBoss : MonoBehaviour, IDamagable
         {
             timer += Time.deltaTime;
 
-            if (timer > 5)
+            if (timer > delayBetweenHammerAttacks)
             {
                 StartCoroutine(phase1AttackRoutine());
                 timer = 0;
