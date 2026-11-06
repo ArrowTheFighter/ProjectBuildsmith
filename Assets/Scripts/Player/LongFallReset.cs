@@ -69,7 +69,7 @@ public class LongFallReset : MonoBehaviour
         }
     }
 
-    void ResetPosition()
+    public void ResetPosition()
     {
         if (alwaysUseCheckpoints && TryGetComponent(out PlayerCheckpointPosition playerCheckpointPosition))
         {
