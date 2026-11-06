@@ -74,6 +74,7 @@ public class MacBossHammerAttack : MonoBehaviour
     void TryApplyDamage(Collider collider)
     {
         Debug.Log("the hammer is trying to apply damage");
+        if(collider.isTrigger) return;
         if (canDamage)
         {
             if (collider.TryGetComponent(out IDamagable damagable))
