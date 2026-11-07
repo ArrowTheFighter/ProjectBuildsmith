@@ -61,6 +61,7 @@ public class MacBoss : MonoBehaviour, IDamagable
             velocity = Mathf.MoveTowards(velocity,0,0.1f);
             if(!atPhase1Position)
             {
+                timer = 0;
                 SpawnHammerAttack();
             }
             atPhase1Position = true;

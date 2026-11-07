@@ -10,19 +10,64 @@ public class LaserBeamParticle : MonoBehaviour
     [SerializeField] float maxRotation;
     [SerializeField] Vector3 targetOffset;
     [SerializeField] float maxDistance = 100;
+    [SerializeField] float slowSpawnDuration;
+    [SerializeField] AnimationCurve slowSpawnCurve;
     bool canDealDamage = true;
+    bool isSlowSpawningLaser;
 
     void OnEnable()
     {
-        Update();
+        isSlowSpawningLaser = false;
+        StartCoroutine(SlowSpawnLaser());
+        //Update();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    IEnumerator SlowSpawnLaser()
+    {
+        if(isSlowSpawningLaser) yield break;
+        isSlowSpawningLaser = true;
+
+        RotateObject();
+        sparksParticle.gameObject.SetActive(false);
+
+        //Vector3 targetPos;
+        float distance = 0;
+
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit ray, maxDistance, ~layersToIgnore, QueryTriggerInteraction.Ignore))
+        {
+            //Vector3 newPosition = transform.forward * (ray.distance - 0.75f);
+            //targetPos = transform.position + newPosition;
+            distance = ray.distance;
+        }
+        else
+        {
+            //Fallback if we don't hit anything
+        }
+
+        float timer = 0;
+        while(true)
+        {
+            timer += Time.deltaTime;
+            float lerpValue = slowSpawnCurve.Evaluate(timer / slowSpawnDuration);
+
+            lineRenderer.SetPosition(1, new Vector3(0, 0, Mathf.Lerp(0,distance,lerpValue)));
+            if(lerpValue >= 1)
+            {
+                break;
+            }
+            yield return null;
+        }
+        isSlowSpawningLaser = false;
+        Update();
+
+    }
+
+    void RotateObject()
     {
         if (lookAtTarget != null)
         {
-            if(maxRotation <= 0)
+            if (maxRotation <= 0)
             {
                 transform.LookAt(lookAtTarget.position + targetOffset);
             }
@@ -34,6 +79,13 @@ public class LaserBeamParticle : MonoBehaviour
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, maxRotation * Time.deltaTime);
             }
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(isSlowSpawningLaser) { return; }
+        RotateObject();
 
         if(Physics.Raycast(transform.position, transform.forward, out RaycastHit ray,maxDistance, ~layersToIgnore,QueryTriggerInteraction.Ignore))
         {
