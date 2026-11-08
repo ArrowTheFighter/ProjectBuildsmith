@@ -51,6 +51,7 @@ public class MacBossHammerAttack : MonoBehaviour
             }
                 })
         .AppendInterval(pauseBeforeDestruction)
+        .Append(transform.DOScale(0,0.2f).SetEase(Ease.OutExpo))
         .AppendCallback(() => {Destroy(gameObject);});
     }
 

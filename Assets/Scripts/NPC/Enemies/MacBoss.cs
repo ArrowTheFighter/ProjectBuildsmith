@@ -39,13 +39,9 @@ public class MacBoss : MonoBehaviour, IDamagable
 
     void Awake()
     {
-        ScriptRefrenceSingleton.OnScriptLoaded += GetPlayerTransform;
-    }
-
-    void GetPlayerTransform()
-    {
         playerTransform = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform;
     }
+
 
     // Update is called once per frame
     void Update()

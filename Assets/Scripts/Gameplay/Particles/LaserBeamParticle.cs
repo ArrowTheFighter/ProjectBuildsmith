@@ -93,7 +93,7 @@ public class LaserBeamParticle : MonoBehaviour
             Vector3 newPosition = transform.forward * (ray.distance - 0.75f);
             sparksParticle.position = transform.position + newPosition;
             sparksParticle.rotation = Quaternion.LookRotation(ray.normal,Vector3.up);
-            lineRenderer.SetPosition(1, new Vector3(0,0,ray.distance));
+            lineRenderer.SetPosition(1, new Vector3(0,0,ray.distance + 0.5f));
 
             if (canDealDamage && ray.collider.gameObject.tag == "Player" && ray.collider.transform.parent.TryGetComponent(out IDamagable damagable))
             {
