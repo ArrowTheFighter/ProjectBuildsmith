@@ -34,6 +34,7 @@ public class MacBoss : MonoBehaviour, IDamagable
     public bool PlayerCanStomp { get => canTakeDamge; set => canTakeDamge = value; }
 
     [SerializeField] UnityEvent phase1FinishedUnityEvent;
+    [SerializeField] UnityEvent phase1DamageTakenUnityEvent;
     [SerializeField] UnityEvent phase2FinishedUnityEvent;
     [SerializeField] UnityEvent onHammerSpawnedUnityEvent;
 
@@ -46,6 +47,7 @@ public class MacBoss : MonoBehaviour, IDamagable
     // Update is called once per frame
     void Update()
     {
+        
         //if(phase1AttackInProgress) return;
         if (!isActive) return;
         if(Vector3.Distance(transform.position, TargetTransform.position) > distanceToPosition)
@@ -63,22 +65,7 @@ public class MacBoss : MonoBehaviour, IDamagable
             atPhase1Position = true;
         }
         
-        Vector3 directionToTarget = (TargetTransform.position - transform.position).normalized;
-
-        transform.position = transform.position + directionToTarget * (speed * Time.deltaTime * velocity);
-        
-        Vector3 newLookDir = directionToTarget;
-        newLookDir.y = 0;
-        if (atPhase1Position)
-        {
-            newLookDir = (playerTransform.position - transform.position).normalized;
-            newLookDir.y = 0;
-        }
-        if (newLookDir.sqrMagnitude > 0.001f)
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(newLookDir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f * Time.deltaTime);
-        }
+        RotateTowardsTarget();
 
         if(phase1Attacking && atPhase1Position)
         {
@@ -89,6 +76,42 @@ public class MacBoss : MonoBehaviour, IDamagable
                 SpawnHammerAttack();
                 timer = 0;
             }
+        }
+    }
+
+    void RotateTowardsPlayer()
+    {
+        Vector3 directionToTarget = (TargetTransform.position - transform.position).normalized;
+
+        transform.position = transform.position + directionToTarget * (speed * Time.deltaTime * velocity);
+
+        Vector3 newLookDir = (playerTransform.position - transform.position).normalized;
+        newLookDir.y = 0;
+        
+        if (newLookDir.sqrMagnitude > 0.001f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(newLookDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f * Time.deltaTime);
+        }
+    }
+
+    void RotateTowardsTarget()
+    {
+        Vector3 directionToTarget = (TargetTransform.position - transform.position).normalized;
+
+        transform.position = transform.position + directionToTarget * (speed * Time.deltaTime * velocity);
+
+        Vector3 newLookDir = directionToTarget;
+        newLookDir.y = 0;
+        if (atPhase1Position || phase2Attacking)
+        {
+            newLookDir = (playerTransform.position - transform.position).normalized;
+            newLookDir.y = 0;
+        }
+        if (newLookDir.sqrMagnitude > 0.001f)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(newLookDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 1f * Time.deltaTime);
         }
     }
 
@@ -157,7 +180,9 @@ public class MacBoss : MonoBehaviour, IDamagable
     public void StartPhase2()
     {
         phase2Attacking = true;
-        canTakeDamge = true;
+        canTakeDamge = false;
+        Quaternion lookDirection = Quaternion.Euler(0,-158,0);
+        transform.DORotate(lookDirection.eulerAngles,2).SetEase(Ease.InOutSine);
     }
 
     IEnumerator resetCanTakeDamageRoutine(float delay)
@@ -183,6 +208,9 @@ public class MacBoss : MonoBehaviour, IDamagable
                 phase1Attacking = false;
                 isActive = false;
                 phase1FinishedUnityEvent?.Invoke();
+            }else
+            {
+                phase1DamageTakenUnityEvent?.Invoke();
             }
             // else
             // {
