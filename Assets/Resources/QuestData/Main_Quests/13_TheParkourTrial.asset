@@ -23,9 +23,21 @@ MonoBehaviour:
     SerializationNodes: []
   ID: TheParkourTrial
   QuestName: Trial of Ascension
-  Description: 
-  AutoPinQuest: 0
-  questObjectives: []
+  Description: I reached the village of The Keepers, and have to complete two trials.
+    The Keeper could not give me any advice, though it looks like there is a path
+    to climb up for this trial.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 6840397408524566529
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6840397408524566529
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Complete the Trial of Ascension
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: AscensionTrialComplete

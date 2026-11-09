@@ -23,9 +23,21 @@ MonoBehaviour:
     SerializationNodes: []
   ID: TheBuildingTrial
   QuestName: Trial of Tinkering
-  Description: 
-  AutoPinQuest: 0
-  questObjectives: []
+  Description: I reached the village of The Keepers, and have to complete two trials.
+    The Keeper could not give me any advice, though it looks like Tinkering is involved
+    for this trial.
+  AutoPinQuest: 1
+  questObjectives:
+  - rid: 6840397408524566528
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6840397408524566528
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Complete the Trial of Tinkering
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: TinkeringTrialComplete
