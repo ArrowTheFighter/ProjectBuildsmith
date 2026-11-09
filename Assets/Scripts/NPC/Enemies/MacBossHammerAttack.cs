@@ -15,6 +15,7 @@ public class MacBossHammerAttack : MonoBehaviour
     [SerializeField] LayerMask groundLayers;
 
     [SerializeField] bool canDamage;
+    [SerializeField] GameObject hammerSlamAudioObject;
 
     void OnEnable()
     {
@@ -40,7 +41,7 @@ public class MacBossHammerAttack : MonoBehaviour
         sequence.Append(transform.DOMoveY(transform.position.y + 2f, moveUpDuration).SetEase(Ease.OutExpo))
         .AppendInterval(pauseAtTopDuration)
         .AppendCallback(() => { canDamage = true; })
-        .Append(transform.DOMoveY(startPos.y - distance, moveDownDuration).SetEase(Ease.InExpo))
+        .Append(transform.DOMoveY(startPos.y - distance, moveDownDuration).SetEase(Ease.InExpo).OnComplete(() => { hammerSlamAudioObject.SetActive(true);}))
         .AppendInterval(0.1f)
         .AppendCallback(() => { 
             canDamage = false;

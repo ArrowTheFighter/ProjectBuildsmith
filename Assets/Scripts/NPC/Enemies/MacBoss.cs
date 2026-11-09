@@ -33,10 +33,15 @@ public class MacBoss : MonoBehaviour, IDamagable
 
     public bool PlayerCanStomp { get => canTakeDamge; set => canTakeDamge = value; }
 
+    [Header("Audio")]
+    [SerializeField] AudioSource takeDamageAudio;
+
     [SerializeField] UnityEvent phase1FinishedUnityEvent;
     [SerializeField] UnityEvent phase1DamageTakenUnityEvent;
     [SerializeField] UnityEvent phase2FinishedUnityEvent;
     [SerializeField] UnityEvent onHammerSpawnedUnityEvent;
+
+    
 
     void Awake()
     {
@@ -202,6 +207,7 @@ public class MacBoss : MonoBehaviour, IDamagable
             atPhase1Position = false;
             TargetTransform = getFurthestPoint(phase1Positions);
             TakeDamageParticle?.Play();
+            takeDamageAudio?.Play();
             if (phase1Health <= 0)
             {
                 Debug.Log("Phase 1 finished");
