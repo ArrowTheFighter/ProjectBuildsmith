@@ -26,7 +26,8 @@ public class UIInputHandler : MonoBehaviour
 
         if (currentScheme == "Gamepad" && playerInput.currentActionMap.name == "UI")
         {
-            if (defaultButton != null && EventSystem.current.currentSelectedGameObject == null)
+            //&& EventSystem.current.currentSelectedGameObject == null
+            if (defaultButton != null )
             {
                 EventSystem.current.SetSelectedGameObject(defaultButton);
             }
@@ -37,6 +38,7 @@ public class UIInputHandler : MonoBehaviour
         }
         OnSchemeChange?.Invoke(currentScheme);
 
+        Debug.Log($"Controls Changed current action map: {playerInput.currentActionMap.name}");
         Debug.Log($"Controls Changed: current scheme is :{currentScheme} - default button is {defaultButton}");
     }
 
