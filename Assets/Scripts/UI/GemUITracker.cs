@@ -18,9 +18,9 @@ public class GemUITracker : MonoBehaviour
     // Update is called once per frame
     void UpdateText()
     {
-        string coin_text = "<font-weight=500>" + ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID).ToString("00") + Suffix;
+        string coin_text = "<font-weight=500>" + ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID).ToString("0") + Suffix;
         if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID) == 0)
-            coin_text = "<font-weight=500>00 / 20";
+            coin_text = "<font-weight=500>0";
             if (coinsAmountText.text != coin_text)
             {
                 coinsAmountText.text = coin_text;
