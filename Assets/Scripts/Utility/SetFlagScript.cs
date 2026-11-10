@@ -11,6 +11,7 @@ public class SetFlagScript : MonoBehaviour
      public void SetDefaultFlag()
     {
         FlagManager.Set_Flag(defualt_flag);
+        Debug.Log($"Setting flag true: {defualt_flag}");
     }
     
         
