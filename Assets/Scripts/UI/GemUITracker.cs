@@ -20,7 +20,7 @@ public class GemUITracker : MonoBehaviour
     {
         string coin_text = "<font-weight=500>" + ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID).ToString("0") + Suffix;
         if (ScriptRefrenceSingleton.instance.gameplayUtils.get_item_holding_amount(ItemID) == 0)
-            coin_text = "<font-weight=500>0";
+            coin_text = $"<font-weight=500>0{Suffix}";
             if (coinsAmountText.text != coin_text)
             {
                 coinsAmountText.text = coin_text;
