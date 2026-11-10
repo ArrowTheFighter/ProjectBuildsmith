@@ -246,12 +246,12 @@ public class GameplayUtils : MonoBehaviour
 
        
         inventoryManager.OnInventoryUpdated += gemScreenCheck;
-        if (MainMenuDemoScreenButton != null)
-        {
-            ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
-            ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = MainMenuDemoScreenButton;
-            ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
-        }
+        // if (MainMenuDemoScreenButton != null)
+        // {
+        //     ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        //     ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = MainMenuDemoScreenButton;
+        //     ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
+        // }
     }
     IEnumerator InitalFade()
     {
