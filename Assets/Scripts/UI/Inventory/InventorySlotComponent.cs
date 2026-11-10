@@ -57,15 +57,17 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         SelectionWatcher.OnSelectionChanged += HandleSelectionChange;
     }
 
+    void OnDisable()
+    {
+        SelectionWatcher.OnSelectionChanged -= HandleSelectionChange;
+    }
+
     void OnEnable()
     {
         Invoke(nameof(BindInputs), 0f); // Schedules after this frame
     }
 
     
-
-    
-
     void HandleSelectionChange(GameObject _gameObject)
     {
         if (ScriptRefrenceSingleton.instance.uIInputHandler.currentScheme == "Gamepad" && gameObject == _gameObject)
@@ -84,7 +86,6 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
                 {
                     ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(inventorySlot.inventoryItemStack.ID);
                     ScriptRefrenceSingleton.instance.itemTitlePopupManager.ShowPopup(inventorySlot.inventoryItemStack.Name,itemData.item_description);
-                    
                 }
             }
         }

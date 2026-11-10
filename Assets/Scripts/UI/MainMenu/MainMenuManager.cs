@@ -38,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
     {
         //ScriptRefrenceSingleton.instance.gameplayUtils.OpenMenu();
         StartCoroutine(freezePlayer());
-        //OpenMainPanel();
+        OpenMainPanel();
     }
 
     IEnumerator freezePlayer()

@@ -86,7 +86,7 @@ public class UIIconHandler : MonoBehaviour
 
                     string lower = CurrentControlDevice.ToLower();
 
-                    print($" current control deveice: {CurrentControlDevice}");
+                    //print($" current control deveice: {CurrentControlDevice}");
 
                     if (lower.Contains("playstation") || lower.Contains("dualshock") || lower.Contains("duelsense"))
                     {
