@@ -17,6 +17,8 @@ public class PlayerCheckpointPosition : MonoBehaviour
         if (other.tag == "Checkpoint" && UseCheckpoints)
         {
             SetCheckpointPosition(other.transform.position + Vector3.up);
+            if(gameObject.tag == "Player")
+                ScriptRefrenceSingleton.instance.saveLoadManager.SaveCurrentFile(false);
         }
     }
 

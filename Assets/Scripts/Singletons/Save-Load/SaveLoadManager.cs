@@ -8,6 +8,7 @@ using System.Collections;
 using Newtonsoft.Json;
 using Unity.Cinemachine;
 using DS.ScriptableObjects;
+using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class SaveLoadManager : MonoBehaviour
     public PlayerCheckpointPosition playerCheckpointPosition;
     [Header("Player Camera")]
     [SerializeField] public CinemachineOrbitalFollow OrbitalFollow;
+    public string currentSaveFileName;
+    float lastTimeSaved;
+    float repeatSaveDelayAmount = 0.2f;
 
     //SaveObjectPosition List
     [HideInInspector]
@@ -111,6 +115,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void LoadFile(string save_name)
     {
+        
         InsureFilePathExists();
         string SaveFile = Path.Combine(FilePath, save_name + ".txt");
         if (!File.Exists(SaveFile))
@@ -118,6 +123,8 @@ public class SaveLoadManager : MonoBehaviour
             print($"no save file for file name {save_name} found.");
             return;
         }
+
+        currentSaveFileName = save_name;
         string json = File.ReadAllText(SaveFile);
         saveFileStruct = JsonConvert.DeserializeObject<SaveFileStruct>(json);
 
@@ -207,9 +214,20 @@ public class SaveLoadManager : MonoBehaviour
         
     }
 
-
-    public bool SaveFile(string save_name)
+    public void SaveCurrentFile(bool showPopup = true)
     {
+        if(currentSaveFileName.IsNullOrEmpty()) 
+            currentSaveFileName = "TestFile";
+        SaveFile(currentSaveFileName,showPopup);
+    }
+
+
+    public bool SaveFile(string save_name, bool showPopup = true)
+    {
+        if(lastTimeSaved > Time.unscaledTime)
+        {
+            return false;
+        }
         if (!canSave)
         {
             gameSavedPopup.ShowCantSavePopup();
@@ -328,7 +346,12 @@ public class SaveLoadManager : MonoBehaviour
         File.WriteAllText(SaveFile, json);
         Debug.Log("Saved settings to " + SaveFile);
 
-        gameSavedPopup.ShowPopup();
+        if(showPopup)
+        {
+            gameSavedPopup.ShowPopup();
+        }
+
+        lastTimeSaved = Time.unscaledTime + repeatSaveDelayAmount;
 
         return true;
     }
