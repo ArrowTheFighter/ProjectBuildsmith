@@ -22,10 +22,21 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   ID: RepairMAC
-  QuestName: 
-  Description: 
+  QuestName: Repairing MAC... Again
+  Description: After the battle on top of the sky engine, MAC was left in pieces.
+    I'll have to bring him back to Callum to get him repaired properly this time.
   AutoPinQuest: 1
-  questObjectives: []
+  questObjectives:
+  - rid: 6840397453146456151
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6840397453146456151
+      type: {class: ObjectiveTalkToNPCFlag, ns: , asm: Assembly-CSharp}
+      data:
+        Description: Talk to <style=callum>Callum</style>
+        StopAtThisObjective: 1
+        StayCompleted: 1
+        isComplete: 0
+        ObjectiveIDCollection: 0
+        flag_id: MACFinalRepair
