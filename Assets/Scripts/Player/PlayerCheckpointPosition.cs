@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCheckpointPosition : MonoBehaviour
 {
-    Vector3 pos;
+    public Vector3 pos {get; private set; }
     public bool UseCheckpoints = true;
 
     void Start()
@@ -16,10 +16,13 @@ public class PlayerCheckpointPosition : MonoBehaviour
     {
         if (other.tag == "Checkpoint" && UseCheckpoints)
         {
-            print("setting checkpoint position");
-            pos = other.transform.position + Vector3.up;
-
+            SetCheckpointPosition(other.transform.position + Vector3.up);
         }
+    }
+
+    public void SetCheckpointPosition(Vector3 _pos)
+    {
+        pos = _pos;
     }
 
     public void SetPlayerToCheckpointPosition()
@@ -35,7 +38,7 @@ public class PlayerCheckpointPosition : MonoBehaviour
     public void MovePlayerToCheckpointSmoothly(float duration = 1)
     {
         transform.DOMove(pos, duration).SetEase(Ease.InOutQuad);
-     }
+    }
 
     IEnumerator DelayPlayerFreeze()
     {

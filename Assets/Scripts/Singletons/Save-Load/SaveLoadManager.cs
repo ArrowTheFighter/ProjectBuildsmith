@@ -18,6 +18,8 @@ public class SaveLoadManager : MonoBehaviour
     public List<int> special_items_collected;
     [Header("Player Safe Zone")]
     public PlayerSafeZone playerSafeZone;
+    [Header("Player Checkpoint Position")]
+    public PlayerCheckpointPosition playerCheckpointPosition;
     [Header("Player Camera")]
     [SerializeField] public CinemachineOrbitalFollow OrbitalFollow;
 
@@ -147,6 +149,9 @@ public class SaveLoadManager : MonoBehaviour
         //playerSafeZone.transform.position = saveFileStruct.player_position.ToVector3();
         playerSafeZone.transform.eulerAngles = saveFileStruct.player_rotation.ToVector3();
 
+        //Checkpoint Position
+        playerCheckpointPosition.SetCheckpointPosition(saveFileStruct.checkpoint_position.ToVector3());
+
         //Player Camera
         OrbitalFollow.HorizontalAxis.Value = saveFileStruct.camera_x;
         OrbitalFollow.VerticalAxis.Value = saveFileStruct.camera_y;
@@ -264,6 +269,9 @@ public class SaveLoadManager : MonoBehaviour
         //Player position
         saveFile.player_position = new SerializableVector3(playerSafeZone.safePos);
         saveFile.player_rotation = new SerializableVector3(playerSafeZone.transform.eulerAngles);
+
+        //Checkpoint position
+        saveFile.checkpoint_position = new SerializableVector3(playerCheckpointPosition.pos);
 
         //Player camera
         saveFile.camera_x = OrbitalFollow.HorizontalAxis.Value;
@@ -392,6 +400,9 @@ public class SaveFileStruct
     //Player position
     public SerializableVector3 player_position;
     public SerializableVector3 player_rotation;
+    
+    //Player checkpoint position
+    public SerializableVector3 checkpoint_position;
 
     //Player Camera
     public float camera_x;
