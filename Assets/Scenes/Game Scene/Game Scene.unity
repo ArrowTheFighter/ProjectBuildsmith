@@ -1104562,6 +1104562,7 @@ MonoBehaviour:
   WorldBottom: 0
   CanReset: 1
   alwaysUseCheckpoints: 0
+  tryUseNPCPosition: 0
   onResetEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1104600,6 +1104601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WorldBottom: 0
+  tryUseNPCPosition: 0
 --- !u!114 &1379781289 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5629002888644262960, guid: 12b2377a6d5b42b419117ed669dee35b, type: 3}
@@ -1191065,6 +1191067,10 @@ PrefabInstance:
     - target: {fileID: 6255366591577745021, guid: 0ff35aa3210744a4cae338951ed11f7b, type: 3}
       propertyPath: m_Name
       value: Gem_Pickup (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372396652748672847, guid: 0ff35aa3210744a4cae338951ed11f7b, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1703945,6 +1703951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WorldBottom: 0
+  tryUseNPCPosition: 1
 --- !u!114 &5595006324023599162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1707932,6 +1707939,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 695593473}
     m_Modifications:
+    - target: {fileID: -6623662390403149275, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: tryUseNPCPosition
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6623662390403149275, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: alwaysUseCheckpoints
       value: 1

@@ -11,6 +11,7 @@ public class LongFallReset : MonoBehaviour
     CharacterMovement characterMovement;
     public bool CanReset = true;
     public bool alwaysUseCheckpoints;
+    public bool tryUseNPCPosition;
 
     public UnityEvent onResetEvent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -71,6 +72,15 @@ public class LongFallReset : MonoBehaviour
 
     public void ResetPosition()
     {
+        Debug.Log($"Calling Reset position on: {gameObject.name}");
+        if(tryUseNPCPosition && TryGetComponent(out NPCFollowTargetInput component))
+        {
+            if(component.target != null)
+            {
+                transform.position = component.target.position;
+                return;
+            }
+        }
         if (alwaysUseCheckpoints && TryGetComponent(out PlayerCheckpointPosition playerCheckpointPosition))
         {
             playerCheckpointPosition.SetPlayerToCheckpointPosition();
