@@ -346,6 +346,22 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void RemoveItemFromMouseSlot(bool force)
+    {
+
+        if(MouseSlot.inventorySlot.isEmpty)
+            return;
+
+        if(!force)
+        {
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(MouseSlot.inventorySlot.inventoryItemStack.ID);
+            if(!itemData.can_be_destroyed)
+                return;
+        }
+
+        MouseSlot.inventorySlot.inventorySlotComponent.RemoveItemFromSlot(false);
+    }
+
     public void AddItemToSlot(InventorySlot inventorySlot, ItemData itemData, int amount = 1, bool force = false, bool broadcastEvent = true)
     {
         if (force || inventorySlot.isEmpty)

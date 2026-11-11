@@ -8,6 +8,7 @@ public class ItemData : ScriptableObject
     public string item_id;
     public string item_name;
     public string item_description;
+    public bool can_be_destroyed;
     public int MaxStackSize = 25;
     public GameObject item_pickup_object;
     [Header("Holding Item")]
