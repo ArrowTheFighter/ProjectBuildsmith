@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LeverScript : MonoBehaviour, IInteractable
+public class LeverScript : MonoBehaviour, IInteractable, ISaveable
 {
     public string PROMPT;
     public string INTERACTION_PROMPT => PROMPT;
@@ -12,6 +12,7 @@ public class LeverScript : MonoBehaviour, IInteractable
     public bool isInteractable = true;
     public bool CanInteract { get => isInteractable; set {isInteractable = value;} }
 
+
     bool isOn;
     public bool ActivateWhenOnAndOff;
     public bool onlyOnce;
@@ -20,6 +21,12 @@ public class LeverScript : MonoBehaviour, IInteractable
 
     public Animator animator;
     float cooldown;
+
+
+    public int unique_id;
+    public int Get_Unique_ID { get => unique_id; set => unique_id = value; }
+
+    public bool Get_Should_Save => onlyOnce && isOn;
 
     public bool Interact(Interactor interactor)
     {
@@ -61,5 +68,10 @@ public class LeverScript : MonoBehaviour, IInteractable
     {
         isInteractable = canInteract;
     }
-   
+
+    public void SaveLoaded(SaveFileStruct saveFileStruct)
+    {
+        isInteractable = false;
+        animator.Play("TurnOn");
+    }
 }
