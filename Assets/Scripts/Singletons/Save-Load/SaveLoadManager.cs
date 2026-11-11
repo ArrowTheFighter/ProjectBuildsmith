@@ -113,7 +113,37 @@ public class SaveLoadManager : MonoBehaviour
         LoadFile("TestFile");
     }
 
-    public void LoadFile(string save_name)
+    public void SetCurrentSaveFileName(string name)
+    {
+        currentSaveFileName = name;
+    }
+
+    public void TryLoadFile(string file_name)
+    {
+        Debug.Log($"Trying to load save file {file_name}");
+        bool fileLoaded = LoadFile(file_name);
+
+        if(!fileLoaded)
+        {
+            Debug.Log($"Failed to load save file{file_name}. Starting a new game");
+            SetCurrentSaveFileName(file_name);
+        }
+    }
+
+    public void TryDeleteFile(string file_name)
+    {
+        InsureFilePathExists();
+        string SaveFile = Path.Combine(FilePath, file_name + ".txt");
+        if (!File.Exists(SaveFile))
+        {
+            print($"no save file for file name {file_name} found.");
+            return;
+        }
+        File.Delete(SaveFile);
+        Debug.Log($"Deleted file {file_name}");
+    }
+
+    public bool LoadFile(string save_name)
     {
         
         InsureFilePathExists();
@@ -121,7 +151,7 @@ public class SaveLoadManager : MonoBehaviour
         if (!File.Exists(SaveFile))
         {
             print($"no save file for file name {save_name} found.");
-            return;
+            return false;
         }
 
         currentSaveFileName = save_name;
@@ -204,6 +234,8 @@ public class SaveLoadManager : MonoBehaviour
 
         OnSaveLoaded?.Invoke(saveFileStruct);
         print("Loaded save file");
+
+        return true;
 
     }
 

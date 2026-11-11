@@ -13,6 +13,11 @@ public class MainMenuManager : MonoBehaviour
     public GameObject PlayButton;
     public GameObject DiscordButton;
 
+    [Header("Load Game Panel")]
+    public GameObject LoadGamePanel;
+    public GameObject SaveSlot1Button;
+    public GameObject LoadGameBackButton;
+
     [Header("Settings Panel")]
     public GameObject SettingsPanel;
     public GameObject settingsBackButton;
@@ -53,6 +58,7 @@ public class MainMenuManager : MonoBehaviour
         ScriptRefrenceSingleton.instance.gameplayUtils.SetCanPause(true);
         MainMenuCam.SetActive(false);
         MainMenuContents.GetComponent<CanvasGroup>().alpha = 0;
+        LoadGamePanel.GetComponent<CanvasGroup>().alpha = 0;
 
     }
 
@@ -67,6 +73,8 @@ public class MainMenuManager : MonoBehaviour
         SettingsPanel.SetActive(false);
         CreditsPanel.SetActive(false);
         DiscordButton.SetActive(false);
+        LoadGamePanel.SetActive(false);
+        LoadGameBackButton.SetActive(false);
     }
 
     public void OpenMainPanel()
@@ -76,6 +84,16 @@ public class MainMenuManager : MonoBehaviour
         DiscordButton.SetActive(true);
         ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
         ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = PlayButton;
+        ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
+    }
+
+    public void OpenLoadGamePanel()
+    {
+        CloseAllPanels();
+        LoadGamePanel.SetActive(true);
+        LoadGameBackButton.SetActive(true);
+        ScriptRefrenceSingleton.instance.uIInputHandler.ClosedMenu();
+        ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = SaveSlot1Button;
         ScriptRefrenceSingleton.instance.uIInputHandler.OpenedMenu();
     }
 
