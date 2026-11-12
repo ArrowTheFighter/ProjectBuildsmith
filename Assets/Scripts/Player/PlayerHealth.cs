@@ -43,6 +43,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     private Coroutine regenCoroutine;
     private float timeSinceLastDamage;
     private bool canRegen;
+    private Tween damageFlashTween;
 
     [SerializeField] AudioClip heartRefillPopSoundFX;
     [SerializeField] float heartRefillPopSoundFXVolume = 0.4f;
@@ -60,7 +61,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     {
         characterMovement = GetComponent<CharacterMovement>();
 
-        if(impulseSource != null)
+        if(impulseSource == null)
         {
             impulseSource = GetComponent<CinemachineImpulseSource>();
         } 
@@ -184,9 +185,9 @@ public class PlayerHealth : MonoBehaviour, IDamagable
             impulseSource.GenerateImpulse();
         }         
 
-        if (!ScriptRefrenceSingleton.instance.gameSettings.IsScreenFlashDisabled())
+        if (!ScriptRefrenceSingleton.instance.gameSettings.IsScreenFlashDisabled() && Health > 0)
         {
-            damageFlashImage.DOFade(damageFlashFadeAlpha, damageFlashFadeTime).SetLoops(2, LoopType.Yoyo);
+            PlayDamageFlash();
         }
 
         AudioCollection audioCollection = ScriptRefrenceSingleton.instance.playerAudioManager.GetAudioClipByID("Hurt1");
@@ -263,6 +264,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public void Respawn()
     {
+        ResetDamageFlash();
         StopAllCoroutines();
         print("respawning");
         dying = true;
@@ -329,5 +331,33 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     {
         ExtraForce = 0;
         return;
+    }
+
+    private void PlayDamageFlash()
+    {
+        if (damageFlashImage == null) return;
+
+        damageFlashTween?.Kill();
+
+        Color color = damageFlashImage.color;
+        color.a = 0f;
+        damageFlashImage.color = color;
+
+        damageFlashTween = damageFlashImage
+            .DOFade(damageFlashFadeAlpha, damageFlashFadeTime)
+            .SetLoops(2, LoopType.Yoyo);
+    }
+
+    private void ResetDamageFlash()
+    {
+        damageFlashTween?.Kill();
+        damageFlashTween = null;
+
+        if (damageFlashImage != null)
+        {
+            Color color = damageFlashImage.color;
+            color.a = 0f;
+            damageFlashImage.color = color;
+        }
     }
 }
