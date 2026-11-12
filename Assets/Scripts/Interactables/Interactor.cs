@@ -53,7 +53,7 @@ public class Interactor : MonoBehaviour
                 break;
             }
 
-            if (interactable != null)
+            if (interactable != null && interactable.CanInteract)
             {
                 //if (!interactable.CanInteract) return;
                 if (!interactionPromptUI.IsDisplayed) interactionPromptUI.SetUp(interactable.INTERACTION_PROMPT, interactable.required_items);

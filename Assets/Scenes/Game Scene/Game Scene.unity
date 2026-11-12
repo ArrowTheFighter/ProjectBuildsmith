@@ -78323,6 +78323,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3575879216446127844, guid: 83966a39c45f1df468562c4035d1ae22, type: 3}
+      propertyPath: pickup_id
+      value: 308
+      objectReference: {fileID: 0}
+    - target: {fileID: 3575879216446127844, guid: 83966a39c45f1df468562c4035d1ae22, type: 3}
       propertyPath: onPickedUp.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -78379,7 +78383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31081834c1738224880f00391a65e811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetFlagScript
-  defualt_flag: AscensionTrialCompleteCheck
+  defualt_flag: AscensionTrialComplete
 --- !u!1001 &99605172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -939675,8 +939679,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0d526d5bb3df74abe6cf7e8a09487e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadIfFlag
-  unique_id: 0
+  unique_id: 882
   flagRules:
+  - CheckIfTrue: 0
+    Flag: KeeperIsStone
+    FlagUnitEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1798845523}
+          m_TargetAssemblyTypeName: PlayAnimationClip, Assembly-CSharp
+          m_MethodName: PlayDefaultClip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - CheckIfTrue: 1
     Flag: KeeperIsStone
     FlagUnitEvent:
@@ -939710,6 +939731,18 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: PlayAnimationClip, Assembly-CSharp
           m_MethodName: SkipDefaultClip
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1798845524}
+          m_TargetAssemblyTypeName: DialogWorker, Assembly-CSharp
+          m_MethodName: SetCanInteract
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1437911,9 +1437944,6 @@ PrefabInstance:
       addedObject: {fileID: 1798845523}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c58eb11bdb173514fa1cd4519fec8719, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1798845522}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c58eb11bdb173514fa1cd4519fec8719, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1798845524}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c58eb11bdb173514fa1cd4519fec8719, type: 3}
       insertIndex: -1
@@ -1437951,33 +1437981,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c58eb11bdb173514fa1cd4519fec8719, type: 3}
   m_PrefabInstance: {fileID: 1798845518}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1798845522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1798845519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72c7b756adeece64997dd27a46bf80f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OnStartEventCall
-  EventCall:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1798845523}
-        m_TargetAssemblyTypeName: PlayAnimationClip, Assembly-CSharp
-        m_MethodName: PlayDefaultClip
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1798845523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1438049,6 +1438052,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1798845524}
+          m_TargetAssemblyTypeName: DialogWorker, Assembly-CSharp
+          m_MethodName: SetCanInteract
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   UseLocalization: 0
   currentDialogSO: {fileID: 0}
   InactivePrompt: Talk
@@ -1438062,7 +1438077,7 @@ MonoBehaviour:
   NPCCamera: {fileID: 0}
   TurnTowardsPlayer: 0
   TurnBackToOrigin: 0
-  unique_id: 0
+  unique_id: 11
 --- !u!136 &1798845525
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -225,11 +225,13 @@ public class SaveLoadManager : MonoBehaviour
         }
 
 
-        //load ISavables
-        foreach(var saveable in saveables)
+        var orderedSaveables = saveables
+            .Where(saveable => saveFileStruct.saveable_ids.Contains(saveable.Get_Unique_ID))
+            .OrderBy(saveable => saveable.LoadPriority);
+
+        foreach (var saveable in orderedSaveables)
         {
-            if (saveFileStruct.saveable_ids.Contains(saveable.Get_Unique_ID))
-                saveable.SaveLoaded(saveFileStruct);
+            saveable.SaveLoaded(saveFileStruct);
         }
 
         OnSaveLoaded?.Invoke(saveFileStruct);

@@ -6,6 +6,7 @@ public class LoadIfFlag : MonoBehaviour, ISaveable
 {
     public int unique_id;
     public int Get_Unique_ID { get => unique_id; set {unique_id = value;} }
+    public int LoadPriority => 5;
 
     public bool Get_Should_Save { get
         {
