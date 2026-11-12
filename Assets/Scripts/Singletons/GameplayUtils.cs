@@ -68,6 +68,29 @@ public class GameplayUtils : MonoBehaviour
 
     void Awake()
     {
+
+        bool canCheat = false;
+
+#if UNITY_EDITOR
+        // Automatically true if running inside the Unity Editor
+        canCheat = true;
+#else
+    // Check command-line arguments when running a standalone build
+    string[] args = System.Environment.GetCommandLineArgs();
+    foreach (string arg in args)
+    {
+        if (arg.Equals("-enableCheats", System.StringComparison.OrdinalIgnoreCase))
+        {
+            canCheat = true;
+            break;
+        }
+    }
+#endif
+
+        CanCheat = canCheat;
+
+
+
         ScriptRefrenceSingleton.OnScriptLoaded += SetupBinds;
         OnStartMoveToMainMenu += OnSceneReload;
         Reset();
@@ -82,18 +105,18 @@ public class GameplayUtils : MonoBehaviour
         ScriptRefrenceSingleton.instance.gameSettings.OnAntiAliasingChanged += SetAntiAliasing;
         ScriptRefrenceSingleton.instance.gameSettings.OnRenderScaleChanged += SetRenderScale;
 
-        PowerConsole.Initialise();
+        if(canCheat)
+        {
+            PowerConsole.Initialise();
 
-        PowerConsole.CommandEntered += CommandCheck;
+            PowerConsole.CommandEntered += CommandCheck;
+        }
+        
         worldCanvasGroup.alpha = 0;
 
         //PowerConsole.OpenCloseHotkeys = new List<KeyCode> { KeyCode.LeftControl,KeyCode.BackQuote};
 
-        
 
-#if UNITY_EDITOR
-        CanCheat = true;
-#endif
     }
 
     void SetupBinds()
