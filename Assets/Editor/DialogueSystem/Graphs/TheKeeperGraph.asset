@@ -27,7 +27,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 29
+      Data: 31
     - Name: 
       Entry: 7
       Data: 1|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
@@ -1833,9 +1833,10 @@ MonoBehaviour:
       Data: Keeper9
     - Name: <Text>k__BackingField
       Entry: 1
-      Data: So you have, then the path ahead is yours to take. You will need these
-        <style=item>anicent gems</style>. Insert them into their sockets on the door,
-        then navigate your way to the artifact.
+      Data: So you have. Then the path ahead is yours to take. You will need this
+        second <style=item>anicent gem</style> for succeeding in the Trial of Tinkering.
+        Insert them both into their sockets on the door, then navigate your way to
+        the artifact.
     - Name: <LocalizedKey>k__BackingField
       Entry: 1
       Data: LOCAL_DIALOG_KEY
@@ -1931,7 +1932,7 @@ MonoBehaviour:
       Data: 
     - Name: <NodeID>k__BackingField
       Entry: 1
-      Data: 4d6e2176-e2d3-40d1-8d15-87c8956c3b08
+      Data: 95927948-abd9-48e2-82eb-62294e68bcdc
     - Name: 
       Entry: 8
       Data: 
@@ -1967,13 +1968,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 83|DSCloseDialogSaveData, Assembly-CSharp-Editor
+      Data: 83|DSRunEventSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
-      Data: 4d6e2176-e2d3-40d1-8d15-87c8956c3b08
+      Data: 95927948-abd9-48e2-82eb-62294e68bcdc
     - Name: <Name>k__BackingField
       Entry: 1
-      Data: CloseDialog
+      Data: RunEvent
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Dialogue text.
@@ -2000,78 +2001,8 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: <NodeID>k__BackingField
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: <GroupID>k__BackingField
-      Entry: 6
-      Data: 
-    - Name: <DialogueType>k__BackingField
-      Entry: 3
-      Data: 4
-    - Name: <Position>k__BackingField
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 10491
-    - Name: 
-      Entry: 4
-      Data: -2835
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: CloseDialog
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 86|DSRunEventSaveData, Assembly-CSharp-Editor
-    - Name: <ID>k__BackingField
       Entry: 1
-      Data: 95927948-abd9-48e2-82eb-62294e68bcdc
-    - Name: <Name>k__BackingField
-      Entry: 1
-      Data: RunEvent
-    - Name: <Text>k__BackingField
-      Entry: 1
-      Data: Dialogue text.
-    - Name: <LocalizedKey>k__BackingField
-      Entry: 6
-      Data: 
-    - Name: <Choices>k__BackingField
-      Entry: 7
-      Data: 87|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
-        Assembly-CSharp-Editor]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 88|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
-    - Name: <Text>k__BackingField
-      Entry: 1
-      Data: Output
-    - Name: LocalizeKey
-      Entry: 6
-      Data: 
-    - Name: OutputID
-      Entry: 6
-      Data: 
-    - Name: <NodeID>k__BackingField
-      Entry: 6
-      Data: 
+      Data: 95efd974-ce31-4736-846b-aa9198b00d04
     - Name: 
       Entry: 8
       Data: 
@@ -2092,10 +2023,10 @@ MonoBehaviour:
       Data: UnityEngine.Vector2, UnityEngine.CoreModule
     - Name: 
       Entry: 4
-      Data: 10144
+      Data: 10139
     - Name: 
       Entry: 4
-      Data: -2982
+      Data: -2817
     - Name: 
       Entry: 8
       Data: 
@@ -2104,13 +2035,13 @@ MonoBehaviour:
       Data: false
     - Name: event_id
       Entry: 1
-      Data: 
+      Data: KeeperStone
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 89|DSGiveItemSaveData, Assembly-CSharp-Editor
+      Data: 86|DSGiveItemSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
       Data: 5201a385-d0b2-484e-b115-f7dd0a83e498
@@ -2125,14 +2056,14 @@ MonoBehaviour:
       Data: 
     - Name: <Choices>k__BackingField
       Entry: 7
-      Data: 90|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+      Data: 87|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
         Assembly-CSharp-Editor]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 91|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+      Data: 88|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Has items
@@ -2180,13 +2111,13 @@ MonoBehaviour:
       Data: mesa_dungeon_gem
     - Name: item_amount
       Entry: 1
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 92|DSRequireFlagSaveData, Assembly-CSharp-Editor
+      Data: 89|DSRequireFlagSaveData, Assembly-CSharp-Editor
     - Name: <ID>k__BackingField
       Entry: 1
       Data: 58f31df1-a7b7-4325-96e9-e9e34f6c86ce
@@ -2201,14 +2132,14 @@ MonoBehaviour:
       Data: 
     - Name: <Choices>k__BackingField
       Entry: 7
-      Data: 93|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+      Data: 90|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
         Assembly-CSharp-Editor]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 94|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+      Data: 91|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Flag is true
@@ -2226,7 +2157,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 95|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+      Data: 92|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
     - Name: <Text>k__BackingField
       Entry: 1
       Data: Flag is false
@@ -2279,6 +2210,222 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 93|DSCloseDialogSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 4d6e2176-e2d3-40d1-8d15-87c8956c3b08
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: CloseDialog
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 94|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 95|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 5581d14f-402c-4965-9638-7fc37476c053
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 4
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 10943
+    - Name: 
+      Entry: 4
+      Data: -2817
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 96|DS.Data.Save.DSNodeSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 5581d14f-402c-4965-9638-7fc37476c053
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: DialogueName
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Hey you shouldn't be able to talk to me, I'm a statue!
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 1
+      Data: LOCAL_DIALOG_KEY
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 97|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 98|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Next Dialogue
+    - Name: LocalizeKey
+      Entry: 1
+      Data: LOCAL_CHOICE_KEY
+    - Name: OutputID
+      Entry: 6
+      Data: 
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 4d6e2176-e2d3-40d1-8d15-87c8956c3b08
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 0
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 11190
+    - Name: 
+      Entry: 4
+      Data: -2702
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 99|DSSetFlagSaveData, Assembly-CSharp-Editor
+    - Name: <ID>k__BackingField
+      Entry: 1
+      Data: 95efd974-ce31-4736-846b-aa9198b00d04
+    - Name: <Name>k__BackingField
+      Entry: 1
+      Data: KeeperIsStone
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: Dialogue text.
+    - Name: <LocalizedKey>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <Choices>k__BackingField
+      Entry: 7
+      Data: 100|System.Collections.Generic.List`1[[DS.Data.Save.DSChoiceSaveData,
+        Assembly-CSharp-Editor]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 101|DS.Data.Save.DSChoiceSaveData, Assembly-CSharp-Editor
+    - Name: <Text>k__BackingField
+      Entry: 1
+      Data: output
+    - Name: LocalizeKey
+      Entry: 6
+      Data: 
+    - Name: OutputID
+      Entry: 1
+      Data: IsTrue
+    - Name: <NodeID>k__BackingField
+      Entry: 1
+      Data: 4d6e2176-e2d3-40d1-8d15-87c8956c3b08
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: <GroupID>k__BackingField
+      Entry: 6
+      Data: 
+    - Name: <DialogueType>k__BackingField
+      Entry: 3
+      Data: 6
+    - Name: <Position>k__BackingField
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 10561
+    - Name: 
+      Entry: 4
+      Data: -2843
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: CloseDialog
+      Entry: 5
+      Data: false
+    - Name: flag_id
+      Entry: 1
+      Data: KeeperIsStone
+    - Name: is_true
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -2288,7 +2435,7 @@ MonoBehaviour:
   <Groups>k__BackingField:
   - <ID>k__BackingField: c7f10d76-813c-484a-8762-f79f3fe8497e
     <Name>k__BackingField: VanishKeeper
-    <Position>k__BackingField: {x: 10119, y: -3041}
+    <Position>k__BackingField: {x: 10114, y: -2876}
   - <ID>k__BackingField: 34c46d91-8bee-492e-827a-6d883392e256
     <Name>k__BackingField: GiveKeys
     <Position>k__BackingField: {x: 9165, y: -2900}
@@ -2321,8 +2468,10 @@ MonoBehaviour:
   - 
   - Keeper9
   - Keeper10
-  - CloseDialog
   - AscensionTrialCompleteCheck
+  - CloseDialog
+  - DialogueName
+  - KeeperIsStone
   <OldGroupedNodeNames>k__BackingField:
     list:
     - Key: VanishKeeper
