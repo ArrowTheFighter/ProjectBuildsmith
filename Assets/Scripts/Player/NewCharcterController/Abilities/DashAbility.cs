@@ -99,7 +99,6 @@ public class DashAbility : PlayerAbility
                     Vector3 platformVel = new Vector3(characterMovement.platformDelta.x, 0, characterMovement.platformDelta.z);
                     
                     Vector3 adjustedVel = HorVel - platformVel;
-                    print(HorVel);
                     if (HorVel.magnitude < 5f && !slideJumping)
                     {
                         if (Time.time - lastTimeDashed > 0.75f)
