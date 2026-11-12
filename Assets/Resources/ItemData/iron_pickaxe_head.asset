@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0fc3100e344dd24099341c8c4cfbe76, type: 3}
-  m_Name: sawmill_blueprint
+  m_Name: iron_pickaxe_head
   m_EditorClassIdentifier: 
-  item_id: sawmill_blueprint
-  item_name: Sawmill Blueprint
-  item_description: 
-  MaxStackSize: 25
-  item_pickup_object: {fileID: 9004872903095088181, guid: 56370176cb19280499af3ac4f57f95df, type: 3}
+  item_id: iron_pickaxe_head
+  item_name: Iron Pickaxe Head
+  item_description: Used to make an iron pickaxe
+  can_be_destroyed: 1
+  MaxStackSize: 1
+  item_pickup_object: {fileID: 6255366591577745021, guid: f8f2f644c740b35469c225e61ffd5094, type: 3}
   holdingItem: {fileID: 0}
   item_prefab_obj: {fileID: 0}
   PositionOffset: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
-  item_ui_image: {fileID: 21300000, guid: 3dc752e067ee3954ab5934b264fce313, type: 3}
+  item_ui_image: {fileID: 21300000, guid: b4a3d1aea3efdf347b0b3db9ef6ef474, type: 3}
   abilityConfigs: []
   references:
     version: 2
