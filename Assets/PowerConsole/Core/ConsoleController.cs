@@ -278,7 +278,10 @@ namespace CI.PowerConsole.Core
 
         private void RefreshDisplay()
         {
+            // _text.richText = false;
             _text.text = string.Join(Environment.NewLine, _buffer);
+
+
         }
 
         private void ScrollToEnd()
