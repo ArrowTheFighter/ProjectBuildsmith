@@ -732,7 +732,10 @@ public class GameplayUtils : MonoBehaviour
         {
             ItemsCrafted[item_id] += amount;
         }
-        ItemsCrafted[item_id] = amount;
+        else
+        {
+            ItemsCrafted[item_id] = amount;
+        }
         inventoryManager.QuestsObjectiveCheck();
     }
 
