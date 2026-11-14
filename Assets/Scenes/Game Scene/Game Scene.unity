@@ -382728,6 +382728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 466177865}
   - component: {fileID: 466177864}
+  - component: {fileID: 466177866}
   m_Layer: 0
   m_Name: RobotRepairedCutsceneSecondTime
   m_TagString: Untagged
@@ -382820,6 +382821,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 466177866}
+          m_TargetAssemblyTypeName: SetFlagScript, Assembly-CSharp
+          m_MethodName: SetDefaultFlag
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     OnLoadSkipEvent:
       m_PersistentCalls:
         m_Calls: []
@@ -382843,6 +382856,19 @@ Transform:
   - {fileID: 1785801020}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &466177866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 466177863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31081834c1738224880f00391a65e811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetFlagScript
+  defualt_flag: MACFinalRepair
 --- !u!1001 &466196625
 PrefabInstance:
   m_ObjectHideFlags: 0
