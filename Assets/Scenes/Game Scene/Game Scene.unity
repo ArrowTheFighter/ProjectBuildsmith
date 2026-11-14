@@ -343482,6 +343482,18 @@ MonoBehaviour:
         pointEvent:
           m_PersistentCalls:
             m_Calls:
+            - m_Target: {fileID: 793076153}
+              m_TargetAssemblyTypeName: MacBoss, Assembly-CSharp
+              m_MethodName: DropItems
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
             - m_Target: {fileID: 415804122}
               m_TargetAssemblyTypeName: EnableObject, Assembly-CSharp
               m_MethodName: Disbale_Objects
@@ -1716056,6 +1716068,10 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
       propertyPath: TargetTransform
       value: 
       objectReference: {fileID: 1379781246}
@@ -1716074,6 +1716090,18 @@ PrefabInstance:
     - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
       propertyPath: distanceToStopAttacking
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[0].itemID
+      value: mac_body
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[1].itemID
+      value: mac_head
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[2].itemID
+      value: mac_chip
       objectReference: {fileID: 0}
     - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
       propertyPath: delayBetweenHammerAttacks
@@ -1716099,6 +1716127,30 @@ PrefabInstance:
       propertyPath: 'phase1Positions.Array.data[3]'
       value: 
       objectReference: {fileID: 273101183}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[0].itemDropLow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[1].itemDropLow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[2].itemDropLow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[0].ItemDropHigh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[1].ItemDropHigh
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
+      propertyPath: Loot.Array.data[2].ItemDropHigh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 455219096851690441, guid: 0bc9d8a5185b5cf47adab27327a02f3d, type: 3}
       propertyPath: offsetTowardsBossForHammerSpawns
       value: 12

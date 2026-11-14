@@ -189,11 +189,19 @@ public class GameplayUtils : MonoBehaviour
             case "giveitem":
                 if (arguments.Length > 2)
                 {
-                    add_items_to_inventory(arguments[1], int.Parse(arguments[2]));
+                    int amountAdded = add_items_to_inventory(arguments[1], int.Parse(arguments[2]));
+                    if (amountAdded == -1)
+                    {
+                        Debug.Log($"Failed to add items for id {arguments[1]}");
+                    }
                 }
                 else if (arguments.Length > 1)
                 {
-                    add_items_to_inventory(arguments[1], 1);
+                    int amountAdded = add_items_to_inventory(arguments[1], 1);
+                    if(amountAdded == -1)
+                    {
+                        Debug.Log($"Failed to add items for id {arguments[1]}");
+                    }
                 }
                 break;
             case "settime":
@@ -751,6 +759,7 @@ public class GameplayUtils : MonoBehaviour
     {
         //inventoryItems.AddToItemAmount(item_id, amount);
         ItemData itemData = GetItemDataByID(item_id);
+        if (itemData == null) return -1;
         int loosePiece = inventoryManager.AddItemToInventory(itemData, amount);
         if (loosePiece >= amount) return -1;
         if (show_notif)

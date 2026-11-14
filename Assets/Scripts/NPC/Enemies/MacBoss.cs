@@ -18,6 +18,10 @@ public class MacBoss : MonoBehaviour, IDamagable
     [SerializeField] float delayBetweenHammerAttacks = 3;
     [SerializeField] float offsetTowardsBossForHammerSpawns = 3;
     [SerializeField] float distanceToStopAttacking = 6;
+
+    public LootTable[] Loot;
+    public Vector3 spawnOffset;
+    public float ItemDropForce = 2;
     float velocity;
     float timer;
     bool phase1AttackInProgress;
@@ -263,5 +267,27 @@ public class MacBoss : MonoBehaviour, IDamagable
     public void TakeDamage(float amount, AttackType[] attackTypes, GameObject source, float knockbackStrength = 1)
     {
         TakeDamage(amount, attackTypes, source);
+    }
+
+    public void DropItems()
+    {
+        foreach (LootTable lootTable in Loot)
+        {
+            int amount = lootTable.GetRandomDropAmount();
+            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(lootTable.itemID);
+            for (int i = 0; i < amount; i++)
+            {
+                GameObject itemDropped = Instantiate(itemData.item_pickup_object, transform.position + Vector3.up + spawnOffset, Quaternion.identity);
+                ItemPickup itemPickup = itemDropped.GetComponent<ItemPickup>();
+
+                itemPickup.amount = 1;
+                itemPickup.respawn_time = -1;
+                Rigidbody rigidbody = itemDropped.GetComponent<Rigidbody>();
+                rigidbody.useGravity = true;
+                Vector3 horDir = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f)).normalized;
+                rigidbody.AddForce((horDir + Vector3.up) * ItemDropForce * UnityEngine.Random.Range(1f, 1.25f), ForceMode.Impulse);
+            }
+
+        }
     }
 }
