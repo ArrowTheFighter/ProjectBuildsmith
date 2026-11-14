@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class NewCutsceneBuilder : MonoBehaviour, ISaveable
@@ -16,6 +17,7 @@ public class NewCutsceneBuilder : MonoBehaviour, ISaveable
     public void PlayCutscene()
     {
         if (save_played) has_played = true;
+        Debug.Log($"starting cutscene on {gameObject.name}",gameObject);
         ScriptRefrenceSingleton.instance.cutsceneManager.StartCutscene(cutsceneData);
     }
 

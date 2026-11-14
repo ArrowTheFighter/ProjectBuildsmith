@@ -4,9 +4,13 @@ public class MoveObjectToPosition : MonoBehaviour
 {
     public Transform objectToMove;
     public Vector3 posToMoveTo;
+    public Transform targetTransform;
 
     public void MoveObject()
     {
-        objectToMove.position = posToMoveTo;
+        if(targetTransform == null)
+            objectToMove.position = posToMoveTo;
+        else    
+            objectToMove.position = targetTransform.position;
     }
 }

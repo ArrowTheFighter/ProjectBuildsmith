@@ -181,10 +181,7 @@ public class SaveLoadManager : MonoBehaviour
             if (flag.Value) FlagManager.Set_Flag(flag.Key);
         }
 
-        //Player Position
-        playerSafeZone.GetComponent<Rigidbody>().MovePosition(saveFileStruct.player_position.ToVector3());
-        //playerSafeZone.transform.position = saveFileStruct.player_position.ToVector3();
-        playerSafeZone.transform.eulerAngles = saveFileStruct.player_rotation.ToVector3();
+       
 
         //Checkpoint Position
         playerCheckpointPosition.SetCheckpointPosition(saveFileStruct.checkpoint_position.ToVector3());
@@ -233,6 +230,11 @@ public class SaveLoadManager : MonoBehaviour
         {
             saveable.SaveLoaded(saveFileStruct);
         }
+
+        //Player Position
+        playerSafeZone.GetComponent<Rigidbody>().MovePosition(saveFileStruct.player_position.ToVector3());
+        //playerSafeZone.transform.position = saveFileStruct.player_position.ToVector3();
+        playerSafeZone.transform.eulerAngles = saveFileStruct.player_rotation.ToVector3();
 
         OnSaveLoaded?.Invoke(saveFileStruct);
         print("Loaded save file");

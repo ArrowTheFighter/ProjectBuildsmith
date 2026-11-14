@@ -47,6 +47,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
     public int Get_Unique_ID { get => unique_id; set { unique_id = value; } }
     public bool EnableOnLoad;
     public int unique_id;
+    public int LoadPriority;
 
     public bool Get_Should_Save { get => is_repaired; }
 
@@ -338,7 +339,7 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
 
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
-        if (!gameObject.activeInHierarchy)
+        if (!gameObject.activeSelf)
             if(!EnableOnLoad)
                 loadOnAwake = true;
             else

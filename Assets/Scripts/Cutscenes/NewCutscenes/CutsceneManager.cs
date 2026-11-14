@@ -18,6 +18,7 @@ public class CutsceneManager : MonoBehaviour
 
     public void StartCutscene(CutsceneData cutsceneData)
     {
+        if(cutsceneData == null) return;
         print("starting cutscene - " + cutsceneData.CutsceneName);
         currentData = cutsceneData;
         cutsceneCam.gameObject.SetActive(true);

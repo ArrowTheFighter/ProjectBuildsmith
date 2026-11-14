@@ -28,6 +28,10 @@ public class NPCFlyingFollow : MonoBehaviour
                 floatTween = BodyVisuals.DOLocalMoveY(-0.5f, 2).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
                 BodyVisuals.DOLocalRotate(Vector3.zero,0.25f);
             }
+            if(!value && IsActive)
+            {
+                floatTween?.Kill();
+            }
             IsActive = value;
 
         }
