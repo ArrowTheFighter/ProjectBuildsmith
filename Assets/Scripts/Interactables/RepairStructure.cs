@@ -102,6 +102,11 @@ public class RepairStructure : MonoBehaviour, IInteractable, ISaveable
         ScriptRefrenceSingleton.instance.gameplayUtils.OnStartMoveToMainMenu += UnBindInputs;
     }
 
+    public void SetCanInteract(bool can)
+    {
+        CInteract = can;
+    }
+
     void UnBindInputs()
     {
         ScriptRefrenceSingleton.instance.gameplayInput.playerInput.actions["Interact"].canceled -= StopInteract;
