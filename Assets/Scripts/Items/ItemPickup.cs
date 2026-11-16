@@ -10,7 +10,7 @@ public class ItemPickup : MonoBehaviour
     [SerializeField] string item_id;
     [SerializeField] public int amount = 1;
     [SerializeField] bool show_notification = true;
-    [SerializeField] bool isSpecialItem;
+    [SerializeField] public bool isSpecialItem ;
     [SerializeField] float cantPickupDelay = 0.5f;
     float cantPickupTime;
     [SerializeField] public float respawn_time = -1;

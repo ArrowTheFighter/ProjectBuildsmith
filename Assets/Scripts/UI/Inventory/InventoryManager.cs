@@ -389,7 +389,11 @@ public class InventoryManager : MonoBehaviour
 
     public int AddItemToInventory(ItemData itemData, int amount = 1)
     {
-
+        if(itemData.item_pickup_object.GetComponent<ItemPickup>().isSpecialItem)
+        {
+            AddSpecialItem(itemData.item_id,amount);
+            return 0;
+        }
         int remainingAmount = amount;
         InventorySlot inventorySlot = GetSlotWithItemButNotFull(itemData.item_id);
         if (inventorySlot != null)
