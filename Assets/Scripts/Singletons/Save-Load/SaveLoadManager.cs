@@ -269,7 +269,8 @@ public class SaveLoadManager : MonoBehaviour
         }
         if (!canSave)
         {
-            gameSavedPopup.ShowCantSavePopup();
+            if (showPopup)
+                gameSavedPopup.ShowCantSavePopup();
             return false;
         } 
         InsureFilePathExists();
