@@ -54,7 +54,7 @@ public class SaveLoadManager : MonoBehaviour
     public event Action<SaveFileStruct> OnSaveLoaded;
 
     [HideInInspector]
-    public bool canSave = true;
+    public bool canSave = false;
 
     public GameSavedPopup gameSavedPopup;
 
@@ -241,7 +241,7 @@ public class SaveLoadManager : MonoBehaviour
 
         OnSaveLoaded?.Invoke(saveFileStruct);
         print("Loaded save file");
-
+        canSave = true;
         return true;
 
     }
