@@ -1086132,9 +1086132,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2032875411}
-        m_TargetAssemblyTypeName: MoveObjectToPosition, Assembly-CSharp
-        m_MethodName: MoveObject
+      - m_Target: {fileID: 150644511}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2032875413}
+        m_TargetAssemblyTypeName: TeleportObject, Assembly-CSharp
+        m_MethodName: Teleport
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1284357,7 +1284369,7 @@ Transform:
   m_GameObject: {fileID: 1608486681}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 870.011, y: 275.567, z: 474.893}
+  m_LocalPosition: {x: 870.268, y: 275.567, z: 475.144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1621830,7 +1621842,7 @@ Transform:
   m_GameObject: {fileID: 2032875410}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.5827594, z: -0, w: 0.8126447}
-  m_LocalPosition: {x: 869.975, y: 275.567, z: 474.908}
+  m_LocalPosition: {x: 870.268, y: 275.567, z: 475.144}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1713639,7 +1713651,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d8bf9a802003d3b43bfc42c2b0285615, type: 2}
     - target: {fileID: 1380868070930423998, guid: 7c908684d1441cb4dbbb1713f0bb1cad, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0029907227
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1380868070930423998, guid: 7c908684d1441cb4dbbb1713f0bb1cad, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1713647,7 +1713659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1380868070930423998, guid: 7c908684d1441cb4dbbb1713f0bb1cad, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.7720032
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1380868070930423998, guid: 7c908684d1441cb4dbbb1713f0bb1cad, type: 3}
       propertyPath: m_LocalRotation.w
