@@ -175,6 +175,9 @@ public class SaveLoadManager : MonoBehaviour
             ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.LoadSavedQuest(quest,true);
         }
 
+        //Crafted Items
+        ScriptRefrenceSingleton.instance.gameplayUtils.ItemsCrafted = saveFileStruct.crafted_items;
+
         //Flags
         foreach (var flag in saveFileStruct.Flags)
         {
@@ -289,6 +292,9 @@ public class SaveLoadManager : MonoBehaviour
 
         //Unlocked Recipes
         saveFile.unlocked_recipes = ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.UnlockedRecipes;
+
+        //Crafted Items
+        saveFile.crafted_items = ScriptRefrenceSingleton.instance.gameplayUtils.ItemsCrafted;
 
         //Quests
         foreach (var quest in ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.activeQuests)
@@ -440,6 +446,7 @@ public class SaveFileStruct
         saved_completed_quests = new List<SaveableQuestInfo>();
         saved_inventory_savers = new List<SerializableInventory>();
         unlocked_recipes = new List<string>();
+        crafted_items = new Dictionary<string, int>();
     }
 
     public string file_name;
@@ -455,6 +462,9 @@ public class SaveFileStruct
     //Quests
     public List<SaveableQuestInfo> saved_quests;
     public List<SaveableQuestInfo> saved_completed_quests;
+
+    //Crafted Items
+    public Dictionary<string, int> crafted_items;
 
     //Player position
     public SerializableVector3 player_position;

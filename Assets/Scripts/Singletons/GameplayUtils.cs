@@ -238,6 +238,8 @@ public class GameplayUtils : MonoBehaviour
                                 ItemData itemData = GetItemDataByID(arguments[2]);
                                 if (itemData == null) return;
                                 PowerConsole.Log(LogLevel.Information, $"id: {itemData.item_id} - name:{itemData.item_name} - item prefab: {itemData.item_prefab_obj}");
+                                if(ItemsCrafted.ContainsKey(itemData.item_id))
+                                    PowerConsole.Log(LogLevel.Information, $"crafted amount: {ItemsCrafted[itemData.item_id]}");
                             }
                         break;
                     }
