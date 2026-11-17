@@ -231,6 +231,8 @@ public class DialogWorker : MonoBehaviour, IInteractable
     public void ForceDialog(ScriptableObject providedDialog)
     {
         if (!isActive) SetIsActive(true);
+        ScriptRefrenceSingleton.instance.gameplayUtils.CloseAllCraftingMenus();
+        ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.CloseInventory();
         GetAndShowNextDialog(providedDialog);
     }
 
