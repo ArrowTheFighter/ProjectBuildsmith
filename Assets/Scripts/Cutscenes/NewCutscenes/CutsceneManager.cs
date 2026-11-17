@@ -79,10 +79,10 @@ public class CutsceneManager : MonoBehaviour
     }
 
 
-    public void SkipCutscene()
+    public void SkipCutscene(bool force_skip = false)
     {
         if (!cutsceneIsRunning) return;
-        if (!currentData.Skippable) return;
+        if (!force_skip && !currentData.Skippable) return;
 
         // Kill any active tweens
         DOTween.Kill(CameraTransform);

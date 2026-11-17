@@ -240,10 +240,17 @@ public class SaveLoadManager : MonoBehaviour
         playerSafeZone.transform.eulerAngles = saveFileStruct.player_rotation.ToVector3();
 
         OnSaveLoaded?.Invoke(saveFileStruct);
-        print("Loaded save file");
-        canSave = true;
+        Debug.Log("Loaded save file");
+        StartCoroutine(SetCanSaveAfterDelay(1));
         return true;
 
+    }
+
+    IEnumerator SetCanSaveAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Debug.Log("Setting canSave to true");
+        canSave = true;
     }
 
     [Button]
@@ -267,10 +274,13 @@ public class SaveLoadManager : MonoBehaviour
         {
             return false;
         }
+        print($"canSave = {canSave}");
         if (!canSave)
         {
             if (showPopup)
+            {
                 gameSavedPopup.ShowCantSavePopup();
+            }
             return false;
         } 
         InsureFilePathExists();

@@ -24,6 +24,6 @@ public class NewCutsceneBuilder : MonoBehaviour, ISaveable
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
         PlayCutscene();
-        ScriptRefrenceSingleton.instance.cutsceneManager.SkipCutscene();
+        ScriptRefrenceSingleton.instance.cutsceneManager.SkipCutscene(true);
     }
 }
