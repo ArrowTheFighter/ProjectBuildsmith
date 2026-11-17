@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     public InventorySlot inventorySlot;
     public int SlotID;
@@ -162,7 +162,7 @@ public class InventorySlotComponent : MonoBehaviour, IPointerEnterHandler, IPoin
         //slotFilled -= ShowAndUnsubscribeItemPopup;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         // --- Left clicked on this slot ---
         if (eventData.button == PointerEventData.InputButton.Left)
