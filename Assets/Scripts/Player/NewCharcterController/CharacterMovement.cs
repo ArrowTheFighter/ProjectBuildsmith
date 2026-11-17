@@ -186,7 +186,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
             ApplyAirDrag(OverrideAirDragAmount);
         }
 
-        foreach (PlayerAbility ability in playerAbilities.ToList())
+        foreach (PlayerAbility ability in playerAbilities)
         {
             ability.UpdateAbility();
         }
@@ -218,7 +218,7 @@ public class CharacterMovement : MonoBehaviour, IPlatformPassenger
         }
         //ApplyPlatformDelta();
         UpdateTilt();
-        foreach (PlayerAbility ability in playerAbilities.ToList())
+        foreach (PlayerAbility ability in playerAbilities)
         {
             ability.FixedUpdateAbility();
         }
