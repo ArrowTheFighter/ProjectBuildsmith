@@ -760207,7 +760207,6 @@ MonoBehaviour:
   - {fileID: 1198847195}
   - {fileID: 2099850686}
   - {fileID: 1288772281}
-  - {fileID: 1780439317}
   Objects_To_disbale: []
 --- !u!4 &942072241
 Transform:
@@ -1722655,6 +1722654,10 @@ PrefabInstance:
     - target: {fileID: 7035379328098804600, guid: 329f7f8c0c4d24e4c96e1661e220cb0f, type: 3}
       propertyPath: m_Name
       value: Tower_Base_NoClimb
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035379328098804600, guid: 329f7f8c0c4d24e4c96e1661e220cb0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7351694099767823025, guid: 329f7f8c0c4d24e4c96e1661e220cb0f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
