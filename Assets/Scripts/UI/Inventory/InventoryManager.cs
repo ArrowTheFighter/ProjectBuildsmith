@@ -112,18 +112,25 @@ public class InventoryManager : MonoBehaviour
     
     void SaveLoaded(SaveFileStruct saveFileStruct)
     {
-        //Load special items
-        foreach (KeyValuePair<string, int> item in saveFileStruct.special_items)
+        if(saveFileStruct.special_items != null)
         {
-            AddSpecialItem(item.Key, item.Value);
+            //Load special items
+            foreach (KeyValuePair<string, int> item in saveFileStruct.special_items)
+            {
+                AddSpecialItem(item.Key, item.Value);
+            }
         }
-        //Load inventory items
-        foreach(SaveableInventroySlot slot in saveFileStruct.inventory_slots)
+        if(saveFileStruct.inventory_slots != null)
         {
-            if (slot.isEmpty) continue;
-            ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(slot.inventoryItemStack.ID);
-            AddItemToSlotByID(slot.slot_id, itemData, slot.inventoryItemStack.Amount, true, false);
+            //Load inventory items
+            foreach (SaveableInventroySlot slot in saveFileStruct.inventory_slots)
+            {
+                if (slot.isEmpty) continue;
+                ItemData itemData = ScriptRefrenceSingleton.instance.gameplayUtils.GetItemDataByID(slot.inventoryItemStack.ID);
+                AddItemToSlotByID(slot.slot_id, itemData, slot.inventoryItemStack.Amount, true, false);
+            }
         }
+        
     }
 
     void ToggleInventory(InputAction.CallbackContext context)

@@ -133,6 +133,7 @@ public class SaveLoadManager : MonoBehaviour
             Debug.Log($"Failed to load save file{file_name}. Starting a new game");
             SetCurrentSaveFileName(file_name);
             canSave = true;
+            OnSaveLoaded?.Invoke(new SaveFileStruct());
         }
     }
 

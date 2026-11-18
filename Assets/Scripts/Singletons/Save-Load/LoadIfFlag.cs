@@ -10,9 +10,10 @@ public class LoadIfFlag : MonoBehaviour, ISaveable
 
     public bool Get_Should_Save { get
         {
+            return false;
             foreach(var rule in flagRules)
             {
-                if(FlagManager.Get_Flag_Value(rule.Flag))
+                if(FlagManager.Get_Flag_Value(rule.Flag) == rule.CheckIfTrue)
                     return true;               
             }
             return false;
@@ -21,14 +22,24 @@ public class LoadIfFlag : MonoBehaviour, ISaveable
 
     [SerializeField] FlagRule[] flagRules;
 
+    void Awake()
+    {
+        ScriptRefrenceSingleton.instance.saveLoadManager.OnSaveLoaded += SaveLoaded;
+    }
+
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
-        Debug.Log("Load if Flag running",gameObject);
-        for (int i = flagRules.Length - 1; i >= 0 ; i--)
+        LoadObject();
+    }
+
+    public void LoadObject()
+    {
+        //Debug.Log("Load if Flag running", gameObject);
+        for (int i = flagRules.Length - 1; i >= 0; i--)
         {
-            if(FlagManager.Get_Flag_Value(flagRules[i].Flag))
+            if (FlagManager.Get_Flag_Value(flagRules[i].Flag) == flagRules[i].CheckIfTrue)
             {
-                Debug.Log($"Loading event because flag {flagRules[i].Flag} was true",gameObject);
+                Debug.Log($"Loading event because flag {flagRules[i].Flag} was true", gameObject);
                 flagRules[i].FlagUnitEvent?.Invoke();
                 return;
             }

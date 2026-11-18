@@ -12,6 +12,7 @@ public class SpecialItemPickup : ItemPickup
     
     void SaveFileLoaded(SaveFileStruct saveFileStruct)
     {
+        if(saveFileStruct.special_items_collected == null) return;
         if(saveFileStruct.special_items_collected.Contains(pickup_id))
         {
             Destroy(gameObject);
