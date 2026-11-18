@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
 using DG.Tweening;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
 {
     public float Health;
+    float startingHealth;
     public float ItemDropForce = 10;
     public float RespawnTime;
     public float ExtraBounceForce;
@@ -43,6 +45,7 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
     void Awake()
     {
         startScale = transform.localScale;
+        startingHealth = Health;
     }
 
     void OnEnable()
@@ -121,11 +124,13 @@ public class BreakableProps : MonoBehaviour, IDamagable, ISaveable
         
         if (RespawnTime <= 0)
         {
+            Health = startingHealth;
             broken = true;
             gameObject.SetActive(false);
         }
         else
         {
+            Health = startingHealth;
             broken = true;
             ScriptRefrenceSingleton.instance.itemRespawnManager.item_respawns.Add(gameObject, Time.time + RespawnTime);
             gameObject.SetActive(false);
