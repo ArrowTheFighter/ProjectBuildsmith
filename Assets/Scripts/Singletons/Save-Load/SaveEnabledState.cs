@@ -26,7 +26,4 @@ public class SaveEnabledState : MonoBehaviour, ISaveable
         gameObject.SetActive(SaveWhenActive);
     }
 
-   
-
-    
 }
