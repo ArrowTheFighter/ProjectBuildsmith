@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Splines;
+using UnityEngine.Rendering;
 
 [ExecuteAlways]
 public class SplineEndCaps : MonoBehaviour
@@ -135,12 +136,16 @@ public class SplineEndCaps : MonoBehaviour
         Graphics.DrawMesh(
             sphereMesh,
             Matrix4x4.TRS(
-                position,
-                Quaternion.identity,
-                Vector3.one * size
+            position,
+            Quaternion.identity,
+            Vector3.one * size
             ),
             material,
-            0
-        );
+            0,
+            null,
+            0,
+            null,
+            ShadowCastingMode.Off
+                );
     }
 }
