@@ -254,6 +254,13 @@ public class GameplayUtils : MonoBehaviour
                     Time.timeScale = float.Parse(arguments[1]);
                 }
                 break;
+            case "unlockgrindrail":
+                if(PlayerTransform.TryGetComponent(out SaveGrindRailAbility saveGrindRailAbility))
+                {
+                    saveGrindRailAbility.AddGrindRailAbility(true);
+                    Debug.Log("Unlocking grind rail ability");
+                }
+                break;
         }
         // string id = callback.Args["-i"];
         // int amount = int.Parse(callback.Args["-a"]);

@@ -32,6 +32,10 @@ public class CutsceneManager : MonoBehaviour
             if (currentData.freeze_player)
             {
                 characterMovement.rb.isKinematic = true;
+                foreach(var ability in characterMovement.playerAbilities)
+                {
+                    ability.ResetAbility();
+                }
             }
         }
         ScriptRefrenceSingleton.instance.gameplayUtils.HideUI();
