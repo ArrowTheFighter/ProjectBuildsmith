@@ -58,6 +58,11 @@ public class SaveLoadManager : MonoBehaviour
 
     public GameSavedPopup gameSavedPopup;
 
+    void Awake()
+    {
+        canSave = false;
+    }
+
     void Start()
     {
         saveables = FindObjectsByType<MonoBehaviour>( FindObjectsInactive.Include,FindObjectsSortMode.None)
@@ -127,6 +132,7 @@ public class SaveLoadManager : MonoBehaviour
         {
             Debug.Log($"Failed to load save file{file_name}. Starting a new game");
             SetCurrentSaveFileName(file_name);
+            canSave = true;
         }
     }
 
