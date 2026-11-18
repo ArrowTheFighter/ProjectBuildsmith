@@ -49,6 +49,7 @@ public class AssignSpecialItemID : Button
             .OfType<ISaveable>()                    // filter by interface
             .ToArray();
         HashSet<int> usedIDs = new HashSet<int>();
+        int changedCount = 0;
 
         // Gather existing non-zero IDs
         foreach (var saveable in savablesArray)
@@ -82,11 +83,12 @@ public class AssignSpecialItemID : Button
 
                 EditorUtility.SetDirty(saveable as MonoBehaviour);
                 EditorSceneManager.MarkSceneDirty((saveable as MonoBehaviour).gameObject.scene);
+                changedCount++;
                 nextID++;
             }
         }
 
-        Debug.Log($"Assigned unique IDs to {savablesArray.Length} ISavabales(s).");
+        Debug.Log($"Assigned unique IDs to {changedCount} ISavabales(s).");
     }
 
     [MenuItem("Tools/Reset ISavableIDs")]
@@ -112,6 +114,7 @@ public class AssignSpecialItemID : Button
         SpecialItemPickup[] pickups = GameObject.FindObjectsByType<SpecialItemPickup>(FindObjectsSortMode.None);
         HashSet<int> usedIDs = new HashSet<int>();
 
+        int changedCount = 0;
         // Gather existing non-zero IDs
         foreach (var pickup in pickups)
         {
@@ -144,17 +147,18 @@ public class AssignSpecialItemID : Button
                 EditorUtility.SetDirty(pickup);
                 EditorSceneManager.MarkSceneDirty(pickup.gameObject.scene);
                 nextID++;
+                changedCount++;
             }
         }
 
-        Debug.Log($"Assigned unique IDs to {pickups.Length} SpecialItemPickup(s).");
+        Debug.Log($"Assigned unique IDs to {changedCount} SpecialItemPickup(s).");
     }
 
     private static void AssignIDsToSaveObjectPositions()
     {
         SaveObjectPosition[] saveObjects = GameObject.FindObjectsByType<SaveObjectPosition>(FindObjectsInactive.Include,FindObjectsSortMode.None);
         HashSet<int> usedIDs = new HashSet<int>();
-
+        int changedCount = 0;
         // Collect existing IDs
         foreach (var obj in saveObjects)
         {
@@ -186,11 +190,12 @@ public class AssignSpecialItemID : Button
 
                 EditorUtility.SetDirty(obj);
                 EditorSceneManager.MarkSceneDirty(obj.gameObject.scene);
+                changedCount++;
                 nextID++;
             }
         }
 
-        Debug.Log($"Assigned unique IDs to {saveObjects.Length} SaveObjectPositions.");
+        Debug.Log($"Assigned unique IDs to {changedCount} SaveObjectPositions.");
     }
 
     private static void AssignIDsToNPCTriggers()
@@ -230,7 +235,7 @@ public class AssignSpecialItemID : Button
     {
         DialogWorker[] dialogWorkers = GameObject.FindObjectsByType<DialogWorker>(FindObjectsSortMode.None);
         HashSet<int> usedIDs = new HashSet<int>();
-
+        int changedCount = 0;
         // Collect existing IDs
         foreach (var obj in dialogWorkers)
         {
@@ -262,11 +267,12 @@ public class AssignSpecialItemID : Button
 
                 EditorUtility.SetDirty(obj);
                 EditorSceneManager.MarkSceneDirty(obj.gameObject.scene);
+                changedCount++;
                 nextID++;
             }
         }
 
-        Debug.Log($"Assigned unique IDs to {dialogWorkers.Length} DialogWorkers.");
+        Debug.Log($"Assigned unique IDs to {changedCount} DialogWorkers.");
     }
 
     private static void AssignIDsToSaveEnabledState()
