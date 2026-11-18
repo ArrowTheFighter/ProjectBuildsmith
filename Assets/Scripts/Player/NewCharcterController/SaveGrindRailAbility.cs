@@ -13,14 +13,18 @@ public class SaveGrindRailAbility : MonoBehaviour, ISaveable
     
     public void SaveLoaded(SaveFileStruct saveFileStruct)
     {
-        AddGrindRailAbility();
+        AddGrindRailAbility(false);
     }
 
-    public void AddGrindRailAbility()
+    public void AddGrindRailAbility(bool showPopup)
     {
         if (GetComponent<RailGrindAbility>() == null)
         {
             GetComponent<CharacterMovement>().AddAbility<RailGrindAbility>();
+        }
+        if(showPopup)
+        {
+            ScriptRefrenceSingleton.instance.gameplayUtils.ShowCustomNotifCenter("Grind Rails Unlocked",6);
         }
     }
 }

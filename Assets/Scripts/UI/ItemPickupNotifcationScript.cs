@@ -58,7 +58,7 @@ public class ItemPickupNotifcationScript : MonoBehaviour
         {
             fadeoutTween.Kill();
         }
-        fadeoutTween = DOVirtual.Float(duration, 0, 2, (context) =>
+        fadeoutTween = DOVirtual.Float(duration, 0, duration, (context) =>
         {
             canvasGroup.alpha = context;
         }).OnComplete(finished_fadeout);
