@@ -1686006,6 +1686006,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 8478192966466492848, guid: 74af4501855dbee44bf6e2f7939f2546, type: 3}
+    - target: {fileID: 2140989698831599401, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: fd110be922db1a1489271b232512ec58, type: 3}
+    - target: {fileID: 2140989698831599401, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140989698831599401, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 3458915798973303727, guid: 64faf9da77d08764daf75147a95c8d80, type: 2}
     - target: {fileID: 2746315416727882891, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1686077,6 +1686089,42 @@ PrefabInstance:
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: StartDialogGraphName
       value: Lacey
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].id
+      value: LaceyPlayCoinSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2099018786}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.AudioSource, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7306702719694348603, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: m_Mesh
@@ -1686177,6 +1686225,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Comment: They take care of the statue and are very proud of their job
+--- !u!82 &2099018786 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2140989698831599401, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+  m_PrefabInstance: {fileID: 2099018777}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2099092799
 PrefabInstance:
   m_ObjectHideFlags: 0
