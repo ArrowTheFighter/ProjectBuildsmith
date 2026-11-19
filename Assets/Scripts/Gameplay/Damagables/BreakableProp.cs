@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using DG.Tweening;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.Events;
 
