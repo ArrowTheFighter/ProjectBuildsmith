@@ -12,7 +12,7 @@ using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 
 public class SaveLoadManager : MonoBehaviour
 {
-    private static string FilePath => Path.Combine(Application.persistentDataPath + "/saves/");
+    private static string FilePath => Path.Combine(Application.persistentDataPath,  "saves");
 
     //Info to save
     [HideInInspector]
@@ -441,9 +441,9 @@ public class SaveLoadManager : MonoBehaviour
 
     void InsureFilePathExists()
     {
-        if (!Directory.Exists(Application.persistentDataPath + "/saves"))
+        if (!Directory.Exists(FilePath))
         {
-            Directory.CreateDirectory(Application.persistentDataPath + "/saves");
+            Directory.CreateDirectory(FilePath);
         }
     }
 }

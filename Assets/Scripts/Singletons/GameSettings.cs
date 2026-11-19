@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Collections;
+using TMPro;
 
 public class GameSettings : MonoBehaviour
 {
@@ -43,11 +44,16 @@ public class GameSettings : MonoBehaviour
 
     public Slider[] RenderScaleSliders;
 
+    public TMP_Dropdown[] FullScreenDropdowns;
+
     public Action<bool> OnVsyncChanged;
     public Action<bool> OnAntiAliasingChanged;
     public Action<bool> OnEnableCompassChanged;
 
     public Action<float> OnRenderScaleChanged;
+
+    public Action<int> OnFullscreenChanged;
+
 
 
 
@@ -110,6 +116,7 @@ public class GameSettings : MonoBehaviour
         foreach (var t in EnableAntiAliasingToggles) t.isOn = settingsContainer.AntiAliasing;
         foreach (var t in EnableCompassToggles) t.isOn = settingsContainer.CompassEnabled;
         foreach (var t in RenderScaleSliders) t.value = settingsContainer.RenderScale;
+        foreach (var t in FullScreenDropdowns) t.value = settingsContainer.Fullscreen;
 
     }
 
@@ -221,6 +228,25 @@ public class GameSettings : MonoBehaviour
         OnRenderScaleChanged?.Invoke(value);
         //SaveSettingsToFile();
         SetUIValues();
+    }
+
+    public void SetFullScreen(Int32 value)
+    {
+        settingsContainer.Fullscreen = value;
+        switch (value)
+        {
+            case 0:
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+            break;
+            case 1:
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            break;
+            case 2:
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            break;
+        }
+
+        OnFullscreenChanged?.Invoke(value);
     }
 
     // void ScreenFlashAccesibilitySetting()
@@ -339,5 +365,6 @@ public class SettingsContainer
     public bool VSync = true;
     public bool AntiAliasing;
     public float RenderScale = 1f;
+    public int Fullscreen;
     public bool CompassEnabled = true;
 }
