@@ -17,15 +17,22 @@ public class FloatingItem : MonoBehaviour
     private bool isActive = false;
     private bool wasActive = false;
     private float delayTimer;
+    private float triggerDistanceSqr;
 
     private Transform objectToAnimate;
 
     private Tween floatTween;
     private Tween spinTween;
 
+    private Transform playerTransform;
+
     void Start()
     {
-        delayTimer = Time.time + checkDelay;
+        triggerDistanceSqr = triggerDistance * triggerDistance;
+
+        delayTimer = Time.time + Random.Range(0f, checkDelay);
+
+        playerTransform = ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform;
 
         objectToAnimate = transform.GetChild(0);
 
@@ -51,26 +58,26 @@ public class FloatingItem : MonoBehaviour
 
     void Update()
     {
-        if (Time.time > delayTimer)
+        if (Time.time < delayTimer) return;
+
+        delayTimer = Time.time + checkDelay;
+
+        if (objectToAnimate == null) return;
+
+        float distSqr = (playerTransform.position - transform.position).sqrMagnitude;
+
+        isActive = distSqr < triggerDistanceSqr;
+
+        if (isActive && !wasActive)
         {
-            delayTimer = Time.time + checkDelay;
-
-            if (objectToAnimate == null || ScriptRefrenceSingleton.instance.gameplayUtils == null) return;
-
-            float dist = Vector3.Distance(ScriptRefrenceSingleton.instance.gameplayUtils.PlayerTransform.position, transform.position);
-            isActive = dist < triggerDistance;
-
-            if (isActive && !wasActive)
-            {
-                StartAnimating();
-            }
-            else if (!isActive && wasActive)
-            {
-                StopAnimating();
-            }
-
-            wasActive = isActive;
+            StartAnimating();
         }
+        else if (!isActive && wasActive)
+        {
+            StopAnimating();
+        }
+
+        wasActive = isActive;
     }
 
     void StartAnimating()
