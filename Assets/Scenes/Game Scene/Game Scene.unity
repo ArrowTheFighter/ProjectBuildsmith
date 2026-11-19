@@ -1287440,6 +1287440,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bf54e5443ba69714393e3870aa75896a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1595394658}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bf54e5443ba69714393e3870aa75896a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1595394659}
   m_SourcePrefab: {fileID: 100100000, guid: bf54e5443ba69714393e3870aa75896a, type: 3}
 --- !u!1 &1595394651 stripped
 GameObject:
@@ -1287506,6 +1287509,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1595394659}
+        m_TargetAssemblyTypeName: SetFlagScript, Assembly-CSharp
+        m_MethodName: SetDefaultFlag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: TalkToSullivanToGetAnvil
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!135 &1595394654
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1287563,6 +1287578,19 @@ MonoBehaviour:
   SaveWhenActive: 0
   OnlyCheckSelfActive: 0
   unique_id: 404
+--- !u!114 &1595394659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595394651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31081834c1738224880f00391a65e811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetFlagScript
+  defualt_flag: TalkToSullivanToGetAnvil
 --- !u!4 &1595443579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5382731794249537704, guid: 2f460dba957db1c4f88813071751998e, type: 3}
