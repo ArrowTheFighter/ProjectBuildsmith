@@ -779365,7 +779365,8 @@ PrefabInstance:
       propertyPath: flag_id
       value: CheckedOnRobot
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8461553115374982740, guid: f9eab09eb61d29a4c9090f988fab9975, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -779415,7 +779416,19 @@ MonoBehaviour:
   use_once: 1
   OnEnterCall:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1715942306}
+        m_TargetAssemblyTypeName: DialogWorker, Assembly-CSharp
+        m_MethodName: ForceDialog
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 071c792066a15be4b8ea3519748ffbcd, type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.ScriptableObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &960266133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -927881,6 +927894,7 @@ GameObject:
   - component: {fileID: 1144008217}
   - component: {fileID: 1144008216}
   - component: {fileID: 1144008215}
+  - component: {fileID: 1144008219}
   m_Layer: 2
   m_Name: ForceDialogUnknownMan
   m_TagString: Untagged
@@ -927983,6 +927997,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -0.81, z: 0}
+--- !u!114 &1144008219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144008214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546bf51acb4e70146a970cda5a793714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveEnabledState
+  SaveWhenActive: 0
+  OnlyCheckSelfActive: 0
+  unique_id: 940
 --- !u!1001 &1144187021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1382700,6 +1382729,36 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f4225fbb107fbc24ebeb76ec7710b698, type: 3}
   m_PrefabInstance: {fileID: 1835898391}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1715942306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715942304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293bdc339b3a204439c60078b31ddbaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogWorker
+  StartDialogGraphName: MACBroken
+  NPC_Name: ???
+  Localized_Table: NPC
+  nPC_Events: []
+  UseLocalization: 0
+  currentDialogSO: {fileID: 0}
+  InactivePrompt: Talk
+  ActivePrompt: Continue
+  PROMPT: 
+  item_Requirements: []
+  NPCCanInteract: 0
+  hasMarker: 0
+  MarkerParticle: {fileID: 0}
+  blendTime: 4
+  NPCCamera: {fileID: 0}
+  TurnTowardsPlayer: 0
+  TurnBackToOrigin: 0
+  unique_id: 0
 --- !u!1001 &1716247404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1483657,7 +1483716,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -650499567623314527, guid: f4225fbb107fbc24ebeb76ec7710b698, type: 3}
       insertIndex: -1
       addedObject: {fileID: 460211128}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f4225fbb107fbc24ebeb76ec7710b698, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1715942306}
   m_SourcePrefab: {fileID: 100100000, guid: f4225fbb107fbc24ebeb76ec7710b698, type: 3}
 --- !u!4 &1835898392 stripped
 Transform:
