@@ -10,19 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f262818b55b0f4418296bad0176bdab, type: 3}
-  m_Name: TalkWithAllEssence
-  m_EditorClassIdentifier: 
-  <DialogueName>k__BackingField: TalkWithAllEssence
-  <Text>k__BackingField: Splendid, you've gathered all the <style=Engine>sky essence</style>,
-    most excellent, hm? The <style=Engine>essence engine</style> has safely restored
-    the path ahead.
+  m_Name: DialogueName
+  m_EditorClassIdentifier: Assembly-CSharp::DS.ScriptableObjects.DSDialogueSO
+  <DialogueName>k__BackingField: DialogueName
+  <Text>k__BackingField: 123
   <LocalizedKey>k__BackingField: LOCAL_DIALOG_KEY
   <Choices>k__BackingField:
   - <Text>k__BackingField: Next Dialogue
     LocalizeKey: LOCAL_CHOICE_KEY
     OutputID: 
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: 0310b0c19a41b1e468407f4b93ef1a9d, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: e4b201f881416634aa3deb5512cee4e8, type: 2}
   <DialogueType>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 0
   CloseDialog: 0
-  <unique_id>k__BackingField: 719
+  <unique_id>k__BackingField: 0
