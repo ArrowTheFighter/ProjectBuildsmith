@@ -25,6 +25,7 @@ MonoBehaviour:
   item_ui_image: {fileID: 21300000, guid: 56bae33218f94834fa87a7f2563951a1, type: 3}
   abilityConfigs:
   - rid: 579739595174838363
+  - rid: 6840397659380645976
   references:
     version: 2
     RefIds:
@@ -32,4 +33,9 @@ MonoBehaviour:
       type: {class: QuickChopAbilityData, ns: , asm: Assembly-CSharp}
       data:
         damage: 1.5
+        attackTypes: 00000000
+    - rid: 6840397659380645976
+      type: {class: ChopSlamAbilityData, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 3
         attackTypes: 00000000
