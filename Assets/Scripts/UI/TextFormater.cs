@@ -10,8 +10,11 @@ public class TextFormater : MonoBehaviour
     void Start()
     {
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
-        rawStoredText = textMeshProUGUI.text;
-        ReformatText();
+        if (string.IsNullOrEmpty(rawStoredText))
+        {
+            rawStoredText = textMeshProUGUI.text;
+        }
+        //ReformatText();
     }
 
     void OnEnable()
@@ -34,8 +37,11 @@ public class TextFormater : MonoBehaviour
     public void ReformatText()
     {
         if (textMeshProUGUI == null) textMeshProUGUI = GetComponent<TextMeshProUGUI>();
-        if (string.IsNullOrEmpty(rawStoredText)) rawStoredText = textMeshProUGUI.text;
-            string formatedText = ScriptRefrenceSingleton.instance.uIIconHandler.FormatText(rawStoredText);
+        if (string.IsNullOrEmpty(rawStoredText))
+        { 
+            rawStoredText = textMeshProUGUI.text;
+        }
+        string formatedText = ScriptRefrenceSingleton.instance.uIIconHandler.FormatText(rawStoredText);
         textMeshProUGUI.text = formatedText;
     }
 }

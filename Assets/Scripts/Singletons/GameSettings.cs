@@ -132,6 +132,7 @@ public class GameSettings : MonoBehaviour
 
         // Controls
         SetCameraSensitivity(settingsContainer.CameraSensitivity);
+        SetCameraControllerSensitivity(settingsContainer.ControllerCameraSensitivity);
 
         // Audio
         SetMasterVolume(settingsContainer.MasterVolume);
