@@ -38,8 +38,6 @@ public class UIInputHandler : MonoBehaviour
         }
         OnSchemeChange?.Invoke(currentScheme);
 
-        Debug.Log($"Controls Changed current action map: {playerInput.currentActionMap.name}");
-        Debug.Log($"Controls Changed: current scheme is :{currentScheme} - default button is {defaultButton}");
     }
 
     public void OpenedMenu()

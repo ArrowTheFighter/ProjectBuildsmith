@@ -13,8 +13,13 @@ public class CameraManager : MonoBehaviour
     [Header("Sensitivity Adjustments")]
     [SerializeField] float SensitivityLow = 0.01f;
     [SerializeField] float SensitivityHigh = 3;
+    [SerializeField] float SensitivityLowController = 0.01f;
+    [SerializeField] float SensitivityHighController = 3;
     float X_speed_adjustment = 1;
     float Y_speed_adjustment = 1;
+
+    float X_speed_adjustment_controller = 1;
+    float Y_speed_adjustment_controller = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Start()
@@ -23,6 +28,7 @@ public class CameraManager : MonoBehaviour
         playerInput.onControlsChanged += OnControlsChanged;
 
         ScriptRefrenceSingleton.instance.gameSettings.OnCameraSensativityChanged += set_camera_sensitivity;
+        ScriptRefrenceSingleton.instance.gameSettings.OnControllerCameraSensativityChanged += set_camera_controller_sensitivity;
         //This gets set in GameSettings instead to save/load the value
         //set_camera_sensitivity(0.25f);
     }
@@ -56,12 +62,12 @@ public class CameraManager : MonoBehaviour
             {
                 if (c.Name == "Look Orbit X")
                 {
-                    c.Input.Gain = base_speed_X * X_speed_adjustment * controller_percentage;
+                    c.Input.Gain = base_speed_X * X_speed_adjustment_controller;
                     continue;
                 }
                 if (c.Name == "Look Orbit Y")
                 {
-                    c.Input.Gain = base_speed_Y * Y_speed_adjustment * controller_percentage;
+                    c.Input.Gain = base_speed_Y * Y_speed_adjustment_controller;
                     continue;
                 }
             }
@@ -77,6 +83,16 @@ public class CameraManager : MonoBehaviour
         //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensitivity);
         X_speed_adjustment = adjustedValue;
         Y_speed_adjustment = adjustedValue;
+        OnControlsChanged(ScriptRefrenceSingleton.instance.gameplayInput.playerInput);
+    }
+
+    public void set_camera_controller_sensitivity(float sensitivity)
+    {
+        float adjustedValue = Mathf.Lerp(SensitivityLowController, SensitivityHighController, Mathf.Pow(sensitivity, 1.75f));
+
+        //float adjustedValue = Mathf.Lerp(SensitivityLow, SensitivityHigh, sensitivity);
+        X_speed_adjustment_controller = adjustedValue;
+        Y_speed_adjustment_controller = adjustedValue;
         OnControlsChanged(ScriptRefrenceSingleton.instance.gameplayInput.playerInput);
     }
 }

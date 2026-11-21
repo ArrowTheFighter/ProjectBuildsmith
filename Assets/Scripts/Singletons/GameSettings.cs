@@ -25,7 +25,9 @@ public class GameSettings : MonoBehaviour
 
     [Header("Control Settings")]
     public Action<float> OnCameraSensativityChanged;
+    public Action<float> OnControllerCameraSensativityChanged;
     public Slider[] sensitivitySliders;
+    public Slider[] controllerSensitivitySliders;
 
     [Header("Audio Settings")]
     public Action<float> OnMasterVolumeChanged;
@@ -105,6 +107,7 @@ public class GameSettings : MonoBehaviour
 
         //Control settings
         foreach (var t in sensitivitySliders) t.value = settingsContainer.CameraSensitivity;
+        foreach (var t in controllerSensitivitySliders) t.value = settingsContainer.ControllerCameraSensitivity;
 
         //Audio settings
         foreach (var t in MasterVolumeSliders) t.value = settingsContainer.MasterVolume;
@@ -171,6 +174,13 @@ public class GameSettings : MonoBehaviour
         settingsContainer.CameraSensitivity = value;
         OnCameraSensativityChanged?.Invoke(value);
         //SaveSettingsToFile();
+        SetUIValues();
+    }
+
+    public void SetCameraControllerSensitivity(float value)
+    {
+        settingsContainer.ControllerCameraSensitivity = value;
+        OnControllerCameraSensativityChanged?.Invoke(value);
         SetUIValues();
     }
 
@@ -355,6 +365,7 @@ public class SettingsContainer
 
     //Controls
     public float CameraSensitivity = 0.2f;
+    public float ControllerCameraSensitivity = 0.2f;
 
     //Sound
     public float MasterVolume = 1f;
