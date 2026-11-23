@@ -19,6 +19,8 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
     bool isFalling;
     Rigidbody rb;
 
+    [SerializeField] private GameObject cloudPuff;
+
     private readonly HashSet<IPlatformPassenger> passengers = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -54,6 +56,11 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         }
         yield return new WaitForSeconds(1);
 
+        if (cloudPuff != null)
+        {
+            cloudPuff.SetActive(false);
+        }
+
         bool isScaling = true;
         transform.DOScale(0, scaleDownTime).SetEase(Ease.InQuad).OnComplete(() =>
         {
@@ -83,6 +90,11 @@ public class FallingPlatformScript : MonoBehaviour, IMoveingPlatform
         float heightCheck = transform.position.y + platformCollider.bounds.extents.y;
         if (collision.gameObject.tag == "Player" && collision.transform.position.y > heightCheck)
         {
+            if(cloudPuff != null)
+            {
+                cloudPuff.SetActive(true);
+            }
+            
             StartCoroutine(Falling());
         }
 
