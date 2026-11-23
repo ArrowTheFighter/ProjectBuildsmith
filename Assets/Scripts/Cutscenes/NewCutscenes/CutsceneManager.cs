@@ -8,6 +8,7 @@ public class CutsceneManager : MonoBehaviour
 {
 
     public Transform CameraTransform;
+    public GameObject MainCamera;
     public Camera cutsceneCam;
 
     CutsceneData currentData;
@@ -22,6 +23,7 @@ public class CutsceneManager : MonoBehaviour
         print("starting cutscene - " + cutsceneData.CutsceneName);
         currentData = cutsceneData;
         cutsceneCam.gameObject.SetActive(true);
+        MainCamera.SetActive(false);
         CameraTransform.position = cutsceneData.startPos.position;
         CameraTransform.forward = cutsceneData.startPos.forward;
         cutsceneIsRunning = true;
@@ -75,6 +77,7 @@ public class CutsceneManager : MonoBehaviour
             characterMovement.rb.isKinematic = false;
         }
         ScriptRefrenceSingleton.instance.gameplayUtils.ShowUI();
+        MainCamera.SetActive(true);
         cutsceneCam.gameObject.SetActive(false);
         cutsceneIsRunning = false;
 
