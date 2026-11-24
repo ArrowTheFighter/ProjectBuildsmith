@@ -59,6 +59,9 @@ public class ToolCraftingTable : CraftingTableBase
 
         foreach (CraftingRecipeData recipe in craftingRecipeData)
         {
+            // Make sure the recipe is unlocked
+            if (!ScriptRefrenceSingleton.instance.gameplayUtils.inventoryManager.UnlockedRecipes.Contains(recipe.recipe_id))
+                continue;
             // Make sure pattern exists
             if (recipe.pattern == null)
                 continue;
