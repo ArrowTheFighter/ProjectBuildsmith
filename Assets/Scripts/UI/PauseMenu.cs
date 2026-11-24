@@ -65,4 +65,17 @@ public class PauseMenu : MonoBehaviour
             settingsTabs[i].SetActive(false);
         }
     }
+
+    public bool IsSettingsScreenOpen()
+    {
+        return SettingsScreen.activeInHierarchy;
+    }
+
+    public void CloseSettingsWithBackButton()
+    {
+        if (SettingsScreen.activeInHierarchy)
+        {
+            SettingsBackButton.onClick.Invoke();
+        }
+    }
 }

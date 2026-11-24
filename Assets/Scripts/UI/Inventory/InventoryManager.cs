@@ -136,6 +136,11 @@ public class InventoryManager : MonoBehaviour
     void ToggleInventory(InputAction.CallbackContext context)
     {
         if (inventoryToggleCooldown > Time.time) return;
+
+        if (!inventoryIsOpen &&
+        ScriptRefrenceSingleton.instance.gameplayUtils.GetOpenMenu())
+            return;
+
         inventoryToggleCooldown = Time.time + 0.1f;
         if (InventoryObject != null)
         {
@@ -145,8 +150,10 @@ public class InventoryManager : MonoBehaviour
                 if (!inventoryIsOpen)
                 {
                     OpenInventory();
-                    ScriptRefrenceSingleton.instance.gameplayUtils.OpenCraftingMenu(CraftingStationTypes.Tool);
-
+                    if (inventoryIsOpen)
+                    {
+                        ScriptRefrenceSingleton.instance.gameplayUtils.OpenCraftingMenu(CraftingStationTypes.Tool);
+                    }
                 }
                 else
                 {
@@ -203,8 +210,8 @@ public class InventoryManager : MonoBehaviour
         if (InventoryObject == null) return;
         if (InventoryObject.TryGetComponent(out CanvasGroup canvasGroup))
         {
-            InventoryObject.SetActive(true);
             if (ScriptRefrenceSingleton.instance.gameplayUtils.GetOpenMenu()) return;
+            InventoryObject.SetActive(true);
             //print("opening inventory");
             ScriptRefrenceSingleton.instance.uIInputHandler.defaultButton = InventorySlotsParent.transform.GetChild(0).gameObject;
             ScriptRefrenceSingleton.instance.gameplayUtils.CloseAllCraftingMenus();

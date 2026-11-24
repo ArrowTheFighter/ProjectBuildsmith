@@ -424,11 +424,11 @@ public class GameplayUtils : MonoBehaviour
             case CraftingStationTypes.Tool:
                 if (ToolCraftingUI.activeInHierarchy)
                 {
-                    OpenCraftingMenu(stationType);
+                    CloseCraftingMenu(stationType);
                 }
                 else
                 {
-                    CloseCraftingMenu(stationType);
+                    OpenCraftingMenu(stationType);
                 }
                 break;
         }
@@ -623,6 +623,18 @@ public class GameplayUtils : MonoBehaviour
 
         if (Time.realtimeSinceStartup < pauseMenuCooldown) return;
         if (DialogIsOpen) return;
+
+        if (PauseMenu.activeInHierarchy)
+        {
+            var pauseMenu = PauseMenu.GetComponent<PauseMenu>();
+
+            if (pauseMenu != null && pauseMenu.IsSettingsScreenOpen())
+            {
+                pauseMenu.CloseSettingsWithBackButton();
+                return;
+            }
+        }
+
         if (open_menu && CanPause)
         {
             CloseAllCraftingMenus();
