@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public class WindballTrigger : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class WindballTrigger : MonoBehaviour
             if (windballLocations[windballStatus - 1] != null)
             {
                 ActivateNextWindball();
+                ClearQuestMarker();
             }
                 
         }
@@ -37,19 +39,35 @@ public class WindballTrigger : MonoBehaviour
             .OnComplete(() =>
             {
                 windballTrigger.enabled = true;
-                RemoveWindball();
+                StartCoroutine(RemoveWindball());
             });
     } 
 
-    private void RemoveWindball()
+    public void EnableQuestMarker()
     {
+        ScriptRefrenceSingleton.instance.compassScript.AddNewQuestMarkerWithWorldMarker(transform,Vector3.up * 1f);
+    }
+
+    public void ClearQuestMarker()
+    {
+        ScriptRefrenceSingleton.instance.compassScript.RemoveQuestMarker(transform);
+    }
+
+    IEnumerator RemoveWindball()
+    {
+
         if (windballStatus == windballLocations.Length)
         {
             FlagManager.Set_Flag(flag);
+            yield return new WaitForSeconds(2f);
             gameObject.transform.DOScale(Vector3.zero, scaleDownTime).OnComplete(() =>
             {
                 gameObject.SetActive(false);
             });
+        }
+        else
+        {
+            EnableQuestMarker();
         }
     }
 }

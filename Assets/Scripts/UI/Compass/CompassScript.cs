@@ -44,6 +44,7 @@ public class CompassScript : MonoBehaviour
     void Update()
     {
         if (PlayerTransform == null) return;
+        if (Camera.main == null) return;
         Vector3 playerForward = Camera.main.transform.forward;
         playerForward.y = 0;
         float SignedAngle = 1 - (Vector3.SignedAngle(Vector3.forward, playerForward, Vector3.up) / 360 + 0.5f);
@@ -131,7 +132,11 @@ public class CompassScript : MonoBehaviour
     public void RemoveQuestMarkerByParent(Transform worldObjectParentTransform)
     {
         QuestMarkerInfo questMarkerInfo = activeQuestMarkers.FirstOrDefault(marker => marker.MarkerWorldTransform.parent == worldObjectParentTransform);
-        if (questMarkerInfo == null) return;
+        if (questMarkerInfo == null)
+        {
+            Debug.Log($"Unable to remove quest marker from parent {worldObjectParentTransform}",worldObjectParentTransform.gameObject);
+            return;
+        } 
 
         RemoveQuestMarker(questMarkerInfo);
     }
