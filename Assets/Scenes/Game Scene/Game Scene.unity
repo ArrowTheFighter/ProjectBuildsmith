@@ -200082,6 +200082,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableRock (48)
       objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1032
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -384441,6 +384445,34 @@ PrefabInstance:
       propertyPath: unique_id
       value: 718
       objectReference: {fileID: 0}
+    - target: {fileID: 4213172738255064692, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
+      propertyPath: itemsRequired.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213172738255064692, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
+      propertyPath: itemsRequired.Array.data[0].item_id
+      value: plank
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213172738255064692, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_id
+      value: rope
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213172738255064692, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
+      propertyPath: itemsRequired.Array.data[0].item_name
+      value: Plank
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213172738255064692, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_name
+      value: Rope
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213172738255064692, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
+      propertyPath: itemsRequired.Array.data[0].item_amount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4213172738255064692, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_amount
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5801764530001404078, guid: 3dbd027a716219d4ea417f551b2a8f70, type: 3}
       propertyPath: m_Radius
       value: 2.43
@@ -458822,6 +458854,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3416302611101957409, guid: b59651cadc6938b4db00993692753227, type: 3}
       insertIndex: -1
       addedObject: {fileID: 754854195}
+    - targetCorrespondingSourceObject: {fileID: 3416302611101957409, guid: b59651cadc6938b4db00993692753227, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 858701995}
     - targetCorrespondingSourceObject: {fileID: 2599476308725695547, guid: b59651cadc6938b4db00993692753227, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1211690397}
@@ -483706,6 +483741,10 @@ PrefabInstance:
     - target: {fileID: 3244063857945859274, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
       propertyPath: m_Name
       value: BreakableRock (47)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1027
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -518234,6 +518273,10 @@ PrefabInstance:
     - target: {fileID: 3244063857945859274, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
       propertyPath: m_Name
       value: BreakableRock (46)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1028
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -566498,6 +566541,10 @@ PrefabInstance:
     - target: {fileID: 3244063857945859274, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
       propertyPath: m_Name
       value: BreakableRock (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1031
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -636755,6 +636802,10 @@ PrefabInstance:
     - target: {fileID: 3244063857945859274, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
       propertyPath: m_Name
       value: BreakableRock (41)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1033
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -708092,6 +708143,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1585111910706244151, guid: 98704203476e9c9449e5fc97ec1bf394, type: 3}
   m_PrefabInstance: {fileID: 858665627}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &858701994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 858701995}
+  - component: {fileID: 858701996}
+  m_Layer: 0
+  m_Name: QuestMarkerAbandonedWorkshop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &858701995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858701994}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.89, y: 9.73, z: -0.51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 546282206}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &858701996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858701994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2215f885d1873ed4dad90c4238047ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveQuestParticle
+  INSTRUCTION: Any quest marker needs to have this script on it's parent to properly
+    save. Don't add any other children to this gameobject
+  unique_id: 1038
 --- !u!1001 &858735375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -877430,16 +877528,32 @@ PrefabInstance:
       value: 746
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_id
       value: gold_bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_id
+      value: coin
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_name
       value: Gold Bars
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_name
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_amount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_amount
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1073008,12 +1073122,28 @@ PrefabInstance:
       value: 430
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_id
       value: iron_bar
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_id
+      value: coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_name
       value: Iron Bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_name
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_amount
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1144428,6 +1144558,18 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1564202724}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 583953425}
+        m_TargetAssemblyTypeName: CompassScript, Assembly-CSharp
+        m_MethodName: RemoveQuestMarker
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 858701995}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1249037,6 +1249179,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8359811914484600462, guid: 847e08f06bdb08a468dcc678b032a473, type: 3}
   m_PrefabInstance: {fileID: 1519574507}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1519598259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1519598261}
+  - component: {fileID: 1519598260}
+  m_Layer: 0
+  m_Name: RepairableBouncePadQuestMarker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1519598260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519598259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2215f885d1873ed4dad90c4238047ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveQuestParticle
+  INSTRUCTION: Any quest marker needs to have this script on it's parent to properly
+    save. Don't add any other children to this gameobject
+  unique_id: 1036
+--- !u!4 &1519598261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519598259}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 399.81, y: 235.26, z: 404.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1519620309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1287905,16 +1288094,32 @@ PrefabInstance:
       value: 736
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_id
       value: cotton
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_id
+      value: coin
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_name
       value: Cotton
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_name
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_amount
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_amount
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1306490,6 +1306695,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableRock (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1030
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1323148,6 +1323357,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5005484245105510556, guid: 43cb4a7d73194254d854710245208128, type: 3}
   m_PrefabInstance: {fileID: 1619211916}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1619219668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1619219669}
+  - component: {fileID: 1619219670}
+  m_Layer: 0
+  m_Name: FirstMiniSkyEngineQuest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1619219669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619219668}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1514243754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1619219670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619219668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2215f885d1873ed4dad90c4238047ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveQuestParticle
+  INSTRUCTION: Any quest marker needs to have this script on it's parent to properly
+    save. Don't add any other children to this gameobject
+  unique_id: 1037
 --- !u!1001 &1619395720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1391379,6 +1391635,10 @@ PrefabInstance:
     - target: {fileID: 3244063857945859274, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
       propertyPath: m_Name
       value: BreakableRock (38)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1034
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1558943,6 +1559203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableRock (43)
       objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1040
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1575775,16 +1576039,32 @@ PrefabInstance:
       value: 237
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_id
       value: copper_bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_id
+      value: coin
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_name
       value: Copper Bar
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_name
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_amount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_amount
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1605754,6 +1606034,10 @@ PrefabInstance:
     - target: {fileID: 3244063857945859274, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
       propertyPath: m_Name
       value: BreakableRock (42)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1035
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1671491,6 +1671775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BreakableRock (45)
       objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1039
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1676888,12 +1677176,28 @@ PrefabInstance:
       value: 382
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_id
       value: carrot
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_id
+      value: coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: itemsRequired.Array.data[0].item_name
       value: Carrot
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_name
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_amount
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1686710,6 +1687014,10 @@ PrefabInstance:
     - target: {fileID: 3244063857945859274, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
       propertyPath: m_Name
       value: BreakableRock (44)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6344741526125774085, guid: d67a85931a5dd0541ae56ea4c3938d41, type: 3}
+      propertyPath: unique_id
+      value: 1029
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1753155,7 +1753463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1753170,6 +1753478,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2008540318}
@@ -1753177,6 +1753489,10 @@ PrefabInstance:
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 5595006324023599154}
+    - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 583953425}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -1753194,6 +1753510,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2008540322}
@@ -1753208,6 +1753528,10 @@ PrefabInstance:
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
       value: ForceDialog
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: RemoveQuestMarker
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -1753234,6 +1753558,10 @@ PrefabInstance:
       value: DialogWorker, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: CompassScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: EnableObject, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -1753250,12 +1753578,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 98be5c177736b3d478961cbcf3a681ca, type: 2}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1519598261}
+    - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.ScriptableObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7309895643450594218, guid: 9efba9d8a00d21e42863dde47208f70d, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1755990,8 +1756326,24 @@ PrefabInstance:
       value: 453
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_id
+      value: coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_name
+      value: Coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: itemsRequired.Array.data[1].item_amount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.size
@@ -1756010,6 +1756362,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1999956156}
@@ -1756021,6 +1756377,10 @@ PrefabInstance:
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
       objectReference: {fileID: 6541647477203163920}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 583953425}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -1756038,6 +1756398,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 203045426}
@@ -1756052,6 +1756416,10 @@ PrefabInstance:
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
       value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: RemoveQuestMarker
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -1756074,6 +1756442,10 @@ PrefabInstance:
       value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[4].m_TargetAssemblyTypeName
+      value: CompassScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: DelayedEventCall, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -1756090,6 +1756462,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1619219669}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
@@ -1756100,6 +1756476,10 @@ PrefabInstance:
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      propertyPath: RepairEvent.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 9162744274613429573, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       propertyPath: OnLoadSkipEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1756114,6 +1756494,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1228738872478606451, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1999956155}
+    - targetCorrespondingSourceObject: {fileID: 1228738872478606451, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1619219669}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8405021084154510802, guid: 3282435608c8af24982fcd13d4751bf8, type: 3}
       insertIndex: -1
@@ -1759217,7 +1759600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.size
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[0].id
@@ -1759292,6 +1759675,10 @@ PrefabInstance:
       value: EnableQuestMarkerForBigTree
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].id
+      value: SpawnQuestMarkerAtWorkshop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1759353,14 +1759740,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1759464,11 +1759855,23 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1759568,11 +1759971,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1858065168}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 583953425}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 848823263}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 583953425}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 583953425}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 583953425}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1759684,11 +1760099,23 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1759780,11 +1760207,23 @@ PrefabInstance:
       value: Enable_Objects
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: AddNewQuestMarkerWithWorldMarker
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetCanInteract
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: AddNewQuestMarkerWithWorldMarker
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddNewQuestMarkerWithWorldMarker
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: AddNewQuestMarkerWithWorldMarker
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1759888,11 +1760327,23 @@ PrefabInstance:
       value: EnableObject, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CompassScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: RepairStructure, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: CompassScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CompassScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: CompassScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1759909,6 +1760360,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1759960,9 +1760415,21 @@ PrefabInstance:
       value: plank_recipe
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1519598261}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1619219669}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1565809933}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 858701995}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[0].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
@@ -1760060,11 +1760527,23 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[15].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[16].run_event.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
       propertyPath: nPC_Events.Array.data[17].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053998421410733908, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
+      propertyPath: nPC_Events.Array.data[18].run_event.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Transform, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6171903528303182381, guid: 7fe64a75a359f884eaffca3840f6c220, type: 3}
@@ -1762936,3 +1763415,4 @@ SceneRoots:
   - {fileID: 622079216}
   - {fileID: 582289859}
   - {fileID: 230785189}
+  - {fileID: 1519598261}
