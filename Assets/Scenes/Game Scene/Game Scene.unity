@@ -829235,6 +829235,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2230373781696086197, guid: 74cfca6f405e1b24ea59af097ed6e4ec, type: 3}
   m_PrefabInstance: {fileID: 1005797431}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1005805304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 737158843467655633, guid: 8661ac1348d14ad4ab712571bb002a44, type: 3}
+  m_PrefabInstance: {fileID: 2062051171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1005805310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005805304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546bf51acb4e70146a970cda5a793714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveEnabledState
+  SaveWhenActive: 1
+  OnlyCheckSelfActive: 0
+  unique_id: 1100
 --- !u!1001 &1005822657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1483037,13 +1483057,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806740776}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.40227917, z: -0, w: -0.9155171}
+  m_LocalRotation: {x: -0, y: -0.68363667, z: -0, w: -0.7298225}
   m_LocalPosition: {x: 175.857, y: 392.62198, z: 814.8511}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 695593473}
-  m_LocalEulerAnglesHint: {x: 0, y: 312.559, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 446.25702, z: 0}
 --- !u!1 &1806741839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683991,6 +1684011,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 737158843467655633, guid: 8661ac1348d14ad4ab712571bb002a44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1005805310}
     - targetCorrespondingSourceObject: {fileID: 6965827811594262873, guid: 8661ac1348d14ad4ab712571bb002a44, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2133397598}
